@@ -147,19 +147,96 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(180,83,9,0.35);
 }
+
+/* Error animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.code-input.is-invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+    animation: shake 0.5s ease-in-out;
+}
+
 .alert-error {
-    background: #fee2e2; color: #7f1d1d;
-    border: 1px solid #fca5a5; border-radius: 10px;
-    padding: 0.7rem 1rem; font-size: 0.85rem; font-weight: 600;
-    margin-bottom: 0.75rem;
-    display: flex; align-items: center; gap: 0.5rem;
+    background: #fee2e2; 
+    color: #7f1d1d;
+    border: 2px solid #ef4444; 
+    border-radius: 10px;
+    padding: 1rem 1.25rem; 
+    font-size: 0.9rem; 
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex; 
+    align-items: center; 
+    gap: 0.75rem;
+    animation: slideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.alert-error::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #dc2626;
+    border-radius: 8px 0 0 8px;
+}
+
+.alert-error i {
+    font-size: 1.2rem;
+    color: #dc2626;
+    flex-shrink: 0;
 }
 .alert-success {
-    background: #d1fae5; color: #065f46;
-    border: 1px solid #6ee7b7; border-radius: 10px;
-    padding: 0.7rem 1rem; font-size: 0.85rem; font-weight: 600;
-    margin-bottom: 0.75rem;
-    display: flex; align-items: center; gap: 0.5rem;
+    background: #d1fae5; 
+    color: #065f46;
+    border: 2px solid #10b981; 
+    border-radius: 10px;
+    padding: 1rem 1.25rem; 
+    font-size: 0.9rem; 
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex; 
+    align-items: center; 
+    gap: 0.75rem;
+    animation: slideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.alert-success::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #10b981;
+    border-radius: 8px 0 0 8px;
+}
+
+.alert-success i {
+    font-size: 1.2rem;
+    color: #059669;
+    flex-shrink: 0;
 }
 .pbf-info-note {
     font-size: 0.78rem; color: #9ca3af;
@@ -209,6 +286,14 @@
                 <div class="alert-error">
                     <i class="fa-solid fa-circle-xmark"></i>
                     {{ $errors->first('kode') }}
+                </div>
+            @endif
+
+            {{-- Alert success (jika redirect setelah berhasil) --}}
+            @if (session('pbf_success'))
+                <div class="alert-success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    {{ session('pbf_success') }}
                 </div>
             @endif
 

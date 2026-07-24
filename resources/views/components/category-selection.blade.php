@@ -35,7 +35,7 @@
 
 .category-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 180px));
+    grid-template-columns: repeat(3, minmax(0, 180px));
     gap: 1.25rem;
     margin: 0 auto;
     padding: 0;
@@ -202,12 +202,12 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .category-grid {
-        grid-template-columns: repeat(4, minmax(0, 120px));
+        grid-template-columns: repeat(3, minmax(0, 120px));
         gap: 0.8rem;
         justify-items: center;
         justify-content: center;
         align-items: center;
-        max-width: 560px;
+        max-width: 420px;
         margin: 0 auto;
     }
 
@@ -246,12 +246,12 @@
 
 @media (max-width: 480px) {
     .category-grid {
-        grid-template-columns: repeat(4, minmax(0, 100px));
+        grid-template-columns: repeat(3, minmax(0, 100px));
         gap: 0.6rem;
         justify-items: center;
         justify-content: center;
         align-items: center;
-        max-width: 440px;
+        max-width: 330px;
         margin: 0 auto;
     }
 
@@ -345,34 +345,6 @@
                         <a href="{{ route('products.apotek') }}?kategori_produk=OBAT" class="dropdown-item">
                             <i class="fa-solid fa-leaf"></i>
                             <span>Herbal</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- PBF -->
-                <div class="category-dropdown-container">
-                    <button class="category-icon-btn" onclick="toggleDropdown(event)">
-                        <div class="category-icon pbf">
-                            <i class="fa-solid fa-warehouse"></i>
-                        </div>
-                        <span>PBF</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="{{ route('products.pbf') }}" class="dropdown-item">
-                            <i class="fa-solid fa-boxes-stacked"></i>
-                            <span>Semua Produk PBF</span>
-                        </a>
-                        <a href="{{ route('products.pbf') }}?kategori_produk=OBAT" class="dropdown-item">
-                            <i class="fa-solid fa-pills"></i>
-                            <span>Obat</span>
-                        </a>
-                        <a href="{{ route('products.pbf') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
-                            <i class="fa-solid fa-spa"></i>
-                            <span>Skincare & Kosmetik</span>
-                        </a>
-                        <a href="{{ route('products.pbf') }}?kategori_produk=ALAT+KESEHATAN" class="dropdown-item">
-                            <i class="fa-solid fa-stethoscope"></i>
-                            <span>ALKES</span>
                         </a>
                     </div>
                 </div>

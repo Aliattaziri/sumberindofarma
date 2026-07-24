@@ -48,61 +48,179 @@
 
 /* PROMO CARDS */
 .promo-section { 
-    padding: 1rem 0; 
+    padding: 2.5rem 0; 
     background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
     width: 100%;
     margin: 0;
+    position: relative;
 }
+
+.promo-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
 .promo-grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 1.5rem;
-    max-width: 100%;
-    padding: 0 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
     justify-items: center;
+    position: relative;
+    z-index: 1;
 }
+
 .promo-card {
-    border-radius: 18px; 
-    padding: 1.5rem 2rem; 
+    border-radius: 24px; 
+    padding: 2rem; 
     color: #fff;
     text-decoration: none; 
     display: flex; 
-    align-items: center; 
-    gap: 1.2rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    flex-direction: column;
+    align-items: flex-start; 
+    justify-content: space-between;
+    gap: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
     position: relative; 
     overflow: hidden;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
-    min-height: 120px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    min-height: 200px;
     width: 100%;
-    max-width: 520px;
+    max-width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
 }
+
+.promo-card::before {
+    content: ''; 
+    position: absolute; 
+    inset: 0; 
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(0,0,0,0.1) 100%); 
+    border-radius: 24px;
+    pointer-events: none;
+}
+
 .promo-card::after {
     content: ''; 
     position: absolute; 
-    right: -30px; 
-    top: -30px;
-    width: 120px; 
-    height: 120px; 
-    background: rgba(255,255,255,0.15); 
+    right: -80px; 
+    bottom: -80px;
+    width: 220px; 
+    height: 220px; 
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); 
     border-radius: 50%;
 }
+
 .promo-card:hover { 
-    transform: translateY(-8px) scale(1.03); 
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
 }
-.promo-1 { background: linear-gradient(135deg, #1565C0 0%, #1E88E5 100%); position: relative; }
-.promo-1::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 100%); border-radius: 18px; }
-.promo-2 { background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%); position: relative; }
-.promo-2::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 100%); border-radius: 18px; }
-.promo-3 { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); position: relative; }
-.promo-3::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 100%); border-radius: 18px; }
-.promo-goapotik { background: linear-gradient(135deg, #023e8a 0%, #0077b6 50%, #00b4d8 100%); position: relative; }
-.promo-goapotik::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 100%); border-radius: 18px; }
-.promo-goapotik-logo { height: 72px; object-fit: contain; flex-shrink: 0; }
-.promo-card > i { font-size: 3.5rem; opacity: 0.95; flex-shrink: 0; }
-.promo-card h4 { font-size: 1.35rem; font-weight: 800; margin: 0 0 0.4rem; color: #fff; }
-.promo-card p  { font-size: 1rem; color: rgba(255,255,255,0.9); margin: 0; font-weight: 500; }
+
+.promo-card-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.promo-card-icon-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.promo-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+.promo-1 { background: linear-gradient(135deg, #1565C0 0%, #1E88E5 100%); }
+.promo-2 { background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%); }
+.promo-3 { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); }
+
+.promo-contact {
+    background: linear-gradient(135deg, #1565C0 0%, #1E88E5 100%);
+}
+
+.promo-goapotik {
+    background: linear-gradient(135deg, #0066b3 0%, #0099ff 50%, #00d4ff 100%);
+}
+
+.promo-goapotik-logo {
+    height: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.promo-pbf {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 60%, #43a047 100%);
+}
+
+.promo-pbf-logo {
+    height: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.pbf-subtitle {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.95;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+}
+
+.promo-card > i {
+    font-size: 4rem;
+    opacity: 0.95;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.promo-card h4 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0;
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: -0.5px;
+}
+
+.promo-card p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.5;
+    opacity: 0.95;
+}
 
 /* SECTION HEADER */
 .sec-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
@@ -296,10 +414,19 @@
     .cat-grid { grid-template-columns: repeat(4,1fr); }
     .why-grid { gap: 1.5rem; }
     .hero-img-wrap { display: none; }
+    .promo-section { padding: 2.2rem 0; }
+    .promo-grid { gap: 1.75rem; }
+    .promo-card { min-height: 190px; padding: 1.8rem; }
 }
 @media (max-width: 768px) {
     .hero { padding: 2rem 0 1.75rem; }
-    .promo-grid { grid-template-columns: 1fr 1fr; }
+    .promo-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .promo-card { padding: 1.75rem 1.5rem; min-height: 180px; }
+    .promo-card-icon-wrap { width: 70px; height: 70px; border-radius: 16px; }
+    .promo-card > i { font-size: 3rem; }
+    .promo-goapotik-logo, .promo-pbf-logo { height: 70px; }
+    .promo-card h4 { font-size: 1.2rem; }
+    .promo-card p { font-size: 0.9rem; }
     .cat-grid { grid-template-columns: repeat(3,1fr); }
     .prod-grid { grid-template-columns: repeat(2,1fr); }
     .cta-box { flex-direction: column; text-align: center; padding: 1.5rem; }
@@ -311,7 +438,14 @@
     .about-stats { width: 100%; grid-template-columns: repeat(4,1fr); }
 }
 @media (max-width: 480px) {
-    .promo-grid { grid-template-columns: 1fr; }
+    .promo-grid { grid-template-columns: 1fr; gap: 0.75rem; padding: 0 0.5rem; }
+    .promo-card { padding: 1.5rem 1.25rem; min-height: 160px; }
+    .promo-card-icon-wrap { width: 60px; height: 60px; border-radius: 14px; }
+    .promo-card > i { font-size: 2.5rem; }
+    .promo-goapotik-logo, .promo-pbf-logo { height: 60px; }
+    .promo-card h4 { font-size: 1rem; }
+    .promo-card p { font-size: 0.85rem; }
+    .pbf-subtitle { font-size: 0.7rem; }
     .cat-grid { grid-template-columns: repeat(3,1fr); }
     .prod-grid { grid-template-columns: repeat(2,1fr); }
     .why-grid { flex-direction: column; align-items: center; gap: 1rem; }
@@ -550,26 +684,39 @@
     .banner-nav { width: 26px; height: 26px; font-size: 0.7rem; top: 50%; }
     .banner-search-panel { padding: 0.8rem 0 0.6rem; }
     .banner-search-row { gap: 0.6rem; }
-    .promo-grid { grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 0.75rem; }
-    .promo-card { padding: 1.25rem 1.5rem; min-height: auto; align-items: center; }
-    .promo-card > i { font-size: 3.5rem; }
-    .promo-goapotik-logo { height: 72px; }
-    .promo-card h4 { font-size: 1.35rem; }
-    .promo-card p { font-size: 1rem; }}
+    .promo-section { padding: 2rem 0; }
+    .promo-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; padding: 0 0.75rem; }
+    .promo-card { padding: 1.5rem 1.25rem; min-height: 180px; flex-direction: column; }
+    .promo-card-content { gap: 1rem; }
+    .promo-card-icon-wrap { width: 70px; height: 70px; border-radius: 16px; font-size: 2.5rem; }
+    .promo-card-text { gap: 0.35rem; }
+    .promo-card > i { font-size: 2.8rem; }
+    .promo-goapotik-logo, .promo-pbf-logo { height: 70px; }
+    .promo-card h4 { font-size: 1.15rem; }
+    .promo-card p { font-size: 0.88rem; }
+}
 @media (max-width: 480px) {
     .banner-slider { aspect-ratio: 4/3; margin-top: 55px; }
     .banner-nav { top: 50%; }
     .banner-prev { left: 0.4rem; }
     .banner-next { right: 0.4rem; }
     .banner-search-overlay .container { padding: 0 0.75rem; }
-    .banner-search-row { flex-direction: column; align-items: stretch; }
+    .banner-search-row { flex-direction: column; align-items: stretch; gap: 0.5rem; }
     .banner-cart-btn { width: 100%; height: 46px; border-radius: 999px; }
-    .promo-grid { grid-template-columns: 1fr; gap: 0.75rem; padding: 0 0.5rem; }
-    .promo-card { padding: 1.25rem 1.5rem; min-height: auto; align-items: center; }
-    .promo-card > i { font-size: 3.5rem; }
-    .promo-goapotik-logo { height: 72px; }
-    .promo-card h4 { font-size: 1.35rem; }
-    .promo-card p { font-size: 1rem; }
+    .promo-section { padding: 1.5rem 0; }
+    .promo-grid { grid-template-columns: 1fr; gap: 0.8rem; padding: 0 0.5rem; }
+    .promo-card { padding: 1.25rem; min-height: 140px; flex-direction: column; }
+    .promo-card-content { gap: 0.75rem; }
+    .promo-card-icon-wrap { width: 60px; height: 60px; border-radius: 14px; font-size: 2rem; }
+    .promo-card-text { gap: 0.3rem; }
+    .promo-card > i { font-size: 2.2rem; }
+    .promo-goapotik-logo, .promo-pbf-logo { height: 60px; }
+    .promo-card h4 { font-size: 1rem; margin: 0; }
+    .promo-card p { font-size: 0.8rem; }
+    .pbf-subtitle { font-size: 0.68rem; }
+    .banner-search-panel { padding: 0.6rem 0 0.5rem; }
+    .banner-search-box input { font-size: 0.9rem; }
+    .banner-search-box button { font-size: 0.75rem; padding: 0.6rem 1rem; }
 }
 
 .search-engine-section {
@@ -813,11 +960,33 @@
   <div class="container">
     <div class="promo-grid">
       <a href="{{ route('contact') }}" class="promo-card promo-contact">
-        <i class="fa-solid fa-headset"></i><div><h4>Hubungi Kami</h4><p>Butuh bantuan? Kontak tim Medikpedia sekarang.</p></div>
+        <div class="promo-card-content">
+          <div class="promo-card-icon-wrap">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div class="promo-card-text">
+            <h4>Hubungi Kami</h4>
+            <p>Butuh bantuan? Kontak tim Medikpedia sekarang.</p>
+          </div>
+        </div>
       </a>
       <a href="https://store.goapotik.com/penjual/apotek-medikpedia" target="_blank" rel="noopener" class="promo-card promo-goapotik">
-        <img src="{{ asset('LOGO GOAPOTIK.png') }}" alt="GoApotik" class="promo-goapotik-logo">
-        <div><h4>GoApotik</h4><p>Kunjungi toko kami di Go Apotik.</p></div>
+        <div class="promo-card-content">
+          <img src="{{ asset('LOGO GOAPOTIK.png') }}" alt="GoApotik" class="promo-goapotik-logo">
+          <div class="promo-card-text">
+            <h4>GoApotik</h4>
+            <p>Kunjungi toko kami di Go Apotik.</p>
+          </div>
+        </div>
+      </a>
+      <a href="{{ route('products.pbf') }}" class="promo-card promo-pbf">
+        <div class="promo-card-content">
+          <img src="{{ asset('LOGO SURYA SHARONE.png') }}" alt="PT Surya Sharone Abadi" class="promo-pbf-logo">
+          <div class="promo-card-text">
+            <h4>PBF<br><span class="pbf-subtitle">PT.SURYA SHARONE ABADI</span></h4>
+            <p>Jelajahi katalog produk PBF terlengkap kami.</p>
+          </div>
+        </div>
       </a>
     </div>
   </div>

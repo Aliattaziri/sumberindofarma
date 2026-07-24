@@ -86,9 +86,21 @@ class ProductController extends Controller
     }
 
     /**
-     * Kode akses PBF — ganti nilai ini sesuai kebutuhan
+     * Kode akses PBF — 10 kode akses (PBF1000 sampai PBF1010)
      */
-    const PBF_ACCESS_CODE = 'MEDIKPBF2025';
+    const PBF_ACCESS_CODES = [
+        'PBF1000',
+        'PBF1001',
+        'PBF1002',
+        'PBF1003',
+        'PBF1004',
+        'PBF1005',
+        'PBF1006',
+        'PBF1007',
+        'PBF1008',
+        'PBF1009',
+        'PBF1010',
+    ];
 
     /**
      * Halaman Produk PBF (frontend) — dilindungi kode akses
@@ -154,14 +166,20 @@ class ProductController extends Controller
     {
         $kode = strtoupper(trim($request->input('kode', '')));
 
-        if ($kode === self::PBF_ACCESS_CODE) {
+        if (empty($kode)) {
+            return redirect()->route('products.pbf')
+                ->withErrors(['kode' => '⚠️ Kode akses tidak boleh kosong. Silakan masukkan kode Anda.'])
+                ->withInput();
+        }
+
+        if (in_array($kode, self::PBF_ACCESS_CODES)) {
             $request->session()->put('pbf_access', true);
             return redirect()->route('products.pbf')
-                ->with('pbf_success', 'Akses berhasil! Selamat datang di Katalog PBF.');
+                ->with('pbf_success', '✅ Akses berhasil! Selamat datang di Katalog PBF.');
         }
 
         return redirect()->route('products.pbf')
-            ->withErrors(['kode' => 'Kode akses tidak valid. Silakan hubungi admin.'])
+            ->withErrors(['kode' => '❌ Kode akses salah atau tidak valid. Periksa kembali atau hubungi admin via WhatsApp.'])
             ->withInput();
     }
 
