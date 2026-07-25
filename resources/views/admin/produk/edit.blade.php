@@ -94,24 +94,10 @@
 
                 <div class="form-group">
                     <label class="form-label">Sediaan</label>
-                    <select name="sediaan" class="form-input {{ $errors->has('sediaan') ? 'is-invalid' : '' }}">
-                        <option value="">— Pilih Sediaan —</option>
-                        <option value="box"          {{ old('sediaan', $medicine->sediaan) == 'box'          ? 'selected' : '' }}>Box — Kotak kardus luar pembungkus obat</option>
-                        <option value="fls"          {{ old('sediaan', $medicine->sediaan) == 'fls'          ? 'selected' : '' }}>Fls / Flacon — Botol kaca/plastik untuk cairan/sirup</option>
-                        <option value="pot"          {{ old('sediaan', $medicine->sediaan) == 'pot'          ? 'selected' : '' }}>Pot — Wadah tabung pendek bermulut lebar untuk salep/krim</option>
-                        <option value="tube"         {{ old('sediaan', $medicine->sediaan) == 'tube'         ? 'selected' : '' }}>Tube — Tabung fleksibel untuk salep/krim</option>
-                        <option value="blister"      {{ old('sediaan', $medicine->sediaan) == 'blister'      ? 'selected' : '' }}>Blister / Strip — Lembaran plastik/aluminium untuk tablet/kapsul</option>
-                        <option value="sachet"       {{ old('sediaan', $medicine->sediaan) == 'sachet'       ? 'selected' : '' }}>Sachet — Kantong kecil sekali pakai untuk bubuk/cair</option>
-                        <option value="ampul"        {{ old('sediaan', $medicine->sediaan) == 'ampul'        ? 'selected' : '' }}>Ampul — Wadah kaca segel runcing sekali pakai untuk injeksi</option>
-                        <option value="vial"         {{ old('sediaan', $medicine->sediaan) == 'vial'         ? 'selected' : '' }}>Vial — Botol kaca kecil tutup karet untuk injeksi dosis ganda</option>
-                        <option value="catch_cover"  {{ old('sediaan', $medicine->sediaan) == 'catch_cover'  ? 'selected' : '' }}>Catch Cover — Kertas lipat pembungkus strip obat</option>
-                        <option value="suppositoria" {{ old('sediaan', $medicine->sediaan) == 'suppositoria' ? 'selected' : '' }}>Suppositoria — Obat padat berbentuk peluru untuk anus</option>
-                        <option value="ovula"        {{ old('sediaan', $medicine->sediaan) == 'ovula'        ? 'selected' : '' }}>Ovula — Obat padat berbentuk telur untuk vagina</option>
-                        <option value="enema"        {{ old('sediaan', $medicine->sediaan) == 'enema'        ? 'selected' : '' }}>Enema — Botol pipa panjang untuk cairan pencahar anus</option>
-                        <option value="inhaler"      {{ old('sediaan', $medicine->sediaan) == 'inhaler'      ? 'selected' : '' }}>Inhaler / Nebules — Tabung semprot atau cairan untuk obat hirup</option>
-                        <option value="pen"          {{ old('sediaan', $medicine->sediaan) == 'pen'          ? 'selected' : '' }}>Pen — Alat suntik berbentuk pena (contoh: insulin)</option>
-                        <option value="pcs"          {{ old('sediaan', $medicine->sediaan) == 'pcs'          ? 'selected' : '' }}>Pcs — Satuan per buah/unit</option>
-                    </select>
+                    <input type="text" name="sediaan"
+                           class="form-input {{ $errors->has('sediaan') ? 'is-invalid' : '' }}"
+                           placeholder="Contoh: fls, box, tube, pcs atau ketik bebas"
+                           value="{{ old('sediaan', $medicine->sediaan) }}">
                     @error('sediaan')
                         <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                     @enderror

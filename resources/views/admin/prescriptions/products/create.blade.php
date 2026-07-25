@@ -134,11 +134,10 @@
 
                 <div class="form-group">
                     <label class="form-label">Sediaan</label>
-                    <select name="sediaan" class="form-input {{ $errors->has('sediaan') ? 'is-invalid' : '' }}">
-                        <option value="">— Pilih Sediaan —</option>
-                        <option value="fls" {{ old('sediaan') == 'fls' ? 'selected' : '' }}>FLS (Fles/Botol)</option>
-                        <option value="box" {{ old('sediaan') == 'box' ? 'selected' : '' }}>BOX (Kotak)</option>
-                    </select>
+                    <input type="text" name="sediaan"
+                           class="form-input {{ $errors->has('sediaan') ? 'is-invalid' : '' }}"
+                           placeholder="Contoh: fls, box, tube, pcs atau ketik bebas"
+                           value="{{ old('sediaan') }}">
                     @error('sediaan')
                         <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                     @enderror
