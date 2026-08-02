@@ -1,12 +1,12 @@
 @extends('layouts.frontend')
 
-@section('title', 'Beranda - Medikpedia')
+@section('title', 'Beranda - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
     /* ===== HERO SECTION ===== */
     .hero-section {
-        background: linear-gradient(135deg, #0D47A1 0%, #1565C0 40%, #1976D2 70%, #1E88E5 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 40%, #B91C1C 70%, #B91C1C 100%);
         min-height: 90vh;
         display: flex;
         align-items: center;
@@ -23,7 +23,7 @@
         right: -100px;
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(124,179,66,0.15) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(220,38,38,0.15) 0%, transparent 70%);
         border-radius: 50%;
     }
 
@@ -47,8 +47,8 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: rgba(124,179,66,0.2);
-        border: 1px solid rgba(124,179,66,0.4);
+        background: rgba(220,38,38,0.2);
+        border: 1px solid rgba(220,38,38,0.4);
         color: #a5d65a;
         padding: 0.3rem 0.8rem;
         border-radius: 50px;
@@ -89,17 +89,17 @@
     }
 
     .hero-subtitle span {
-        color: #7CB342;
+        color: #ef4444;
     }
 
     .medik-blue {
-        color: #1E88E5 !important;
-        text-shadow: 3px 3px 6px rgba(30,136,229,0.4);
+        color: #B91C1C !important;
+        text-shadow: 3px 3px 6px rgba(220,38,38,0.4);
     }
 
     .medik-green {
-        color: #7CB342 !important;
-        text-shadow: 3px 3px 6px rgba(124,179,66,0.4);
+        color: #ef4444 !important;
+        text-shadow: 3px 3px 6px rgba(220,38,38,0.4);
     }
 
     .hero-desc {
@@ -117,7 +117,7 @@
     }
 
     .btn-hero-primary {
-        background: #7CB342;
+        background: #ef4444;
         color: white;
         padding: 0.85rem 2rem;
         border-radius: 50px;
@@ -125,13 +125,13 @@
         font-weight: 700;
         font-size: 1rem;
         transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(124,179,66,0.4);
+        box-shadow: 0 4px 15px rgba(220,38,38,0.4);
     }
 
     .btn-hero-primary:hover {
-        background: #689F38;
+        background: #B91C1C;
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(124,179,66,0.5);
+        box-shadow: 0 8px 25px rgba(220,38,38,0.5);
         color: white;
     }
 
@@ -199,7 +199,7 @@
         font-size: 1.3rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
-        color: #7CB342;
+        color: #ef4444;
     }
 
     .overlay-content p {
@@ -244,7 +244,7 @@
     .small-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(30,136,229,0.8), rgba(124,179,66,0.8));
+        background: linear-gradient(135deg, rgba(220,38,38,0.8), rgba(220,38,38,0.8));
         display: flex;
         align-items: center;
         justify-content: center;
@@ -302,7 +302,7 @@
         display: block;
         font-size: 1.2rem;
         font-weight: 800;
-        color: #1E88E5;
+        color: #B91C1C;
         line-height: 1;
     }
 
@@ -332,7 +332,7 @@
     .stat-number {
         font-size: 2rem;
         font-weight: 800;
-        color: #1E88E5;
+        color: #B91C1C;
         display: block;
     }
 
@@ -350,8 +350,8 @@
 
     .section-label {
         display: inline-block;
-        background: #e3f2fd;
-        color: #1E88E5;
+        background: #fef2f2;
+        color: #B91C1C;
         padding: 0.35rem 1rem;
         border-radius: 50px;
         font-size: 0.85rem;
@@ -391,14 +391,14 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #1E88E5, #7CB342);
+        background: linear-gradient(90deg, #B91C1C, #ef4444);
         transform: scaleX(0);
         transition: transform 0.3s;
     }
 
     .feature-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 12px 40px rgba(30,136,229,0.12);
+        box-shadow: 0 12px 40px rgba(220,38,38,0.12);
         border-color: transparent;
     }
 
@@ -417,10 +417,10 @@
         margin-bottom: 1.25rem;
     }
 
-    .icon-blue { background: #e3f2fd; }
-    .icon-green { background: #f1f8e9; }
+    .icon-blue { background: #fef2f2; }
+    .icon-green { background: #fee2e2; }
     .icon-purple { background: #f3e5f5; }
-    .icon-orange { background: #fff3e0; }
+    .icon-orange { background: #fef2f2; }
 
     .feature-card h4 {
         font-size: 1.1rem;
@@ -462,7 +462,7 @@
 
     .news-thumb {
         height: 180px;
-        background: linear-gradient(135deg, #1E88E5, #1565C0);
+        background: linear-gradient(135deg, #B91C1C, #991B1B);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -482,7 +482,7 @@
 
     .news-preview-date {
         font-size: 0.8rem;
-        color: #7CB342;
+        color: #ef4444;
         font-weight: 600;
         margin-bottom: 0.5rem;
     }
@@ -510,7 +510,7 @@
 
     /* ===== CTA SECTION ===== */
     .cta-section {
-        background: linear-gradient(135deg, #0D47A1 0%, #1E88E5 50%, #7CB342 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #B91C1C 50%, #ef4444 100%);
         padding: 5rem 0;
         text-align: center;
         position: relative;
@@ -541,7 +541,7 @@
 
     .btn-cta {
         background: white;
-        color: #1E88E5;
+        color: #B91C1C;
         padding: 0.9rem 2.5rem;
         border-radius: 50px;
         text-decoration: none;
@@ -556,7 +556,7 @@
     .btn-cta:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-        color: #1565C0;
+        color: #991B1B;
     }
 
     @media (max-width: 768px) {
@@ -605,13 +605,13 @@
                 </div>
                 
                 <h1 class="hero-title">
-                    <span style="color:#1E88E5;">Medik</span><span style="color:#7CB342;">pedia</span>
+                    <span style="color:#B91C1C;">Medik</span><span style="color:#ef4444;">pedia</span>
                 </h1>
                 <p class="hero-subtitle">
                     Distributor Obat & Suplemen Terpercaya
                 </p>
                 <p class="hero-desc">
-                    Medikpedia adalah distributor resmi obat-obatan dan suplemen kesehatan dari 76+ perusahaan farmasi terkemuka. Melayani apotek, klinik, dan rumah sakit di seluruh Indonesia dengan jaminan kualitas dan harga kompetitif.
+                    Sumberindo Farma Tama adalah distributor resmi obat-obatan dan suplemen kesehatan dari 76+ perusahaan farmasi terkemuka. Melayani apotek, klinik, dan rumah sakit di seluruh Indonesia dengan jaminan kualitas dan harga kompetitif.
                 </p>
                 <div class="hero-buttons">
                     <a href="{{ route('products.index') }}" class="btn-hero-primary">📋 Katalog Produk</a>
@@ -623,7 +623,7 @@
                 <div class="distributor-gallery">
                     <!-- Foto utama besar di kanan -->
                     <div class="main-photo">
-                        <img src="{{ asset('page3.jpeg') }}" alt="Medikpedia - Distributor Obat Terpercaya">
+                        <img src="{{ asset('page3.jpeg') }}" alt="Sumberindo Farma Tama - Distributor Obat Terpercaya">
                         <div class="photo-overlay">
                             <div class="overlay-content">
                                 <h3><i class="fas fa-pills"></i> Distributor Obat Terpercaya</h3>
@@ -718,7 +718,7 @@
         <div class="row align-items-center g-5 mb-5">
             <div class="col-lg-5">
                 <span class="section-label">Keunggulan Kami</span>
-                <h2 class="section-heading">Mengapa Pilih Medikpedia?</h2>
+                <h2 class="section-heading">Mengapa Pilih Sumberindo Farma Tama?</h2>
                 <p class="section-sub">Kami berkomitmen memberikan layanan terbaik dengan standar farmasi internasional untuk kesehatan Anda dan keluarga.</p>
             </div>
             <div class="col-lg-7">
@@ -767,3 +767,8 @@
 </section>
 
 @endsection
+
+
+
+
+

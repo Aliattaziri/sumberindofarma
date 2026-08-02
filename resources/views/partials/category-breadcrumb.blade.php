@@ -2,11 +2,11 @@
 <div style="padding: 1rem 0; background: #f8faff; border-bottom: 1px solid #e5e7eb;">
     <div class="container">
         <div style="display: flex; gap: 0.5rem; align-items: center; font-size: 0.85rem; color: #6b7280;">
-            <a href="{{ route('home') }}" style="color: #1E88E5; text-decoration: none; font-weight: 600;">
+            <a href="{{ route('home') }}" style="color: #B91C1C; text-decoration: none; font-weight: 600;">
                 <i class="fa-solid fa-home"></i> Home
             </a>
             <span>/</span>
-            <a href="{{ route('products.index') }}" style="color: #1E88E5; text-decoration: none; font-weight: 600;">
+            <a href="{{ route('products.index') }}" style="color: #B91C1C; text-decoration: none; font-weight: 600;">
                 Katalog
             </a>
             @if(isset($mainCategory))
@@ -20,3 +20,4 @@
         </div>
     </div>
 </div>
+

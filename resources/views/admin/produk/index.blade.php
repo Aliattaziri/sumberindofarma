@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Produk Kami - Admin Medikpedia')
+@section('title', 'Produk Kami - Admin Sumberindo Farma Tama')
 @section('page-title', '🛒 Produk Kami')
 
 @section('styles')
@@ -10,16 +10,16 @@
     .page-header-left p  { font-size:0.85rem; color:#6b7280; margin:0; }
     .page-header-actions { display:flex; gap:0.6rem; flex-wrap:wrap; }
     .btn-icon { display:inline-flex; align-items:center; gap:0.4rem; padding:0.55rem 1.1rem; border-radius:0.5rem; font-size:0.875rem; font-weight:600; text-decoration:none; border:none; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
-    .btn-icon-primary { background:#1E88E5; color:white; }
-    .btn-icon-primary:hover { background:#1565C0; color:white; transform:translateY(-1px); }
+    .btn-icon-primary { background:#B91C1C; color:white; }
+    .btn-icon-primary:hover { background:#991B1B; color:white; transform:translateY(-1px); }
     .btn-icon-outline { background:white; color:#374151; border:1px solid #d1d5db; }
     .btn-icon-outline:hover { background:#f9fafb; border-color:#9ca3af; color:#374151; }
 
     /* Kategori tabs */
     .kat-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem; }
     .kat-tab { padding:0.45rem 1rem; border-radius:20px; font-size:0.82rem; font-weight:700; text-decoration:none; border:2px solid #e5e7eb; color:#6b7280; background:white; transition:all 0.2s; }
-    .kat-tab:hover { border-color:#1E88E5; color:#1E88E5; }
-    .kat-tab.active { background:#1E88E5; color:white; border-color:#1E88E5; }
+    .kat-tab:hover { border-color:#B91C1C; color:#B91C1C; }
+    .kat-tab.active { background:#B91C1C; color:white; border-color:#B91C1C; }
     .kat-count { background:rgba(255,255,255,0.25); border-radius:20px; padding:0.05rem 0.45rem; font-size:0.72rem; margin-left:0.3rem; }
     .kat-tab:not(.active) .kat-count { background:#f3f4f6; color:#9ca3af; }
 
@@ -31,10 +31,10 @@
     .search-input-wrap i { position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); color:#9ca3af; font-size:0.85rem; }
     .search-input-wrap input, .search-input-wrap select { width:100%; padding:0.55rem 0.75rem 0.55rem 2.1rem; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.875rem; background:#fafafa; transition:all 0.2s; color:#1f2937; }
     .search-input-wrap select { padding-left:0.75rem; }
-    .search-input-wrap input:focus, .search-input-wrap select:focus { outline:none; border-color:#1E88E5; background:white; box-shadow:0 0 0 3px rgba(30,136,229,0.08); }
+    .search-input-wrap input:focus, .search-input-wrap select:focus { outline:none; border-color:#B91C1C; background:white; box-shadow:0 0 0 3px rgba(220,38,38,0.08); }
     .search-actions { display:flex; gap:0.5rem; align-items:flex-end; }
-    .btn-search { padding:0.55rem 1.25rem; background:#1E88E5; color:white; border:none; border-radius:0.5rem; font-size:0.875rem; font-weight:600; cursor:pointer; transition:background 0.2s; display:inline-flex; align-items:center; gap:0.4rem; }
-    .btn-search:hover { background:#1565C0; }
+    .btn-search { padding:0.55rem 1.25rem; background:#B91C1C; color:white; border:none; border-radius:0.5rem; font-size:0.875rem; font-weight:600; cursor:pointer; transition:background 0.2s; display:inline-flex; align-items:center; gap:0.4rem; }
+    .btn-search:hover { background:#991B1B; }
     .btn-reset { padding:0.55rem 0.9rem; background:white; color:#6b7280; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.875rem; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:0.3rem; transition:all 0.2s; }
     .btn-reset:hover { background:#f9fafb; color:#374151; }
 
@@ -47,33 +47,33 @@
     .data-table tbody tr:hover { background:#fafbff; }
 
     .med-img { width:88px; height:88px; border-radius:0.5rem; object-fit:cover; border:1px solid #e5e7eb; display:block; }
-    .med-img-placeholder { width:88px; height:88px; border-radius:0.5rem; background:linear-gradient(135deg,#e3f2fd,#bbdefb); display:flex; align-items:center; justify-content:center; font-size:1.25rem; border:1px solid #e5e7eb; }
+    .med-img-placeholder { width:88px; height:88px; border-radius:0.5rem; background:linear-gradient(135deg,#fef2f2,#fee2e2); display:flex; align-items:center; justify-content:center; font-size:1.25rem; border:1px solid #e5e7eb; }
     .med-name { font-weight:600; color:#1f2937; }
     .med-desc { color:#374151; font-size:0.82rem; margin-top:0.45rem; max-width:240px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
     .med-meta { font-size:0.76rem; color:#6b7280; margin-top:0.25rem; max-width:240px; }
 
     .kat-badge { display:inline-block; padding:0.2rem 0.6rem; border-radius:20px; font-size:0.72rem; font-weight:700; }
-    .kat-lengkap   { background:#e3f2fd; color:#1565C0; }
+    .kat-lengkap   { background:#fef2f2; color:#991B1B; }
     .kat-skincare  { background:#fce4ec; color:#c2185b; }
-    .kat-alkes     { background:#e8f5e9; color:#2e7d32; }
+    .kat-alkes     { background:#fef2f2; color:#991B1B; }
 
     .stock-badge { display:inline-flex; align-items:center; padding:0.25rem 0.65rem; border-radius:20px; font-size:0.78rem; font-weight:700; }
-    .stock-ok    { background:#d1fae5; color:#065f46; }
-    .stock-low   { background:#fef3c7; color:#92400e; }
+    .stock-ok    { background:#fee2e2; color:#065f46; }
+    .stock-low   { background:#fee2e2; color:#B91C1C; }
     .stock-empty { background:#fee2e2; color:#991b1b; }
-    .price-text  { font-weight:600; color:#1E88E5; }
+    .price-text  { font-weight:600; color:#B91C1C; }
 
     .action-wrap { display:flex; gap:0.4rem; }
     .btn-edit, .btn-del { display:inline-flex; align-items:center; gap:0.3rem; padding:0.35rem 0.75rem; border-radius:0.4rem; font-size:0.78rem; font-weight:600; text-decoration:none; border:none; cursor:pointer; transition:all 0.2s; }
     .bulk-actions { display:flex; justify-content:space-between; align-items:center; padding:0.9rem 1.1rem; background:#f8faff; border-bottom:1px solid #e5e7eb; gap:0.75rem; flex-wrap:wrap; }
     .bulk-actions-left { display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; font-weight:600; color:#374151; }
-    .bulk-actions-left input[type="checkbox"] { width:16px; height:16px; accent-color:#1E88E5; }
+    .bulk-actions-left input[type="checkbox"] { width:16px; height:16px; accent-color:#B91C1C; }
     .bulk-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.5rem 0.95rem; border-radius:0.45rem; font-size:0.8rem; font-weight:700; border:none; cursor:pointer; }
     .bulk-btn:disabled { opacity:0.55; cursor:not-allowed; }
     .bulk-btn-danger { background:#fee2e2; color:#991b1b; }
     .bulk-btn-danger:hover:not(:disabled) { background:#ef4444; color:white; }
-    .btn-edit { background:#e3f2fd; color:#1565C0; }
-    .btn-edit:hover { background:#1E88E5; color:white; }
+    .btn-edit { background:#fef2f2; color:#991B1B; }
+    .btn-edit:hover { background:#B91C1C; color:white; }
     .btn-del  { background:#fee2e2; color:#991b1b; }
     .btn-del:hover  { background:#ef4444; color:white; }
 
@@ -94,8 +94,8 @@
     .pagination-info { font-size:0.8rem; color:#6b7280; }
     .pagination-pages { display:flex; gap:0.3rem; }
     .page-btn { min-width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; border-radius:0.4rem; font-size:0.8rem; font-weight:600; text-decoration:none; border:1px solid #e5e7eb; color:#374151; background:white; transition:all 0.2s; padding:0 0.5rem; }
-    .page-btn:hover { background:#1E88E5; color:white; border-color:#1E88E5; }
-    .page-btn.active { background:#1E88E5; color:white; border-color:#1E88E5; }
+    .page-btn:hover { background:#B91C1C; color:white; border-color:#B91C1C; }
+    .page-btn.active { background:#B91C1C; color:white; border-color:#B91C1C; }
     .page-btn.disabled { background:#f9fafb; color:#d1d5db; cursor:not-allowed; pointer-events:none; }
 
     .empty-state { padding:4rem 2rem; text-align:center; background:white; border-radius:0.75rem; border:1px solid #f0f0f0; }
@@ -238,7 +238,7 @@
                     <td><div class="med-name">{{ $medicine->nama_obat }}</div></td>
                     <td>
                         @if($medicine->sediaan)
-                            <span style="display:inline-block;padding:0.25rem 0.5rem;background:#e0f2fe;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
+                            <span style="display:inline-block;padding:0.25rem 0.5rem;background:#fee2e2;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
                                 {{ $medicine->sediaan }}
                             </span>
                         @else
@@ -247,9 +247,9 @@
                     </td>
                     <td>
                         @if($medicine->kelompok === 'PBF')
-                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fef3c7;color:#92400e;border-radius:4px;font-size:0.75rem;font-weight:700;">PBF</span>
+                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fee2e2;color:#B91C1C;border-radius:4px;font-size:0.75rem;font-weight:700;">PBF</span>
                         @elseif($medicine->kelompok === 'APOTEK')
-                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#d1fae5;color:#065f46;border-radius:4px;font-size:0.75rem;font-weight:700;">APOTEK</span>
+                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fee2e2;color:#065f46;border-radius:4px;font-size:0.75rem;font-weight:700;">APOTEK</span>
                         @else
                             <span style="font-size:0.75rem;color:#9ca3af;">-</span>
                         @endif
@@ -477,3 +477,8 @@ document.getElementById('deleteModal').addEventListener('click', function(e) {
 });
 </script>
 @endsection
+
+
+
+
+

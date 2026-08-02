@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin - Medikpedia')</title>
-    <link rel="icon" type="image/png" href="{{ asset('logo1.png') }}">
+    <title>@yield('title', 'Admin - Sumberindo Farma Tama')</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo pt sumber indo farma tama.png') }}">
 
     <!-- Font Awesome (icons for admin UI) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -12,9 +12,9 @@
 
     <style>
         :root {
-            --primary: #1E88E5;
-            --secondary: #1565C0;
-            --accent: #7CB342;
+            --primary: #B91C1C;
+            --secondary: #991B1B;
+            --accent: #ef4444;
             --dark: #1f2937;
             --light: #f3f4f6;
             --sidebar: #111827;
@@ -39,7 +39,7 @@
 
         /* Sidebar */
         .sidebar {
-            background: linear-gradient(180deg, #0D47A1 0%, var(--sidebar) 100%);
+            background: linear-gradient(180deg, #991B1B 0%, var(--sidebar) 100%);
             color: white;
             width: 250px;
             padding: 2rem 0;
@@ -88,7 +88,7 @@
         }
 
         .sidebar-menu a.active {
-            background: rgba(16,185,129,0.1);
+            background: rgba(239,68,68,0.1);
             color: var(--accent);
             border-left-color: var(--accent);
         }
@@ -112,7 +112,7 @@
             background: linear-gradient(90deg, white 0%, #F5F7FA 100%);
             padding: 1.5rem;
             border-radius: 0.75rem;
-            box-shadow: 0 2px 8px rgba(30, 136, 229, 0.1);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
             margin-bottom: 2rem;
             border-left: 4px solid var(--primary);
         }
@@ -145,7 +145,7 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
         }
 
         .logout-btn {
@@ -172,7 +172,7 @@
         }
 
         .alert-success {
-            background: #d1fae5;
+            background: #fee2e2;
             color: #065f46;
             border-left-color: var(--primary);
         }
@@ -293,12 +293,12 @@
         }
 
         .btn-warning {
-            background: #f59e0b;
+            background: #ef4444;
             color: white;
         }
 
         .btn-warning:hover {
-            background: #d97706;
+            background: #dc2626;
         }
 
         /* Form */
@@ -325,7 +325,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
         }
 
         textarea.form-control {
@@ -606,37 +606,37 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <img src="{{ asset('logo1.png') }}" alt="Medikpedia" style="height: 35px; object-fit: contain;">
+                <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Tama" style="height: 35px; object-fit: contain;">
                 <span style="white-space: nowrap;">Admin</span>
             </div>
             <ul class="sidebar-menu">
                 <li>
                     <a href="{{ route('admin.dashboard') }}" class="@if(Route::current()->getName() == 'admin.dashboard') active @endif">
-                        <span>📊</span>
+                        <i class="fa-solid fa-gauge"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.produk.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.produk')) active @endif">
-                        <span>🛒</span>
+                        <i class="fa-solid fa-pills"></i>
                         <span>Produk Kami</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.banners.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.banners')) active @endif">
-                        <span>🖼️</span>
+                        <i class="fa-solid fa-image"></i>
                         <span>Banner Promo</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admin.promo-products.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.promo-products')) active @endif">
-                        <span>🏷️</span>
+                        <i class="fa-solid fa-tag"></i>
                         <span>Promo Produk</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('home') }}">
-                        <span>🏠</span>
+                        <i class="fa-solid fa-arrow-left"></i>
                         <span>Kembali ke Home</span>
                     </a>
                 </li>
@@ -648,7 +648,7 @@
             <!-- Topbar -->
             <div class="topbar">
                 <div style="display:flex; align-items:center; gap:0.75rem;">
-                    <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+                    <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
                     <h1 class="topbar-title">@yield('page-title', 'Dashboard')</h1>
                 </div>
                 <div class="topbar-right">
@@ -669,19 +669,19 @@
             <!-- Alert Messages -->
             @if ($message = Session::get('success'))
                 <div class="alert alert-success">
-                    ✓ {{ $message }}
+                    <i class="fa-solid fa-circle-check"></i> {{ $message }}
                 </div>
             @endif
 
             @if ($message = Session::get('error'))
                 <div class="alert alert-error">
-                    ✕ {{ $message }}
+                    <i class="fa-solid fa-circle-xmark"></i> {{ $message }}
                 </div>
             @endif
 
             @if ($errors->any())
                 <div class="alert alert-error" style="margin-bottom:1rem;">
-                    <strong>⚠️ Terdapat kesalahan:</strong>
+                    <strong><i class="fa-solid fa-triangle-exclamation"></i> Terdapat kesalahan:</strong>
                     <ul style="margin:0.5rem 0 0 1.25rem;padding:0;">
                         @foreach ($errors->all() as $error)
                             <li style="font-size:0.875rem;">{{ $error }}</li>
@@ -713,18 +713,21 @@
     <nav class="bottom-nav">
         <div class="bottom-nav-items">
             <a href="{{ route('admin.dashboard') }}" class="bottom-nav-item @if(Route::current()->getName() == 'admin.dashboard') active @endif">
-                <span>📊</span>
+                <i class="fa-solid fa-gauge"></i>
                 <span>Dashboard</span>
             </a>
             <a href="{{ route('admin.produk.index') }}" class="bottom-nav-item @if(str_contains(Route::current()->getName() ?? '', 'admin.produk')) active @endif">
-                <span>🛒</span>
+                <i class="fa-solid fa-pills"></i>
                 <span>Produk</span>
             </a>
             <a href="{{ route('home') }}" class="bottom-nav-item">
-                <span>🏠</span>
+                <i class="fa-solid fa-house"></i>
                 <span>Home</span>
             </a>
         </div>
     </nav>
 </body>
 </html>
+
+
+

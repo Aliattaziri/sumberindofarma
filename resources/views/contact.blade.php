@@ -1,11 +1,11 @@
 @extends('layouts.frontend')
 
-@section('title', 'Hubungi Kami - Medikpedia')
+@section('title', 'Hubungi Kami - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
     .contact-header {
-        background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
         padding: 4rem 0;
         position: relative;
         overflow: hidden;
@@ -15,7 +15,7 @@
         position: absolute;
         top: -80px; right: -80px;
         width: 350px; height: 350px;
-        background: radial-gradient(circle, rgba(124,179,66,0.18) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 70%);
         border-radius: 50%;
     }
     .contact-header .header-deco-icon {
@@ -73,14 +73,14 @@
         display: flex; align-items: center; justify-content: center;
         font-size: 1.1rem; flex-shrink: 0;
     }
-    .icon-blue   { background: #e3f2fd; color: #1E88E5; }
-    .icon-green  { background: #f0fdf4; color: #25D366; }
-    .icon-orange { background: #fff7ed; color: #f59e0b; }
-    .icon-purple { background: #f5f3ff; color: #7c3aed; }
+    .icon-blue   { background: #fef2f2; color: #B91C1C; }
+    .icon-green  { background: #fff5f5; color: #ef4444; }
+    .icon-orange { background: #fef2f2; color: #ef4444; }
+    .icon-purple { background: #fef2f2; color: #B91C1C; }
 
     .info-text h4 { font-size: 0.875rem; font-weight: 700; color: #374151; margin-bottom: 0.25rem; }
     .info-text p, .info-text a { font-size: 0.9rem; color: #6b7280; margin: 0; line-height: 1.7; text-decoration: none; }
-    .info-text a:hover { color: #1E88E5; }
+    .info-text a:hover { color: #B91C1C; }
 
     .social-row { display: flex; gap: 0.6rem; margin-top: 1.25rem; }
     .social-btn {
@@ -117,20 +117,20 @@
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
-        border-color: #1E88E5; background: white;
-        box-shadow: 0 0 0 3px rgba(30,136,229,0.1);
+        border-color: #B91C1C; background: white;
+        box-shadow: 0 0 0 3px rgba(220,38,38,0.1);
     }
     .form-group textarea { resize: vertical; min-height: 130px; }
 
     .btn-send {
         width: 100%; padding: 0.85rem;
-        background: linear-gradient(135deg, #25D366, #1ebe5d);
+        background: linear-gradient(135deg, #ef4444, #991B1B);
         color: white; border: none; border-radius: 10px;
         font-size: 1rem; font-weight: 700; cursor: pointer;
         display: flex; align-items: center; justify-content: center; gap: 0.6rem;
         transition: all 0.3s;
     }
-    .btn-send:hover { background: linear-gradient(135deg, #1ebe5d, #17a34a); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.35); }
+    .btn-send:hover { background: linear-gradient(135deg, #991B1B, #B91C1C); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.35); }
 
     /* Dokumen Card */
     .doc-card {
@@ -152,24 +152,24 @@
         border: 1px solid transparent;
     }
     .doc-type:last-child { margin-bottom: 0; }
-    .doc-type-blue   { background: #eff6ff; border-color: #bfdbfe; }
-    .doc-type-green  { background: #f0fdf4; border-color: #bbf7d0; }
-    .doc-type-orange { background: #fff7ed; border-color: #fed7aa; }
+    .doc-type-blue   { background: #fef2f2; border-color: #fecaca; }
+    .doc-type-green  { background: #fef2f2; border-color: #fecaca; }
+    .doc-type-orange { background: #fff5f5; border-color: #fecaca; }
     .doc-type-header {
         display: flex; align-items: center; gap: 0.5rem;
         font-size: 0.875rem; font-weight: 700; margin-bottom: 0.55rem;
     }
-    .doc-type-blue   .doc-type-header { color: #1d4ed8; }
-    .doc-type-green  .doc-type-header { color: #15803d; }
-    .doc-type-orange .doc-type-header { color: #b45309; }
+    .doc-type-blue   .doc-type-header { color: #991B1B; }
+    .doc-type-green  .doc-type-header { color: #991B1B; }
+    .doc-type-orange .doc-type-header { color: #991B1B; }
     .doc-type-icon {
         width: 28px; height: 28px; border-radius: 7px;
         display: flex; align-items: center; justify-content: center;
         font-size: 0.8rem; flex-shrink: 0;
     }
-    .doc-type-blue   .doc-type-icon { background: #dbeafe; color: #1d4ed8; }
-    .doc-type-green  .doc-type-icon { background: #dcfce7; color: #15803d; }
-    .doc-type-orange .doc-type-icon { background: #ffedd5; color: #b45309; }
+    .doc-type-blue   .doc-type-icon { background: #fef2f2; color: #991B1B; }
+    .doc-type-green  .doc-type-icon { background: #fef2f2; color: #991B1B; }
+    .doc-type-orange .doc-type-icon { background: #fff5f5; color: #991B1B; }
     .doc-list {
         list-style: none; padding: 0; margin: 0;
         display: flex; flex-wrap: wrap; gap: 0.4rem;
@@ -178,9 +178,9 @@
         font-size: 0.78rem; font-weight: 600; padding: 0.25rem 0.65rem;
         border-radius: 20px;
     }
-    .doc-type-blue   .doc-list li { background: #dbeafe; color: #1e40af; }
-    .doc-type-green  .doc-list li { background: #dcfce7; color: #166534; }
-    .doc-type-orange .doc-list li { background: #ffedd5; color: #92400e; }
+    .doc-type-blue   .doc-list li { background: #fef2f2; color: #991B1B; }
+    .doc-type-green  .doc-list li { background: #fee2e2; color: #166534; }
+    .doc-type-orange .doc-list li { background: #fee2e2; color: #B91C1C; }
 
     /* Map */
     .map-section { margin-top: 2.5rem; }
@@ -230,7 +230,7 @@
                 {{-- Card Persyaratan Dokumen --}}
                 <div class="doc-card">
                     <div class="doc-card-title">
-                        <i class="fa-solid fa-file-shield" style="color:#1E88E5;"></i>
+                        <i class="fa-solid fa-file-shield" style="color:#B91C1C;"></i>
                         Persyaratan Dokumen Pemesanan
                     </div>
 
@@ -283,15 +283,19 @@
                         <div class="info-icon icon-blue"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="info-text">
                             <h4>Alamat</h4>
-                            <p>Jl. Letjen Suprapto No.1, Sumur Batu, Kec. Kemayoran,<br>
-                               Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10640</p>
+                            <p>Komp. Pergudangan Ocean 88 C2-3<br>
+                               Jl. Adisucipto<br>
+                               Arang Limbung<br>
+                               Kec. Sungai Raya<br>
+                               Kab. Kubu Raya<br>
+                               Kalimantan Barat</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon icon-green"><i class="fa-brands fa-whatsapp"></i></div>
                         <div class="info-text">
                             <h4>WhatsApp</h4>
-                            <a href="https://wa.me/6285890007359" target="_blank">0858 9000 7359</a>
+                            <a href="https://wa.me/6285248965590" target="_blank">+62 852-4896-5590</a>
                             <p style="margin-top:0.2rem;font-size:0.8rem;">Klik untuk chat langsung</p>
                         </div>
                     </div>
@@ -299,7 +303,7 @@
                         <div class="info-icon icon-orange"><i class="fa-solid fa-phone"></i></div>
                         <div class="info-text">
                             <h4>Telepon</h4>
-                            <a href="tel:+6285890007359">0858 9000 7359</a>
+                            <a href="tel:+6285248965590">+62 852-4896-5590</a>
                             <p style="margin-top:0.2rem;font-size:0.8rem;">Sen–Jum 08:00–18:00 · Sab–Min 09:00–17:00</p>
                         </div>
                     </div>
@@ -307,17 +311,16 @@
                         <div class="info-icon icon-purple"><i class="fa-solid fa-envelope"></i></div>
                         <div class="info-text">
                             <h4>Email</h4>
-                            <a href="mailto:medikpedia.mitramedika@gmail.com">medikpedia.mitramedika@gmail.com</a>
+                            <a href="mailto:info@sumberindofarmatama.com">info@sumberindofarmatama.com</a>
                         </div>
                     </div>
                 </div>
 
                 <div style="margin-top:1.25rem; background:white; border-radius:16px; padding:1.5rem; box-shadow:0 2px 12px rgba(0,0,0,0.06); border:1px solid #e5e7eb;">
-                    <h4 style="font-size:0.9rem;font-weight:700;color:#374151;margin-bottom:0.75rem;"><i class="fa-solid fa-share-nodes" style="color:#1E88E5;margin-right:0.4rem;"></i> Ikuti Kami</h4>
+                    <h4 style="font-size:0.9rem;font-weight:700;color:#374151;margin-bottom:0.75rem;"><i class="fa-solid fa-share-nodes" style="color:#B91C1C;margin-right:0.4rem;"></i> Ikuti Kami</h4>
                     <div class="social-row">
-                        <a href="#" class="social-btn" style="background:#1877f2;" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="social-btn" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/6285890007359" target="_blank" class="social-btn" style="background:#25D366;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="social-btn" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/6285248965590" target="_blank" class="social-btn" style="background:#ef4444;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
 
@@ -326,7 +329,7 @@
             {{-- FORM --}}
             <div>
                 <div class="form-card">
-                    <h3><i class="fa-solid fa-paper-plane" style="color:#1E88E5;margin-right:0.5rem;"></i> Kirim Pesan via WhatsApp</h3>
+                    <h3><i class="fa-solid fa-paper-plane" style="color:#B91C1C;margin-right:0.5rem;"></i> Kirim Pesan via WhatsApp</h3>
 
                     <div class="form-row">
                         <div class="form-group">
@@ -367,10 +370,15 @@
 
                 {{-- MAP --}}
                 <div class="map-section">
-                    <h3><i class="fa-solid fa-map-location-dot" style="color:#1E88E5;"></i> Lokasi Kami</h3>
+                    <h3><i class="fa-solid fa-map-location-dot" style="color:#B91C1C;"></i> Lokasi Kami</h3>
+                    <p style="margin-bottom:0.75rem; font-size:0.95rem; color:#4b5563;">Gunakan rute langsung ke lokasi kami dengan Google Maps.</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=VCX4+XV+Sungai+Raya,+Kabupaten+Kubu+Raya,+Kalimantan+Barat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:0.9rem;padding:0.75rem 1rem;background:#ef4444;color:#fff;border-radius:999px;text-decoration:none;font-weight:700;box-shadow:0 12px 32px rgba(239,68,68,0.18);">
+                        <i class="fa-brands fa-google" style="font-size:1rem;"></i>
+                        Buka Rute di Maps
+                    </a>
                     <div class="map-wrap">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.8!2d106.8574!3d-6.1627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2ad6e1e0e1d1f!2sITC%20Cempaka%20Mas!5e0!3m2!1sid!2sid!4v1"
+                            src="https://maps.google.com/maps?q=VCX4%2BXV%20Sungai%20Raya%2C%20Kabupaten%20Kubu%20Raya%2C%20Kalimantan%20Barat&output=embed"
                             width="100%" height="320" style="border:0;display:block;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
@@ -400,7 +408,7 @@ function kirimWA() {
     errEl.style.display = 'none';
 
     const teks =
-`Halo Medikpedia!
+`Halo Sumberindo Farma Tama!
 
 👤 *Nama*    : ${nama}
 📱 *Telepon* : ${telp || '-'}
@@ -409,7 +417,12 @@ function kirimWA() {
 💬 *Pesan*:
 ${pesan}`;
 
-    window.open('https://wa.me/6285890007359?text=' + encodeURIComponent(teks), '_blank');
+    window.open('https://wa.me/6285248965590?text=' + encodeURIComponent(teks), '_blank');
 }
 </script>
 @endsection
+
+
+
+
+

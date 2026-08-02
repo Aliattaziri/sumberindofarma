@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Import Obat Resep - Admin Medikpedia')
+@section('title', 'Import Obat Resep - Admin Sumberindo Farma Tama')
 @section('page-title', 'Import Obat Resep')
 
 @section('styles')
@@ -141,8 +141,8 @@
                 </tbody>
             </table>
         </div>
-        <div style="margin-top:1rem;padding:0.75rem;background:#fef3c7;border-radius:0.5rem;border:1px solid #fde68a;">
-            <p style="font-size:0.78rem;color:#92400e;margin:0;line-height:1.6;">
+        <div style="margin-top:1rem;padding:0.75rem;background:#fee2e2;border-radius:0.5rem;border:1px solid #fde68a;">
+            <p style="font-size:0.78rem;color:#B91C1C;margin:0;line-height:1.6;">
                 <i class="fa-solid fa-lightbulb" style="margin-right:0.3rem;"></i>
                 <strong>Format file:</strong> CSV dengan pemisah titik koma (;). Simpan dari Excel: File → Save As → CSV (Semicolon).
             </p>
@@ -210,9 +210,9 @@ function updateFileLabel(input) {
 
     if (input.files && input.files[0]) {
         label.textContent = '✅ ' + input.files[0].name;
-        label.style.color = '#059669';
-        zone.style.borderColor = '#059669';
-        zone.style.background  = '#f0fdf4';
+        label.style.color = '#dc2626';
+        zone.style.borderColor = '#dc2626';
+        zone.style.background  = '#fff5f5';
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor  = 'pointer';
@@ -257,3 +257,7 @@ function submitForm() {
 }
 </script>
 @endsection
+
+
+
+

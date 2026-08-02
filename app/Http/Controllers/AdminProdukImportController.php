@@ -33,14 +33,25 @@ class AdminProdukImportController extends Controller
 
     public function downloadTemplate()
     {
-        $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'GRADE', 'KOMPOSISI', 'INDIKASI', 'KELOMPOK', 'KATEGORI'];
-        $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 8, 25, 30, 12, 22];
+        if (auth()->check() && auth()->user()->isSuperAdmin()) {
+            $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'GRADE', 'KOMPOSISI', 'INDIKASI', 'KELOMPOK', 'KATEGORI'];
+            $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 8, 25, 30, 12, 22];
 
-        $rows = [
-            ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'A', 'Paracetamol 500 mg',  'Demam & nyeri',                'PBF',    'OBAT'],
-            ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'B', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'APOTEK', 'SKINCARE & KOSMETIK'],
-            ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5',  'A', '-',                   'Mengukur tekanan darah',        'PBF',    'ALAT KESEHATAN'],
-        ];
+            $rows = [
+                ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'A', 'Paracetamol 500 mg',  'Demam & nyeri',                'PBF',    'OBAT'],
+                ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'B', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'APOTEK', 'SKINCARE & KOSMETIK'],
+                ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5',  'A', '-',                   'Mengukur tekanan darah',        'PBF',    'ALAT KESEHATAN'],
+            ];
+        } else {
+            $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'GRADE', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
+            $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 8, 25, 30, 22];
+
+            $rows = [
+                ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'A', 'Paracetamol 500 mg',  'Demam & nyeri',                'OBAT'],
+                ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'B', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'SKINCARE & KOSMETIK'],
+                ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5',  'A', '-',                   'Mengukur tekanan darah',        'ALAT KESEHATAN'],
+            ];
+        }
 
         return \App\Helpers\XlsxWriter::download('template_produk.xlsx', $columns, $rows, $widths);
     }
@@ -286,12 +297,16 @@ class AdminProdukImportController extends Controller
                 }
 
                 // Kelompok: PBF atau APOTEK — harus diketahui sebelum menentukan $match
-                $kelompok = null;
-                if (isset($data['KELOMPOK']) && !empty($data['KELOMPOK'])) {
-                    $k = strtoupper(trim($data['KELOMPOK']));
-                    if (in_array($k, ['PBF', 'APOTEK'])) {
-                        $kelompok = $k;
+                if (auth()->check() && auth()->user()->isSuperAdmin()) {
+                    $kelompok = null;
+                    if (isset($data['KELOMPOK']) && !empty($data['KELOMPOK'])) {
+                        $k = strtoupper(trim($data['KELOMPOK']));
+                        if (in_array($k, ['PBF', 'APOTEK'])) {
+                            $kelompok = $k;
+                        }
                     }
+                } else {
+                    $kelompok = 'APOTEK';
                 }
 
                 // Match key: sertakan kelompok agar PBF dan APOTEK tersimpan sebagai record terpisah

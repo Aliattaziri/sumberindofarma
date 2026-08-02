@@ -36,6 +36,22 @@ class Banner extends Model
      */
     public function getImageUrlAttribute(): string
     {
+        if (!$this->gambar) {
+            return '';
+        }
+
+        $paths = [
+            'storage/' . $this->gambar,
+            $this->gambar,
+            'public/storage/' . $this->gambar,
+        ];
+
+        foreach ($paths as $path) {
+            if (file_exists(public_path($path))) {
+                return url($path);
+            }
+        }
+
         return url('storage/' . $this->gambar);
     }
 }

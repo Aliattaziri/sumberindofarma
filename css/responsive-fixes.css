@@ -1,5 +1,5 @@
 /* =============================================
-   MEDIKPEDIA - Responsive Fixes
+   SUMBERINDO FARMA TAMA - Responsive Fixes
    Perbaikan styling desktop & mobile semua halaman user
    ============================================= */
 
@@ -302,7 +302,7 @@ html, body {
         top: 52px;
         width: 100%;
         height: calc(100vh - 52px);
-        background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #1E88E5 100%);
+        background: linear-gradient(135deg, #991B1B 0%, #B91C1C 50%, #B91C1C 100%);
         flex-direction: column;
         justify-content: flex-start;
         gap: 0;
@@ -1078,3 +1078,5 @@ html, body {
         gap: 0.5rem;
     }
 }
+
+

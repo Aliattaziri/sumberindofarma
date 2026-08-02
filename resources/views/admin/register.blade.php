@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Register - Medikpedia</title>
+    <title>Admin Register - Sumberindo Farma Tama</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -16,7 +16,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+            background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -47,7 +47,7 @@
         .register-header h1 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
-            color: #1E88E5;
+            color: #B91C1C;
         }
 
         .register-header p {
@@ -77,8 +77,8 @@
 
         .form-control:focus {
             outline: none;
-            border-color: #1E88E5;
-            box-shadow: 0 0 0 3px rgba(30,136,229,0.1);
+            border-color: #B91C1C;
+            box-shadow: 0 0 0 3px rgba(220,38,38,0.1);
         }
 
         .form-errors {
@@ -90,7 +90,7 @@
         .btn-register {
             width: 100%;
             padding: 0.75rem;
-            background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+            background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
             color: white;
             border: none;
             border-radius: 0.5rem;
@@ -98,13 +98,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(30,136,229,0.3);
+            box-shadow: 0 4px 12px rgba(220,38,38,0.18);
         }
 
         .btn-register:hover {
-            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            background: linear-gradient(135deg, #991B1B 0%, #7F1D1D 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(30,136,229,0.4);
+            box-shadow: 0 6px 16px rgba(220,38,38,0.4);
         }
 
         .register-footer {
@@ -115,7 +115,7 @@
         }
 
         .register-footer a {
-            color: #1E88E5;
+            color: #B91C1C;
             text-decoration: none;
             font-weight: 600;
         }
@@ -140,9 +140,9 @@
     <div class="register-container">
         <div class="register-header">
             <div class="register-logo">
-                <img src="{{ asset('logo1.png') }}" alt="Medikpedia" style="max-height: 80px; max-width: 100%; object-fit: contain;">
+                <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Tama" style="max-height: 80px; max-width: 100%; object-fit: contain;">
             </div>
-            <h1>Medikpedia Admin</h1>
+            <h1>Sumberindo Farma Tama Admin</h1>
             <p>Daftar akun admin baru</p>
         </div>
 
@@ -172,7 +172,7 @@
                     id="email"
                     name="email" 
                     class="form-control @error('email') is-invalid @enderror"
-                    placeholder="admin@medikpedia.com"
+                    placeholder="admin@sumberindofarmatama.com"
                     required
                     value="{{ old('email') }}"
                 >
@@ -221,3 +221,6 @@
     </div>
 </body>
 </html>
+
+
+

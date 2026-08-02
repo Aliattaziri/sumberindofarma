@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen Produk Resep - Admin Medikpedia')
+@section('title', 'Manajemen Produk Resep - Admin Sumberindo Farma Tama')
 @section('page-title', 'Manajemen Produk Resep')
 
 @section('styles')
@@ -137,8 +137,8 @@
         padding: 0.25rem 0.65rem; border-radius: 20px;
         font-size: 0.78rem; font-weight: 700;
     }
-    .stock-ok    { background: #d1fae5; color: #065f46; }
-    .stock-low   { background: #fef3c7; color: #92400e; }
+    .stock-ok    { background: #fee2e2; color: #065f46; }
+    .stock-low   { background: #fee2e2; color: #B91C1C; }
     .stock-empty { background: #fee2e2; color: #991b1b; }
 
     .price-text { font-weight: 600; color: #dc2626; }
@@ -246,7 +246,7 @@
 </div>
 
 @if(session('success'))
-    <div style="background:#d1fae5;border:1px solid #6ee7b7;border-radius:0.5rem;padding:0.85rem 1rem;margin-bottom:1rem;color:#065f46;font-size:0.875rem;display:flex;align-items:center;gap:0.5rem;">
+    <div style="background:#fee2e2;border:1px solid #6ee7b7;border-radius:0.5rem;padding:0.85rem 1rem;margin-bottom:1rem;color:#065f46;font-size:0.875rem;display:flex;align-items:center;gap:0.5rem;">
         <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
     </div>
 @endif
@@ -282,7 +282,7 @@
                     </td>
                     <td>
                         @if($medicine->sediaan)
-                            <span style="display:inline-block;padding:0.25rem 0.5rem;background:#e0f2fe;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
+                            <span style="display:inline-block;padding:0.25rem 0.5rem;background:#fee2e2;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
                                 {{ $medicine->sediaan }}
                             </span>
                         @else
@@ -388,3 +388,7 @@
 @endif
 
 @endsection
+
+
+
+

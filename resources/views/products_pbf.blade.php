@@ -1,4 +1,4 @@
-﻿@extends('layouts.frontend')
+@extends('layouts.frontend')
 
 @section('title', 'PT. Surya Sharone Abadi - Produk PBF')
 
@@ -109,15 +109,15 @@
         background: #f9fafb; transition: all 0.2s; outline: none;
     }
     .filter-input:focus, .filter-select:focus {
-        border-color: #1E88E5; background: white;
-        box-shadow: 0 0 0 3px rgba(30,136,229,0.1);
+        border-color: #B91C1C; background: white;
+        box-shadow: 0 0 0 3px rgba(220,38,38,0.1);
     }
     .btn-filter {
-        padding: 0.6rem 1.4rem; background: linear-gradient(135deg, #1E88E5, #1565C0);
+        padding: 0.6rem 1.4rem; background: linear-gradient(135deg, #B91C1C, #991B1B);
         color: white; border: none; border-radius: 10px; cursor: pointer;
         font-weight: 600; font-size: 0.9rem; transition: all 0.3s; white-space: nowrap;
     }
-    .btn-filter:hover { background: linear-gradient(135deg, #1565C0, #0D47A1); transform: translateY(-2px); }
+    .btn-filter:hover { background: linear-gradient(135deg, #991B1B, #7F1D1D); transform: translateY(-2px); }
     .btn-reset {
         padding: 0.6rem 1rem; background: white; color: #6b7280;
         border: 1.5px solid #e5e7eb; border-radius: 10px; cursor: pointer;
@@ -155,7 +155,7 @@
     .medicine-card:hover .medicine-image img { transform: scale(1.05); }
     .medicine-body { padding: 1.1rem; flex: 1; display: flex; flex-direction: column; }
     .medicine-company {
-        display: inline-block; background: #e3f2fd; color: #1565C0;
+        display: inline-block; background: #fef2f2; color: #991B1B;
         padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.72rem;
         font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 0.3px;
     }
@@ -166,39 +166,39 @@
         display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
         overflow: hidden; line-height: 1.4; flex: 1;
     }
-    .medicine-price { font-size: 1.15rem; font-weight: 800; color: #1E88E5; margin-bottom: 0.5rem; }
+    .medicine-price { font-size: 1.15rem; font-weight: 800; color: #B91C1C; margin-bottom: 0.5rem; }
     .stock-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.85rem; }
-    .stock-available { background: #d1fae5; color: #065f46; }
-    .stock-low       { background: #fef3c7; color: #92400e; }
+    .stock-available { background: #fee2e2; color: #065f46; }
+    .stock-low       { background: #fee2e2; color: #B91C1C; }
     .stock-out       { background: #fee2e2; color: #7f1d1d; }
     .medicine-btn {
         display: block; width: 100%; padding: 0.65rem;
-        background: linear-gradient(135deg, #1E88E5, #1565C0);
+        background: linear-gradient(135deg, #B91C1C, #991B1B);
         color: white; border: none; border-radius: 10px; cursor: pointer;
         font-weight: 700; font-size: 0.875rem; text-align: center;
         text-decoration: none; transition: all 0.3s;
     }
     .medicine-btn:hover {
-        background: linear-gradient(135deg, #1565C0, #0D47A1);
+        background: linear-gradient(135deg, #991B1B, #7F1D1D);
         transform: translateY(-2px); color: white;
-        box-shadow: 0 4px 12px rgba(30,136,229,0.3);
+        box-shadow: 0 4px 12px rgba(220,38,38,0.18);
     }
     .btn-cart {
         display: block; width: 100%; padding: 0.55rem;
-        background: white; color: #1E88E5;
-        border: 2px solid #1E88E5; border-radius: 10px; cursor: pointer;
+        background: white; color: #B91C1C;
+        border: 2px solid #B91C1C; border-radius: 10px; cursor: pointer;
         font-weight: 700; font-size: 0.82rem; text-align: center;
         text-decoration: none; transition: all 0.3s; margin-top: 0.5rem;
     }
-    .btn-cart:hover { background: #e3f2fd; transform: translateY(-1px); }
-    .btn-cart.added { background: #d1fae5; color: #065f46; border-color: #34d399; }
+    .btn-cart:hover { background: #fef2f2; transform: translateY(-1px); }
+    .btn-cart.added { background: #fee2e2; color: #065f46; border-color: #34d399; }
 
 /* CART DRAWER */
 .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .cart-overlay.open { opacity: 1; pointer-events: all; }
 .cart-drawer { position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw; height: 100vh; background: #fff; z-index: 2001; display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,0.15); transition: right 0.35s cubic-bezier(.4,0,.2,1); }
 .cart-drawer.open { right: 0; }
-.cart-head { background: linear-gradient(135deg, #0D47A1, #1E88E5); padding: 1.25rem 1.5rem; color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.cart-head { background: linear-gradient(135deg, #7F1D1D, #B91C1C); padding: 1.25rem 1.5rem; color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .cart-head h2 { font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
 .cart-close-btn { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .cart-close-btn:hover { background: rgba(255,255,255,0.35); }
@@ -206,30 +206,30 @@
 .cart-empty-msg { text-align: center; padding: 3rem 1rem; color: #9ca3af; }
 .cart-empty-msg i { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
 .cart-item-row { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 0; border-bottom: 1px solid #f3f4f6; }
-.cart-item-thumb { width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg,#e3f2fd,#bbdefb); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.cart-item-thumb { width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg,#fef2f2,#fee2e2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .cart-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .cart-item-info { flex: 1; min-width: 0; }
 .cart-item-name { font-size: 0.84rem; font-weight: 700; color: #1f2937; margin-bottom: 0.2rem; line-height: 1.3; }
-.cart-item-price { font-size: 0.8rem; color: #1E88E5; font-weight: 700; }
+.cart-item-price { font-size: 0.8rem; color: #B91C1C; font-weight: 700; }
 .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; }
 .qty-btn { width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid #e5e7eb; background: #fff; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #374151; transition: all 0.2s; }
-.qty-btn:hover { border-color: #1E88E5; color: #1E88E5; }
+.qty-btn:hover { border-color: #B91C1C; color: #B91C1C; }
 .qty-num { font-size: 0.85rem; font-weight: 700; min-width: 20px; text-align: center; }
 .cart-item-del { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 0.9rem; padding: 0.2rem; flex-shrink: 0; transition: color 0.2s; }
 .cart-item-del:hover { color: #ef4444; }
 .cart-foot { padding: 1.25rem 1.5rem; border-top: 2px solid #f3f4f6; flex-shrink: 0; background: #fafbff; }
 .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .cart-total-row span { font-size: 0.9rem; color: #6b7280; }
-.cart-total-row strong { font-size: 1.2rem; color: #1E88E5; font-weight: 800; }
-.btn-order-wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.85rem; background: #25D366; color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
-.btn-order-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+.cart-total-row strong { font-size: 1.2rem; color: #B91C1C; font-weight: 800; }
+.btn-order-wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.85rem; background: #ef4444; color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
+.btn-order-wa:hover { background: #991B1B; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
 .btn-clear-cart { display: block; width: 100%; padding: 0.5rem; background: none; border: none; color: #9ca3af; font-size: 0.8rem; cursor: pointer; margin-top: 0.5rem; transition: color 0.2s; }
 .btn-clear-cart:hover { color: #ef4444; }
 
 /* ORDER MODAL */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 3000; }
 .modal-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 92%; max-width: 480px; max-height: 90vh; overflow-y: auto; background: #fff; border-radius: 20px; z-index: 3001; box-shadow: 0 25px 60px rgba(0,0,0,0.25); }
-.modal-head { background: linear-gradient(135deg,#1565C0,#1E88E5); padding: 1.25rem 1.5rem; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
+.modal-head { background: linear-gradient(135deg,#991B1B,#B91C1C); padding: 1.25rem 1.5rem; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
 .modal-head h3 { color: #fff; margin: 0; font-size: 1rem; font-weight: 700; }
 .modal-head p { color: rgba(255,255,255,0.8); margin: 0; font-size: 0.75rem; }
 .modal-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
@@ -237,10 +237,10 @@
 .modal-form { padding: 1.25rem 1.5rem; }
 .form-lbl { display: block; font-size: 0.78rem; font-weight: 700; color: #374151; margin-bottom: 0.3rem; }
 .form-inp { width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; margin-bottom: 0.75rem; }
-.form-inp:focus { border-color: #1E88E5; }
+.form-inp:focus { border-color: #B91C1C; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .form-error { display: none; background: #fee2e2; color: #7f1d1d; padding: 0.6rem; border-radius: 8px; font-size: 0.8rem; margin-bottom: 0.75rem; }
-.btn-submit-wa { width: 100%; padding: 0.85rem; background: linear-gradient(135deg,#25D366,#1ebe5d); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.btn-submit-wa { width: 100%; padding: 0.85rem; background: linear-gradient(135deg,#ef4444,#991B1B); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 
 
     /* ===== CART DRAWER ===== */
@@ -258,7 +258,7 @@
     }
     .cart-drawer.open { right: 0; }
     .cart-header {
-        background: linear-gradient(135deg, #0D47A1, #1E88E5);
+        background: linear-gradient(135deg, #7F1D1D, #B91C1C);
         padding: 1.25rem 1.5rem; color: white;
         display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
     }
@@ -274,30 +274,30 @@
     }
     .cart-item-img {
         width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
-        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
         display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
     .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
     .cart-item-info { flex: 1; min-width: 0; }
     .cart-item-name { font-size: 0.85rem; font-weight: 700; color: #1f2937; margin-bottom: 0.2rem; line-height: 1.3; }
-    .cart-item-price { font-size: 0.82rem; color: #1E88E5; font-weight: 700; }
+    .cart-item-price { font-size: 0.82rem; color: #B91C1C; font-weight: 700; }
     .cart-item-qty { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; }
     .qty-btn { width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid #e5e7eb; background: white; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-weight: 700; color: #374151; }
-    .qty-btn:hover { border-color: #1E88E5; color: #1E88E5; }
+    .qty-btn:hover { border-color: #B91C1C; color: #B91C1C; }
     .qty-num { font-size: 0.85rem; font-weight: 700; min-width: 20px; text-align: center; }
     .cart-item-remove { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 0.9rem; padding: 0.2rem; transition: color 0.2s; flex-shrink: 0; }
     .cart-item-remove:hover { color: #ef4444; }
     .cart-footer { padding: 1.25rem 1.5rem; border-top: 2px solid #f3f4f6; flex-shrink: 0; background: #fafbff; }
     .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
     .cart-total span { font-size: 0.9rem; color: #6b7280; }
-    .cart-total strong { font-size: 1.2rem; color: #1E88E5; font-weight: 800; }
+    .cart-total strong { font-size: 1.2rem; color: #B91C1C; font-weight: 800; }
     .btn-wa {
         display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-        width: 100%; padding: 0.85rem; background: #25D366; color: white;
+        width: 100%; padding: 0.85rem; background: #ef4444; color: white;
         border: none; border-radius: 12px; cursor: pointer; font-weight: 700;
         font-size: 1rem; text-decoration: none; transition: all 0.3s;
     }
-    .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); color: white; }
+    .btn-wa:hover { background: #991B1B; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); color: white; }
     .btn-wa:disabled { background: #d1d5db; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-clear { display: block; width: 100%; padding: 0.5rem; background: none; border: none; color: #9ca3af; font-size: 0.8rem; cursor: pointer; margin-top: 0.5rem; transition: color 0.2s; }
     .btn-clear:hover { color: #ef4444; }
@@ -329,8 +329,8 @@
         color: #374151; font-size: 0.875rem; text-decoration: none;
         border: 1px solid #e5e7eb; min-width: 36px; text-align: center; transition: all 0.2s;
     }
-    .page-btn:hover  { background: #1E88E5; color: white; border-color: #1E88E5; }
-    .page-btn.active { background: #1E88E5; color: white; border-color: #1E88E5; font-weight: 700; }
+    .page-btn:hover  { background: #B91C1C; color: white; border-color: #B91C1C; }
+    .page-btn.active { background: #B91C1C; color: white; border-color: #B91C1C; font-weight: 700; }
     .page-btn.disabled { background: #f3f4f6; color: #d1d5db; cursor: not-allowed; pointer-events: none; }
 
     @media (max-width: 768px) {
@@ -441,22 +441,16 @@
 <div class="products-header">
     <div class="container">
         <div class="hero-panel">
-            <img src="{{ asset('LOGO SURYA SHARONE.png') }}" alt="PT. Surya Sharone Abadi" class="brand-logo" />
+            <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="brand-logo" />
             <div class="brand-copy">
                 <div class="breadcrumb-custom" style="margin:0 0 0.75rem;">
                     <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
                     <span>/</span>
-                    <span class="current">PT. Surya Sharone Abadi</span>
+                    <span class="current">Apotek & PBF</span>
                 </div>
                 <h1><i class="fa-solid fa-box"></i> Katalog Produk PBF</h1>
-                <p>{{ $total }} produk PBF tersedia dari PT. Surya Sharone Abadi untuk mitra apotek dan distributor yang membutuhkan stok terpercaya.</p>
-                <p class="brand-address">Jl. Pendawa Jl. Sersan Muis No.99, 2 Ilir, Kec. Ilir Tim. II, Kota Palembang, Sumatera Selatan 30118</p>
-                <div class="partner-logos">
-                    <img src="{{ asset('LOGO 5 PABRIK.png') }}" alt="Mitra 5 Pabrik" class="partner-logo-desktop" />
-                    <div class="partner-card">
-                        <img src="{{ asset('LOGO 5 PABRIK.png') }}" alt="Mitra 5 Pabrik" />
-                    </div>
-                </div>
+                <p>{{ $total }} produk PBF tersedia untuk mitra apotek dan distributor.</p>
+                <p class="brand-address">Komp. Pergudangan Ocean 88 C2-3, Jl. Adisucipto, Arang Limbung, Kec. Sungai Raya, Kab. Kubu Raya, Kalimantan Barat</p>
             </div>
         </div>
     </div>
@@ -470,7 +464,7 @@
 
         {{-- Flash: akses berhasil --}}
         @if(session('pbf_success'))
-        <div style="background:#d1fae5;border:1px solid #6ee7b7;border-radius:12px;padding:0.85rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div style="background:#fee2e2;border:1px solid #6ee7b7;border-radius:12px;padding:0.85rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
             <span style="color:#065f46;font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;">
                 <i class="fa-solid fa-circle-check"></i>
                 {{ session('pbf_success') }}
@@ -480,13 +474,13 @@
 
         {{-- Info bar: akses aktif + tombol keluar --}}
         <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:0.75rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
-            <span style="color:#92400e;font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:0.5rem;">
-                <i class="fa-solid fa-shield-halved" style="color:#f59e0b;"></i>
+            <span style="color:#B91C1C;font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:0.5rem;">
+                <i class="fa-solid fa-shield-halved" style="color:#ef4444;"></i>
                 Anda masuk sebagai mitra PBF terverifikasi
             </span>
             <form method="POST" action="{{ route('products.pbf.logout') }}" style="margin:0;">
                 @csrf
-                <button type="submit" style="background:none;border:1.5px solid #f59e0b;color:#92400e;padding:0.35rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;">
+                <button type="submit" style="background:none;border:1.5px solid #ef4444;color:#B91C1C;padding:0.35rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar Akses
                 </button>
             </form>
@@ -504,7 +498,7 @@
                 <select name="kategori_produk" class="filter-select">
                     <option value="">Semua Kategori</option>
                     @foreach($kategoriOptions as $k)
-                        @php $icon = match($k) { 'OBAT' => '💊', 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '📦' }; @endphp
+                        @php $icon = match($k) { 'OBAT' => '??', 'SKINCARE & KOSMETIK' => '?', 'ALAT KESEHATAN' => '??', default => '??' }; @endphp
                         <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $icon }} {{ $k }}</option>
                     @endforeach
                 </select>
@@ -524,7 +518,7 @@
                     <option value="terbaru"    @selected($sort === 'terbaru')>Terbaru</option>
                     <option value="harga_asc"  @selected($sort === 'harga_asc')>Harga Terendah</option>
                     <option value="harga_desc" @selected($sort === 'harga_desc')>Harga Tertinggi</option>
-                    <option value="nama"       @selected($sort === 'nama')>Nama A–Z</option>
+                    <option value="nama"       @selected($sort === 'nama')>Nama A�Z</option>
                 </select>
             </div>
             <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
@@ -532,18 +526,18 @@
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
                 @if($search || ($kategori_produk ?? '') || $perusahaan || $sort !== 'terbaru')
-                    <a href="{{ route('products.pbf') }}" class="btn-reset">✕ Reset</a>
+                    <a href="{{ route('products.pbf') }}" class="btn-reset">? Reset</a>
                 @endif
             </div>
         </form>
 
         <div class="result-info">
             <p>
-                Menampilkan <strong>{{ $medicines->firstItem() ?? 0 }}–{{ $medicines->lastItem() ?? 0 }}</strong>
+                Menampilkan <strong>{{ $medicines->firstItem() ?? 0 }}�{{ $medicines->lastItem() ?? 0 }}</strong>
                 dari <strong>{{ $medicines->total() }}</strong> produk
-                @if($search) · "<strong>{{ $search }}</strong>" @endif
-                @if($kategori_produk ?? '') · <strong>{{ $kategori_produk }}</strong> @endif
-                @if($perusahaan) · <strong>{{ $perusahaan }}</strong> @endif
+                @if($search) � "<strong>{{ $search }}</strong>" @endif
+                @if($kategori_produk ?? '') � <strong>{{ $kategori_produk }}</strong> @endif
+                @if($perusahaan) � <strong>{{ $perusahaan }}</strong> @endif
             </p>
         </div>
 
@@ -555,12 +549,13 @@
                             @if($medicine->gambar)
                                 <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}">
                             @else
-                                <i class="fa-solid fa-pills" style="color:#90caf9;font-size:3rem;"></i>
+                                <i class="fa-solid fa-pills" style="color:#fecaca;font-size:3rem;"></i>
                             @endif
                         </div>
                         <div class="medicine-body">
-                            
-                            <span class="medicine-company">{{ $medicine->kategori }}</span>
+                            @if($medicine->kategori)
+                                <div class="medicine-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.45rem;font-weight:600;">Toko: {{ $medicine->kategori }}</div>
+                            @endif
                             <h3 class="medicine-name">{{ $medicine->nama_obat }}</h3>
                             
                             <div class="medicine-price">{{ $medicine->getFormattedPrice() }}</div>
@@ -593,9 +588,9 @@
                 <p class="info">Halaman {{ $medicines->currentPage() }} dari {{ $medicines->lastPage() }}</p>
                 <div class="pagination-btns">
                     @if($medicines->onFirstPage())
-                        <span class="page-btn disabled">‹</span>
+                        <span class="page-btn disabled">�</span>
                     @else
-                        <a href="{{ $medicines->previousPageUrl() }}" class="page-btn">‹</a>
+                        <a href="{{ $medicines->previousPageUrl() }}" class="page-btn">�</a>
                     @endif
 
                     @foreach($medicines->getUrlRange(1, $medicines->lastPage()) as $page => $url)
@@ -604,7 +599,7 @@
                         @elseif($page == 1 || $page == $medicines->lastPage() || abs($page - $medicines->currentPage()) <= 2)
                             <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
                         @elseif(abs($page - $medicines->currentPage()) == 3)
-                            <span class="page-btn disabled">…</span>
+                            <span class="page-btn disabled">�</span>
                         @endif
                     @endforeach
 
@@ -628,7 +623,7 @@
                     @endif
                 </p>
                 @if($search || ($kategori_produk ?? '') || $perusahaan)
-                    <a href="{{ route('products.pbf') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;">✕ Hapus Filter</a>
+                    <a href="{{ route('products.pbf') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;">? Hapus Filter</a>
                 @endif
             </div>
         @endif
@@ -641,11 +636,16 @@
 @section('scripts')
 <script>
 window.cartSettings = {
-    storageKey: 'medikpedia_cart_pbf',
-    receiptStoreName: 'PT. Surya Sharone Abadi',
-    receiptStoreAddress: 'Jl. Pendawa Jl. Sersan Muis No.99, 2 Ilir, Kec. Ilir Tim. II, Kota Palembang\nSumatera Selatan 30118',
-    receiptFilePrefix: 'struk-pt-surya-sharone-abadi'
+    storageKey: 'sumberindofarmatama_cart_pbf',
+    receiptStoreName: 'Sumberindo Farma Tama',
+    receiptStoreAddress: 'Komp. Pergudangan Ocean 88 C2-3\nJl. Adisucipto\nArang Limbung\nKec. Sungai Raya\nKab. Kubu Raya\nKalimantan Barat',
+    receiptFilePrefix: 'struk-sumberindo-farma'
 };
 </script>
 @include('partials.cart')
 @endsection
+
+
+
+
+

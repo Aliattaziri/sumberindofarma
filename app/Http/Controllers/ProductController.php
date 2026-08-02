@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Medicine;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -107,9 +108,8 @@ class ProductController extends Controller
      */
     public function pbf(Request $request)
     {
-        // Cek apakah session akses PBF sudah ada
-        if (! $request->session()->get('pbf_access')) {
-            return view('products_pbf_gate');
+        if (! Auth::check() || ! Auth::user()->isSuperAdmin()) {
+            return redirect()->route('login')->with('error', 'Akses Produk PBF hanya untuk admin utama. Silakan login dengan akun admin utama.');
         }
 
         $search          = $request->get('search', '');
@@ -202,6 +202,10 @@ class ProductController extends Controller
         $kategori_produk = $request->get('kategori_produk', '');
         $perusahaan      = $request->get('perusahaan', '');
         $sort            = $request->get('sort', 'terbaru');
+
+        if (!$perusahaan && Auth::check() && Auth::user()->outlet_name) {
+            $perusahaan = Auth::user()->outlet_name;
+        }
 
         $query = Medicine::where('kelompok', 'APOTEK');
 

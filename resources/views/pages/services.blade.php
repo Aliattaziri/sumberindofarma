@@ -1,6 +1,6 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
-@section('title', 'Layanan - Medikpedia')
+@section('title', 'Layanan - Sumberindo Farma Tama')
 
 @section('content')
 <!-- Page Header -->
@@ -196,3 +196,4 @@
 </section>
 
 @endsection
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Medikpedia - Apotik Online Terpercaya')</title>
+    <title>@yield('title', 'Sumberindo Farma Tama - Apotik Online Terpercaya')</title>
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>
@@ -64,8 +64,8 @@
         }
         
         :root {
-            --primary-color: #10b981;
-            --secondary-color: #059669;
+            --primary-color: #ef4444;
+            --secondary-color: #dc2626;
             --text-dark: #1f2937;
             --text-light: #6b7280;
             --border-color: #e5e7eb;
@@ -252,7 +252,7 @@
         
         /* Badge */
         .badge-custom {
-            background-color: #d1fae5;
+            background-color: #fee2e2;
             color: var(--secondary-color);
             padding: 8px 16px;
             border-radius: 50px;
@@ -297,7 +297,8 @@
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="fas fa-pills"></i>Medikpedia
+                <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Logo" style="height: 30px; width: auto; margin-right: 0.5rem;">
+                PT SUMBERINDO FARMA TAMA
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -332,12 +333,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 footer-section mb-4">
-                    <h5><i class="fas fa-pills"></i> Medikpedia</h5>
+                    <h5><i class="fas fa-pills"></i> Sumberindo Farma Tama</h5>
                     <p>Apotik online terpercaya menyediakan obat dan suplemen berkualitas dengan harga terjangkau.</p>
                     <div class="mt-3">
-                        <a href="#" class="footer-link"><i class="fab fa-facebook"></i> Facebook</a>
-                        <a href="#" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a>
-                        <a href="#" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+
+                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://wa.me/6285248965590" target="_blank" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
                 <div class="col-md-3 footer-section">
@@ -347,20 +348,13 @@
                     <a href="{{ route('products.index') }}" class="footer-link">Produk</a>
                     <a href="{{ route('services') }}" class="footer-link">Layanan</a>
                 </div>
-                <div class="col-md-3 footer-section">
-                    <h5>Layanan</h5>
-                    <a href="#" class="footer-link">Konsultasi Apoteker</a>
-                    <a href="#" class="footer-link">Pengiriman Gratis</a>
-                    <a href="#" class="footer-link">Program Loyalitas</a>
-                    <a href="#" class="footer-link">Resep Online</a>
-                </div>
-                <div class="col-md-3 footer-section">
+                    <div class="col-md-3 footer-section">
                     <h5>Hubungi Kami</h5>
                     <p class="footer-link">
-                        <i class="fas fa-phone"></i> (021) 1234-5678
+                        <i class="fas fa-phone"></i> +62 852-4896-5590
                     </p>
                     <p class="footer-link">
-                        <i class="fas fa-envelope"></i> medikpedia.mitramedika@gmail.com
+                        <i class="fas fa-envelope"></i> info@sumberindofarmatama.com
                     </p>
                     <p class="footer-link">
                         <i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia
@@ -368,7 +362,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Medikpedia. All rights reserved. | Privacy Policy | Terms & Conditions</p>
+                <p>&copy; 2024 Sumberindo Farma Tama. All rights reserved. | Privacy Policy | Terms & Conditions</p>
             </div>
         </div>
     </footer>
@@ -380,3 +374,5 @@
     @yield('scripts')
 </body>
 </html>
+
+

@@ -1,6 +1,6 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
-@section('title', 'Import Produk Resep - Admin Medikpedia')
+@section('title', 'Import Produk Resep - Admin Sumberindo Farma Tama')
 @section('page-title', 'Import Produk Resep')
 
 @section('styles')
@@ -72,7 +72,7 @@
     }
     .info-box li { margin-bottom: 0.5rem; }
     .info-box .success-note {
-        color: #059669; margin: 0.75rem 0 0; font-size: 0.875rem; font-weight: 600;
+        color: #dc2626; margin: 0.75rem 0 0; font-size: 0.875rem; font-weight: 600;
     }
     .template-table {
         margin-top: 1rem; background: #f9fafb; border-radius: 0.5rem;
@@ -120,7 +120,7 @@
         <li>Semua produk yang diimpor otomatis ditandai sebagai <strong>Produk Resep (KERAS)</strong></li>
     </ol>
     <p class="success-note">
-        ✅ Format kolom: <strong>PABRIK | NAMA PRODUK | SEDIAAN | RETAIL | KOMPOSISI | INDIKASI</strong>
+        ? Format kolom: <strong>PABRIK | NAMA PRODUK | SEDIAAN | RETAIL | KOMPOSISI | INDIKASI</strong>
     </p>
 </div>
 
@@ -133,8 +133,8 @@
     <div class="form-body">
         <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
             <a href="{{ route('admin.prescription-products.import.template') }}"
-               style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.5rem;background:#10b981;color:white;border-radius:0.5rem;font-size:0.9rem;font-weight:700;text-decoration:none;transition:all 0.2s;"
-               onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10b981'">
+               style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.5rem;background:#ef4444;color:white;border-radius:0.5rem;font-size:0.9rem;font-weight:700;text-decoration:none;transition:all 0.2s;"
+               onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
                 <i class="fa-solid fa-download"></i> Download Template Excel (.xlsx)
             </a>
             <span style="color:#6b7280;font-size:0.875rem;">
@@ -183,8 +183,8 @@
             </table>
         </div>
 
-        <div style="margin-top:1rem;padding:0.75rem;background:#fef3c7;border-radius:0.5rem;border:1px solid #fde68a;">
-            <p style="font-size:0.78rem;color:#92400e;margin:0;line-height:1.6;">
+        <div style="margin-top:1rem;padding:0.75rem;background:#fee2e2;border-radius:0.5rem;border:1px solid #fde68a;">
+            <p style="font-size:0.78rem;color:#B91C1C;margin:0;line-height:1.6;">
                 <i class="fa-solid fa-lightbulb" style="margin-right:0.3rem;"></i>
                 <strong>Catatan:</strong> Semua produk yang diimpor akan otomatis menjadi <strong>Obat Resep (KERAS)</strong>.
             </p>
@@ -209,12 +209,12 @@
              ondragover="handleDragOver(event)"
              ondragleave="handleDragLeave(event)"
              ondrop="handleDrop(event)">
-            <div class="upload-icon">📂</div>
+            <div class="upload-icon">??</div>
             <p>Klik atau drag & drop file di sini</p>
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX — Maks. 2MB</small>
+            <small>Format: CSV, XLS, XLSX � Maks. 2MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
 
@@ -252,10 +252,10 @@ function updateFileLabel(input) {
 
     if (input.files && input.files[0]) {
         const name = input.files[0].name;
-        label.textContent = '✅ ' + name;
-        label.style.color = '#059669';
-        zone.style.borderColor = '#059669';
-        zone.style.background  = '#f0fdf4';
+        label.textContent = '? ' + name;
+        label.style.color = '#dc2626';
+        zone.style.borderColor = '#dc2626';
+        zone.style.background  = '#fff5f5';
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor  = 'pointer';
@@ -300,3 +300,7 @@ function submitForm() {
 }
 </script>
 @endsection
+
+
+
+

@@ -1,12 +1,12 @@
 @extends('layouts.frontend')
 
-@section('title', 'Farmakologi - Medikpedia')
+@section('title', 'Farmakologi - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
     /* ===== HEADER ===== */
     .farma-header {
-        background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
         padding: 4rem 0;
         position: relative;
         overflow: hidden;
@@ -16,7 +16,7 @@
         position: absolute;
         top: -80px; right: -80px;
         width: 350px; height: 350px;
-        background: radial-gradient(circle, rgba(124,179,66,0.18) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 70%);
         border-radius: 50%;
     }
     .farma-header .header-deco-icon {
@@ -60,13 +60,13 @@
         top: 80px;
         background: white;
         border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(30,136,229,0.1);
+        box-shadow: 0 4px 20px rgba(220,38,38,0.1);
         border: 1px solid #e5e7eb;
         overflow: hidden;
     }
 
     .sidebar-header {
-        background: linear-gradient(135deg, #1E88E5, #1565C0);
+        background: linear-gradient(135deg, #B91C1C, #991B1B);
         padding: 1rem 1.25rem;
         color: white;
         font-weight: 700;
@@ -92,8 +92,8 @@
     }
 
     .sidebar-search input:focus {
-        border-color: #1E88E5;
-        box-shadow: 0 0 0 3px rgba(30,136,229,0.1);
+        border-color: #B91C1C;
+        box-shadow: 0 0 0 3px rgba(220,38,38,0.1);
     }
 
     .sidebar-list {
@@ -120,22 +120,22 @@
     }
 
     .sidebar-item:hover {
-        background: #eff6ff;
-        color: #1E88E5;
-        border-left-color: #1E88E5;
+        background: #fef2f2;
+        color: #B91C1C;
+        border-left-color: #B91C1C;
     }
 
     .sidebar-item.active {
-        background: #eff6ff;
-        color: #1E88E5;
-        border-left-color: #1E88E5;
+        background: #fef2f2;
+        color: #B91C1C;
+        border-left-color: #B91C1C;
         font-weight: 600;
     }
 
     .sidebar-item i {
         font-size: 0.75rem;
         flex-shrink: 0;
-        color: #7CB342;
+        color: #ef4444;
     }
 
     /* ===== CONTENT AREA ===== */
@@ -156,12 +156,12 @@
     }
 
     .disease-card:hover {
-        box-shadow: 0 8px 30px rgba(30,136,229,0.12);
+        box-shadow: 0 8px 30px rgba(220,38,38,0.12);
         transform: translateY(-2px);
     }
 
     .disease-card-header {
-        background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+        background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
         padding: 1rem 1.5rem;
         display: flex;
         align-items: center;
@@ -171,7 +171,7 @@
     }
 
     .disease-card-header:hover {
-        background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+        background: linear-gradient(135deg, #991B1B 0%, #7F1D1D 100%);
     }
 
     .disease-icon {
@@ -237,7 +237,7 @@
         line-height: 1.5;
     }
 
-    .symptom-label i { color: #f59e0b; margin-top: 2px; flex-shrink: 0; }
+    .symptom-label i { color: #ef4444; margin-top: 2px; flex-shrink: 0; }
 
     .komposisi-text {
         font-size: 0.78rem;
@@ -254,8 +254,8 @@
 
     .obat-tag {
         display: inline-block;
-        background: #e3f2fd;
-        color: #1565C0;
+        background: #fef2f2;
+        color: #991B1B;
         padding: 0.2rem 0.55rem;
         border-radius: 20px;
         font-size: 0.72rem;
@@ -265,7 +265,7 @@
     }
 
     .obat-tag:hover {
-        background: #1E88E5;
+        background: #B91C1C;
         color: white;
         cursor: default;
     }
@@ -274,7 +274,7 @@
         display: inline-flex;
         align-items: center;
         gap: 0.3rem;
-        background: #f0fdf4;
+        background: #fff5f5;
         color: #166534;
         padding: 0.25rem 0.65rem;
         border-radius: 20px;
@@ -338,7 +338,7 @@
     .farma-stat-card .num {
         font-size: 1.75rem;
         font-weight: 800;
-        color: #1E88E5;
+        color: #B91C1C;
         display: block;
     }
 
@@ -460,9 +460,9 @@
                     </div>
                     <div class="disease-body">
                         <div class="symptom-header">
-                            <span><i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;margin-right:0.3rem;"></i> Gejala</span>
+                            <span><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;margin-right:0.3rem;"></i> Gejala</span>
                             <span><i class="fa-solid fa-flask" style="color:#6366f1;margin-right:0.3rem;"></i> Komposisi / Generik</span>
-                            <span><i class="fa-solid fa-pills" style="color:#1E88E5;margin-right:0.3rem;"></i> Nama Obat & Dosis</span>
+                            <span><i class="fa-solid fa-pills" style="color:#B91C1C;margin-right:0.3rem;"></i> Nama Obat & Dosis</span>
                         </div>
                         @foreach($disease['symptoms'] as $symptom)
                         <div class="symptom-row">
@@ -554,3 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 @endsection
+
+
+
+

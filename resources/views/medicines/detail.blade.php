@@ -1,12 +1,12 @@
 @extends('layouts.frontend')
 
-@section('title', $medicine->nama_obat . ' - Medikpedia')
+@section('title', $medicine->nama_obat . ' - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
     /* ===== DETAIL PAGE HEADER ===== */
     .detail-page-header {
-        background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
         padding: 3rem 0;
         position: relative;
         overflow: hidden;
@@ -16,7 +16,7 @@
         position: absolute;
         top: -80px; right: -80px;
         width: 300px; height: 300px;
-        background: radial-gradient(circle, rgba(124,179,66,0.18) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 70%);
         border-radius: 50%;
     }
     .detail-page-header h1 {
@@ -56,7 +56,7 @@
 
     .detail-image-col {
         padding: 2rem;
-        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -67,7 +67,7 @@
         width: 100%;
         aspect-ratio: 1;
         max-width: 340px;
-        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -100,8 +100,8 @@
 
     .detail-category {
         display: inline-block;
-        background: #e3f2fd;
-        color: #1565C0;
+        background: #fef2f2;
+        color: #991B1B;
         padding: 0.3rem 0.85rem;
         border-radius: 20px;
         font-size: 0.8rem;
@@ -112,9 +112,9 @@
     .price-section {
         margin: 1.25rem 0;
         padding: 1.25rem 1.5rem;
-        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
         border-radius: 12px;
-        border-left: 4px solid #1E88E5;
+        border-left: 4px solid #B91C1C;
     }
 
         /* Deskripsi di bawah foto (detail) */
@@ -136,7 +136,7 @@
             color: #0f172a;
             display:flex; align-items:center; gap:0.5rem;
         }
-        .detail-desc .icon { color: #1E88E5; font-size:1.05rem; }
+        .detail-desc .icon { color: #B91C1C; font-size:1.05rem; }
         .detail-desc p {
             line-height: 1.6;
             font-size: 0.95rem;
@@ -150,7 +150,7 @@
 
     .price-label {
         font-size: 0.78rem;
-        color: #1565C0;
+        color: #991B1B;
         text-transform: uppercase;
         font-weight: 700;
         letter-spacing: 0.05em;
@@ -160,7 +160,7 @@
     .price {
         font-size: clamp(1.5rem, 3vw, 2rem);
         font-weight: 800;
-        color: #1565C0;
+        color: #991B1B;
         line-height: 1.2;
     }
 
@@ -228,7 +228,7 @@
         gap: 0.5rem;
     }
 
-    .related-section h2 i { color: #1E88E5; }
+    .related-section h2 i { color: #B91C1C; }
 
     .related-grid {
         display: grid;
@@ -247,16 +247,16 @@
     }
 
     .related-card:hover {
-        box-shadow: 0 8px 25px rgba(30,136,229,0.12);
+        box-shadow: 0 8px 25px rgba(220,38,38,0.12);
         transform: translateY(-4px);
-        border-color: #90caf9;
+        border-color: #fecaca;
         color: inherit;
     }
 
     .related-image {
         width: 100%;
         height: 120px;
-        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -290,7 +290,7 @@
     .related-price {
         font-size: 0.9rem;
         font-weight: 800;
-        color: #1E88E5;
+        color: #B91C1C;
     }
 
     @media (max-width: 768px) {
@@ -364,7 +364,7 @@
                     @if($medicine->gambar)
                         <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}">
                     @else
-                        <i class="fa-solid fa-pills" style="color:#90caf9;font-size:4rem;"></i>
+                        <i class="fa-solid fa-pills" style="color:#fecaca;font-size:4rem;"></i>
                     @endif
                 </div>
 
@@ -395,7 +395,7 @@
                         <div class="stock-item-label">Status</div>
                         <div class="stock-item-value" style="font-size:1rem;">
                             @if($medicine->isAvailable())
-                                <span style="color:#1E88E5;"><i class="fa-solid fa-circle-check"></i> Tersedia</span>
+                                <span style="color:#B91C1C;"><i class="fa-solid fa-circle-check"></i> Tersedia</span>
                             @else
                                 <span style="color:#ef4444;"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
                             @endif
@@ -417,7 +417,7 @@
                 <!-- Form Pemesanan -->
                 <div style="background:#f9fafb;border-radius:12px;padding:1.25rem;margin:1.25rem 0;border:1px solid #e5e7eb;">
                     <h3 style="font-size:0.95rem;font-weight:700;color:#1f2937;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;">
-                        <i class="fa-brands fa-whatsapp" style="color:#25D366;font-size:1.1rem;"></i> Form Pemesanan
+                        <i class="fa-brands fa-whatsapp" style="color:#ef4444;font-size:1.1rem;"></i> Form Pemesanan
                     </h3>
 
                     <div style="margin-bottom:0.85rem;">
@@ -432,9 +432,9 @@
                         </div>
                     </div>
 
-                    <div style="margin-bottom:0.85rem;padding:0.65rem 1rem;background:#e3f2fd;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
-                        <span style="font-size:0.82rem;color:#1565C0;font-weight:600;">Total Harga</span>
-                        <span id="totalHarga" style="font-size:1rem;font-weight:800;color:#1565C0;">{{ $medicine->getFormattedPrice() }}</span>
+                    <div style="margin-bottom:0.85rem;padding:0.65rem 1rem;background:#fef2f2;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:0.82rem;color:#991B1B;font-weight:600;">Total Harga</span>
+                        <span id="totalHarga" style="font-size:1rem;font-weight:800;color:#991B1B;">{{ $medicine->getFormattedPrice() }}</span>
                     </div>
 
                     <div style="margin-bottom:1rem;">
@@ -443,14 +443,14 @@
                         </label>
                         <textarea id="alamatInput" rows="3" placeholder="Jl. Merdeka No. 10, RT 02/RW 03, Kel. Menteng, Jakarta Pusat 10310"
                             style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.875rem;resize:vertical;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;"
-                            onfocus="this.style.borderColor='#25D366'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+                            onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
                         <p id="alamatError" style="color:#ef4444;font-size:0.78rem;margin-top:0.2rem;display:none;">
                             <i class="fa-solid fa-circle-exclamation"></i> Alamat pengiriman wajib diisi.
                         </p>
                     </div>
 
                     <button onclick="pesanWA()"
-                        style="width:100%;padding:0.85rem;background:#25D366;color:white;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.3s;">
+                        style="width:100%;padding:0.85rem;background:#ef4444;color:white;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.3s;">
                         <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i> Pesan via WhatsApp
                     </button>
                 </div>
@@ -472,7 +472,7 @@
                         @if($related->gambar)
                             <img src="{{ url('storage/' . $related->gambar) }}" alt="{{ $related->nama_obat }}">
                         @else
-                            <i class="fa-solid fa-pills" style="color:#90caf9;font-size:1.75rem;"></i>
+                            <i class="fa-solid fa-pills" style="color:#fecaca;font-size:1.75rem;"></i>
                         @endif
                     </div>
                     <div class="related-body">
@@ -529,7 +529,7 @@
         const total          = formatRupiah(hargaSatuan * qty);
         const hargaSatuanFmt = formatRupiah(hargaSatuan);
 
-        const pesan = 'Halo Medikpedia, saya ingin memesan:\n\n' +
+        const pesan = 'Halo Sumberindo Farma Tama, saya ingin memesan:\n\n' +
             'Produk     : ' + namaObat + '\n' +
             'Perusahaan : ' + kategori + '\n' +
             'Harga      : ' + hargaSatuanFmt + ' / pcs\n' +
@@ -538,24 +538,29 @@
             'Alamat Pengiriman:\n' + alamat + '\n\n' +
             'Mohon konfirmasi ketersediaan stok dan info pengiriman. Terima kasih!';
 
-        window.open('https://wa.me/6285890007359?text=' + encodeURIComponent(pesan), '_blank');
+window.open('https://wa.me/6285248965590?text=' + encodeURIComponent(pesan), '_blank');
     }
 
     document.querySelector('.detail-info a[href]').addEventListener('mouseover', function() {
-        this.style.borderColor = '#1E88E5';
-        this.style.color = '#1E88E5';
+        this.style.borderColor = '#B91C1C';
+        this.style.color = '#B91C1C';
     });
     document.querySelector('.detail-info a[href]').addEventListener('mouseout', function() {
         this.style.borderColor = '#e5e7eb';
         this.style.color = '#6b7280';
     });
     document.querySelector('button[onclick="pesanWA()"]').addEventListener('mouseover', function() {
-        this.style.background = '#1ebe5d';
+        this.style.background = '#991B1B';
         this.style.transform = 'translateY(-2px)';
     });
     document.querySelector('button[onclick="pesanWA()"]').addEventListener('mouseout', function() {
-        this.style.background = '#25D366';
+        this.style.background = '#ef4444';
         this.style.transform = 'translateY(0)';
     });
 </script>
 @endsection
+
+
+
+
+

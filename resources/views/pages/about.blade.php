@@ -1,12 +1,12 @@
 @extends('layouts.frontend')
 
-@section('title', 'Tentang Kami - Medikpedia')
+@section('title', 'Tentang Kami - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
     /* ===== PAGE HEADER ===== */
     .about-header {
-        background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
         padding: 4rem 0;
         position: relative;
         overflow: hidden;
@@ -19,7 +19,7 @@
         right: -60px;
         width: 300px;
         height: 300px;
-        background: radial-gradient(circle, rgba(124,179,66,0.2) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(220,38,38,0.2) 0%, transparent 70%);
         border-radius: 50%;
     }
 
@@ -81,7 +81,7 @@
         transform: rotate(-6deg);
         opacity: 0.55;
         z-index: 1;
-        background: linear-gradient(135deg, #1565C0, #0D47A1);
+        background: linear-gradient(135deg, #991B1B, #7F1D1D);
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
@@ -95,8 +95,8 @@
         top: 0;
         transform: rotate(3deg);
         z-index: 2;
-        background: linear-gradient(135deg, #1E88E5, #1565C0);
-        box-shadow: 0 20px 50px rgba(30,136,229,0.3);
+        background: linear-gradient(135deg, #B91C1C, #991B1B);
+        box-shadow: 0 20px 50px rgba(220,38,38,0.18);
     }
 
     .about-img-back img,
@@ -126,8 +126,8 @@
 
     .section-label {
         display: inline-block;
-        background: #e3f2fd;
-        color: #1E88E5;
+        background: #fef2f2;
+        color: #B91C1C;
         padding: 0.35rem 1rem;
         border-radius: 50px;
         font-size: 0.85rem;
@@ -175,7 +175,7 @@
     }
 
     .check-list li .fa-circle-check {
-        color: #7CB342;
+        color: #ef4444;
         font-size: 1rem;
         flex-shrink: 0;
         margin-top: 2px;
@@ -196,12 +196,12 @@
     }
 
     .vm-card-visi {
-        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-        border: 1px solid #90caf9;
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        border: 1px solid #fecaca;
     }
 
     .vm-card-misi {
-        background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%);
+        background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
         border: 1px solid #aed581;
     }
 
@@ -211,7 +211,7 @@
         margin-bottom: 1rem;
     }
 
-    .vm-card-visi h3 { color: #1565C0; }
+    .vm-card-visi h3 { color: #991B1B; }
     .vm-card-misi h3 { color: #558B2F; }
 
     .vm-card p {
@@ -244,8 +244,8 @@
 
     .value-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 12px 40px rgba(30,136,229,0.1);
-        border-color: #1E88E5;
+        box-shadow: 0 12px 40px rgba(220,38,38,0.1);
+        border-color: #B91C1C;
     }
 
     .value-icon {
@@ -270,7 +270,7 @@
 
     /* ===== STATS ===== */
     .stats-section {
-        background: linear-gradient(135deg, #0D47A1 0%, #1E88E5 100%);
+        background: linear-gradient(135deg, #7F1D1D 0%, #B91C1C 100%);
         padding: 4rem 0;
     }
 
@@ -321,7 +321,7 @@
 
     .team-photo {
         height: 200px;
-        background: linear-gradient(135deg, #1E88E5, #0D47A1);
+        background: linear-gradient(135deg, #B91C1C, #7F1D1D);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -340,7 +340,7 @@
     }
 
     .team-role {
-        color: #1E88E5;
+        color: #B91C1C;
         font-weight: 600;
         font-size: 0.9rem;
         margin-bottom: 0.75rem;
@@ -385,7 +385,7 @@
             <span>/</span>
             <span class="current">Tentang Kami</span>
         </div>
-        <h1>Tentang Medikpedia</h1>
+        <h1>Tentang Sumberindo Farma Tama</h1>
         <p>Mengenal lebih jauh visi, misi, dan tim profesional kami</p>
     </div>
 </div>
@@ -397,10 +397,10 @@
             <div class="col-lg-5">
                 <div class="about-image-stack">
                     <div class="about-img-back">
-                        <img src="{{ asset('page3.jpeg') }}" alt="Medikpedia">
+                        <img src="{{ asset('page3.jpeg') }}" alt="Sumberindo Farma Tama">
                     </div>
                     <div class="about-img-front">
-                        <img src="{{ asset('page3.jpeg') }}" alt="Medikpedia">
+                        <img src="{{ asset('page3.jpeg') }}" alt="Sumberindo Farma Tama">
                     </div>
                     <div class="about-img-badge">
                         <span class="badge-icon">🏆</span>
@@ -415,7 +415,7 @@
                 <span class="section-label">Siapa Kami</span>
                 <h2>Apotik Online Terpercaya untuk Seluruh Indonesia</h2>
                 <p>
-                    Medikpedia adalah apotik online yang berdiri sejak tahun 2020 dengan komitmen untuk menyediakan produk kesehatan berkualitas tinggi kepada masyarakat Indonesia.
+                    Sumberindo Farma Tama adalah apotik online yang berdiri sejak tahun 2020 dengan komitmen untuk menyediakan produk kesehatan berkualitas tinggi kepada masyarakat Indonesia.
                 </p>
                 <p>
                     Kami memahami bahwa kesehatan adalah hak setiap orang, dan berkomitmen untuk membuat obat dan suplemen berkualitas dapat diakses oleh semua kalangan dengan harga yang terjangkau.
@@ -511,14 +511,14 @@
             </div>
             <div class="col-md-4">
                 <div class="value-card">
-                    <span class="value-icon"><i class="fa-solid fa-star" style="color:#f59e0b;"></i></span>
+                    <span class="value-icon"><i class="fa-solid fa-star" style="color:#ef4444;"></i></span>
                     <h4>Kualitas</h4>
                     <p>Semua produk kami telah melalui proses seleksi ketat dan memiliki sertifikasi farmasi yang lengkap.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="value-card">
-                    <span class="value-icon"><i class="fa-solid fa-handshake" style="color:#1E88E5;"></i></span>
+                    <span class="value-icon"><i class="fa-solid fa-handshake" style="color:#B91C1C;"></i></span>
                     <h4>Kemanusiaan</h4>
                     <p>Kami percaya bahwa kesehatan adalah hak setiap orang dan berkomitmen menjangkau semua kalangan.</p>
                 </div>
@@ -561,3 +561,8 @@
 </section>
 
 @endsection
+
+
+
+
+

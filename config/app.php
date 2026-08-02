@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
 
@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Medikpedia'),
+    'name' => env('APP_NAME', 'Sumberindo Farma Tama'),
 
     /*
     |--------------------------------------------------------------------------
@@ -124,3 +124,4 @@ return [
     ],
 
 ];
+

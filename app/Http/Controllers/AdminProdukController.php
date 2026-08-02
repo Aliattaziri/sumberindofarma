@@ -6,11 +6,27 @@ use Illuminate\Http\Request;
 use App\Models\Medicine;
 use App\Constants\Companies;
 use App\Helpers\ImageHelper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class AdminProdukController extends Controller
 {
     private array $kategoriProduk = Companies::LIST;
+    private array $outletOptions = [
+        'Alfa Sintang',
+        'Alfa Air Upas',
+        'Alfa Kendawangan',
+        'Alfa Balai Berkuak',
+        'Alfa Nanga Tayap',
+        'Alfa Tumbang Titi',
+        'Alfa Sosok',
+        'Alfa Bodok',
+        'Alfa Kembayan',
+        'Alfa Ambawang',
+        'Alfa Jungkat',
+        'Alfa Mempawah',
+        'Apotek Medistra Farma',
+    ];
 
     public function index(Request $request)
     {
@@ -19,6 +35,10 @@ class AdminProdukController extends Controller
         $pabrik          = $request->get('pabrik', '');
 
         $query = Medicine::latest();
+        $outlet = Auth::user()?->outlet_name;
+        if ($outlet) {
+            $query->where('kategori', $outlet);
+        }
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -37,7 +57,7 @@ class AdminProdukController extends Controller
         }
 
         $medicines       = $query->paginate(15)->withQueryString();
-        $total           = Medicine::count();
+        $total           = (clone $query)->count();
         $kategoriOptions = Companies::LIST;
 
         return view('admin.produk.index', compact(
@@ -49,16 +69,16 @@ class AdminProdukController extends Controller
     {
         return view('admin.produk.create', [
             'kategoriOptions' => $this->kategoriProduk,
+            'outletOptions'  => $this->outletOptions,
         ]);
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
             'kategori_produk' => ['required', 'in:' . implode(',', Companies::LIST)],
             'kategori'        => ['required', 'string', 'max:255'],
-            'kelompok'        => ['nullable', 'in:PBF,APOTEK'],
             'sku'             => ['nullable', 'string', 'max:255'],
             'brand'           => ['nullable', 'string', 'max:255'],
             'terjual'         => ['nullable', 'integer', 'min:0'],
@@ -69,10 +89,25 @@ class AdminProdukController extends Controller
             'deskripsi'       => ['nullable', 'string'],
             'komposisi'       => ['nullable', 'string'],
             'indikasi'        => ['nullable', 'string'],
-        ]);
+        ];
+        if (Auth::user()?->isSuperAdmin()) {
+            $rules['kategori'] = ['required', 'in:' . implode(',', $this->outletOptions)];
+        }
+        if (Auth::user()?->isSuperAdmin()) {
+            $rules['kelompok'] = ['nullable', 'in:PBF,APOTEK'];
+        }
+
+        $validated = $request->validate($rules);
 
         if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
             $validated['gambar'] = ImageHelper::storeProductImage($request->file('gambar'));
+        }
+
+        if ($outlet = Auth::user()?->outlet_name) {
+            $validated['kategori'] = $outlet;
+            if (! Auth::user()->isSuperAdmin()) {
+                $validated['kelompok'] = 'APOTEK';
+            }
         }
 
         if (!empty(trim($validated['deskripsi'] ?? ''))) {
@@ -89,19 +124,21 @@ class AdminProdukController extends Controller
 
     public function edit(Medicine $produk)
     {
+        $this->authorizeOutletProduct($produk);
+
         return view('admin.produk.edit', [
             'medicine'        => $produk,
             'kategoriOptions' => $this->kategoriProduk,
+            'outletOptions'   => $this->outletOptions,
         ]);
     }
 
     public function update(Request $request, Medicine $produk)
     {
-        $validated = $request->validate([
+        $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
             'kategori_produk' => ['required', 'in:' . implode(',', Companies::LIST)],
             'kategori'        => ['required', 'string', 'max:255'],
-            'kelompok'        => ['nullable', 'in:PBF,APOTEK'],
             'sku'             => ['nullable', 'string', 'max:255'],
             'brand'           => ['nullable', 'string', 'max:255'],
             'terjual'         => ['nullable', 'integer', 'min:0'],
@@ -113,9 +150,19 @@ class AdminProdukController extends Controller
             'komposisi'       => ['nullable', 'string'],
             'indikasi'        => ['nullable', 'string'],
             'delete_gambar'   => ['nullable'],
-        ]);
+        ];
+        if (Auth::user()?->isSuperAdmin()) {
+            $rules['kategori'] = ['required', 'in:' . implode(',', $this->outletOptions)];
+        }
+        if (Auth::user()?->isSuperAdmin()) {
+            $rules['kelompok'] = ['nullable', 'in:PBF,APOTEK'];
+        }
+
+        $validated = $request->validate($rules);
 
         unset($validated['delete_gambar']);
+
+        $this->authorizeOutletProduct($produk);
 
         if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
             ImageHelper::deleteProductImage($produk->gambar);
@@ -141,6 +188,7 @@ class AdminProdukController extends Controller
 
     public function destroy(Request $request, Medicine $produk)
     {
+        $this->authorizeOutletProduct($produk);
         ImageHelper::deleteProductImage($produk->gambar);
         $produk->delete();
 
@@ -166,7 +214,13 @@ class AdminProdukController extends Controller
                              ->with('error', 'Pilih minimal satu produk untuk dihapus.');
         }
 
-        $products = Medicine::whereIn('id', $selectedIds)->get();
+        $products = Medicine::whereIn('id', $selectedIds)
+            ->when(Auth::user()?->outlet_name, fn($q, $outlet) => $q->where('kategori', $outlet))
+            ->get();
+
+        if (count($products) !== count($selectedIds)) {
+            abort(403);
+        }
 
         foreach ($products as $produk) {
             ImageHelper::deleteProductImage($produk->gambar);
@@ -177,6 +231,14 @@ class AdminProdukController extends Controller
 
         return redirect()->route('admin.produk.index', $queryParams)
                          ->with('success', 'Sebanyak ' . count($products) . ' produk berhasil dihapus!');
+    }
+
+    private function authorizeOutletProduct(Medicine $produk): void
+    {
+        $outlet = Auth::user()?->outlet_name;
+        if ($outlet && $produk->kategori !== $outlet) {
+            abort(403);
+        }
     }
 
     private function buildIndexQueryParams(Request $request): array

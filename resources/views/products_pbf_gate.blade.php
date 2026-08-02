@@ -1,6 +1,6 @@
-﻿@extends('layouts.frontend')
+@extends('layouts.frontend')
 
-@section('title', 'Akses Produk PBF - Medikpedia')
+@section('title', 'Akses Produk PBF - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
@@ -21,7 +21,7 @@
     overflow: hidden;
 }
 .pbf-gate-header {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #991B1B 100%);
     padding: 2.5rem 2rem 2rem;
     text-align: center;
     position: relative;
@@ -73,7 +73,7 @@
     margin-bottom: 1.75rem;
 }
 .pbf-steps h4 {
-    font-size: 0.88rem; font-weight: 800; color: #92400e;
+    font-size: 0.88rem; font-weight: 800; color: #B91C1C;
     margin: 0 0 0.85rem;
     display: flex; align-items: center; gap: 0.5rem;
 }
@@ -84,7 +84,7 @@
 .pbf-step:last-child { margin-bottom: 0; }
 .pbf-step-num {
     width: 22px; height: 22px; flex-shrink: 0;
-    background: #f59e0b; color: #fff;
+    background: #ef4444; color: #fff;
     border-radius: 50%; font-size: 0.72rem; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
     margin-top: 1px;
@@ -92,13 +92,13 @@
 .pbf-step p {
     margin: 0; font-size: 0.85rem; color: #78350f; line-height: 1.5;
 }
-.pbf-step strong { color: #92400e; }
+.pbf-step strong { color: #B91C1C; }
 
 /* WA Button */
 .btn-wa-request {
     display: flex; align-items: center; justify-content: center; gap: 0.6rem;
     width: 100%; padding: 0.8rem 1rem;
-    background: linear-gradient(135deg, #25D366, #1ebe5d);
+    background: linear-gradient(135deg, #ef4444, #991B1B);
     color: #fff; border: none; border-radius: 12px;
     font-weight: 700; font-size: 0.9rem; cursor: pointer;
     text-decoration: none; transition: all 0.25s;
@@ -106,7 +106,7 @@
     box-shadow: 0 4px 14px rgba(37,211,102,0.35);
 }
 .btn-wa-request:hover {
-    background: linear-gradient(135deg, #1ebe5d, #17a34a);
+    background: linear-gradient(135deg, #991B1B, #B91C1C);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37,211,102,0.45);
     color: #fff;
@@ -127,7 +127,7 @@
     color: #1f2937;
     text-align: center;
 }
-.code-input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+.code-input:focus { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
 .code-input.is-invalid { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
 .code-input-label {
     display: block; font-size: 0.8rem; font-weight: 700;
@@ -135,7 +135,7 @@
 }
 .btn-verify {
     width: 100%; padding: 0.85rem;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     color: #fff; border: none; border-radius: 12px;
     font-weight: 700; font-size: 1rem; cursor: pointer;
     margin-top: 0.75rem; transition: all 0.25s;
@@ -143,7 +143,7 @@
     box-shadow: 0 4px 14px rgba(217,119,6,0.3);
 }
 .btn-verify:hover {
-    background: linear-gradient(135deg, #d97706, #b45309);
+    background: linear-gradient(135deg, #dc2626, #991B1B);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(180,83,9,0.35);
 }
@@ -206,9 +206,9 @@
     flex-shrink: 0;
 }
 .alert-success {
-    background: #d1fae5; 
+    background: #fee2e2; 
     color: #065f46;
-    border: 2px solid #10b981; 
+    border: 2px solid #ef4444; 
     border-radius: 10px;
     padding: 1rem 1.25rem; 
     font-size: 0.9rem; 
@@ -229,13 +229,13 @@
     top: 0;
     bottom: 0;
     width: 4px;
-    background: #10b981;
+    background: #ef4444;
     border-radius: 8px 0 0 8px;
 }
 
 .alert-success i {
     font-size: 1.2rem;
-    color: #059669;
+    color: #dc2626;
     flex-shrink: 0;
 }
 .pbf-info-note {
@@ -243,7 +243,7 @@
     text-align: center; margin-top: 1rem;
     line-height: 1.5;
 }
-.pbf-info-note a { color: #d97706; text-decoration: none; }
+.pbf-info-note a { color: #dc2626; text-decoration: none; }
 .pbf-info-note a:hover { text-decoration: underline; }
 </style>
 @endsection
@@ -251,7 +251,7 @@
 @section('content')
 
 {{-- Page Header --}}
-<div class="products-header" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%); padding: 3rem 0; position: relative; overflow: hidden;">
+<div class="products-header" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #991B1B 100%); padding: 3rem 0; position: relative; overflow: hidden;">
     <div class="container">
         <div class="breadcrumb-custom">
             <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
@@ -276,7 +276,7 @@
         <div class="pbf-gate-header">
             <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
             <h1>Akses Terbatas</h1>
-            <p>Halaman ini hanya untuk mitra & distributor resmi Medikpedia</p>
+            <p>Halaman ini hanya untuk mitra & distributor resmi Sumberindo Farma Tama</p>
         </div>
 
         <div class="pbf-gate-body">
@@ -304,7 +304,7 @@
                 <h4><i class="fa-brands fa-whatsapp"></i> Hubungi Admin via WhatsApp</h4>
                 <div class="pbf-step">
                     <span class="pbf-step-num">1</span>
-                    <p>Klik tombol di bawah — pesan sudah disiapkan otomatis untuk Anda.</p>
+                    <p>Klik tombol di bawah � pesan sudah disiapkan otomatis untuk Anda.</p>
                 </div>
                 <div class="pbf-step">
                     <span class="pbf-step-num">2</span>
@@ -321,7 +321,7 @@
             </div>
 
             {{-- Tombol WA --}}
-            <a href='https://wa.me/6285890007359?text={{ urlencode("Halo Medikpedia, saya ingin meminta kode akses untuk halaman Produk PBF.\n\nData saya:\n- Nama Perusahaan/Apotek: \n- Nomor SIA/SIPA: \n- Nama PIC: \n\nMohon informasi kode aksesnya. Terima kasih.") }}'
+            <a href='https://wa.me/6285248965590?text={{ urlencode("Halo Sumberindo Farma Tama, saya ingin meminta kode akses untuk halaman Produk PBF.\n\nData saya:\n- Nama Perusahaan/Apotek: \n- Nomor SIA/SIPA: \n- Nama PIC: \n\nMohon informasi kode aksesnya. Terima kasih.") }}'
                target="_blank"
                class="btn-wa-request">
                 <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i>
@@ -335,7 +335,7 @@
             <form action="{{ route('products.pbf.verify') }}" method="POST">
                 @csrf
                 <label class="code-input-label" for="kode">
-                    <i class="fa-solid fa-key" style="color:#f59e0b;"></i>
+                    <i class="fa-solid fa-key" style="color:#ef4444;"></i>
                     Kode Akses
                 </label>
                 <input
@@ -357,7 +357,7 @@
 
             <p class="pbf-info-note">
                 Kode akses bersifat rahasia dan hanya untuk mitra resmi.<br>
-                Butuh bantuan? <a href="https://wa.me/6285890007359" target="_blank">Chat Admin</a>
+                Butuh bantuan? <a href="https://wa.me/6285248965590" target="_blank">Chat Admin</a>
                 atau kunjungi <a href="{{ route('contact') }}">halaman kontak</a>.
             </p>
 
@@ -366,3 +366,7 @@
 </div>
 
 @endsection
+
+
+
+

@@ -1,31 +1,31 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
-@section('title', 'Import Produk - Admin Medikpedia')
-@section('page-title', '📥 Import Produk')
+@section('title', 'Import Produk - Admin Sumberindo Farma Tama')
+@section('page-title', '?? Import Produk')
 
 @section('styles')
 <style>
     .form-card { background:white; border-radius:0.75rem; box-shadow:0 1px 4px rgba(0,0,0,0.06); border:1px solid #f0f0f0; overflow:hidden; }
     .form-card-header { padding:1rem 1.5rem; border-bottom:1px solid #f3f4f6; display:flex; align-items:center; gap:0.6rem; }
     .form-card-header h3 { font-size:0.95rem; font-weight:700; color:#1f2937; margin:0; }
-    .header-icon { width:32px; height:32px; background:#e3f2fd; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; color:#1E88E5; font-size:0.9rem; }
+    .header-icon { width:32px; height:32px; background:#fef2f2; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; color:#B91C1C; font-size:0.9rem; }
     .form-body { padding:1.5rem; }
     .form-footer { padding:1rem 1.5rem; border-top:1px solid #f3f4f6; display:flex; gap:0.6rem; align-items:center; }
-    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#1E88E5; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-    .btn-save:hover { background:#1565C0; transform:translateY(-1px); }
+    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#B91C1C; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .btn-save:hover { background:#991B1B; transform:translateY(-1px); }
     .btn-save:disabled { background:#d1d5db; cursor:not-allowed; transform:none; }
     .btn-cancel { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:white; color:#6b7280; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
     .btn-cancel:hover { background:#f9fafb; color:#374151; }
     .upload-zone { border:2px dashed #d1d5db; border-radius:0.6rem; padding:2rem 1rem; text-align:center; background:#fafafa; cursor:pointer; transition:all 0.2s; }
-    .upload-zone:hover, .upload-zone.drag-over { border-color:#1E88E5; background:#f0f7ff; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:#B91C1C; background:#fef2f2; }
     .upload-zone .upload-icon { font-size:2.5rem; margin-bottom:0.5rem; }
     .upload-zone p { font-size:0.85rem; color:#6b7280; margin:0 0 0.75rem; }
     .upload-zone small { font-size:0.75rem; color:#9ca3af; display:block; margin-top:0.5rem; }
     .btn-choose { display:inline-flex; align-items:center; gap:0.35rem; padding:0.45rem 1rem; background:white; border:1px solid #d1d5db; border-radius:0.4rem; font-size:0.82rem; font-weight:600; color:#374151; cursor:pointer; transition:all 0.2s; }
     .btn-choose:hover { background:#f3f4f6; border-color:#9ca3af; }
-    .info-box { background:#eff6ff; border:1px solid #bfdbfe; border-radius:0.75rem; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
-    .info-box h3 { color:#1d4ed8; margin:0 0 0.75rem; font-size:0.95rem; font-weight:700; }
-    .info-box ol { color:#1e40af; margin:0; padding-left:1.25rem; line-height:1.8; font-size:0.9rem; }
+    .info-box { background:#fef2f2; border:1px solid #fecaca; border-radius:0.75rem; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
+    .info-box h3 { color:#B91C1C; margin:0 0 0.75rem; font-size:0.95rem; font-weight:700; }
+    .info-box ol { color:#991B1B; margin:0; padding-left:1.25rem; line-height:1.8; font-size:0.9rem; }
     .template-table { margin-top:1rem; background:#f9fafb; border-radius:0.5rem; padding:1rem; overflow-x:auto; }
     .template-table table { width:100%; border-collapse:collapse; font-size:0.8rem; }
     .template-table thead tr { background:#e5e7eb; }
@@ -37,7 +37,7 @@
 @section('content')
 
 <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:#9ca3af;margin-bottom:1.25rem;">
-    <a href="{{ route('admin.produk.index') }}" style="color:#1E88E5;text-decoration:none;font-weight:600;">🛒 Produk Kami</a>
+    <a href="{{ route('admin.produk.index') }}" style="color:#B91C1C;text-decoration:none;font-weight:600;">?? Produk Kami</a>
     <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
     <span style="color:#374151;font-weight:600;">Import Produk</span>
 </div>
@@ -52,20 +52,19 @@
         <li>Data yang sudah ada (SKU atau nama produk sama) akan diperbarui, data baru akan ditambahkan</li>
         <li>Struktur file tidak harus persis sama; selama header yang dikenali ada, data tetap bisa dimasukkan</li>
     </ol>
-    <p style="color:#059669;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
-        ✅ Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | GRADE | KOMPOSISI | INDIKASI | KELOMPOK | KATEGORI</strong>
-    </p>
-</div>
-
-{{-- Template --}}
-<div class="form-card" style="margin-bottom:1.5rem;">
-    <div class="form-card-header">
-        <div class="header-icon"><i class="fa-solid fa-file-excel"></i></div>
-        <h3>Template File</h3>
-    </div>
-    <div class="form-body">
-        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
-            <a href="{{ route('admin.produk.import.template') }}" class="btn-save" style="background:#10b981;text-decoration:none;">
+        @if(auth()->check() && auth()->user()->isSuperAdmin())
+            <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
+                ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | GRADE | KOMPOSISI | INDIKASI | KELOMPOK | KATEGORI</strong>
+            </p>
+        @else
+            <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
+                ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | GRADE | KOMPOSISI | INDIKASI | KATEGORI</strong>
+            </p>
+            <p style="color:#14532d;margin:0.75rem 0 0;font-size:0.875rem;">
+                Produk yang diimport oleh akun apotek akan otomatis disimpan sebagai <strong>APOTEK</strong> pada outlet Anda.
+            </p>
+        @endif
+            <a href="{{ route('admin.produk.import.template') }}" class="btn-save" style="background:#ef4444;text-decoration:none;">
                 <i class="fa-solid fa-download"></i> Download Template Excel
             </a>
         </div>
@@ -104,7 +103,7 @@
                         <td>Paracetamol 500 mg</td>
                         <td>Demam & nyeri</td>
                         <td>PBF</td>
-                        <td><span style="background:#e3f2fd;color:#1565C0;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">OBAT</span></td>
+                        <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">OBAT</span></td>
                     </tr>
                     <tr>
                         <td>SKU-002</td>
@@ -136,13 +135,13 @@
                         <td>-</td>
                         <td>Mengukur tekanan darah</td>
                         <td>PBF</td>
-                        <td><span style="background:#e8f5e9;color:#2e7d32;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">ALAT KESEHATAN</span></td>
+                        <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">ALAT KESEHATAN</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div style="margin-top:0.75rem;padding:0.75rem;background:#fef3c7;border-radius:0.5rem;border:1px solid #fde68a;">
-            <p style="font-size:0.78rem;color:#92400e;margin:0;line-height:1.6;">
+        <div style="margin-top:0.75rem;padding:0.75rem;background:#fee2e2;border-radius:0.5rem;border:1px solid #fde68a;">
+            <p style="font-size:0.78rem;color:#B91C1C;margin:0;line-height:1.6;">
                 <i class="fa-solid fa-lightbulb" style="margin-right:0.3rem;"></i>
                 <strong>Kolom KATEGORI</strong> harus salah satu dari:
                 <strong>OBAT</strong> &nbsp;|&nbsp;
@@ -151,7 +150,7 @@
                 Jika tidak diisi atau tidak sesuai, otomatis masuk ke <strong>OBAT</strong>.
             </p>
         </div>
-        <div style="margin-top:0.75rem;padding:0.75rem;background:#f0fdf4;border-radius:0.5rem;border:1px solid #bbf7d0;">
+        <div style="margin-top:0.75rem;padding:0.75rem;background:#fff5f5;border-radius:0.5rem;border:1px solid #bbf7d0;">
             <p style="font-size:0.78rem;color:#14532d;margin:0;line-height:1.6;">
                 <i class="fa-solid fa-lightbulb" style="margin-right:0.3rem;"></i>
                 <strong>Kolom KELOMPOK:</strong> Gunakan <strong>PBF</strong> atau <strong>APOTEK</strong> (opsional, boleh dikosongkan)
@@ -174,12 +173,12 @@
         @endif
         <div id="dropZone" class="upload-zone" onclick="document.getElementById('fileInput').click()"
              ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-            <div class="upload-icon">📂</div>
+            <div class="upload-icon">??</div>
             <p>Klik atau drag & drop file di sini</p>
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX — Maks. 10MB</small>
+            <small>Format: CSV, XLS, XLSX � Maks. 10MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
         <input type="file" id="fileInput" name="file" accept=".csv,.xls,.xlsx,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" onchange="updateFileLabel(this)">
@@ -204,10 +203,10 @@ function updateFileLabel(input) {
     const btn   = document.getElementById('submitBtn');
     const zone  = document.getElementById('dropZone');
     if (input.files && input.files[0]) {
-        label.textContent = '✅ ' + input.files[0].name;
-        label.style.color = '#059669';
-        zone.style.borderColor = '#059669';
-        zone.style.background  = '#f0fdf4';
+        label.textContent = '? ' + input.files[0].name;
+        label.style.color = '#dc2626';
+        zone.style.borderColor = '#dc2626';
+        zone.style.background  = '#fff5f5';
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor  = 'pointer';
@@ -232,3 +231,7 @@ function submitForm() {
 }
 </script>
 @endsection
+
+
+
+

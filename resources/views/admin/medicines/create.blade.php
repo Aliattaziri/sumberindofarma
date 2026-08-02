@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Obat - Admin Medikpedia')
+@section('title', 'Tambah Obat - Admin Sumberindo Farma Tama')
 @section('page-title', 'Tambah Obat Baru')
 
 @section('styles')
@@ -27,10 +27,10 @@
     }
     .form-card-header .header-icon {
         width: 32px; height: 32px;
-        background: #e3f2fd;
+        background: #fef2f2;
         border-radius: 0.4rem;
         display: flex; align-items: center; justify-content: center;
-        color: #1E88E5; font-size: 0.9rem;
+        color: #B91C1C; font-size: 0.9rem;
     }
     .form-body {
         padding: 1.5rem;
@@ -69,9 +69,9 @@
     }
     .form-input:focus {
         outline: none;
-        border-color: #1E88E5;
+        border-color: #B91C1C;
         background: white;
-        box-shadow: 0 0 0 3px rgba(30,136,229,0.08);
+        box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
     }
     .form-input.is-invalid { border-color: #ef4444; }
     textarea.form-input { resize: vertical; min-height: 120px; }
@@ -95,8 +95,8 @@
         transition: all 0.2s;
     }
     .upload-zone:hover, .upload-zone.drag-over {
-        border-color: #1E88E5;
-        background: #f0f7ff;
+        border-color: #B91C1C;
+        background: #fef2f2;
     }
     .upload-zone .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
     .upload-zone p { font-size: 0.85rem; color: #6b7280; margin: 0 0 0.75rem; }
@@ -157,7 +157,7 @@
         align-items: center;
         gap: 0.4rem;
         padding: 0.6rem 1.5rem;
-        background: #1E88E5;
+        background: #B91C1C;
         color: white;
         border: none;
         border-radius: 0.5rem;
@@ -166,7 +166,7 @@
         cursor: pointer;
         transition: all 0.2s;
     }
-    .btn-save:hover { background: #1565C0; transform: translateY(-1px); }
+    .btn-save:hover { background: #991B1B; transform: translateY(-1px); }
     .btn-cancel {
         display: inline-flex;
         align-items: center;
@@ -208,7 +208,7 @@
 
 {{-- Breadcrumb --}}
 <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:#9ca3af;margin-bottom:1.25rem;">
-    <a href="{{ route('admin.medicines.index') }}" style="color:#1E88E5;text-decoration:none;font-weight:600;">
+    <a href="{{ route('admin.medicines.index') }}" style="color:#B91C1C;text-decoration:none;font-weight:600;">
         <i class="fa-solid fa-pills"></i> Manajemen Obat
     </a>
     <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
@@ -370,9 +370,9 @@
                     <img id="previewImg" src="" alt="Preview">
                 </div>
 
-                <div style="margin-top:1rem;padding:0.75rem;background:#f8faff;border-radius:0.5rem;border:1px solid #e3f2fd;">
+                <div style="margin-top:1rem;padding:0.75rem;background:#f8faff;border-radius:0.5rem;border:1px solid #fef2f2;">
                     <p style="font-size:0.78rem;color:#6b7280;margin:0;line-height:1.6;">
-                        <i class="fa-solid fa-circle-info" style="color:#1E88E5;margin-right:0.3rem;"></i>
+                        <i class="fa-solid fa-circle-info" style="color:#B91C1C;margin-right:0.3rem;"></i>
                         Foto opsional. Jika tidak diupload, akan ditampilkan ikon default.
                     </p>
                 </div>
@@ -420,3 +420,7 @@
     });
 </script>
 @endsection
+
+
+
+

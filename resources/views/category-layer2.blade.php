@@ -1,13 +1,13 @@
 @extends('layouts.frontend')
-@section('title', 'Kategori ' . ucfirst($mainCategory) . ' - ' . ucfirst($subCategory) . ' - Medikpedia')
+@section('title', 'Kategori ' . ucfirst($mainCategory) . ' - ' . ucfirst($subCategory) . ' - Sumberindo Farma Tama')
 
 @section('styles')
 <style>
 /* ===== PAGE HEADER ===== */
 .category-page-header {
-    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+    background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
     padding: 2rem 0 1rem;
-    border-bottom: 1px solid #dbeafe;
+    border-bottom: 1px solid #fef2f2;
     position: relative;
     overflow: hidden;
 }
@@ -85,7 +85,7 @@
 .search-filter-section {
     background: linear-gradient(180deg, #f8fbff 0%, #f3f8ff 100%);
     padding: 1.5rem 0;
-    border-bottom: 1px solid #dbeafe;
+    border-bottom: 1px solid #fef2f2;
     position: sticky;
     top: var(--navbar-height, 65px);
     z-index: 900;
@@ -123,7 +123,7 @@
 
 .search-box-category button {
     padding: 0.55rem 1.2rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -134,14 +134,14 @@
 }
 
 .search-box-category button:hover {
-    background: linear-gradient(135deg, #1565C0, #0D47A1);
+    background: linear-gradient(135deg, #991B1B, #7F1D1D);
 }
 
 .cart-btn-header {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
     color: #fff;
     padding: 0.65rem 1.25rem;
     border-radius: 50px;
@@ -156,7 +156,7 @@
 }
 
 .cart-btn-header:hover {
-    background: linear-gradient(135deg, #1565C0, #0D47A1);
+    background: linear-gradient(135deg, #991B1B, #7F1D1D);
     transform: translateY(-2px);
 }
 
@@ -188,7 +188,7 @@
     background: linear-gradient(180deg, #fefefe 0%, #f8fbff 100%);
     border-radius: 16px;
     padding: 1.5rem;
-    border: 1.5px solid #dbeafe;
+    border: 1.5px solid #fef2f2;
     height: fit-content;
     box-shadow: 0 8px 24px rgba(21, 101, 192, 0.06);
 }
@@ -231,16 +231,16 @@
 }
 
 .sidebar-item:hover {
-    color: #1E88E5;
-    border-left-color: #1E88E5;
+    color: #B91C1C;
+    border-left-color: #B91C1C;
     padding-left: 1rem;
 }
 
 .sidebar-item.active {
-    background: #f0f9ff;
-    background: linear-gradient(90deg, #e3f2fd 0%, #f0f9ff 100%);
-    color: #1565C0;
-    border-left-color: #7CB342;
+    background: #fef2f2;
+    background: linear-gradient(90deg, #fef2f2 0%, #fef2f2 100%);
+    color: #991B1B;
+    border-left-color: #ef4444;
     font-weight: 700;
     padding-left: 1rem;
 }
@@ -271,7 +271,7 @@
 .product-card:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 12px 40px rgba(30, 136, 229, 0.12);
-    border-color: #90caf9;
+    border-color: #fecaca;
 }
 
 .product-img {
@@ -299,14 +299,14 @@
 
 .product-img .no-img-icon {
     font-size: 2.5rem;
-    color: #90caf9;
+    color: #fecaca;
 }
 
 .product-badge {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: linear-gradient(135deg, #1E88E5, #7CB342);
+    background: linear-gradient(135deg, #B91C1C, #ef4444);
     color: #fff;
     font-size: 0.6rem;
     font-weight: 700;
@@ -326,8 +326,8 @@
 .product-brand {
     font-size: 0.7rem;
     font-weight: 700;
-    color: #1565C0;
-    background: #e3f2fd;
+    color: #991B1B;
+    background: #fef2f2;
     display: inline-block;
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
@@ -350,7 +350,7 @@
 .product-price {
     font-size: 1.1rem;
     font-weight: 800;
-    color: #0D47A1;
+    color: #7F1D1D;
     margin-bottom: 0.6rem;
 }
 
@@ -364,13 +364,13 @@
 }
 
 .stock-ok {
-    background: #d1fae5;
+    background: #fee2e2;
     color: #065f46;
 }
 
 .stock-low {
-    background: #fef3c7;
-    color: #92400e;
+    background: #fee2e2;
+    color: #B91C1C;
 }
 
 .stock-out {
@@ -392,7 +392,7 @@
 .btn-detail {
     display: block;
     padding: 0.75rem 0.85rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
     color: #fff;
     border: none;
     border-radius: 9px;
@@ -405,7 +405,7 @@
 }
 
 .btn-detail:hover {
-    background: linear-gradient(135deg, #1565C0, #0D47A1);
+    background: linear-gradient(135deg, #991B1B, #7F1D1D);
     transform: translateY(-2px);
 }
 
@@ -413,8 +413,8 @@
     display: block;
     padding: 0.75rem;
     background: #fff;
-    color: #1E88E5;
-    border: 1.5px solid #1E88E5;
+    color: #B91C1C;
+    border: 1.5px solid #B91C1C;
     border-radius: 9px;
     cursor: pointer;
     font-weight: 700;
@@ -424,7 +424,7 @@
 }
 
 .btn-add-cart:hover {
-    background: #f0f9ff;
+    background: #fef2f2;
 }
 
 /* ===== PAGINATION ===== */
@@ -451,9 +451,9 @@
     height: 2rem;
     padding: 0 0.65rem;
     border-radius: 999px;
-    border: 1px solid #dbeafe;
+    border: 1px solid #fef2f2;
     background: #fff;
-    color: #1565C0;
+    color: #991B1B;
     font-size: 0.82rem;
     line-height: 1;
     font-weight: 700;
@@ -462,14 +462,14 @@
 }
 
 .pagination .page-link:hover {
-    background: #e3f2fd;
-    border-color: #90caf9;
-    color: #0D47A1;
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #7F1D1D;
 }
 
 .pagination .page-item.active .page-link {
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
-    border-color: #1565C0;
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
+    border-color: #991B1B;
     color: #fff;
     box-shadow: 0 6px 16px rgba(30, 136, 229, 0.2);
 }
@@ -677,9 +677,8 @@
                                 @endif
                             </div>
                             <div class="product-body">
-                                
                                 @if($med->kategori)
-                                    <span class="product-brand">{{ $med->kategori }}</span>
+                                    <div class="product-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.35rem;font-weight:600;">Toko: {{ $med->kategori }}</div>
                                 @endif
                                 <h3 class="product-name">{{ $med->nama_obat }}</h3>
                                 
@@ -724,3 +723,7 @@
 </div>
 
 @endsection
+
+
+
+

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Produk Promo - Admin Medikpedia')
+@section('title', 'Edit Produk Promo - Admin Sumberindo Farma Tama')
 @section('page-title', '🏷️ Edit Produk Promo')
 
 @section('content')
@@ -102,7 +102,7 @@
             </p>
 
             @if($news->file)
-                <div style="margin-bottom: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 0.375rem;">
+                <div style="margin-bottom: 1rem; padding: 1rem; background: #fff5f5; border-radius: 0.375rem;">
                     <p style="margin: 0 0 0.5rem 0; color: #15803d; font-weight: 600;">📁 File Saat Ini:</p>
                     @if(\Str::startsWith($news->file, ['news/']))
                         @php
@@ -152,7 +152,7 @@
             </label>
             
             @if($news->thumbnail)
-                <div style="margin-bottom: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 0.375rem;">
+                <div style="margin-bottom: 1rem; padding: 1rem; background: #fff5f5; border-radius: 0.375rem;">
                     <p style="margin: 0 0 0.5rem 0; color: #15803d; font-weight: 600;">🖼️ Thumbnail Saat Ini:</p>
                     <img src="{{ url('storage/' . $news->thumbnail) }}" style="max-height: 150px; max-width: 100%; object-fit: cover; border-radius: 0.375rem;">
                 </div>
@@ -217,8 +217,8 @@
 
 <style>
     #dropZone:hover, #thumbnailDropZone:hover {
-        border-color: #3b82f6;
-        background: #eff6ff;
+        border-color: #ef4444;
+        background: #fef2f2;
     }
     
     #filePreview img, #thumbnailPreview img {
@@ -263,8 +263,8 @@ function setupDropZone(zoneId, inputId, labelId, previewId, maxMB) {
     
     zone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        zone.style.borderColor = '#3b82f6';
-        zone.style.background = '#eff6ff';
+        zone.style.borderColor = '#ef4444';
+        zone.style.background = '#fef2f2';
     });
     
     zone.addEventListener('dragleave', () => {
@@ -340,3 +340,6 @@ function handleTypeChange() {
 }
 </script>
 @endsection
+
+
+

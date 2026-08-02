@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Produk - Admin Medikpedia')
+@section('title', 'Tambah Produk - Admin Sumberindo Farma Tama')
 @section('page-title', '➕ Tambah Produk')
 
 @section('styles')
@@ -8,18 +8,18 @@
     .form-card { background:white; border-radius:0.75rem; box-shadow:0 1px 4px rgba(0,0,0,0.06); border:1px solid #f0f0f0; overflow:hidden; }
     .form-card-header { padding:1rem 1.5rem; border-bottom:1px solid #f3f4f6; display:flex; align-items:center; gap:0.6rem; }
     .form-card-header h3 { font-size:0.95rem; font-weight:700; color:#1f2937; margin:0; }
-    .header-icon { width:32px; height:32px; background:#e3f2fd; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; color:#1E88E5; font-size:0.9rem; }
+    .header-icon { width:32px; height:32px; background:#fef2f2; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; color:#B91C1C; font-size:0.9rem; }
     .form-body { padding:1.5rem; display:flex; flex-direction:column; gap:1rem; }
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
     .form-group { margin-bottom:0; }
     .form-label { display:block; font-size:0.8rem; font-weight:700; color:#374151; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.04em; }
     .form-label .req { color:#ef4444; margin-left:2px; }
     .form-input { width:100%; padding:0.6rem 0.85rem; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; color:#1f2937; background:#fafafa; transition:all 0.2s; }
-    .form-input:focus { outline:none; border-color:#1E88E5; background:white; box-shadow:0 0 0 3px rgba(30,136,229,0.08); }
+    .form-input:focus { outline:none; border-color:#B91C1C; background:white; box-shadow:0 0 0 3px rgba(220,38,38,0.08); }
     .form-input.is-invalid { border-color:#ef4444; }
     .form-error { font-size:0.78rem; color:#ef4444; margin-top:0.3rem; display:flex; align-items:center; gap:0.3rem; }
     .upload-zone { border:2px dashed #d1d5db; border-radius:0.6rem; padding:1.75rem 1rem; text-align:center; background:#fafafa; cursor:pointer; transition:all 0.2s; }
-    .upload-zone:hover, .upload-zone.drag-over { border-color:#1E88E5; background:#f0f7ff; }
+    .upload-zone:hover, .upload-zone.drag-over { border-color:#B91C1C; background:#fef2f2; }
     .upload-zone .upload-icon { font-size:2rem; margin-bottom:0.5rem; }
     .upload-zone p { font-size:0.85rem; color:#6b7280; margin:0 0 0.75rem; }
     .upload-zone small { font-size:0.75rem; color:#9ca3af; display:block; margin-top:0.5rem; }
@@ -29,20 +29,20 @@
     .img-preview-wrap img { width:100%; max-height:220px; object-fit:contain; display:block; background:#f9fafb; }
     .img-preview-label { position:absolute; top:0.5rem; left:0.5rem; background:rgba(0,0,0,0.55); color:white; font-size:0.7rem; font-weight:600; padding:0.2rem 0.5rem; border-radius:0.3rem; }
     .form-footer { padding:1rem 1.5rem; border-top:1px solid #f3f4f6; display:flex; gap:0.6rem; align-items:center; }
-    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#1E88E5; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-    .btn-save:hover { background:#1565C0; transform:translateY(-1px); }
+    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#B91C1C; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .btn-save:hover { background:#991B1B; transform:translateY(-1px); }
     .btn-cancel { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:white; color:#6b7280; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
     .btn-cancel:hover { background:#f9fafb; color:#374151; }
     .two-col-layout { display:grid; grid-template-columns:1fr 340px; gap:1.25rem; align-items:start; }
     /* Kategori selector cards */
     .kat-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; }
     .kat-card { border:2px solid #e5e7eb; border-radius:0.6rem; padding:0.75rem 0.5rem; text-align:center; cursor:pointer; transition:all 0.2s; background:white; }
-    .kat-card:hover { border-color:#1E88E5; }
-    .kat-card.selected { border-color:#1E88E5; background:#e3f2fd; }
+    .kat-card:hover { border-color:#B91C1C; }
+    .kat-card.selected { border-color:#B91C1C; background:#fef2f2; }
     .kat-card input[type=radio] { display:none; }
     .kat-card .kat-icon { font-size:1.5rem; display:block; margin-bottom:0.3rem; }
     .kat-card .kat-label { font-size:0.72rem; font-weight:700; color:#374151; line-height:1.3; }
-    .kat-card.selected .kat-label { color:#1565C0; }
+    .kat-card.selected .kat-label { color:#991B1B; }
     @media (max-width:900px) { .two-col-layout { grid-template-columns:1fr; } }
     @media (max-width:600px) { .form-grid { grid-template-columns:1fr; } .form-body { padding:1rem; } .form-footer { padding:1rem; } .kat-selector { grid-template-columns:1fr 1fr; } }
 </style>
@@ -51,7 +51,7 @@
 @section('content')
 
 <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:#9ca3af;margin-bottom:1.25rem;">
-    <a href="{{ route('admin.produk.index') }}" style="color:#1E88E5;text-decoration:none;font-weight:600;">🛒 Produk Kami</a>
+    <a href="{{ route('admin.produk.index') }}" style="color:#B91C1C;text-decoration:none;font-weight:600;">🛒 Produk Kami</a>
     <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
     <span style="color:#374151;font-weight:600;">Tambah Produk</span>
 </div>
@@ -68,14 +68,29 @@
             </div>
             <div class="form-body">
 
-                <div class="form-group">
-                    <label class="form-label">Pabrik / Merek <span class="req">*</span></label>
-                    <input type="text" name="kategori" class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}"
-                           placeholder="Contoh: KIMIA FARMA / WARDAH / OMRON" value="{{ old('kategori') }}" required>
-                    @error('kategori')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
+                @if(auth()->check() && auth()->user()->isSuperAdmin())
+                    <div class="form-group">
+                        <label class="form-label">Outlet / Apotek <span class="req">*</span></label>
+                        <select name="kategori" class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}" required>
+                            <option value="">— Pilih Outlet —</option>
+                            @foreach($outletOptions as $outlet)
+                                <option value="{{ $outlet }}" {{ old('kategori') == $outlet ? 'selected' : '' }}>{{ $outlet }}</option>
+                            @endforeach
+                        </select>
+                        @error('kategori')
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                        @enderror
+                    </div>
+                @else
+                    <div class="form-group">
+                        <label class="form-label">Pabrik / Merek <span class="req">*</span></label>
+                        <input type="text" name="kategori" class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}"
+                               placeholder="Contoh: KIMIA FARMA / WARDAH / OMRON" value="{{ old('kategori') }}" required>
+                        @error('kategori')
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label class="form-label">Nama Produk <span class="req">*</span></label>
@@ -97,17 +112,19 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Kelompok</label>
-                    <select name="kelompok" class="form-input {{ $errors->has('kelompok') ? 'is-invalid' : '' }}">
-                        <option value="">— Pilih Kelompok —</option>
-                        <option value="PBF"    {{ old('kelompok') == 'PBF'    ? 'selected' : '' }}>PBF</option>
-                        <option value="APOTEK" {{ old('kelompok') == 'APOTEK' ? 'selected' : '' }}>APOTEK</option>
-                    </select>
-                    @error('kelompok')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
+                @if(auth()->check() && auth()->user()->isSuperAdmin())
+                    <div class="form-group">
+                        <label class="form-label">Kelompok</label>
+                        <select name="kelompok" class="form-input {{ $errors->has('kelompok') ? 'is-invalid' : '' }}">
+                            <option value="">— Pilih Kelompok —</option>
+                            <option value="PBF"    {{ old('kelompok') == 'PBF'    ? 'selected' : '' }}>PBF</option>
+                            <option value="APOTEK" {{ old('kelompok') == 'APOTEK' ? 'selected' : '' }}>APOTEK</option>
+                        </select>
+                        @error('kelompok')
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label class="form-label">Deskripsi Produk</label>
@@ -242,9 +259,9 @@
                     <span class="img-preview-label">Preview</span>
                     <img id="previewImg" src="" alt="Preview">
                 </div>
-                <div style="margin-top:1rem;padding:0.75rem;background:#f8faff;border-radius:0.5rem;border:1px solid #e3f2fd;">
+                <div style="margin-top:1rem;padding:0.75rem;background:#f8faff;border-radius:0.5rem;border:1px solid #fef2f2;">
                     <p style="font-size:0.78rem;color:#6b7280;margin:0;line-height:1.6;">
-                        <i class="fa-solid fa-circle-info" style="color:#1E88E5;margin-right:0.3rem;"></i>
+                        <i class="fa-solid fa-circle-info" style="color:#B91C1C;margin-right:0.3rem;"></i>
                         Foto opsional. Jika tidak diupload, akan ditampilkan ikon default.
                     </p>
                 </div>
@@ -279,3 +296,7 @@ dropZone.addEventListener('drop', e => {
 });
 </script>
 @endsection
+
+
+
+

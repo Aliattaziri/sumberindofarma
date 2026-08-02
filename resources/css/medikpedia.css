@@ -1,5 +1,5 @@
 /* =============================================
-   MEDIKPEDIA - Global Section Decorations
+   SUMBERINDO FARMA TAMA - Global Section Decorations
    ============================================= */
 
 /* ===== STATS BAR DECORATION ===== */
@@ -13,7 +13,7 @@
     position: absolute;
     top: -40px; left: -40px;
     width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(30,136,229,0.07) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.07) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -23,7 +23,7 @@
     position: absolute;
     bottom: -40px; right: -40px;
     width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(124,179,66,0.07) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.07) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -39,7 +39,7 @@
     position: absolute;
     top: -60px; right: -60px;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(30,136,229,0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -49,7 +49,7 @@
     position: absolute;
     bottom: 40px; left: -80px;
     width: 250px; height: 250px;
-    background: radial-gradient(circle, rgba(124,179,66,0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -67,7 +67,7 @@
 
 .products-section .section-deco-dots span {
     width: 4px; height: 4px;
-    background: #1E88E5;
+    background: #B91C1C;
     border-radius: 50%;
     display: block;
 }
@@ -83,7 +83,7 @@
     position: absolute;
     top: -80px; right: -80px;
     width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(30,136,229,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -93,7 +93,7 @@
     position: absolute;
     bottom: -60px; left: -60px;
     width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(124,179,66,0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -133,7 +133,7 @@
     position: absolute;
     top: -80px; right: -80px;
     width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(124,179,66,0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -171,7 +171,7 @@
     position: absolute;
     top: 0; right: -100px;
     width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(30,136,229,0.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.04) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -187,7 +187,7 @@
     position: absolute;
     top: -30px; right: -30px;
     width: 120px; height: 120px;
-    background: radial-gradient(circle, rgba(30,136,229,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -205,7 +205,7 @@
     position: absolute;
     top: -60px; left: -60px;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(124,179,66,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -216,7 +216,7 @@
     position: absolute;
     bottom: -60px; right: -60px;
     width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(30,136,229,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -232,7 +232,7 @@
     position: absolute;
     top: -80px; right: -80px;
     width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(124,179,66,0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -242,7 +242,7 @@
     position: absolute;
     bottom: -60px; left: -60px;
     width: 280px; height: 280px;
-    background: radial-gradient(circle, rgba(30,136,229,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -258,7 +258,7 @@
     position: absolute;
     top: -80px; right: -80px;
     width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(124,179,66,0.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -285,3 +285,6 @@
     display: block;
     width: 100%;
 }
+
+
+

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Produk Promo - Admin Medikpedia')
+@section('title', 'Tambah Produk Promo - Admin Sumberindo Farma Tama')
 @section('page-title', '🏷️ Tambah Produk Promo')
 
 @section('content')
@@ -192,8 +192,8 @@
 
 <style>
     #dropZone:hover, #thumbnailDropZone:hover {
-        border-color: #3b82f6;
-        background: #eff6ff;
+        border-color: #ef4444;
+        background: #fef2f2;
     }
     
     #filePreview img, #thumbnailPreview img {
@@ -238,8 +238,8 @@ function setupDropZone(zoneId, inputId, labelId, previewId, maxMB) {
     
     zone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        zone.style.borderColor = '#3b82f6';
-        zone.style.background = '#eff6ff';
+        zone.style.borderColor = '#ef4444';
+        zone.style.background = '#fef2f2';
     });
     
     zone.addEventListener('dragleave', () => {
@@ -330,3 +330,6 @@ function handleTypeChange() {
 }
 </script>
 @endsection
+
+
+

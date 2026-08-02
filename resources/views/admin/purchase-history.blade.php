@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Riwayat Pembelian - Admin Medikpedia')
+@section('title', 'Riwayat Pembelian - Admin Sumberindo Farma Tama')
 @section('page-title', '🧾 Riwayat Pembelian')
 
 @section('content')
@@ -56,7 +56,7 @@
                         </td>
                         <td>
                             @if($order->payment_method)
-                                <span style="background:#eff6ff;color:#1d4ed8;padding:0.2rem 0.55rem;border-radius:20px;font-size:0.78rem;font-weight:600;">{{ $order->payment_method }}</span>
+                                <span style="background:#fef2f2;color:#B91C1C;padding:0.2rem 0.55rem;border-radius:20px;font-size:0.78rem;font-weight:600;">{{ $order->payment_method }}</span>
                             @else
                                 <span style="color:#d1d5db;font-size:0.8rem;font-style:italic;">—</span>
                             @endif
@@ -66,7 +66,7 @@
                                 $status = $order->approval_status ?? 'pending';
                                 $statusLabel = $status === 'approved' ? 'Setuju' : ($status === 'rejected' ? 'Tidak' : 'Belum diproses');
                                 $statusColor = $status === 'approved' ? '#16a34a' : ($status === 'rejected' ? '#dc2626' : '#64748b');
-                                $statusBg = $status === 'approved' ? '#dcfce7' : ($status === 'rejected' ? '#fee2e2' : '#f1f5f9');
+                                $statusBg = $status === 'approved' ? '#fee2e2' : ($status === 'rejected' ? '#fee2e2' : '#f1f5f9');
                             @endphp
                             <div style="display:flex;flex-direction:column;gap:0.4rem;align-items:flex-start;">
                                 <span style="display:inline-block;padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700;color:{{ $statusColor }};background:{{ $statusBg }};">{{ $statusLabel }}</span>
@@ -343,10 +343,10 @@
                 </tbody>
             </table>
             <div style="margin-top: 1rem; padding: 0.75rem 0.9rem; background: #f8fafc; border-radius: 8px;">
-                <div style="font-weight: 700; font-size: 1.05rem;">Status Persetujuan: <span style="display:inline-block;padding:0.25rem 0.6rem;border-radius:999px;font-size:0.8rem;font-weight:700;color:${order.approval_status === 'approved' ? '#16a34a' : order.approval_status === 'rejected' ? '#dc2626' : '#64748b'};background:${order.approval_status === 'approved' ? '#dcfce7' : order.approval_status === 'rejected' ? '#fee2e2' : '#f1f5f9'};">${order.approval_status === 'approved' ? 'Setuju' : order.approval_status === 'rejected' ? 'Tidak' : 'Belum diproses'}</span></div>
+                <div style="font-weight: 700; font-size: 1.05rem;">Status Persetujuan: <span style="display:inline-block;padding:0.25rem 0.6rem;border-radius:999px;font-size:0.8rem;font-weight:700;color:${order.approval_status === 'approved' ? '#16a34a' : order.approval_status === 'rejected' ? '#dc2626' : '#64748b'};background:${order.approval_status === 'approved' ? '#fee2e2' : order.approval_status === 'rejected' ? '#fee2e2' : '#f1f5f9'};">${order.approval_status === 'approved' ? 'Setuju' : order.approval_status === 'rejected' ? 'Tidak' : 'Belum diproses'}</span></div>
                 <div style="margin-top: 0.35rem; font-weight: 700; font-size: 1.05rem;">Total Efektif: Rp ${Number(order.effective_total || 0).toLocaleString('id-ID')}</div>
             </div>
-            ${order.payment_method ? `<div style="margin-top:0.75rem;padding:0.6rem 0.9rem;background:#eff6ff;border-radius:8px;font-size:0.9rem;color:#1d4ed8;"><i class="fa-solid fa-credit-card" style="margin-right:0.4rem;"></i> <strong>Metode Pembayaran:</strong> ${order.payment_method}</div>` : ''}
+            ${order.payment_method ? `<div style="margin-top:0.75rem;padding:0.6rem 0.9rem;background:#fef2f2;border-radius:8px;font-size:0.9rem;color:#B91C1C;"><i class="fa-solid fa-credit-card" style="margin-right:0.4rem;"></i> <strong>Metode Pembayaran:</strong> ${order.payment_method}</div>` : ''}
         `;
         
         content.innerHTML = detailHtml;
@@ -367,3 +367,6 @@
     }
 </script>
 @endsection
+
+
+

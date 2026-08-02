@@ -1,6 +1,6 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
-@section('title', 'Kontak - Medikpedia')
+@section('title', 'Kontak - Sumberindo Farma Tama')
 
 @section('content')
 <!-- Page Header -->
@@ -22,9 +22,12 @@
                         <i class="fas fa-map-marker-alt" style="color: var(--primary-color); margin-right: 10px;"></i>Alamat
                     </h4>
                     <p class="text-muted" style="line-height: 1.8;">
-                        Jl. Letjen Suprapto No.1, Sumur Batu,<br>
-                        Kec. Kemayoran, Kota Jakarta Pusat,<br>
-                        Daerah Khusus Ibukota Jakarta 10640
+                        Komp. Pergudangan Ocean 88 C2-3<br>
+                        Jl. Adisucipto<br>
+                        Arang Limbung<br>
+                        Kec. Sungai Raya<br>
+                        Kab. Kubu Raya<br>
+                        Kalimantan Barat
                     </p>
                 </div>
 
@@ -33,7 +36,7 @@
                         <i class="fas fa-phone" style="color: var(--primary-color); margin-right: 10px;"></i>Telepon
                     </h4>
                     <p class="text-muted">
-                        <a href="tel:+6285890007359" style="color: var(--primary-color); text-decoration: none;">0858 9000 7359</a>
+                        <a href="tel:+6285248965590" style="color: var(--primary-color); text-decoration: none;">+62 852-4896-5590</a>
                     </p>
                     <p class="text-muted">
                         <small>Senin - Jumat: 08:00 - 18:00</small><br>
@@ -46,7 +49,7 @@
                         <i class="fas fa-envelope" style="color: var(--primary-color); margin-right: 10px;"></i>Email
                     </h4>
                     <p class="text-muted">
-                        <a href="mailto:medikpedia.mitramedika@gmail.com" style="color: var(--primary-color); text-decoration: none;">medikpedia.mitramedika@gmail.com</a>
+                        <a href="mailto:info@sumberindofarmatama.com" style="color: var(--primary-color); text-decoration: none;">info@sumberindofarmatama.com</a>
                     </p>
                 </div>
 
@@ -55,10 +58,10 @@
                         <i class="fas fa-share-alt" style="color: var(--primary-color); margin-right: 10px;"></i>Ikuti Kami
                     </h4>
                     <div class="d-flex gap-2">
-                        <a href="#" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
-                            <i class="fab fa-facebook"></i>
+                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                            <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="#" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
@@ -217,3 +220,4 @@
 </section>
 
 @endsection
+

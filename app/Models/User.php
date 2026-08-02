@@ -59,4 +59,39 @@ class User extends Authenticatable
     {
         return $this->role === 'user';
     }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->isAdmin() && $this->outlet_name === null;
+    }
+
+    public function getOutletNameAttribute(): ?string
+    {
+        return self::mapAdminOutletByEmail($this->email);
+    }
+
+    public function isOutletAdmin(): bool
+    {
+        return $this->outlet_name !== null;
+    }
+
+    public static function mapAdminOutletByEmail(string $email): ?string
+    {
+        return match (strtolower(trim($email))) {
+            'alfa.sintang@sumberindofarma.com'       => 'Alfa Sintang',
+            'alfa.airupas@sumberindofarma.com'       => 'Alfa Air Upas',
+            'alfa.kendawangan@sumberindofarma.com'   => 'Alfa Kendawangan',
+            'alfa.balaiberkuak@sumberindofarma.com'  => 'Alfa Balai Berkuak',
+            'alfa.nangatayap@sumberindofarma.com'    => 'Alfa Nanga Tayap',
+            'alfa.tumbangtiti@sumberindofarma.com'   => 'Alfa Tumbang Titi',
+            'alfa.sosok@sumberindofarma.com'         => 'Alfa Sosok',
+            'alfa.bodok@sumberindofarma.com'         => 'Alfa Bodok',
+            'alfa.kembayan@sumberindofarma.com'      => 'Alfa Kembayan',
+            'alfa.ambawang@sumberindofarma.com'      => 'Alfa Ambawang',
+            'alfa.jungkat@sumberindofarma.com'       => 'Alfa Jungkat',
+            'alfa.mempawah@sumberindofarma.com'      => 'Alfa Mempawah',
+            'apotek.medistrafarma@sumberindofarma.com' => 'Apotek Medistra Farma',
+            default => null,
+        };
+    }
 }

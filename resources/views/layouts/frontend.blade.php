@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Medikpedia - Apotik Online')</title>
-    <link rel="icon" type="image/png" href="{{ asset('logo1.png') }}">
+    <title>@yield('title', 'Sumberindo Farma Tama - Apotik Online')</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo pt sumber indo farma tama.png') }}">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>
@@ -56,7 +56,8 @@
         /* ===== BOOTSTRAP GRID REPLACEMENT ===== */
         *, *::before, *::after { box-sizing: border-box; }
         html, body { overflow-x: hidden; max-width: 100%; }
-        body { margin: 0; }
+        html { min-height: 100%; }
+        body { margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         img, svg, video { max-width: 100%; height: auto; display: block; }
         button, input, textarea, select { max-width: 100%; }
         .container { width: 100%; max-width: 100%; padding-left: 1rem; padding-right: 1rem; margin-left: auto; margin-right: auto; }
@@ -115,7 +116,7 @@
             position: absolute;
             top: -40px; left: -40px;
             width: 180px; height: 180px;
-            background: radial-gradient(circle, rgba(30,136,229,0.07) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.07) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
         .stats-bar::after {
@@ -123,7 +124,7 @@
             position: absolute;
             bottom: -40px; right: -40px;
             width: 160px; height: 160px;
-            background: radial-gradient(circle, rgba(124,179,66,0.07) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.07) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
 
@@ -134,7 +135,7 @@
             position: absolute;
             top: -60px; right: -60px;
             width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(30,136,229,0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
         .products-section::after {
@@ -142,7 +143,7 @@
             position: absolute;
             bottom: 40px; left: -80px;
             width: 250px; height: 250px;
-            background: radial-gradient(circle, rgba(124,179,66,0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
 
@@ -153,7 +154,7 @@
             position: absolute;
             top: -80px; right: -80px;
             width: 350px; height: 350px;
-            background: radial-gradient(circle, rgba(30,136,229,0.04) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.04) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
         .about-section::after {
@@ -161,7 +162,7 @@
             position: absolute;
             bottom: -60px; left: -60px;
             width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(124,179,66,0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
 
@@ -172,7 +173,7 @@
             position: absolute;
             top: 0; right: -100px;
             width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(30,136,229,0.03) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.03) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
 
@@ -183,7 +184,7 @@
             position: absolute;
             top: -30px; right: -30px;
             width: 120px; height: 120px;
-            background: radial-gradient(circle, rgba(30,136,229,0.04) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.04) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
 
@@ -194,7 +195,7 @@
             position: absolute;
             top: -80px; right: -80px;
             width: 350px; height: 350px;
-            background: radial-gradient(circle, rgba(124,179,66,0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
         .footer::after {
@@ -202,7 +203,7 @@
             position: absolute;
             bottom: -60px; left: -60px;
             width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(30,136,229,0.04) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.04) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
 
@@ -229,7 +230,7 @@
             position: absolute;
             top: -25px; right: -25px;
             width: 90px; height: 90px;
-            background: radial-gradient(circle, rgba(30,136,229,0.07) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.07) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
@@ -254,7 +255,7 @@
             position: absolute;
             bottom: -20px; right: -20px;
             width: 75px; height: 75px;
-            background: radial-gradient(circle, rgba(124,179,66,0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
@@ -266,7 +267,7 @@
             position: absolute;
             top: -30px; right: -30px;
             width: 120px; height: 120px;
-            background: radial-gradient(circle, rgba(30,136,229,0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(220,38,38,0.05) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
@@ -294,14 +295,14 @@
         .mp-capsule {
             width: 60px; height: 26px;
             border-radius: 13px;
-            background: linear-gradient(90deg, #1E88E5 50%, #7CB342 50%);
-            box-shadow: 0 2px 8px rgba(30,136,229,0.25), inset 0 1px 3px rgba(255,255,255,0.4);
+            background: linear-gradient(90deg, #B91C1C 50%, #ef4444 50%);
+            box-shadow: 0 2px 8px rgba(220,38,38,0.25), inset 0 1px 3px rgba(255,255,255,0.4);
         }
 
         .mp-tablet {
             width: 42px; height: 26px;
             border-radius: 13px;
-            background: #bbdefb;
+            background: #fee2e2;
             border: 2.5px solid #42a5f5;
             position: relative;
             box-shadow: 0 2px 8px rgba(66,165,245,0.2);
@@ -319,21 +320,21 @@
         .mp-pill {
             width: 24px; height: 24px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #ffffff, #66bb6a);
+            background: radial-gradient(circle at 35% 35%, #ffffff, #fee2e2);
             border: 2px solid rgba(102,187,106,0.6);
-            box-shadow: 0 2px 8px rgba(124,179,66,0.25);
+            box-shadow: 0 2px 8px rgba(220,38,38,0.2);
         }
 
         .mp-cross {
             width: 28px; height: 28px;
             position: relative;
-            filter: drop-shadow(0 2px 4px rgba(30,136,229,0.3));
+            filter: drop-shadow(0 2px 4px rgba(220,38,38,0.18));
         }
         .mp-cross::before,
         .mp-cross::after {
             content: '';
             position: absolute;
-            background: #1E88E5;
+            background: #B91C1C;
             border-radius: 3px;
         }
         .mp-cross::before {
@@ -347,7 +348,7 @@
 
         .mp-icon {
             font-size: 1.6rem;
-            color: #1565C0;
+            color: #991B1B;
             transform: rotate(var(--r, 0deg)) scale(var(--s, 1));
             filter: drop-shadow(0 2px 4px rgba(21,101,192,0.2));
         }
@@ -355,14 +356,14 @@
         /* Variasi warna ikon */
         .mp-icon:nth-child(odd)  { color: #388e3c; }
         .mp-icon:nth-child(3n)   { color: #0288d1; }
-        .mp-icon:nth-child(4n)   { color: #1976d2; }
+        .mp-icon:nth-child(4n)   { color: #B91C1C; }
     </style>
     
     <style>
         :root {
-            --primary: #1E88E5;
-            --secondary: #1565C0;
-            --accent: #7CB342;
+            --primary: #B91C1C;
+            --secondary: #991B1B;
+            --accent: #ef4444;
             --dark: #1f2937;
             --light: #f3f4f6;
         }
@@ -378,14 +379,14 @@
             padding: 0 !important;
             font-size: 16px;
             line-height: 1.5;
-            min-height: 100%;
         }
 
         html {
             scroll-behavior: smooth;
             scroll-padding-top: var(--navbar-height, 65px);
-            background: linear-gradient(160deg, #dbeafe 0%, #ede9fe 35%, #d1fae5 70%, #dbeafe 100%);
+            background: linear-gradient(160deg, #fef2f2 0%, #fef2f2 35%, #fee2e2 70%, #fef2f2 100%);
             background-attachment: fixed;
+            min-height: 100%;
         }
 
         body {
@@ -399,13 +400,19 @@
         }
 
         main {
-            flex: 1;
+            flex: 1 0 auto;
+            padding: 1rem 0;
         }
 
         /* Semua konten di atas canvas */
         main, footer {
             position: relative;
             z-index: 1;
+        }
+
+        /* Pastikan footer selalu di bawah dan tidak dikecilkan */
+        footer.footer {
+            flex-shrink: 0;
         }
         .float-wrap {
             position: relative;
@@ -438,8 +445,8 @@
 
         /* Navbar */
         .navbar {
-            background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #1E88E5 100%);
-            box-shadow: 0 4px 20px rgba(13, 71, 161, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #991B1B 0%, #B91C1C 50%, #B91C1C 100%);
+            box-shadow: 0 4px 20px rgba(220,38,38,0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             padding: 0;
             position: fixed;
             top: 0;
@@ -450,11 +457,13 @@
             border-bottom: 2px solid rgba(124, 179, 66, 0.4);
         }
 
-        /*
-         * Global fix: semua page header (bukan section tengah halaman)
-         * otomatis dapat padding-top yang cukup agar tidak tertutup navbar.
-         * Berlaku untuk: produk, contact, medicines detail, dll.
-         */
+        body {
+            padding-top: var(--navbar-height, 65px);
+        }
+
+        .page-offset {
+            padding-top: 0;
+        }
         .category-page-header,
         .products-header,
         .contact-header,
@@ -483,35 +492,52 @@
         }
 
         .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.45rem;
+            font-weight: 700;
             color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: transform 0.3s;
+            gap: 0.65rem;
+            transition: transform 0.25s ease;
             flex-shrink: 0;
+            white-space: nowrap;
         }
 
         .navbar-brand:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .navbar-brand img {
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-            height: 45px;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
+            height: 42px;
             object-fit: contain;
-            margin-left: -8px;
+            margin-left: -4px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0.85rem;
+            padding: 0.35rem;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
         .navbar-menu {
             display: flex;
-            gap: 0;
+            gap: 0.75rem;
             align-items: center;
             list-style: none;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             justify-content: flex-end;
+            flex: 1 1 auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu li {
+            margin: 0;
+        }
+
+        .navbar-menu li {
+            list-style: none;
         }
 
         .navbar-menu a,
@@ -520,12 +546,12 @@
             text-decoration: none;
             transition: all 0.3s;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 0.35rem;
-            padding: 0.5rem 0.6rem;
+            padding: 0.5rem 0.7rem;
             border-radius: 0.375rem;
-            font-size: 0.82rem;
+            font-size: 0.9rem;
             white-space: nowrap;
         }
 
@@ -538,7 +564,6 @@
             background: rgba(220, 38, 38, 0.2);
             border: 1px solid rgba(220, 38, 38, 0.4);
             cursor: pointer;
-            border: none;
             width: auto;
             text-align: center;
             font-size: 1rem;
@@ -549,7 +574,36 @@
         }
 
         .navbar-menu .admin-link {
-            color: #7CB342;
+            color: #fee2e2;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .social-circle {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            text-decoration: none;
+            transition: background 0.25s ease;
+        }
+
+        .social-circle:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .footer-icon {
+            margin-right: 0.6rem;
+            color: #ef4444;
+            min-width: 1rem;
         }
 
         /* Dropdown nav */
@@ -584,7 +638,7 @@
         }
         .navbar-menu .dropdown-menu-nav li a:hover {
             background: #f3f4f6 !important;
-            color: #1E88E5 !important;
+            color: #B91C1C !important;
         }
 
         .admin-login-item a {
@@ -648,19 +702,96 @@
 
         /* Footer */
         .footer {
-            background: linear-gradient(180deg, #1e1b4b 0%, #0a0e2e 100%) !important;
+            background: linear-gradient(180deg, #7F1D1D 0%, #B91C1C 100%) !important;
             color: white;
             padding: 3rem 0;
-            margin-top: 4rem;
+            margin-top: auto;
+            flex-shrink: 0;
             position: relative;
             z-index: 1;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.75rem;
             margin-bottom: 2rem;
+        }
+
+        .footer-content > div {
+            min-width: 220px;
+        }
+
+        .footer-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #fecaca;
+        }
+
+        .footer-content ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-content ul li {
+            margin-bottom: 0.85rem;
+        }
+
+        .footer-content a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .footer-content a:hover {
+            color: white;
+        }
+
+        .footer-content span {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .social-circle {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            text-decoration: none;
+            transition: background 0.25s ease;
+        }
+
+        .social-circle:hover {
+            background: rgba(255,255,255,0.24);
+        }
+
+        .footer-icon {
+            width: 1.2rem;
+            color: #ef4444;
+            flex-shrink: 0;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 1.5rem;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.95rem;
         }
 
         .footer h3 {
@@ -701,7 +832,7 @@
         }
 
         .alert-success {
-            background: #d1fae5;
+            background: #fee2e2;
             color: #065f46;
             border-left: 4px solid var(--primary);
         }
@@ -724,9 +855,9 @@
             .navbar-menu {
                 position: fixed;
                 left: 0;
-                top: var(--navbar-height, 56px);
+                top: var(--navbar-height, 65px);
                 width: 100%;
-                background: linear-gradient(135deg, #1565C0 0%, #1976D2 50%, #1E88E5 100%);
+                background: linear-gradient(135deg, #991B1B 0%, #B91C1C 50%, #B91C1C 100%);
                 flex-direction: column;
                 justify-content: flex-start;
                 gap: 0;
@@ -745,6 +876,30 @@
 
             .navbar-menu li {
                 width: 100%;
+                margin-bottom: 0.4rem;
+            }
+
+            .navbar-menu a,
+            .navbar-menu .logout-btn {
+                padding: 0.95rem 1rem;
+                font-size: 1rem;
+                display: block;
+            }
+
+            .navbar-menu li {
+                width: 100%;
+                margin-bottom: 0.4rem;
+            }
+
+            .navbar-menu a,
+            .navbar-menu .logout-btn {
+                padding: 0.95rem 1rem;
+                font-size: 1rem;
+                display: block;
+            }
+
+            .navbar-menu li {
+                width: 100%;
                 margin-bottom: 0.25rem;
             }
 
@@ -755,12 +910,20 @@
                 display: block;
             }
 
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
             .navbar-brand img {
                 height: 45px;
             }
         }
 
         @media (max-width: 480px) {
+            .navbar-brand {
+                font-size: 0.85rem;
+            }
+
             .navbar-brand img {
                 height: 38px;
             }
@@ -842,8 +1005,9 @@
 
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="{{ route('login') }}" class="navbar-brand" title="Admin Login">
-                <img src="{{ asset('logo2.png') }}" alt="Medikpedia">
+            <a href="{{ route('login') }}" class="navbar-brand" title="Login Admin PT SUMBERINDO FARMA TAMA">
+                <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Logo">
+                PT SUMBERINDO FARMA TAMA
             </a>
             
             <!-- Hamburger Menu Button -->
@@ -907,7 +1071,7 @@
     @endif
 
     <!-- Content -->
-    <main>
+    <main class="page-offset">
         @yield('content')
     </main>
 
@@ -916,55 +1080,37 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <h3><i class="fa-solid fa-pills" style="color:#7CB342;"></i> <span style="color:#1E88E5;">Medik</span><span style="color:#7CB342;">pedia</span></h3>
-                    <p style="color:#d1d5db; line-height:1.8; margin-bottom:1.25rem;">Apotik online terpercaya dengan koleksi obat lengkap dan harga terjangkau.</p>
-                    <div style="display:flex; gap:0.75rem;">
-                        <a href="#" style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#1877f2'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#e1306c'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/6285890007359" style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#25d366'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fa-brands fa-whatsapp"></i></a>
+                    <h3><i class="fa-solid fa-pills"></i> Sumberindo Farma Tama</h3>
+                    <p>Apotik online terpercaya dengan koleksi obat lengkap dan layanan cepat.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="social-circle" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/6285248965590" class="social-circle" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
-                </div>
-                <div>
-                    <h3>Kategori</h3>
-                    <ul>
-                        <li><a href="#"><i class="fa-solid fa-capsules fa-fw" style="margin-right:0.5rem;color:#7CB342;"></i>Antibiotik</a></li>
-                        <li><a href="#"><i class="fa-solid fa-tablets fa-fw" style="margin-right:0.5rem;color:#7CB342;"></i>Vitamin</a></li>
-                        <li><a href="#"><i class="fa-solid fa-flask fa-fw" style="margin-right:0.5rem;color:#7CB342;"></i>Suplemen</a></li>
-                    </ul>
                 </div>
                 <div>
                     <h3>Informasi</h3>
                     <ul>
-                        <li><a href="{{ route('contact') }}"><i class="fa-solid fa-headset fa-fw" style="margin-right:0.5rem;color:#7CB342;"></i>Hubungi Kami</a></li>
-                        <li><a href="#"><i class="fa-solid fa-shield-halved fa-fw" style="margin-right:0.5rem;color:#7CB342;"></i>Kebijakan Privasi</a></li>
+                        <li><a href="{{ route('contact') }}"><i class="fa-solid fa-headset fa-fw footer-icon"></i>Hubungi Kami</a></li>
+                        <li><a href="#"><i class="fa-solid fa-shield-halved fa-fw footer-icon"></i>Kebijakan Privasi</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3>Kontak</h3>
                     <ul>
-                        <li style="margin-bottom:0.75rem;">
-                            <a href="tel:+6285890007359" style="color:#d1d5db;text-decoration:none;display:flex;align-items:flex-start;gap:0.6rem;">
-                                <i class="fa-solid fa-phone" style="color:#7CB342;margin-top:3px;flex-shrink:0;"></i>
-                                <span>0858 9000 7359</span>
-                            </a>
-                        </li>
-                        <li style="margin-bottom:0.75rem;">
-                            <a href="mailto:medikpedia.mitramedika@gmail.com" style="color:#d1d5db;text-decoration:none;display:flex;align-items:flex-start;gap:0.6rem;">
-                                <i class="fa-solid fa-envelope" style="color:#7CB342;margin-top:3px;flex-shrink:0;"></i>
-                                <span>medikpedia.mitramedika@gmail.com</span>
-                            </a>
+                        <li>
+                            <a href="tel:+6285248965590"><i class="fa-solid fa-phone footer-icon"></i>+62 852-4896-5590</a>
                         </li>
                         <li>
-                            <span style="color:#d1d5db;display:flex;align-items:flex-start;gap:0.6rem;">
-                                <i class="fa-solid fa-location-dot" style="color:#7CB342;margin-top:3px;flex-shrink:0;"></i>
-                                <span>Jl. Letjen Suprapto No.1, Sumur Batu, Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10640</span>
-                            </span>
+                            <a href="mailto:info@sumberindofarmatama.com"><i class="fa-solid fa-envelope footer-icon"></i>info@sumberindofarmatama.com</a>
+                        </li>
+                        <li>
+                            <span><i class="fa-solid fa-location-dot footer-icon"></i>Komp. Pergudangan Ocean 88 C2-3, Jl. Adisucipto, Arang Limbung, Kec. Sungai Raya, Kab. Kubu Raya, Kalimantan Barat</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Medikpedia. Semua hak dilindungi.</p>
+                <p>&copy; 2026 Sumberindo Farma Tama. Semua hak dilindungi.</p>
             </div>
         </div>
     </footer>
@@ -975,7 +1121,7 @@
 
         /* Links container desktop */
         .float-links {
-            display:flex; flex-direction:column; align-items:center; gap:1.6rem;
+            display:flex; flex-direction:column; align-items:center; gap:0.9rem;
         }
 
         .float-item { position:relative; display:flex; align-items:center; justify-content:center; }
@@ -997,7 +1143,7 @@
 
         /* Toggle button (mobile only) */
         .float-toggle {
-            width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,#1565C0,#1E88E5);
+            width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,#991B1B,#B91C1C);
             border:none; color:white; font-size:1.3rem; cursor:pointer;
             display:none; align-items:center; justify-content:center;
             box-shadow:0 4px 16px rgba(13,71,161,0.45); transition:transform 0.3s;
@@ -1032,47 +1178,11 @@
     <div class="float-wrap">
         <!-- Links (semua tombol) -->
         <div class="float-links" id="floatLinks">
-            <!-- Dermilosofi -->
-            <div class="float-item">
-                <span class="float-tooltip">Dermilosofi</span>
-                <span class="float-label-mobile">Dermilosofi</span>
-                <a href="https://dermilosofi.site" target="_blank" class="float-btn"
-                   style="background:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.2);overflow:hidden;">
-                    <img src="{{ asset('logodermilosofi.site.jpeg') }}" alt="Dermilosofi" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-                </a>
-            </div>
-            <!-- Tokopedia -->
-            <div class="float-item">
-                <span class="float-tooltip">Tokopedia</span>
-                <span class="float-label-mobile">Tokopedia</span>
-                <a href="https://tk.tokopedia.com/ZSHt4vosN/" target="_blank" class="float-btn"
-                   style="background:#42b549;box-shadow:0 4px 16px rgba(66,181,73,0.45);overflow:hidden;">
-                    <img src="{{ asset('logotokopedia.png') }}" alt="Tokopedia" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-                </a>
-            </div>
-            <!-- Shopee -->
-            <div class="float-item">
-                <span class="float-tooltip">Shopee</span>
-                <span class="float-label-mobile">Shopee</span>
-                <a href="https://shopee.co.id/medikpedia.mitramedika" target="_blank" class="float-btn"
-                   style="background:#ee4d2d;box-shadow:0 4px 16px rgba(238,77,45,0.45);overflow:hidden;">
-                    <img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-                </a>
-            </div>
-            <!-- TikTok -->
-            <div class="float-item">
-                <span class="float-tooltip">TikTok</span>
-                <span class="float-label-mobile">TikTok</span>
-                <a href="https://www.tiktok.com/@medikpedia" target="_blank" class="float-btn"
-                   style="background:#010101;color:white;font-size:1.4rem;box-shadow:0 4px 16px rgba(0,0,0,0.35);">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-            </div>
             <!-- Instagram -->
             <div class="float-item">
                 <span class="float-tooltip">Instagram</span>
                 <span class="float-label-mobile">Instagram</span>
-                <a href="https://instagram.com" target="_blank" class="float-btn"
+                <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="float-btn"
                    style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;font-size:1.4rem;box-shadow:0 4px 16px rgba(220,39,67,0.45);">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
@@ -1081,9 +1191,9 @@
             <div class="float-item">
                 <span class="float-tooltip">Chat WhatsApp</span>
                 <span class="float-label-mobile">WhatsApp</span>
-                <a href="https://wa.me/6285890007359?text=Halo%20Medikpedia%2C%20saya%20ingin%20bertanya%20tentang%20produk%20obat."
+                <a href="https://wa.me/6285248965590?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20bertanya%20tentang%20produk%20obat."
                    target="_blank" class="float-btn float-btn-wa"
-                   style="background:#25D366;color:white;font-size:1.9rem;box-shadow:0 6px 24px rgba(37,211,102,0.55);">
+                   style="background:#ef4444;color:white;font-size:1.9rem;box-shadow:0 6px 24px rgba(37,211,102,0.55);">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
             </div>
@@ -1122,6 +1232,12 @@
         }
         checkFloatDesktop();
         window.addEventListener('resize', checkFloatDesktop);
+    </script>
+
+    <script>
+        window.cartSettings = Object.assign({
+            storageKey: @json(auth()->check() ? 'sumberindofarmatama_cart_user_' . auth()->user()->id : 'sumberindofarmatama_cart')
+        }, window.cartSettings || {});
     </script>
 
     @yield('scripts')
@@ -1256,22 +1372,22 @@
         // Cart badge sync - gunakan key khusus jika halaman mendefinisikan cartSettings
         (function() {
             // Migrasi sekali: jika ada key lama retail/grosir, gabungkan ke key utama
-            ['medikpedia_cart_retail', 'medikpedia_cart_grosir'].forEach(function(oldKey) {
+            ['sumberindofarmatama_cart_retail', 'sumberindofarmatama_cart_grosir'].forEach(function(oldKey) {
                 try {
                     const oldData = JSON.parse(localStorage.getItem(oldKey) || '[]');
                     if (oldData.length) {
-                        let current = JSON.parse(localStorage.getItem('medikpedia_cart') || '[]');
+                        let current = JSON.parse(localStorage.getItem('sumberindofarmatama_cart') || '[]');
                         oldData.forEach(function(item) {
                             const ex = current.find(function(i) { return i.id === item.id; });
                             if (ex) ex.qty += item.qty; else current.push(item);
                         });
-                        localStorage.setItem('medikpedia_cart', JSON.stringify(current));
+                        localStorage.setItem('sumberindofarmatama_cart', JSON.stringify(current));
                         localStorage.removeItem(oldKey);
                     }
                 } catch(e) {}
             });
 
-            const storageKey = (window.cartSettings && window.cartSettings.storageKey) ? window.cartSettings.storageKey : 'medikpedia_cart';
+            const storageKey = (window.cartSettings && window.cartSettings.storageKey) ? window.cartSettings.storageKey : 'sumberindofarmatama_cart';
             const cart = JSON.parse(localStorage.getItem(storageKey) || '[]');
             const total = cart.reduce(function(s, i) { return s + i.qty; }, 0);
             
@@ -1292,6 +1408,8 @@
             }
         }
         setNavbarHeight();
+        window.addEventListener('DOMContentLoaded', setNavbarHeight);
+        window.addEventListener('load', setNavbarHeight);
         window.addEventListener('resize', setNavbarHeight);
 
         hamburgerBtn.addEventListener('click', () => {
@@ -1323,3 +1441,8 @@
     <script src="{{ asset('js/fix-cursor.js') }}"></script>
 </body>
 </html>
+
+
+
+
+

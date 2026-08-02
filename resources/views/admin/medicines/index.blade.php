@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen Obat - Admin Medikpedia')
+@section('title', 'Manajemen Obat - Admin Sumberindo Farma Tama')
 @section('page-title', 'Manajemen Obat')
 
 @section('styles')
@@ -44,10 +44,10 @@
         white-space: nowrap;
     }
     .btn-icon-primary {
-        background: #1E88E5;
+        background: #B91C1C;
         color: white;
     }
-    .btn-icon-primary:hover { background: #1565C0; color: white; transform: translateY(-1px); }
+    .btn-icon-primary:hover { background: #991B1B; color: white; transform: translateY(-1px); }
     .btn-icon-outline {
         background: white;
         color: #374151;
@@ -104,14 +104,14 @@
     .search-input-wrap input:focus,
     .search-input-wrap select:focus {
         outline: none;
-        border-color: #1E88E5;
+        border-color: #B91C1C;
         background: white;
-        box-shadow: 0 0 0 3px rgba(30,136,229,0.08);
+        box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
     }
     .search-actions { display: flex; gap: 0.5rem; align-items: flex-end; }
     .btn-search {
         padding: 0.55rem 1.25rem;
-        background: #1E88E5;
+        background: #B91C1C;
         color: white;
         border: none;
         border-radius: 0.5rem;
@@ -123,7 +123,7 @@
         align-items: center;
         gap: 0.4rem;
     }
-    .btn-search:hover { background: #1565C0; }
+    .btn-search:hover { background: #991B1B; }
     .btn-reset {
         padding: 0.55rem 0.9rem;
         background: white;
@@ -189,7 +189,7 @@
         width: 44px;
         height: 44px;
         border-radius: 0.5rem;
-        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -210,12 +210,12 @@
         font-size: 0.78rem;
         font-weight: 700;
     }
-    .stock-ok    { background: #d1fae5; color: #065f46; }
-    .stock-low   { background: #fef3c7; color: #92400e; }
+    .stock-ok    { background: #fee2e2; color: #065f46; }
+    .stock-low   { background: #fee2e2; color: #B91C1C; }
     .stock-empty { background: #fee2e2; color: #991b1b; }
 
     /* Price */
-    .price-text { font-weight: 600; color: #1E88E5; }
+    .price-text { font-weight: 600; color: #B91C1C; }
 
     /* Action buttons */
     .action-wrap { display: flex; gap: 0.4rem; }
@@ -232,8 +232,8 @@
         cursor: pointer;
         transition: all 0.2s;
     }
-    .btn-edit { background: #e3f2fd; color: #1565C0; }
-    .btn-edit:hover { background: #1E88E5; color: white; }
+    .btn-edit { background: #fef2f2; color: #991B1B; }
+    .btn-edit:hover { background: #B91C1C; color: white; }
     .btn-del  { background: #fee2e2; color: #991b1b; }
     .btn-del:hover  { background: #ef4444; color: white; }
 
@@ -265,8 +265,8 @@
         transition: all 0.2s;
         padding: 0 0.5rem;
     }
-    .page-btn:hover { background: #1E88E5; color: white; border-color: #1E88E5; }
-    .page-btn.active { background: #1E88E5; color: white; border-color: #1E88E5; }
+    .page-btn:hover { background: #B91C1C; color: white; border-color: #B91C1C; }
+    .page-btn.active { background: #B91C1C; color: white; border-color: #B91C1C; }
     .page-btn.disabled { background: #f9fafb; color: #d1d5db; cursor: not-allowed; pointer-events: none; }
 
     /* Empty state */
@@ -296,10 +296,10 @@
 {{-- Page Header --}}
 <div class="page-header">
     <div class="page-header-left">
-        <h2><i class="fa-solid fa-pills" style="color:#1E88E5;margin-right:0.4rem;"></i>Daftar Obat</h2>
+        <h2><i class="fa-solid fa-pills" style="color:#B91C1C;margin-right:0.4rem;"></i>Daftar Obat</h2>
         <p>Total <strong>{{ $medicines->total() }}</strong> obat terdaftar
             @if($search || $kategori)
-                &mdash; <span style="color:#1E88E5;">hasil filter aktif</span>
+                &mdash; <span style="color:#B91C1C;">hasil filter aktif</span>
             @endif
         </p>
     </div>
@@ -382,7 +382,7 @@
                     </td>
                     <td>
                         @if($medicine->sediaan)
-                            <span style="display:inline-block;padding:0.25rem 0.5rem;background:#e0f2fe;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
+                            <span style="display:inline-block;padding:0.25rem 0.5rem;background:#fee2e2;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
                                 {{ $medicine->sediaan }}
                             </span>
                         @else
@@ -391,9 +391,9 @@
                     </td>
                     <td>
                         @if($medicine->kelompok === 'PBF')
-                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fef3c7;color:#92400e;border-radius:4px;font-size:0.75rem;font-weight:700;">PBF</span>
+                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fee2e2;color:#B91C1C;border-radius:4px;font-size:0.75rem;font-weight:700;">PBF</span>
                         @elseif($medicine->kelompok === 'APOTEK')
-                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#d1fae5;color:#065f46;border-radius:4px;font-size:0.75rem;font-weight:700;">APOTEK</span>
+                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fee2e2;color:#065f46;border-radius:4px;font-size:0.75rem;font-weight:700;">APOTEK</span>
                         @else
                             <span style="font-size:0.75rem;color:#9ca3af;">-</span>
                         @endif
@@ -415,11 +415,11 @@
                     </td>
                     <td>
                         @if($medicine->is_resep)
-                            <span style="display:inline-block;background:#fef3c7;color:#92400e;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;">
+                            <span style="display:inline-block;background:#fee2e2;color:#B91C1C;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;">
                                 <i class="fa-solid fa-file-prescription"></i> Resep
                             </span>
                         @else
-                            <span style="display:inline-block;background:#e3f2fd;color:#1565C0;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;">
+                            <span style="display:inline-block;background:#fef2f2;color:#991B1B;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.7rem;font-weight:700;">
                                 <i class="fa-solid fa-pills"></i> Biasa
                             </span>
                         @endif
@@ -512,3 +512,8 @@
 @endif
 
 @endsection
+
+
+
+
+

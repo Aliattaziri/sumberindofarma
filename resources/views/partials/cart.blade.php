@@ -1,4 +1,4 @@
-﻿{{--
+{{--
   =====================================================================
   SHARED CART PARTIAL - resources/views/partials/cart.blade.php
   Include ini di @section('scripts') semua halaman yang butuh keranjang:
@@ -12,7 +12,7 @@
 .cart-overlay.open { opacity: 1; pointer-events: all; }
 .cart-drawer { position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw; height: 100vh; background: #fff; z-index: 2001; display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,0.15); transition: right 0.35s cubic-bezier(.4,0,.2,1); }
 .cart-drawer.open { right: 0; }
-.cart-head { background: linear-gradient(135deg, #0D47A1, #1E88E5); padding: 1.25rem 1.5rem; color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.cart-head { background: linear-gradient(135deg, #7F1D1D, #B91C1C); padding: 1.25rem 1.5rem; color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .cart-head h2 { font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
 .cart-close-btn { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .cart-close-btn:hover { background: rgba(255,255,255,0.35); }
@@ -20,29 +20,29 @@
 .cart-empty-msg { text-align: center; padding: 3rem 1rem; color: #9ca3af; }
 .cart-empty-msg i { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
 .cart-item-row { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 0; border-bottom: 1px solid #f3f4f6; }
-.cart-item-thumb { width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg,#e3f2fd,#bbdefb); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.cart-item-thumb { width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg,#fef2f2,#fee2e2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .cart-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .cart-item-info { flex: 1; min-width: 0; }
 .cart-item-name { font-size: 0.84rem; font-weight: 700; color: #1f2937; margin-bottom: 0.2rem; line-height: 1.3; }
-.cart-item-price { font-size: 0.8rem; color: #1E88E5; font-weight: 700; }
+.cart-item-price { font-size: 0.8rem; color: #B91C1C; font-weight: 700; }
 .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; }
 .qty-btn { width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid #e5e7eb; background: #fff; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #374151; transition: all 0.2s; }
-.qty-btn:hover { border-color: #1E88E5; color: #1E88E5; }
+.qty-btn:hover { border-color: #B91C1C; color: #B91C1C; }
 .qty-num { font-size: 0.85rem; font-weight: 700; min-width: 20px; text-align: center; }
 .cart-item-del { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 0.9rem; padding: 0.2rem; flex-shrink: 0; transition: color 0.2s; }
 .cart-item-del:hover { color: #ef4444; }
 .cart-foot { padding: 1.25rem 1.5rem; border-top: 2px solid #f3f4f6; flex-shrink: 0; background: #fafbff; }
 .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .cart-total-row span { font-size: 0.9rem; color: #6b7280; }
-.cart-total-row strong { font-size: 1.2rem; color: #1E88E5; font-weight: 800; }
-.btn-order-wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.85rem; background: #25D366; color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
-.btn-order-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+.cart-total-row strong { font-size: 1.2rem; color: #B91C1C; font-weight: 800; }
+.btn-order-wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.85rem; background: #ef4444; color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
+.btn-order-wa:hover { background: #991B1B; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
 .btn-clear-cart { display: block; width: 100%; padding: 0.5rem; background: none; border: none; color: #9ca3af; font-size: 0.8rem; cursor: pointer; margin-top: 0.5rem; transition: color 0.2s; }
 .btn-clear-cart:hover { color: #ef4444; }
 /* ORDER MODAL */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 3000; }
 .modal-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 92%; max-width: 480px; max-height: 90vh; overflow-y: auto; background: #fff; border-radius: 20px; z-index: 3001; box-shadow: 0 25px 60px rgba(0,0,0,0.25); }
-.modal-head { background: linear-gradient(135deg,#1565C0,#1E88E5); padding: 1.25rem 1.5rem; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
+.modal-head { background: linear-gradient(135deg,#991B1B,#B91C1C); padding: 1.25rem 1.5rem; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
 .modal-head h3 { color: #fff; margin: 0; font-size: 1rem; font-weight: 700; }
 .modal-head p { color: rgba(255,255,255,0.8); margin: 0; font-size: 0.75rem; }
 .modal-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
@@ -50,13 +50,13 @@
 .modal-form { padding: 1.25rem 1.5rem 1.5rem; }
 .form-lbl { display: block; font-size: 0.78rem; font-weight: 700; color: #374151; margin-bottom: 0.3rem; }
 .form-inp { width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; margin-bottom: 0.75rem; }
-.form-inp:focus { border-color: #1E88E5; }
+.form-inp:focus { border-color: #B91C1C; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .form-error { display: none; background: #fee2e2; color: #7f1d1d; padding: 0.6rem; border-radius: 8px; font-size: 0.8rem; margin-bottom: 0.75rem; }
-.btn-submit-wa { width: 100%; padding: 0.85rem; background: linear-gradient(135deg,#25D366,#1ebe5d); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-.btn-cart { display: block; width: 100%; padding: 0.55rem; background: white; color: #1E88E5; border: 2px solid #1E88E5; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.82rem; text-align: center; text-decoration: none; transition: all 0.3s; margin-top: 0.5rem; }
-.btn-cart:hover { background: #e3f2fd; transform: translateY(-1px); }
-.btn-cart.added { background: #d1fae5; color: #065f46; border-color: #34d399; }
+.btn-submit-wa { width: 100%; padding: 0.85rem; background: linear-gradient(135deg,#ef4444,#991B1B); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.btn-cart { display: block; width: 100%; padding: 0.55rem; background: white; color: #B91C1C; border: 2px solid #B91C1C; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.82rem; text-align: center; text-decoration: none; transition: all 0.3s; margin-top: 0.5rem; }
+.btn-cart:hover { background: #fef2f2; transform: translateY(-1px); }
+.btn-cart.added { background: #fee2e2; color: #065f46; border-color: #34d399; }
 @media (max-width: 768px) {
   .cart-drawer { width: 100%; max-width: 100%; right: -100%; }
   .cart-drawer.open { right: 0; }
@@ -106,7 +106,7 @@
     <div id="orderSummary"></div>
     <div style="display:flex;justify-content:space-between;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid #e5e7eb;">
       <span style="font-weight:700;color:#374151;font-size:0.85rem;">Total</span>
-      <span id="orderTotal" style="font-weight:800;color:#1E88E5;font-size:1rem;"></span>
+      <span id="orderTotal" style="font-weight:800;color:#B91C1C;font-size:1rem;"></span>
     </div>
   </div>
   <div class="modal-form" id="orderFormPanel">
@@ -178,10 +178,10 @@
   </div>
   <div class="modal-form" id="nextActionPanel" style="display:none;">
     <p style="color:#374151;font-size:0.9rem;margin-bottom:1rem;">Pesanan berhasil dicatat! Pilih tindakan selanjutnya:</p>
-    <button onclick="downloadReceiptAndClose()" style="width:100%;padding:0.75rem;background:#e3f2fd;color:#1565C0;border:1.5px solid #90caf9;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+    <button onclick="downloadReceiptAndClose()" style="width:100%;padding:0.75rem;background:#fef2f2;color:#991B1B;border:1.5px solid #fecaca;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
       <i class="fa-solid fa-file-pdf"></i> Download Struk PDF
     </button>
-    <button onclick="openWhatsAppOrder()" style="width:100%;padding:0.75rem;background:#25D366;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
+    <button onclick="openWhatsAppOrder()" style="width:100%;padding:0.75rem;background:#ef4444;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;">
       <i class="fa-brands fa-whatsapp" style="font-size:1.2rem;"></i> Chat WhatsApp
     </button>
   </div>
@@ -189,13 +189,13 @@
 
 {{-- ===== CART JAVASCRIPT ===== --}}
 <script>
-// Satu keranjang untuk semua halaman - key default: medikpedia_cart
-const WA = '6285890007359';
+// Satu keranjang untuk semua halaman - key default: sumberindofarmatama_cart
+const WA = '6285248965590';
 const CART_DEFAULT_SETTINGS = {
-  storageKey: 'medikpedia_cart',
-  receiptStoreName: 'MEDIKPEDIA',
-  receiptStoreAddress: 'Jl. Letjen Suprapto No.1, Sumur Batu, Kec. Kemayoran, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10640',
-  receiptFilePrefix: 'struk-medikpedia'
+  storageKey: 'sumberindofarmatama_cart',
+  receiptStoreName: 'SUMBERINDO FARMA TAMA',
+  receiptStoreAddress: 'Komp. Pergudangan Ocean 88 C2-3\nJl. Adisucipto\nArang Limbung\nKec. Sungai Raya\nKab. Kubu Raya\nKalimantan Barat',
+  receiptFilePrefix: 'struk-sumberindofarmatama'
 };
 const CART_CONFIG = Object.assign({}, CART_DEFAULT_SETTINGS, window.cartSettings || {});
 let cart = JSON.parse(localStorage.getItem(CART_CONFIG.storageKey) || '[]');
@@ -280,7 +280,7 @@ function setDiscount(id, value) {
     if (it.discount > 0) {
       previewEl.innerHTML = `<span style="text-decoration:line-through;color:#9ca3af;">${rp(subtotal)}</span>
         <span style="color:#ef4444;font-weight:700;font-size:.78rem;">-${rp(it.discount)}</span>
-        <span style="color:#10b981;font-weight:800;">${rp(afterDisc)}</span>`;
+        <span style="color:#ef4444;font-weight:800;">${rp(afterDisc)}</span>`;
     } else {
       previewEl.innerHTML = '';
     }
@@ -310,14 +310,14 @@ function render() {
     total += (it.price * it.qty) - (it.discount || 0);
     const imgHtml = it.img
       ? `<img src="${it.img}" alt="">`
-      : '<i class="fa-solid fa-pills" style="color:#90caf9;font-size:1.4rem;"></i>';
+      : '<i class="fa-solid fa-pills" style="color:#fecaca;font-size:1.4rem;"></i>';
     html += `<div class="cart-item-row">
       <div class="cart-item-thumb">${imgHtml}</div>
       <div class="cart-item-info">
         <div class="cart-item-name">${it.name}</div>
         <div class="cart-item-price">${rp(it.price)}</div>
         <div class="cart-qty-row">
-          <button class="qty-btn" onclick="changeQty(${it.id},-1)">−</button>
+          <button class="qty-btn" onclick="changeQty(${it.id},-1)">-</button>
           <input type="number" class="qty-num" min="1" value="${it.qty}" onchange="setQty(${it.id}, this.value)"
             style="width:4rem;text-align:center;border:1px solid #d1d5db;border-radius:8px;padding:0.4rem;" />
           <button class="qty-btn" onclick="changeQty(${it.id},1)">+</button>
@@ -338,7 +338,7 @@ function render() {
             />
           </div>
           <div id="disc-preview-${it.id}" style="margin-top:.4rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;min-height:1.2rem;font-size:.84rem;">
-            ${it.discount > 0 ? `<span style="text-decoration:line-through;color:#9ca3af;">${rp(it.price * it.qty)}</span><span style="color:#ef4444;font-weight:700;font-size:.78rem;">-${rp(it.discount)}</span><span style="color:#10b981;font-weight:800;">${rp(it.price * it.qty - it.discount)}</span>` : ''}
+            ${it.discount > 0 ? `<span style="text-decoration:line-through;color:#9ca3af;">${rp(it.price * it.qty)}</span><span style="color:#ef4444;font-weight:700;font-size:.78rem;">-${rp(it.discount)}</span><span style="color:#ef4444;font-weight:800;">${rp(it.price * it.qty - it.discount)}</span>` : ''}
           </div>
         </div>
       </div>
@@ -379,7 +379,7 @@ function openOrder() {
     html += `<div style="padding:0.35rem 0;border-bottom:1px solid #f3f4f6;font-size:0.83rem;">
       <div style="display:flex;justify-content:space-between;gap:0.75rem;">
         <span>${i+1}. ${it.name} <span style="color:#9ca3af;">&times;${it.qty}</span></span>
-        <span style="font-weight:700;color:#1E88E5;">${disc > 0 ? `<span style="text-decoration:line-through;color:#9ca3af;font-size:.78rem;">${rp(sub)}</span> ${rp(afterDisc)}` : rp(sub)}</span>
+        <span style="font-weight:700;color:#B91C1C;">${disc > 0 ? `<span style="text-decoration:line-through;color:#9ca3af;font-size:.78rem;">${rp(sub)}</span> ${rp(afterDisc)}` : rp(sub)}</span>
       </div>`;
     if (disc > 0) html += `<div style="color:#ef4444;font-size:.78rem;">Potongan: -${rp(disc)}</div>`;
     if (it.note)  html += `<div style="margin-top:0.35rem;color:#6b7280;font-size:0.8rem;">Catatan: ${escapeHtml(it.note)}</div>`;
@@ -471,7 +471,7 @@ function buildReceiptPdf(orderData) {
       doc.setFontSize(13);
       doc.text('Apotik Online Terpercaya', leftMargin + receiptWidth / 2, y, { align: 'center' });
       y += 14;
-      doc.text('www.medikpedia.com', leftMargin + receiptWidth / 2, y, { align: 'center' });
+      doc.text('www.sumberindopontianak.com', leftMargin + receiptWidth / 2, y, { align: 'center' });
       y += 16;
     } else {
       y += 16;
@@ -665,14 +665,14 @@ function downloadReceiptAndClose() {
 
 function openWhatsAppOrder() {
   let total = 0;
-  let msg = '*Halo Medikpedia, saya ingin memesan:*\n';
+  let msg = '*Halo Sumberindo Farma Tama, saya ingin memesan:*\n';
   cart.forEach((it, i) => {
     const sub = it.price * it.qty;
     const disc = it.discount || 0;
     const afterDisc = sub - disc;
     total += afterDisc;
     msg += `${i+1}. *${it.name}*\n   Qty: ${it.qty} x ${rp(it.price)} = ${rp(sub)}\n`;
-    if (disc > 0) msg += `   Potongan: -${rp(disc)} → *${rp(afterDisc)}*\n`;
+    if (disc > 0) msg += `   Potongan: -${rp(disc)} ? *${rp(afterDisc)}*\n`;
     if (it.note) msg += `   Catatan: ${it.note}\n`;
   });
   msg += `---\n*Total: ${rp(total)}*\n\n*Data ${window.orderPayload?.buyer_type === 'apotik' ? 'Apotik' : 'Pemesan'}:*\n`;
@@ -700,3 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.head.appendChild(s);
 });
 </script>
+
+
+
+

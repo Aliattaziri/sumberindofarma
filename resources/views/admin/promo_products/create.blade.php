@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Tambah Promo Produk - Admin Medikpedia')
+@section('title', 'Tambah Promo Produk - Admin Sumberindo Farma Tama')
 @section('page-title', '🏷️ Tambah Promo Produk')
 
 @section('styles')
@@ -9,7 +9,7 @@
 .form-label { display:block; font-size:0.82rem; font-weight:700; color:#374151; margin-bottom:0.4rem; }
 .form-label .req { color:#ef4444; }
 .form-control { width:100%; padding:0.65rem 0.9rem; border:1.5px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; color:#374151; transition:border-color 0.2s; background:#fafafa; }
-.form-control:focus { outline:none; border-color:#1E88E5; background:#fff; box-shadow:0 0 0 3px rgba(30,136,229,0.08); }
+.form-control:focus { outline:none; border-color:#B91C1C; background:#fff; box-shadow:0 0 0 3px rgba(220,38,38,0.08); }
 .form-hint { font-size:0.75rem; color:#9ca3af; margin-top:0.3rem; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
 .toggle-wrap { display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem; background:#f8faff; border-radius:0.5rem; border:1.5px solid #e5e7eb; }
@@ -18,19 +18,19 @@
 .toggle-switch input { opacity:0; width:0; height:0; }
 .toggle-slider { position:absolute; inset:0; background:#d1d5db; border-radius:24px; cursor:pointer; transition:0.3s; }
 .toggle-slider::before { content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:0.3s; }
-.toggle-switch input:checked + .toggle-slider { background:#1E88E5; }
+.toggle-switch input:checked + .toggle-slider { background:#B91C1C; }
 .toggle-switch input:checked + .toggle-slider::before { transform:translateX(20px); }
 
 /* Square preview */
 .img-preview-wrap { width:180px; height:180px; border-radius:0.75rem; border:2px dashed #d1d5db; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#f3f4f6; cursor:pointer; transition:all 0.2s; margin-top:0.5rem; }
-.img-preview-wrap:hover { border-color:#90caf9; background:#e3f2fd; }
+.img-preview-wrap:hover { border-color:#fecaca; background:#fef2f2; }
 .img-preview-wrap img { width:100%; height:100%; object-fit:cover; display:none; }
 .img-preview-wrap .placeholder-text { display:flex; flex-direction:column; align-items:center; gap:0.4rem; color:#9ca3af; font-size:0.8rem; text-align:center; padding:1rem; }
 .img-preview-wrap .placeholder-text i { font-size:2rem; }
 
 .btn-actions { display:flex; gap:0.75rem; margin-top:1.5rem; flex-wrap:wrap; }
-.btn-save { padding:0.7rem 2rem; background:#1E88E5; color:#fff; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; }
-.btn-save:hover { background:#1565C0; transform:translateY(-1px); }
+.btn-save { padding:0.7rem 2rem; background:#B91C1C; color:#fff; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:0.4rem; }
+.btn-save:hover { background:#991B1B; transform:translateY(-1px); }
 .btn-back { padding:0.7rem 1.5rem; background:#fff; color:#374151; border:1.5px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; transition:all 0.2s; }
 .btn-back:hover { background:#f9fafb; color:#374151; }
 @media(max-width:600px) { .form-row { grid-template-columns:1fr; } }
@@ -46,7 +46,7 @@
 
 <div class="form-card">
     @if(isset($tableReady) && !$tableReady)
-    <div style="background:#fef3c7;color:#92400e;padding:0.85rem 1.1rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.85rem;">
+    <div style="background:#fee2e2;color:#B91C1C;padding:0.85rem 1.1rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.85rem;">
         <strong>Fitur promo belum aktif.</strong>
         Tabel <code>promo_products</code> belum ada. Jalankan <code>php artisan migrate</code> terlebih dahulu.
     </div>
@@ -143,3 +143,7 @@ function previewImg(input) {
 }
 </script>
 @endsection
+
+
+
+

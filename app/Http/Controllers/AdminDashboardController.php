@@ -9,22 +9,35 @@ use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
+use Illuminate\Support\Facades\Auth;
+
 class AdminDashboardController extends Controller
 {
     public function index()
     {
-        $totalProduk    = Medicine::count();
-        $totalStok      = Medicine::sum('stok');
-        $lowStok        = Medicine::where('stok', '<', 5)->count();
-        $latestProduk   = Medicine::latest()->limit(10)->get();
+        $user = Auth::user();
+        $query = Medicine::query();
+
+        if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
+            $query->where('kategori', $user->outlet_name);
+        }
+
+        $totalProduk    = $query->count();
+        $totalStok      = $query->sum('stok');
+        $lowStok        = (clone $query)->where('stok', '<', 5)->count();
+        $latestProduk   = (clone $query)->latest()->limit(10)->get();
 
         // Per kategori produk
         $categoryColumn = Schema::hasColumn('medicines', 'kategori_produk') ? 'kategori_produk' : 'kategori';
-        $kategoriList = Schema::hasColumn('medicines', 'kategori_produk') ? Companies::LIST : Medicine::whereNotNull('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
+        $kategoriList = Schema::hasColumn('medicines', 'kategori_produk') ? Companies::LIST : $query->whereNotNull('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
 
         $perKategori = [];
         foreach ($kategoriList as $kat) {
-            $perKategori[$kat] = Medicine::where($categoryColumn, $kat)->count();
+            $kategoriQuery = Medicine::where($categoryColumn, $kat);
+            if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
+                $kategoriQuery->where('kategori', $user->outlet_name);
+            }
+            $perKategori[$kat] = $kategoriQuery->count();
         }
 
         $latestBanners = Schema::hasTable('banners') ? Banner::orderBy('urutan')->orderBy('id')->limit(5)->get() : collect();
@@ -42,12 +55,19 @@ class AdminDashboardController extends Controller
 
     public function stats()
     {
+        $user = Auth::user();
+        $query = Medicine::query();
+
+        if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
+            $query->where('kategori', $user->outlet_name);
+        }
+
         $selectColumns = ['id', 'nama_obat', 'kategori', 'harga', 'stok', 'created_at'];
         if (Schema::hasColumn('medicines', 'kategori_produk')) {
             $selectColumns[] = 'kategori_produk';
         }
 
-        $latestProduk = Medicine::latest()->limit(10)
+        $latestProduk = (clone $query)->latest()->limit(10)
             ->get($selectColumns)
             ->map(fn($m) => [
                 'id'              => $m->id,
@@ -60,8 +80,8 @@ class AdminDashboardController extends Controller
             ]);
 
         return response()->json([
-            'total'         => Medicine::count(),
-            'lowStok'       => Medicine::where('stok', '<', 5)->count(),
+            'total'         => (clone $query)->count(),
+            'lowStok'       => (clone $query)->where('stok', '<', 5)->count(),
             'latestProduk'  => $latestProduk,
         ]);
     }

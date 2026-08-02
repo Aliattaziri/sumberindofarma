@@ -2,7 +2,7 @@
 <style>
 /* ===== CATEGORY PILIHAN ===== */
 .category-selection-section {
-    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+    background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
     padding: 2rem 0;
     margin: center;
     border-radius: 0;
@@ -111,11 +111,11 @@
 }
 
 .category-icon.apotik {
-    background: linear-gradient(135deg, #ffb74d, #ff8a65);
+    background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
 .category-icon.pbf {
-    background: linear-gradient(135deg, #66bb6a, #43a047);
+    background: linear-gradient(135deg, #fee2e2, #ef4444);
 }
 
 .category-icon.jasa {
@@ -180,7 +180,7 @@
 
 .dropdown-item i {
     font-size: 1.2rem;
-    color: #1E88E5;
+    color: #B91C1C;
     flex-shrink: 0;
     display: inline-block;
     width: 1.5rem;
@@ -188,15 +188,15 @@
 }
 
 .dropdown-item:hover {
-    background: #f0f9ff;
-    border-left-color: #1E88E5;
+    background: #fef2f2;
+    border-left-color: #B91C1C;
     padding-left: 1.75rem;
-    color: #1E88E5;
+    color: #B91C1C;
     font-weight: 600;
 }
 
 .dropdown-item:hover i {
-    color: #1E88E5;
+    color: #B91C1C;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -461,3 +461,5 @@ window.addEventListener('scroll', function() {
     });
 });
 </script>
+
+

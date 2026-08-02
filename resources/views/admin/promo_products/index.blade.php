@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Promo Produk - Admin Medikpedia')
+@section('title', 'Promo Produk - Admin Sumberindo Farma Tama')
 @section('page-title', '🏷️ Promo Produk')
 
 @section('styles')
@@ -7,31 +7,31 @@
 .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap; }
 .page-header h2 { font-size:1.1rem; font-weight:700; color:#1f2937; margin:0 0 0.2rem; }
 .page-header p  { font-size:0.85rem; color:#6b7280; margin:0; }
-.btn-add { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:#1E88E5; color:#fff; border-radius:0.5rem; font-size:0.875rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
-.btn-add:hover { background:#1565C0; color:#fff; transform:translateY(-1px); }
+.btn-add { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:#B91C1C; color:#fff; border-radius:0.5rem; font-size:0.875rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
+.btn-add:hover { background:#991B1B; color:#fff; transform:translateY(-1px); }
 
 .promo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1.25rem; }
 .promo-card { background:#fff; border-radius:1rem; overflow:hidden; border:1px solid #e5e7eb; box-shadow:0 1px 4px rgba(0,0,0,0.06); transition:box-shadow 0.2s; }
 .promo-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.1); }
-.promo-img-wrap { width:100%; aspect-ratio:1/1; overflow:hidden; background:#e3f2fd; position:relative; }
+.promo-img-wrap { width:100%; aspect-ratio:1/1; overflow:hidden; background:#fef2f2; position:relative; }
 .promo-img { width:100%; height:100%; object-fit:cover; display:block; }
 .promo-body { padding:0.85rem; }
 .promo-title { font-size:0.88rem; font-weight:700; color:#1f2937; margin:0 0 0.2rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .promo-sub   { font-size:0.76rem; color:#6b7280; margin:0 0 0.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .promo-meta  { display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.75rem; }
-.badge-aktif   { padding:0.18rem 0.55rem; border-radius:20px; font-size:0.7rem; font-weight:700; background:#d1fae5; color:#065f46; }
+.badge-aktif   { padding:0.18rem 0.55rem; border-radius:20px; font-size:0.7rem; font-weight:700; background:#fee2e2; color:#065f46; }
 .badge-nonaktif{ padding:0.18rem 0.55rem; border-radius:20px; font-size:0.7rem; font-weight:700; background:#fee2e2; color:#991b1b; }
-.badge-urutan  { padding:0.18rem 0.55rem; border-radius:20px; font-size:0.7rem; font-weight:600; background:#e3f2fd; color:#1565C0; }
+.badge-urutan  { padding:0.18rem 0.55rem; border-radius:20px; font-size:0.7rem; font-weight:600; background:#fef2f2; color:#991B1B; }
 .promo-actions { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; }
-.btn-edit { display:inline-flex; align-items:center; gap:0.25rem; padding:0.35rem 0.7rem; background:#e3f2fd; color:#1565C0; border-radius:0.4rem; font-size:0.75rem; font-weight:600; text-decoration:none; transition:all 0.2s; border:none; cursor:pointer; }
-.btn-edit:hover { background:#1E88E5; color:#fff; }
+.btn-edit { display:inline-flex; align-items:center; gap:0.25rem; padding:0.35rem 0.7rem; background:#fef2f2; color:#991B1B; border-radius:0.4rem; font-size:0.75rem; font-weight:600; text-decoration:none; transition:all 0.2s; border:none; cursor:pointer; }
+.btn-edit:hover { background:#B91C1C; color:#fff; }
 .btn-del  { display:inline-flex; align-items:center; gap:0.25rem; padding:0.35rem 0.7rem; background:#fee2e2; color:#991b1b; border-radius:0.4rem; font-size:0.75rem; font-weight:600; border:none; cursor:pointer; transition:all 0.2s; }
 .btn-del:hover  { background:#ef4444; color:#fff; }
 .btn-toggle { display:inline-flex; align-items:center; gap:0.25rem; padding:0.35rem 0.7rem; border-radius:0.4rem; font-size:0.75rem; font-weight:600; border:none; cursor:pointer; transition:all 0.2s; }
-.btn-toggle-on  { background:#fef3c7; color:#92400e; }
-.btn-toggle-on:hover  { background:#f59e0b; color:#fff; }
-.btn-toggle-off { background:#d1fae5; color:#065f46; }
-.btn-toggle-off:hover { background:#10b981; color:#fff; }
+.btn-toggle-on  { background:#fee2e2; color:#B91C1C; }
+.btn-toggle-on:hover  { background:#ef4444; color:#fff; }
+.btn-toggle-off { background:#fee2e2; color:#065f46; }
+.btn-toggle-off:hover { background:#ef4444; color:#fff; }
 
 .empty-state { text-align:center; padding:4rem 2rem; background:#fff; border-radius:1rem; border:1px solid #e5e7eb; }
 .empty-state i { font-size:3rem; color:#d1d5db; display:block; margin-bottom:1rem; }
@@ -59,12 +59,12 @@
 </div>
 
 @if(session('success'))
-<div style="background:#d1fae5;color:#065f46;padding:0.85rem 1.25rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.875rem;font-weight:600;">
+<div style="background:#fee2e2;color:#065f46;padding:0.85rem 1.25rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.875rem;font-weight:600;">
     <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
 </div>
 @endif
 @if(session('warning'))
-<div style="background:#fef3c7;color:#92400e;padding:0.85rem 1.25rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.875rem;font-weight:600;">
+<div style="background:#fee2e2;color:#B91C1C;padding:0.85rem 1.25rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.875rem;font-weight:600;">
     <i class="fa-solid fa-triangle-exclamation"></i> {{ session('warning') }}
 </div>
 @endif
@@ -154,3 +154,7 @@ async function togglePromo(id, btn) {
 }
 </script>
 @endsection
+
+
+
+

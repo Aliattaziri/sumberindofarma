@@ -1,10 +1,16 @@
-﻿@extends('layouts.frontend')
-@section('title', 'Medikpedia - Apotik Online Terpercaya')
+@extends('layouts.frontend')
+@section('title', 'Sumberindo Farma Tama - Distributor Farmasi Terpercaya')
 @section('styles')
 <style>
 /* ==============================================
    HOME PAGE - Clean GoApotik Style
    ============================================== */
+body {
+    padding-top: var(--navbar-height, 65px) !important;
+}
+main.page-offset {
+    padding-top: 0 !important;
+}
 </style>
 <style>
 /* SEARCH */
@@ -12,7 +18,7 @@
 .search-box {
     display: flex; gap: 0.5rem; background: #fff;
     border-radius: 14px; padding: 0.5rem;
-    box-shadow: 0 2px 16px rgba(30,136,229,0.1);
+    box-shadow: 0 2px 16px rgba(220,38,38,0.1);
     border: 1.5px solid #e5e7eb; max-width: 700px; margin: 0 auto;
 }
 .search-box input {
@@ -21,16 +27,16 @@
 }
 .search-box button {
     padding: 0.55rem 1.4rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
     color: #fff; border: none; border-radius: 10px; cursor: pointer;
     font-weight: 700; font-size: 0.88rem; white-space: nowrap;
     display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s;
 }
-.search-box button:hover { background: linear-gradient(135deg, #1565C0, #0D47A1); }
+.search-box button:hover { background: linear-gradient(135deg, #991B1B, #7F1D1D); }
 </style>
 <style>
 /* QUICK CATEGORY */
-.quick-section { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 0; display: none; }
+.quick-section { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 0; display: block; }
 .quick-row { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 4px; }
 .quick-row::-webkit-scrollbar { height: 3px; }
 .quick-row::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 2px; }
@@ -41,15 +47,15 @@
     border: 1.5px solid #e5e7eb; background: #fff; min-width: 75px;
     transition: all 0.2s; font-size: 0;
 }
-.quick-btn:hover { background: #e3f2fd; border-color: #90caf9; color: #1565C0; }
-.quick-btn.active { background: linear-gradient(135deg,#1E88E5,#1565C0); border-color: transparent; color: #fff; }
+.quick-btn:hover { background: #fef2f2; border-color: #fecaca; color: #991B1B; }
+.quick-btn.active { background: linear-gradient(135deg,#B91C1C,#991B1B); border-color: transparent; color: #fff; }
 .quick-btn i { font-size: 1.25rem; }
 .quick-btn span { font-size: 0.7rem; font-weight: 600; }
 
 /* PROMO CARDS */
 .promo-section { 
     padding: 2.5rem 0; 
-    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+    background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
     width: 100%;
     margin: 0;
     position: relative;
@@ -158,16 +164,16 @@
     position: relative;
     z-index: 2;
 }
-.promo-1 { background: linear-gradient(135deg, #1565C0 0%, #1E88E5 100%); }
-.promo-2 { background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%); }
+.promo-1 { background: linear-gradient(135deg, #991B1B 0%, #B91C1C 100%); }
+.promo-2 { background: linear-gradient(135deg, #991B1B 0%, #ef4444 100%); }
 .promo-3 { background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%); }
 
 .promo-contact {
-    background: linear-gradient(135deg, #1565C0 0%, #1E88E5 100%);
+    background: linear-gradient(135deg, #991B1B 0%, #B91C1C 100%);
 }
 
 .promo-goapotik {
-    background: linear-gradient(135deg, #0066b3 0%, #0099ff 50%, #00d4ff 100%);
+    background: linear-gradient(135deg, #047857 0%, #10b981 45%, #6ee7b7 100%);
 }
 
 .promo-goapotik-logo {
@@ -178,7 +184,7 @@
 }
 
 .promo-pbf {
-    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 60%, #43a047 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 45%, #fde68a 100%);
 }
 
 .promo-pbf-logo {
@@ -225,9 +231,9 @@
 /* SECTION HEADER */
 .sec-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
 .sec-head-left { display: flex; flex-direction: column; gap: 0.25rem; }
-.sec-tag { display: inline-block; background: #e3f2fd; color: #1565C0; padding: 0.2rem 0.75rem; border-radius: 50px; font-size: 0.72rem; font-weight: 600; }
+.sec-tag { display: inline-block; background: #fef2f2; color: #991B1B; padding: 0.2rem 0.75rem; border-radius: 50px; font-size: 0.72rem; font-weight: 600; }
 .sec-title { font-size: 1.2rem; font-weight: 800; color: #1f2937; margin: 0; }
-.sec-link { font-size: 0.82rem; color: #1E88E5; text-decoration: none; font-weight: 600; white-space: nowrap; }
+.sec-link { font-size: 0.82rem; color: #B91C1C; text-decoration: none; font-weight: 600; white-space: nowrap; }
 .sec-link:hover { text-decoration: underline; }
 </style>
 <style>
@@ -239,24 +245,24 @@
     border: 1.5px solid #e5e7eb; display: flex; flex-direction: column;
     transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
-.prod-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(30,136,229,0.12); border-color: #90caf9; }
+.prod-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(220,38,38,0.12); border-color: #fecaca; }
 .prod-img {
     width: 100%; height: 148px;
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden; position: relative;
 }
 .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
 .prod-card:hover .prod-img img { transform: scale(1.06); }
-.prod-img .no-img-icon { font-size: 2.5rem; color: #90caf9; }
+.prod-img .no-img-icon { font-size: 2.5rem; color: #fecaca; }
 .prod-badge-label {
     position: absolute; top: 8px; left: 8px;
-    background: #1E88E5; color: #fff;
+    background: #B91C1C; color: #fff;
     font-size: 0.62rem; font-weight: 700; padding: 0.18rem 0.45rem; border-radius: 6px;
 }
 .prod-badge-grade-a {
     position: absolute; top: 8px; right: 8px;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     color: #fff;
     font-size: 0.62rem; font-weight: 700; padding: 0.2rem 0.5rem;
     border-radius: 6px;
@@ -265,7 +271,7 @@
 }
 .prod-body { padding: 0.85rem; flex: 1; display: flex; flex-direction: column; }
 .prod-brand-tag {
-    font-size: 0.66rem; font-weight: 700; color: #1565C0; background: #e3f2fd;
+    font-size: 0.66rem; font-weight: 700; color: #991B1B; background: #fef2f2;
     display: inline-block; padding: 0.15rem 0.5rem; border-radius: 20px; margin-bottom: 0.4rem;
 }
 .prod-name {
@@ -275,26 +281,26 @@
 }
   .prod-desc { color: #374151; font-size: 0.86rem; margin: 0 0 0.45rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .prod-meta { font-size: 0.72rem; color: #6b7280; margin-bottom: 0.35rem; }
-.prod-price { font-size: 1rem; font-weight: 800; color: #1E88E5; margin-bottom: 0.35rem; }
-.stock-ok  { font-size: 0.65rem; font-weight: 600; color: #065f46; background: #d1fae5; padding: 0.15rem 0.5rem; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem; }
-.stock-low { font-size: 0.65rem; font-weight: 600; color: #92400e; background: #fef3c7; padding: 0.15rem 0.5rem; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem; }
+.prod-price { font-size: 1rem; font-weight: 800; color: #B91C1C; margin-bottom: 0.35rem; }
+.stock-ok  { font-size: 0.65rem; font-weight: 600; color: #065f46; background: #fee2e2; padding: 0.15rem 0.5rem; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem; }
+.stock-low { font-size: 0.65rem; font-weight: 600; color: #B91C1C; background: #fee2e2; padding: 0.15rem 0.5rem; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem; }
 .stock-out { font-size: 0.65rem; font-weight: 600; color: #7f1d1d; background: #fee2e2; padding: 0.15rem 0.5rem; border-radius: 20px; display: inline-block; margin-bottom: 0.6rem; }
 .btn-detail {
     display: block; width: 100%; padding: 0.5rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0); color: #fff;
+    background: linear-gradient(135deg, #B91C1C, #991B1B); color: #fff;
     border: none; border-radius: 9px; cursor: pointer; font-weight: 700;
     font-size: 0.78rem; text-align: center; text-decoration: none; transition: all 0.25s;
 }
-.btn-detail:hover { background: linear-gradient(135deg, #1565C0, #0D47A1); transform: translateY(-1px); color: #fff; }
+.btn-detail:hover { background: linear-gradient(135deg, #991B1B, #7F1D1D); transform: translateY(-1px); color: #fff; }
 .btn-cart {
     display: block; width: 100%; padding: 0.42rem;
-    background: #fff; color: #1E88E5;
-    border: 1.5px solid #1E88E5; border-radius: 9px; cursor: pointer;
+    background: #fff; color: #B91C1C;
+    border: 1.5px solid #B91C1C; border-radius: 9px; cursor: pointer;
     font-weight: 700; font-size: 0.72rem; text-align: center;
     text-decoration: none; transition: all 0.2s; margin-top: 0.4rem;
 }
-.btn-cart:hover { background: #e3f2fd; }
-.btn-cart.added { background: #d1fae5; color: #065f46; border-color: #34d399; }
+.btn-cart:hover { background: #fef2f2; }
+.btn-cart.added { background: #fee2e2; color: #065f46; border-color: #34d399; }
 </style>
 <style>
 /* WHY US */
@@ -308,7 +314,7 @@
 /* CTA */
 .cta-section { padding: 1.25rem 0; }
 .cta-box {
-    background: linear-gradient(135deg, #0D47A1, #1E88E5);
+    background: linear-gradient(135deg, #7F1D1D, #B91C1C);
     border-radius: 20px; padding: 2rem 2.5rem;
     display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
 }
@@ -316,11 +322,11 @@
 .cta-box p  { color: rgba(255,255,255,0.85); font-size: 0.9rem; margin: 0; }
 .btn-wa {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    background: #25D366; color: #fff; padding: 0.75rem 1.75rem;
+    background: #ef4444; color: #fff; padding: 0.75rem 1.75rem;
     border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.95rem;
     transition: all 0.25s; white-space: nowrap; flex-shrink: 0;
 }
-.btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); color: #fff; }
+.btn-wa:hover { background: #991B1B; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); color: #fff; }
 
 /* CATEGORY GRID */
 .cat-section { padding: 1.5rem 0 1rem; }
@@ -331,7 +337,7 @@
     border: 1.5px solid #e5e7eb; text-decoration: none; color: #374151;
     transition: all 0.25s; text-align: center;
 }
-.cat-card:hover { background: #e3f2fd; border-color: #90caf9; color: #1565C0; transform: translateY(-3px); box-shadow: 0 6px 18px rgba(30,136,229,0.1); }
+.cat-card:hover { background: #fef2f2; border-color: #fecaca; color: #991B1B; transform: translateY(-3px); box-shadow: 0 6px 18px rgba(220,38,38,0.1); }
 .cat-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; }
 .cat-card > span { font-size: 0.7rem; font-weight: 600; line-height: 1.3; }
 
@@ -349,22 +355,22 @@
 .about-info p  { font-size: 0.85rem; color: #6b7280; line-height: 1.7; margin: 0 0 0.85rem; }
 .btn-about {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    background: #e3f2fd; color: #1565C0; padding: 0.45rem 1.1rem;
+    background: #fef2f2; color: #991B1B; padding: 0.45rem 1.1rem;
     border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.82rem; transition: all 0.2s;
 }
-.btn-about:hover { background: #1565C0; color: #fff; }
+.btn-about:hover { background: #991B1B; color: #fff; }
 .about-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.65rem; flex-shrink: 0; }
 .about-stat-item { text-align: center; padding: 0.65rem 1rem; background: #f8faff; border-radius: 12px; border: 1px solid #e5e7eb; }
-.about-stat-item .n { font-size: 1.3rem; font-weight: 800; color: #1E88E5; display: block; line-height: 1.2; }
+.about-stat-item .n { font-size: 1.3rem; font-weight: 800; color: #B91C1C; display: block; line-height: 1.2; }
 .about-stat-item .l { font-size: 0.68rem; color: #6b7280; }
-.about-stat-item:nth-child(even) .n { color: #7CB342; }
+.about-stat-item:nth-child(even) .n { color: #ef4444; }
 
 /* CART DRAWER */
 .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .cart-overlay.open { opacity: 1; pointer-events: all; }
 .cart-drawer { position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw; height: 100vh; background: #fff; z-index: 2001; display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,0.15); transition: right 0.35s cubic-bezier(.4,0,.2,1); }
 .cart-drawer.open { right: 0; }
-.cart-head { background: linear-gradient(135deg, #0D47A1, #1E88E5); padding: 1.25rem 1.5rem; color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.cart-head { background: linear-gradient(135deg, #7F1D1D, #B91C1C); padding: 1.25rem 1.5rem; color: #fff; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .cart-head h2 { font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
 .cart-close-btn { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .cart-close-btn:hover { background: rgba(255,255,255,0.35); }
@@ -372,23 +378,23 @@
 .cart-empty-msg { text-align: center; padding: 3rem 1rem; color: #9ca3af; }
 .cart-empty-msg i { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
 .cart-item-row { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.85rem 0; border-bottom: 1px solid #f3f4f6; }
-.cart-item-thumb { width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg,#e3f2fd,#bbdefb); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.cart-item-thumb { width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg,#fef2f2,#fee2e2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .cart-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .cart-item-info { flex: 1; min-width: 0; }
 .cart-item-name { font-size: 0.84rem; font-weight: 700; color: #1f2937; margin-bottom: 0.2rem; line-height: 1.3; }
-.cart-item-price { font-size: 0.8rem; color: #1E88E5; font-weight: 700; }
+.cart-item-price { font-size: 0.8rem; color: #B91C1C; font-weight: 700; }
 .cart-qty-row { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; }
 .qty-btn { width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid #e5e7eb; background: #fff; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #374151; transition: all 0.2s; }
-.qty-btn:hover { border-color: #1E88E5; color: #1E88E5; }
+.qty-btn:hover { border-color: #B91C1C; color: #B91C1C; }
 .qty-num { font-size: 0.85rem; font-weight: 700; min-width: 20px; text-align: center; }
 .cart-item-del { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 0.9rem; padding: 0.2rem; flex-shrink: 0; transition: color 0.2s; }
 .cart-item-del:hover { color: #ef4444; }
 .cart-foot { padding: 1.25rem 1.5rem; border-top: 2px solid #f3f4f6; flex-shrink: 0; background: #fafbff; }
 .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .cart-total-row span { font-size: 0.9rem; color: #6b7280; }
-.cart-total-row strong { font-size: 1.2rem; color: #1E88E5; font-weight: 800; }
-.btn-order-wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.85rem; background: #25D366; color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
-.btn-order-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+.cart-total-row strong { font-size: 1.2rem; color: #B91C1C; font-weight: 800; }
+.btn-order-wa { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.85rem; background: #ef4444; color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s; }
+.btn-order-wa:hover { background: #991B1B; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
 .btn-clear-cart { display: block; width: 100%; padding: 0.5rem; background: none; border: none; color: #9ca3af; font-size: 0.8rem; cursor: pointer; margin-top: 0.5rem; transition: color 0.2s; }
 .btn-clear-cart:hover { color: #ef4444; }
 </style>
@@ -396,7 +402,7 @@
 /* ORDER MODAL */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 3000; }
 .modal-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 92%; max-width: 480px; max-height: 90vh; overflow-y: auto; background: #fff; border-radius: 20px; z-index: 3001; box-shadow: 0 25px 60px rgba(0,0,0,0.25); }
-.modal-head { background: linear-gradient(135deg,#1565C0,#1E88E5); padding: 1.25rem 1.5rem; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
+.modal-head { background: linear-gradient(135deg,#991B1B,#B91C1C); padding: 1.25rem 1.5rem; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; align-items: center; }
 .modal-head h3 { color: #fff; margin: 0; font-size: 1rem; font-weight: 700; }
 .modal-head p { color: rgba(255,255,255,0.8); margin: 0; font-size: 0.75rem; }
 .modal-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
@@ -404,10 +410,10 @@
 .modal-form { padding: 1.25rem 1.5rem; }
 .form-lbl { display: block; font-size: 0.78rem; font-weight: 700; color: #374151; margin-bottom: 0.3rem; }
 .form-inp { width: 100%; padding: 0.6rem 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 0.9rem; outline: none; transition: border-color 0.2s; margin-bottom: 0.75rem; }
-.form-inp:focus { border-color: #1E88E5; }
+.form-inp:focus { border-color: #B91C1C; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .form-error { display: none; background: #fee2e2; color: #7f1d1d; padding: 0.6rem; border-radius: 8px; font-size: 0.8rem; margin-bottom: 0.75rem; }
-.btn-submit-wa { width: 100%; padding: 0.85rem; background: linear-gradient(135deg,#25D366,#1ebe5d); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.btn-submit-wa { width: 100%; padding: 0.85rem; background: linear-gradient(135deg,#ef4444,#991B1B); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 
 /* RESPONSIVE */
 @media (max-width: 992px) {
@@ -468,6 +474,184 @@
     .btn-order-wa { padding: 0.8rem; font-size: 0.92rem; border-radius: 10px; }
     .btn-clear-cart { margin-top: 0.35rem; font-size: 0.75rem; }
 }
+
+.banner-promo-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1rem 2rem;
+}
+
+.banner-promo-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    min-height: 320px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    background: #111;
+    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.16);
+}
+
+.banner-promo-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.6);
+    transition: transform 0.45s ease;
+}
+
+.banner-promo-item:hover .banner-promo-bg {
+    transform: scale(1.04);
+}
+
+.banner-promo-copy {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 320px;
+    padding: 1.75rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.72) 100%);
+}
+
+.banner-promo-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.94);
+    color: #B91C1C;
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin-bottom: 0.75rem;
+}
+
+.banner-promo-item h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 2.5vw, 3rem);
+    line-height: 1.05;
+    color: #fff;
+}
+
+.banner-promo-item p {
+    margin: 0;
+    color: rgba(255,255,255,0.92);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+.banner-promo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.95);
+    color: #B91C1C;
+    font-weight: 700;
+}
+
+    .outlet-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+        z-index: 2100;
+    }
+    .outlet-modal-overlay.open {
+        opacity: 1;
+        visibility: visible;
+    }
+    .outlet-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: min(96vw, 520px);
+        max-height: 90vh;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 30px 90px rgba(0,0,0,0.22);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        z-index: 2101;
+    }
+    .outlet-modal.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    .outlet-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.4rem 1.5rem;
+        border-bottom: 1px solid #f3f4f6;
+    }
+    .outlet-modal-head h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #111827;
+    }
+    .outlet-modal-head p {
+        margin: 0;
+        color: #6b7280;
+        font-size: 0.95rem;
+    }
+    .outlet-modal-close {
+        width: 38px;
+        height: 38px;
+        border: none;
+        border-radius: 50%;
+        background: #f3f4f6;
+        color: #374151;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+    }
+    .outlet-modal-list {
+        max-height: calc(90vh - 108px);
+        overflow-y: auto;
+        padding: 1rem 1.25rem 1.25rem;
+        display: grid;
+        gap: 0.65rem;
+    }
+    .outlet-choice {
+        display: block;
+        padding: 0.95rem 1.1rem;
+        border-radius: 16px;
+        background: #f8f8ff;
+        border: 1px solid #e5e7eb;
+        color: #111827;
+        text-decoration: none;
+        font-weight: 700;
+        transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .outlet-choice:hover {
+        background: #fef2f2;
+        border-color: #fecaca;
+    }
+
+        .banner-promo-copy {
+            min-height: 0;
+            height: 100%;
+            padding: 1.2rem;
+        }
+    }
 </style>
 @endsection
 
@@ -477,250 +661,28 @@
      BANNER PROMO SLIDESHOW
      ============================================================ --}}
 @if($banners->count())
-<div class="banner-slider" id="bannerSlider" style="width: 100%; height: 100%; aspect-ratio: 3998/1224;">
-    <div class="banner-track" id="bannerTrack" style="display: flex; width: 100%; height: 100%;">
-        @foreach($banners as $i => $banner)
-        <div class="banner-slide {{ $i === 0 ? 'active' : '' }}" data-index="{{ $i }}" style="min-width: 100%; width: 100%; height: 100%;">
-            <a href="{{ $banner->url_tujuan ?: '#' }}" class="banner-link" style="display: block; width: 100%; height: 100%;" {{ $banner->url_tujuan ? 'target=_blank' : '' }}>
-                <img src="{{ url('storage/'.$banner->gambar) }}" alt="{{ $banner->judul }}" class="banner-img" loading="{{ $i === 0 ? 'eager' : 'lazy' }}">
-                <div class="banner-overlay">
-                    <div class="banner-text">
-                        <h2 class="banner-title-text">{{ $banner->judul }}</h2>
-                        @if($banner->subjudul)
-                        <p class="banner-sub-text">{{ $banner->subjudul }}</p>
-                        @endif
-                        @if($banner->url_tujuan)
-                        <span class="banner-btn-label">{{ $banner->label_tombol }} <i class="fa-solid fa-arrow-right"></i></span>
-                        @endif
-                    </div>
+    <div class="banner-promo-top">
+        @foreach($banners as $banner)
+            <a href="{{ $banner->url_tujuan ?: 'javascript:void(0)' }}" class="banner-promo-item" target="_blank">
+                <div class="banner-promo-bg" style="background-image: url('{{ $banner->image_url }}');"></div>
+                <div class="banner-promo-copy">
+                    <span class="banner-promo-label">Promo</span>
+                    <h2>{{ $banner->judul }}</h2>
+                    @if(!empty($banner->subjudul))
+                        <p>{{ $banner->subjudul }}</p>
+                    @endif
+                    @if(!empty($banner->url_tujuan))
+                        <span class="banner-promo-btn">{{ $banner->label_tombol ?: 'Lihat Promo' }}</span>
+                    @endif
                 </div>
             </a>
-        </div>
         @endforeach
     </div>
-
-    @if($banners->count() > 1)
-    {{-- Dots --}}
-    <div class="banner-dots">
-        @foreach($banners as $i => $banner)
-        <button class="banner-dot {{ $i === 0 ? 'active' : '' }}" onclick="goToBanner({{ $i }})" aria-label="Slide {{ $i+1 }}"></button>
-        @endforeach
-    </div>
-    @endif
-</div>
+@endif
 
 <style>
-/* ===== BANNER SLIDESHOW ===== */
-.banner-slider {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
-    line-height: 0;
-}
-.banner-search-panel {
-    position: relative;
-    z-index: 2;
-    margin-top: 0;
-    padding: 1rem 0 0.75rem;
-    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 100%);
-    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-    order: 3;
-}
-.banner-search-panel .container {
-    display: flex;
-    justify-content: center;
-}
-.banner-search-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    width: min(100%, 760px);
-    pointer-events: auto;
-}
-.banner-search-box {
-    flex: 1;
-    background: rgba(255,255,255,0.96);
-    border: 1px solid rgba(255,255,255,0.9);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    backdrop-filter: blur(8px);
-}
-.banner-cart-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border: none;
-    border-radius: 999px;
-    background: #7CB342;
-    color: #fff;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.22);
-    cursor: pointer;
-    position: relative;
-}
-.banner-cart-btn:hover { background: #689F38; }
-.banner-cart-btn .cart-badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-}
-.banner-track { position: relative; width: 100%; height: 100%; }
-.banner-slide {
-    display: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.banner-slide.active { display: block; }
-.banner-link { display: block; text-decoration: none; }
-.banner-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-    transition: transform 7s ease;
-}
-.banner-slide.active .banner-img { transform: scale(1.0); }
-.banner-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 80%);
-    display: flex;
-    align-items: center;
-}
-.banner-text {
-    padding: 0 2.5rem;
-    max-width: 560px;
-    line-height: 1.4;
-}
-.banner-title-text {
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    font-weight: 800;
-    color: #fff;
-    margin: 0 0 0.5rem;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    line-height: 1.2;
-}
-.banner-sub-text {
-    font-size: clamp(0.82rem, 1.5vw, 1rem);
-    color: rgba(255,255,255,0.9);
-    margin: 0 0 1rem;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
-.banner-btn-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: #7CB342;
-    color: #fff;
-    padding: 0.55rem 1.25rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    transition: background 0.2s;
-}
-.banner-link:hover .banner-btn-label { background: #689F38; }
-
-/* Nav buttons */
-.banner-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.25);
-    border: none;
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transition: background 0.2s;
-    backdrop-filter: blur(4px);
-}
-.banner-nav:hover { background: rgba(255,255,255,0.45); }
-.banner-prev { left: 1rem; }
-.banner-next { right: 1rem; }
-
-/* Dots */
-.banner-dots {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-    z-index: 10;
-}
-.banner-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.45);
-    border: 1px solid rgba(255,255,255,0.6);
-    cursor: pointer;
-    transition: all 0.3s;
-    padding: 0;
-}
-.banner-dot.active {
-    background: #7CB342;
-    width: 22px;
-    border-radius: 4px;
-    border-color: #7CB342;
-}
-
-@media (max-width: 768px) {
-    .banner-slider { aspect-ratio: 16/9; margin-top: 60px; }
-    .banner-text { padding: 0 1.25rem; max-width: 90%; }
-    .banner-title-text { font-size: 1rem; }
-    .banner-sub-text { display: none; }
-    .banner-btn-label { font-size: 0.75rem; padding: 0.4rem 0.85rem; }
-    .banner-nav { width: 26px; height: 26px; font-size: 0.7rem; top: 50%; }
-    .banner-search-panel { padding: 0.8rem 0 0.6rem; }
-    .banner-search-row { gap: 0.6rem; }
-    .promo-section { padding: 2rem 0; }
-    .promo-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; padding: 0 0.75rem; }
-    .promo-card { padding: 1.5rem 1.25rem; min-height: 180px; flex-direction: column; }
-    .promo-card-content { gap: 1rem; }
-    .promo-card-icon-wrap { width: 70px; height: 70px; border-radius: 16px; font-size: 2.5rem; }
-    .promo-card-text { gap: 0.35rem; }
-    .promo-card > i { font-size: 2.8rem; }
-    .promo-goapotik-logo, .promo-pbf-logo { height: 70px; }
-    .promo-card h4 { font-size: 1.15rem; }
-    .promo-card p { font-size: 0.88rem; }
-}
-@media (max-width: 480px) {
-    .banner-slider { aspect-ratio: 4/3; margin-top: 55px; }
-    .banner-nav { top: 50%; }
-    .banner-prev { left: 0.4rem; }
-    .banner-next { right: 0.4rem; }
-    .banner-search-overlay .container { padding: 0 0.75rem; }
-    .banner-search-row { flex-direction: column; align-items: stretch; gap: 0.5rem; }
-    .banner-cart-btn { width: 100%; height: 46px; border-radius: 999px; }
-    .promo-section { padding: 1.5rem 0; }
-    .promo-grid { grid-template-columns: 1fr; gap: 0.8rem; padding: 0 0.5rem; }
-    .promo-card { padding: 1.25rem; min-height: 140px; flex-direction: column; }
-    .promo-card-content { gap: 0.75rem; }
-    .promo-card-icon-wrap { width: 60px; height: 60px; border-radius: 14px; font-size: 2rem; }
-    .promo-card-text { gap: 0.3rem; }
-    .promo-card > i { font-size: 2.2rem; }
-    .promo-goapotik-logo, .promo-pbf-logo { height: 60px; }
-    .promo-card h4 { font-size: 1rem; margin: 0; }
-    .promo-card p { font-size: 0.8rem; }
-    .pbf-subtitle { font-size: 0.68rem; }
-    .banner-search-panel { padding: 0.6rem 0 0.5rem; }
-    .banner-search-box input { font-size: 0.9rem; }
-    .banner-search-box button { font-size: 0.75rem; padding: 0.6rem 1rem; }
-}
-
 .search-engine-section {
-    background: linear-gradient(135deg, #0D47A1 0%, #1565C0 50%, #1E88E5 100%);
+    background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
     padding: 2.5rem 0;
     margin: 0;
     box-shadow: 0 8px 32px rgba(13, 71, 161, 0.2);
@@ -782,7 +744,7 @@
 
 .search-engine-box button {
     padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -799,7 +761,7 @@
 }
 
 .search-engine-box button:hover {
-    background: linear-gradient(135deg, #1565C0, #0D47A1);
+    background: linear-gradient(135deg, #991B1B, #7F1D1D);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(30, 136, 229, 0.4);
 }
@@ -809,7 +771,7 @@
     align-items: center;
     gap: 0.6rem;
     background: #fff;
-    color: #1E88E5;
+    color: #B91C1C;
     padding: 0.75rem 1.75rem;
     border-radius: 50px;
     text-decoration: none;
@@ -905,85 +867,33 @@
 }
 </style>
 
-<script>
-(function() {
-    let current = 0;
-    const slides = document.querySelectorAll('.banner-slide');
-    const dots   = document.querySelectorAll('.banner-dot');
-    const total  = slides.length;
-    let timer;
-
-    function show(idx) {
-        slides[current].classList.remove('active');
-        if (dots[current]) dots[current].classList.remove('active');
-        current = (idx + total) % total;
-        slides[current].classList.add('active');
-        if (dots[current]) dots[current].classList.add('active');
-    }
-
-    function startTimer() {
-        clearInterval(timer);
-        if (total > 1) timer = setInterval(() => show(current + 1), 4500);
-    }
-
-    window.slideBanner = function(dir) { show(current + dir); startTimer(); };
-    window.goToBanner  = function(idx) { show(idx); startTimer(); };
-
-    startTimer();
-
-    // Pause on hover
-    const slider = document.getElementById('bannerSlider');
-    if (slider) {
-        slider.addEventListener('mouseenter', () => clearInterval(timer));
-        slider.addEventListener('mouseleave', startTimer);
-    }
-})();
-</script>
-@endif
-
-{{-- QUICK CATEGORY --}}
-<div class="quick-section">
-  <div class="container">
-    <div class="quick-row">
-      <a href="{{ route('products.index') }}" class="quick-btn active"><i class="fa-solid fa-th-large"></i><span>Semua</span></a>
-      <a href="{{ route('products.pbf') }}" class="quick-btn"><i class="fa-solid fa-box" style="color:#f59e0b;"></i><span>PBF</span></a>
-      <a href="{{ route('products.apotek') }}" class="quick-btn"><i class="fa-solid fa-store" style="color:#059669;"></i><span>Apotek</span></a>
-      <a href="{{ route('products.index') }}?kategori_produk=OBAT" class="quick-btn"><i class="fa-solid fa-pills" style="color:#1E88E5;"></i><span>Obat</span></a>
-      <a href="{{ route('products.index') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="quick-btn"><i class="fa-solid fa-spa" style="color:#e91e8c;"></i><span>Skincare</span></a>
-      <a href="{{ route('products.index') }}?kategori_produk=ALAT+KESEHATAN" class="quick-btn"><i class="fa-solid fa-stethoscope" style="color:#0288d1;"></i><span>ALKES</span></a>
-    </div>
-  </div>
-</div>
-
 {{-- PROMO --}}
 <div class="promo-section">
   <div class="container">
     <div class="promo-grid">
-      <a href="{{ route('contact') }}" class="promo-card promo-contact">
+      <a href="{{ route('products.pbf') }}" class="promo-card promo-contact">
         <div class="promo-card-content">
-          <div class="promo-card-icon-wrap">
-            <i class="fa-solid fa-headset"></i>
-          </div>
+          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
-            <h4>Hubungi Kami</h4>
-            <p>Butuh bantuan? Kontak tim Medikpedia sekarang.</p>
+            <h4>PBF</h4>
+            <p>Jelajahi produk PBF terbaik untuk mitra apotek dan distributor.</p>
           </div>
         </div>
       </a>
-      <a href="https://store.goapotik.com/penjual/apotek-medikpedia" target="_blank" rel="noopener" class="promo-card promo-goapotik">
+      <a href="{{ route('products.apotek') }}" class="promo-card promo-goapotik">
         <div class="promo-card-content">
-          <img src="{{ asset('LOGO GOAPOTIK.png') }}" alt="GoApotik" class="promo-goapotik-logo">
+          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
-            <h4>GoApotik</h4>
-            <p>Kunjungi toko kami di Go Apotik.</p>
+            <h4>Apotek Medistra</h4>
+            <p>Kunjungi toko kami di Apotek Medistra.</p>
           </div>
         </div>
       </a>
-      <a href="{{ route('products.pbf') }}" class="promo-card promo-pbf">
+      <a href="javascript:void(0)" onclick="openAlfaOutletModal()" class="promo-card promo-pbf">
         <div class="promo-card-content">
-          <img src="{{ asset('LOGO SURYA SHARONE.png') }}" alt="PT Surya Sharone Abadi" class="promo-pbf-logo">
+          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-pbf-logo">
           <div class="promo-card-text">
-            <h4>PBF<br><span class="pbf-subtitle">PT.SURYA SHARONE ABADI</span></h4>
+            <h4>Apotek Alfa Group</h4>
             <p>Jelajahi katalog produk PBF terlengkap kami.</p>
           </div>
         </div>
@@ -991,246 +901,6 @@
     </div>
   </div>
 </div>
-
-{{-- KATEGORI PILIHAN --}}
-@include('components.category-selection')
-
-<div class="search-engine-section">
-    <div class="container">
-        <div class="search-engine-wrapper">
-            <form method="GET" action="{{ route('products.index') }}" class="search-engine-box">
-                <i class="fa-solid fa-magnifying-glass" style="color: #9ca3af; padding: 0 0.5rem; font-size: 1.05rem; flex-shrink: 0;"></i>
-                <input type="text" name="search" placeholder="Cari obat, vitamin, skincare, ALKES...">
-                <button type="submit">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <span>Cari</span>
-                </button>
-            </form>
-            <button class="cart-btn-home" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.index') }}';}">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span>Keranjang</span>
-                <span class="cart-badge-home" id="cartBadgeHome">0</span>
-            </button>
-        </div>
-    </div>
-</div>
-
-<style>
-/* ===== FEATURED CAROUSEL ===== */
-.featured-section { padding: 3rem 0; }
-.featured-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 1.5rem; flex-wrap: wrap; gap: .75rem;
-}
-.featured-nav {
-    display: flex; align-items: center; gap: .5rem;
-}
-.featured-nav-btn {
-    width: 38px; height: 38px; border-radius: 50%;
-    border: 2px solid #e5e7eb; background: #fff;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: #374151; font-size: .85rem;
-    transition: all .2s; flex-shrink: 0;
-}
-.featured-nav-btn:hover,
-.featured-nav-btn.active-page { border-color: #1E88E5; background: #1E88E5; color: #fff; }
-.featured-nav-btn:disabled { opacity: .35; cursor: not-allowed; }
-
-/* Track geser */
-.featured-track-wrap {
-    overflow: hidden;
-    border-radius: 16px;
-}
-.featured-track {
-    display: flex;
-    gap: 1rem;
-    transition: transform .4s cubic-bezier(.25,.8,.25,1);
-    will-change: transform;
-}
-
-/* Card di carousel — lebar tetap */
-.featured-track .prod-card {
-    flex: 0 0 calc(20% - .8rem); /* 5 per baris desktop */
-    min-width: 0;
-}
-
-/* Dots */
-.featured-dots {
-    display: flex; justify-content: center; gap: .5rem; margin-top: 1.25rem;
-}
-.featured-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #d1d5db; border: none; cursor: pointer;
-    transition: all .25s; padding: 0;
-}
-.featured-dot.active { background: #1E88E5; width: 24px; border-radius: 4px; }
-
-/* CTA bawah */
-.featured-cta { text-align: center; margin-top: 1.75rem; }
-
-/* ===== MOBILE: 4 card terlihat, sisa geser ===== */
-@media (max-width: 768px) {
-    .featured-track .prod-card {
-        flex: 0 0 calc(50% - .5rem); /* 2 per baris → 4 visible */
-    }
-    .featured-nav { display: none; } /* sembunyikan tombol prev/next di mobile */
-    .featured-track-wrap { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-    .featured-track { transition: none; }
-    .featured-track .prod-card { scroll-snap-align: start; }
-}
-@media (max-width: 480px) {
-    .featured-track .prod-card {
-        flex: 0 0 calc(50% - .5rem);
-    }
-}
-</style>
-
-<section class="featured-section">
-  <div class="container">
-    <div class="featured-header">
-      <div class="sec-head-left">
-        <span class="sec-tag">🔥 Terlaris</span>
-        <h2 class="sec-title" style="margin:0;">Produk Unggulan</h2>
-      </div>
-      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-        @php $totalPages = ceil($featuredProducts->count() / 10); @endphp
-        @if($featuredProducts->count() > 0)
-        <div class="featured-nav">
-          <button class="featured-nav-btn" id="featPrev" onclick="featMove(-1)" disabled>
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <span id="featPageInfo" style="font-size:.82rem;color:#6b7280;min-width:50px;text-align:center;">1 / {{ $totalPages }}</span>
-          <button class="featured-nav-btn" id="featNext" onclick="featMove(1)" {{ $totalPages <= 1 ? 'disabled' : '' }}>
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-        @endif
-        <a href="{{ route('products.index') }}" class="sec-link">Lihat Semua <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </div>
-
-    @if($featuredProducts->count() > 0)
-    <div class="featured-track-wrap" id="featWrap">
-      <div class="featured-track" id="featTrack">
-        @foreach($featuredProducts as $med)
-        <div class="prod-card">
-          <div class="prod-img">
-            @if($med->gambar)
-              <img src="{{ url('storage/'.$med->gambar) }}" alt="{{ $med->nama_obat }}" loading="lazy">
-            @else
-              <i class="fa-solid fa-pills no-img-icon"></i>
-            @endif
-            @if($med->kategori_produk)
-              <span class="prod-badge-label">{{ $med->kategori_produk==='SKINCARE & KOSMETIK'?'✨':($med->kategori_produk==='ALAT KESEHATAN'?'🩺':'💊') }}</span>
-            @endif
-          </div>
-          <div class="prod-body">
-            @if($med->kategori)<span class="prod-brand-tag">{{ $med->kategori }}</span>@endif
-            <h3 class="prod-name">{{ $med->nama_obat }}</h3>
-            <div class="prod-price">{{ $med->getFormattedPrice() }}</div>
-            @if($med->sediaan_label)
-              <div style="font-size:0.75rem;color:#6b7280;margin-bottom:0.35rem;display:flex;align-items:center;gap:0.35rem;">
-                <i class="fa-solid fa-cube"></i> <span>{{ $med->sediaan_label }}</span>
-              </div>
-            @endif
-            @if($med->stok > 10)
-              <span class="stock-ok"><i class="fa-solid fa-circle-check"></i> Stok Tersedia</span>
-            @elseif($med->stok > 0)
-              <span class="stock-low"><i class="fa-solid fa-triangle-exclamation"></i> Sisa {{ $med->stok }}</span>
-            @else
-              <span class="stock-out"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
-            @endif
-            <a href="{{ route('medicines.show', $med->id) }}" class="btn-detail">Lihat Detail <i class="fa-solid fa-arrow-right"></i></a>
-            @if($med->stok > 0)
-            <button class="btn-cart" onclick="addToCart({{ $med->id }},'{{ addslashes($med->nama_obat) }}',{{ $med->harga }},'{{ $med->gambar ? url('storage/'.$med->gambar) : '' }}','{{ addslashes($med->brand ?: $med->kategori) }}',this)">
-              <i class="fa-solid fa-cart-plus"></i> Keranjang
-            </button>
-            @endif
-          </div>
-        </div>
-        @endforeach
-      </div>
-    </div>
-
-    {{-- Dots pagination --}}
-    @if($totalPages > 1)
-    <div class="featured-dots" id="featDots">
-      @for($i = 0; $i < $totalPages; $i++)
-        <button class="featured-dot {{ $i===0?'active':'' }}" onclick="featGoTo({{ $i }})"></button>
-      @endfor
-    </div>
-    @endif
-
-    @else
-    <div style="text-align:center;padding:3rem;background:#fff;border-radius:16px;border:1px solid #e5e7eb;">
-      <i class="fa-solid fa-box-open" style="font-size:3rem;color:#d1d5db;display:block;margin-bottom:1rem;"></i>
-      <p style="color:#6b7280;margin:0;">Belum ada produk tersedia saat ini.</p>
-    </div>
-    @endif
-
-    <div class="featured-cta">
-      <a href="{{ route('products.index') }}" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 2.25rem;background:linear-gradient(135deg,#1E88E5,#1565C0);color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.9rem;transition:all 0.25s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-        <i class="fa-solid fa-pills"></i> Lihat Semua Produk
-      </a>
-    </div>
-  </div>
-</section>
-
-<script>
-(function () {
-    const ITEMS_PER_PAGE = 10;
-    let currentPage = 0;
-    const track = document.getElementById('featTrack');
-    const wrap  = document.getElementById('featWrap');
-    const dots  = document.querySelectorAll('.featured-dot');
-    const prevBtn = document.getElementById('featPrev');
-    const nextBtn = document.getElementById('featNext');
-    const pageInfo = document.getElementById('featPageInfo');
-
-    if (!track) return;
-
-    const cards  = track.querySelectorAll('.prod-card');
-    const total  = cards.length;
-    const pages  = Math.ceil(total / ITEMS_PER_PAGE);
-
-    function getCardWidth() {
-        if (!cards.length) return 0;
-        const style = getComputedStyle(track);
-        const gap   = parseFloat(style.gap) || 16;
-        return cards[0].getBoundingClientRect().width + gap;
-    }
-
-    function goTo(page) {
-        if (page < 0 || page >= pages) return;
-        currentPage = page;
-
-        // Geser track sebesar (page * 10 cards)
-        const cardW  = getCardWidth();
-        const offset = currentPage * ITEMS_PER_PAGE * cardW;
-        track.style.transform = `translateX(-${offset}px)`;
-
-        // Update dots
-        dots.forEach((d, i) => d.classList.toggle('active', i === currentPage));
-
-        // Update nav buttons
-        if (prevBtn) prevBtn.disabled = currentPage === 0;
-        if (nextBtn) nextBtn.disabled = currentPage >= pages - 1;
-        if (pageInfo) pageInfo.textContent = (currentPage + 1) + ' / ' + pages;
-    }
-
-    window.featMove = function (dir) { goTo(currentPage + dir); };
-    window.featGoTo = function (p)   { goTo(p); };
-
-    // Touch / swipe support
-    let touchStartX = 0;
-    wrap && wrap.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-    wrap && wrap.addEventListener('touchend', e => {
-        const diff = touchStartX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 50) goTo(currentPage + (diff > 0 ? 1 : -1));
-    });
-})();
-</script>
-
 
 {{-- PROMO PRODUK --}}
 @if(isset($promoProducts) && $promoProducts->count())
@@ -1240,7 +910,7 @@
    ============================================= */
 .promo-products-section {
     padding: 3rem 0;
-    background: linear-gradient(135deg, #1E88E5 0%, #2e7d32 100%);
+    background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
     position: relative;
     overflow: hidden;
     border-top: none;
@@ -1282,7 +952,6 @@
     letter-spacing: -0.5px;
 }
 
-/* Horizontal scroll grid */
 .promo-products-track-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -1319,7 +988,6 @@
     padding: 0.5rem 0;
 }
 
-/* Individual promo photo card — Clean Design */
 .promo-photo-card {
     width: 165px;
     height: 165px;
@@ -1352,7 +1020,6 @@
 
 .promo-photo-card:hover img { transform: scale(1.08); }
 
-/* Simple overlay on hover */
 .promo-photo-card::before {
     content: '';
     position: absolute;
@@ -1365,7 +1032,6 @@
 
 .promo-photo-card:hover::before { opacity: 1; }
 
-/* Star badge */
 .promo-photo-card::after {
     content: '★';
     position: absolute;
@@ -1444,6 +1110,244 @@
 </section>
 @endif
 
+<div class="search-engine-section">
+    <div class="container">
+        <div class="search-engine-wrapper">
+            <form method="GET" action="{{ route('products.index') }}" class="search-engine-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: #9ca3af; padding: 0 0.5rem; font-size: 1.05rem; flex-shrink: 0;"></i>
+                <input type="text" name="search" placeholder="Cari obat, vitamin, skincare, ALKES...">
+                <button type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Cari</span>
+                </button>
+            </form>
+            <button class="cart-btn-home" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.index') }}';}">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Keranjang</span>
+                <span class="cart-badge-home" id="cartBadgeHome">0</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ===== FEATURED CAROUSEL ===== */
+.featured-section { padding: 3rem 0; }
+.featured-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.5rem; flex-wrap: wrap; gap: .75rem;
+}
+.featured-nav {
+    display: flex; align-items: center; gap: .5rem;
+}
+.featured-nav-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 2px solid #e5e7eb; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: #374151; font-size: .85rem;
+    transition: all .2s; flex-shrink: 0;
+}
+.featured-nav-btn:hover,
+.featured-nav-btn.active-page { border-color: #B91C1C; background: #B91C1C; color: #fff; }
+.featured-nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* Track geser */
+.featured-track-wrap {
+    overflow: hidden;
+    border-radius: 16px;
+}
+.featured-track {
+    display: flex;
+    gap: 1rem;
+    transition: transform .4s cubic-bezier(.25,.8,.25,1);
+    will-change: transform;
+}
+
+/* Card di carousel — lebar tetap */
+.featured-track .prod-card {
+    flex: 0 0 calc(20% - .8rem); /* 5 per baris desktop */
+    min-width: 0;
+}
+
+/* Dots */
+.featured-dots {
+    display: flex; justify-content: center; gap: .5rem; margin-top: 1.25rem;
+}
+.featured-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #d1d5db; border: none; cursor: pointer;
+    transition: all .25s; padding: 0;
+}
+.featured-dot.active { background: #B91C1C; width: 24px; border-radius: 4px; }
+
+/* CTA bawah */
+.featured-cta { text-align: center; margin-top: 1.75rem; }
+
+/* ===== MOBILE: 4 card terlihat, sisa geser ===== */
+@media (max-width: 768px) {
+    .featured-track .prod-card {
+        flex: 0 0 calc(50% - .5rem); /* 2 per baris → 4 visible */
+    }
+    .featured-nav { display: none; } /* sembunyikan tombol prev/next di mobile */
+    .featured-track-wrap { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .featured-track { transition: none; }
+    .featured-track .prod-card { scroll-snap-align: start; }
+}
+@media (max-width: 480px) {
+    .featured-track .prod-card {
+        flex: 0 0 calc(50% - .5rem);
+    }
+}
+</style>
+
+<section class="featured-section">
+  <div class="container">
+    <div class="featured-header">
+      <div class="sec-head-left">
+        <span class="sec-tag">🔥 Terlaris</span>
+        <h2 class="sec-title" style="margin:0;">Produk Unggulan</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        @php $totalPages = ceil($featuredProducts->count() / 10); @endphp
+        @if($featuredProducts->count() > 0)
+        <div class="featured-nav">
+          <button class="featured-nav-btn" id="featPrev" onclick="featMove(-1)" disabled>
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <span id="featPageInfo" style="font-size:.82rem;color:#6b7280;min-width:50px;text-align:center;">1 / {{ $totalPages }}</span>
+          <button class="featured-nav-btn" id="featNext" onclick="featMove(1)" {{ $totalPages <= 1 ? 'disabled' : '' }}>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        @endif
+        <a href="{{ route('products.index') }}" class="sec-link">Lihat Semua <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    @if($featuredProducts->count() > 0)
+    <div class="featured-track-wrap" id="featWrap">
+      <div class="featured-track" id="featTrack">
+        @foreach($featuredProducts as $med)
+        <div class="prod-card">
+          <div class="prod-img">
+            @if($med->gambar)
+              <img src="{{ $med->image_url }}" alt="{{ $med->nama_obat }}" loading="lazy">
+            @else
+              <i class="fa-solid fa-pills no-img-icon"></i>
+            @endif
+            @if($med->kategori_produk)
+              <span class="prod-badge-label">{{ $med->kategori_produk==='SKINCARE & KOSMETIK'?'✨':($med->kategori_produk==='ALAT KESEHATAN'?'🩺':'💊') }}</span>
+            @endif
+          </div>
+          <div class="prod-body">
+            @if($med->kategori)
+              <div class="prod-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.35rem;font-weight:600;">Toko: {{ $med->kategori }}</div>
+            @endif
+            <h3 class="prod-name">{{ $med->nama_obat }}</h3>
+            <div class="prod-price">{{ $med->getFormattedPrice() }}</div>
+            @if($med->sediaan_label)
+              <div style="font-size:0.75rem;color:#6b7280;margin-bottom:0.35rem;display:flex;align-items:center;gap:0.35rem;">
+                <i class="fa-solid fa-cube"></i> <span>{{ $med->sediaan_label }}</span>
+              </div>
+            @endif
+            @if($med->stok > 10)
+              <span class="stock-ok"><i class="fa-solid fa-circle-check"></i> Stok Tersedia</span>
+            @elseif($med->stok > 0)
+              <span class="stock-low"><i class="fa-solid fa-triangle-exclamation"></i> Sisa {{ $med->stok }}</span>
+            @else
+              <span class="stock-out"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
+            @endif
+            <a href="{{ route('medicines.show', $med->id) }}" class="btn-detail">Lihat Detail <i class="fa-solid fa-arrow-right"></i></a>
+            @if($med->stok > 0)
+            <button class="btn-cart" onclick="addToCart({{ $med->id }},'{{ addslashes($med->nama_obat) }}',{{ $med->harga }},'{{ $med->gambar ? $med->image_url : '' }}','{{ addslashes($med->brand ?: $med->kategori) }}',this)">
+              <i class="fa-solid fa-cart-plus"></i> Keranjang
+            </button>
+            @endif
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+
+    {{-- Dots pagination --}}
+    @if($totalPages > 1)
+    <div class="featured-dots" id="featDots">
+      @for($i = 0; $i < $totalPages; $i++)
+        <button class="featured-dot {{ $i===0?'active':'' }}" onclick="featGoTo({{ $i }})"></button>
+      @endfor
+    </div>
+    @endif
+
+    @else
+    <div style="text-align:center;padding:3rem;background:#fff;border-radius:16px;border:1px solid #e5e7eb;">
+      <i class="fa-solid fa-box-open" style="font-size:3rem;color:#d1d5db;display:block;margin-bottom:1rem;"></i>
+      <p style="color:#6b7280;margin:0;">Belum ada produk tersedia saat ini.</p>
+    </div>
+    @endif
+
+    <div class="featured-cta">
+      <a href="{{ route('products.index') }}" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 2.25rem;background:linear-gradient(135deg,#B91C1C,#991B1B);color:#fff;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.9rem;transition:all 0.25s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <i class="fa-solid fa-pills"></i> Lihat Semua Produk
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+    const ITEMS_PER_PAGE = 10;
+    let currentPage = 0;
+    const track = document.getElementById('featTrack');
+    const wrap  = document.getElementById('featWrap');
+    const dots  = document.querySelectorAll('.featured-dot');
+    const prevBtn = document.getElementById('featPrev');
+    const nextBtn = document.getElementById('featNext');
+    const pageInfo = document.getElementById('featPageInfo');
+
+    if (!track) return;
+
+    const cards  = track.querySelectorAll('.prod-card');
+    const total  = cards.length;
+    const pages  = Math.ceil(total / ITEMS_PER_PAGE);
+
+    function getCardWidth() {
+        if (!cards.length) return 0;
+        const style = getComputedStyle(track);
+        const gap   = parseFloat(style.gap) || 16;
+        return cards[0].getBoundingClientRect().width + gap;
+    }
+
+    function goTo(page) {
+        if (page < 0 || page >= pages) return;
+        currentPage = page;
+
+        // Geser track sebesar (page * 10 cards)
+        const cardW  = getCardWidth();
+        const offset = currentPage * ITEMS_PER_PAGE * cardW;
+        track.style.transform = `translateX(-${offset}px)`;
+
+        // Update dots
+        dots.forEach((d, i) => d.classList.toggle('active', i === currentPage));
+
+        // Update nav buttons
+        if (prevBtn) prevBtn.disabled = currentPage === 0;
+        if (nextBtn) nextBtn.disabled = currentPage >= pages - 1;
+        if (pageInfo) pageInfo.textContent = (currentPage + 1) + ' / ' + pages;
+    }
+
+    window.featMove = function (dir) { goTo(currentPage + dir); };
+    window.featGoTo = function (p)   { goTo(p); };
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    wrap && wrap.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    wrap && wrap.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) goTo(currentPage + (diff > 0 ? 1 : -1));
+    });
+})();
+</script>
+
 
 {{-- WHY US --}}
 <style>
@@ -1453,7 +1357,7 @@
 .why-cards-section {
     margin-top: 0;
     padding: 5rem 0 5.5rem;
-    background: linear-gradient(160deg, #f0f7ff 0%, #eef5ff 50%, #f6fbff 100%);
+    background: linear-gradient(160deg, #fef2f2 0%, #eef5ff 50%, #f6fbff 100%);
     position: relative;
     overflow: hidden;
 }
@@ -1462,7 +1366,7 @@
     position: absolute;
     top: -120px; left: -120px;
     width: 420px; height: 420px;
-    background: radial-gradient(circle, rgba(30,136,229,.10) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,.10) 0%, transparent 70%);
     pointer-events: none;
 }
 .why-cards-section::after {
@@ -1470,7 +1374,7 @@
     position: absolute;
     bottom: -100px; right: -80px;
     width: 360px; height: 360px;
-    background: radial-gradient(circle, rgba(124,179,66,.09) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(220,38,38,.09) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -1481,13 +1385,13 @@
 }
 .why-section-tag {
     display: inline-flex; align-items: center; gap: .45rem;
-    background: linear-gradient(135deg, #1E88E5, #1565C0);
+    background: linear-gradient(135deg, #B91C1C, #991B1B);
     color: #fff;
     padding: .45rem 1.2rem;
     border-radius: 999px;
     font-size: .8rem; font-weight: 700;
     letter-spacing: .04em;
-    box-shadow: 0 6px 20px rgba(30,136,229,.3);
+    box-shadow: 0 6px 20px rgba(220,38,38,.3);
     margin-bottom: .85rem;
 }
 .why-section-title {
@@ -1534,15 +1438,15 @@
     height: 4px;
     border-radius: 20px 20px 0 0;
 }
-.why-card:nth-child(1)::before { background: linear-gradient(90deg, #1E88E5 0%, #64b5f6 100%); }
-.why-card:nth-child(2)::before { background: linear-gradient(90deg, #2e7d32 0%, #66bb6a 100%); }
-.why-card:nth-child(3)::before { background: linear-gradient(90deg, #e65100 0%, #ffb74d 100%); }
+.why-card:nth-child(1)::before { background: linear-gradient(90deg, #B91C1C 0%, #ef4444 100%); }
+.why-card:nth-child(2)::before { background: linear-gradient(90deg, #991B1B 0%, #ef4444 100%); }
+.why-card:nth-child(3)::before { background: linear-gradient(90deg, #b91c1c 0%, #ef4444 100%); }
 
 /* Hover lift */
 .why-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 48px rgba(15,23,42,.12), 0 4px 12px rgba(15,23,42,.06);
-    border-color: rgba(30,136,229,.25);
+    border-color: rgba(220,38,38,.25);
 }
 
 /* Icon circle */
@@ -1556,9 +1460,9 @@
     transition: transform .3s ease;
 }
 .why-card:hover .why-card-icon-wrap { transform: scale(1.08) rotate(-4deg); }
-.why-card:nth-child(1) .why-card-icon-wrap { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #1565C0; }
-.why-card:nth-child(2) .why-card-icon-wrap { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); color: #2e7d32; }
-.why-card:nth-child(3) .why-card-icon-wrap { background: linear-gradient(135deg, #fff3e0, #ffe0b2); color: #e65100; }
+.why-card:nth-child(1) .why-card-icon-wrap { background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #991B1B; }
+.why-card:nth-child(2) .why-card-icon-wrap { background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #991B1B; }
+.why-card:nth-child(3) .why-card-icon-wrap { background: linear-gradient(135deg, #fef2f2, #ffe0b2); color: #B91C1C; }
 
 /* Title */
 .why-card h4 {
@@ -1586,9 +1490,9 @@
     padding: .4rem .85rem;
     border-radius: 999px;
 }
-.why-card:nth-child(1) .why-card-badge { background: #e3f2fd; color: #1565C0; }
-.why-card:nth-child(2) .why-card-badge { background: #e8f5e9; color: #1b5e20; }
-.why-card:nth-child(3) .why-card-badge { background: #fff3e0; color: #bf360c; }
+.why-card:nth-child(1) .why-card-badge { background: #fef2f2; color: #991B1B; }
+.why-card:nth-child(2) .why-card-badge { background: #fef2f2; color: #991B1B; }
+.why-card:nth-child(3) .why-card-badge { background: #fef2f2; color: #bf360c; }
 
 /* ---- Responsive ---- */
 @media (max-width: 900px) {
@@ -1640,7 +1544,7 @@
       <div>
         <span class="why-section-tag"><i class="fa-solid fa-star"></i> Kenapa Pilih Kami?</span>
       </div>
-      <h2 class="why-section-title">Keunggulan Medikpedia</h2>
+      <h2 class="why-section-title">Keunggulan Sumberindo Farma Tama</h2>
       <p class="why-section-sub">Kami hadir sebagai mitra terpercaya untuk kebutuhan farmasi Anda</p>
     </div>
 
@@ -1688,7 +1592,7 @@
         <h3>💬 Mau pesan via WhatsApp?</h3>
         <p>Tim kami siap bantu proses pesanan Anda dengan cepat & mudah.</p>
       </div>
-      <a href="https://wa.me/6285890007359?text=Halo%20Medikpedia%2C%20saya%20ingin%20memesan%20produk." target="_blank" class="btn-wa">
+      <a href="https://wa.me/6285248965590?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20memesan%20produk." target="_blank" class="btn-wa">
         <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i> Chat WhatsApp
       </a>
     </div>
@@ -1706,27 +1610,15 @@
     </div>
     <div class="cat-grid">
       <a href="{{ route('products.pbf') }}" class="cat-card">
-        <div class="cat-icon" style="background:#fef3c7;"><i class="fa-solid fa-box" style="color:#f59e0b;"></i></div>
+        <div class="cat-icon" style="background:#fee2e2;"><i class="fa-solid fa-box" style="color:#ef4444;"></i></div>
         <span>PBF</span>
       </a>
-      <a href="{{ route('products.apotek') }}" class="cat-card">
-        <div class="cat-icon" style="background:#d1fae5;"><i class="fa-solid fa-store" style="color:#059669;"></i></div>
-        <span>Apotek</span>
-      </a>
       <a href="{{ route('products.index') }}?kategori_produk=OBAT" class="cat-card">
-        <div class="cat-icon" style="background:#e3f2fd;"><i class="fa-solid fa-pills" style="color:#1E88E5;"></i></div>
+        <div class="cat-icon" style="background:#fef2f2;"><i class="fa-solid fa-pills" style="color:#B91C1C;"></i></div>
         <span>Obat</span>
       </a>
-      <a href="{{ route('products.index') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="cat-card">
-        <div class="cat-icon" style="background:#fce4ec;"><i class="fa-solid fa-spa" style="color:#e91e8c;"></i></div>
-        <span>Skincare & Kosmetik</span>
-      </a>
-      <a href="{{ route('products.index') }}?kategori_produk=ALAT+KESEHATAN" class="cat-card">
-        <div class="cat-icon" style="background:#e8f5e9;"><i class="fa-solid fa-stethoscope" style="color:#2e7d32;"></i></div>
-        <span>ALKES</span>
-      </a>
       <a href="{{ route('products.index') }}" class="cat-card">
-        <div class="cat-icon" style="background:#fff3e0;"><i class="fa-solid fa-capsules" style="color:#e65100;"></i></div>
+        <div class="cat-icon" style="background:#fef2f2;"><i class="fa-solid fa-capsules" style="color:#B91C1C;"></i></div>
         <span>Obat Bebas</span>
       </a>
       <a href="{{ route('products.index') }}" class="cat-card">
@@ -1741,9 +1633,9 @@
 <div class="about-strip">
   <div class="container">
     <div class="about-box">
-      <img src="{{ asset('logo1.png') }}" alt="Medikpedia" class="about-logo">
+      <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Tama" class="about-logo">
       <div class="about-info">
-        <h3><span style="color:#1E88E5;">Medik</span><span style="color:#7CB342;">pedia</span> — Distributor Farmasi Terpercaya</h3>
+        <h3><span style="color:#B91C1C;">Medik</span><span style="color:#ef4444;">pedia</span> — Distributor Farmasi Terpercaya</h3>
         <p>Sejak 2016 melayani kebutuhan medis masyarakat & praktisi kesehatan di seluruh Indonesia. Produk original, harga distributor, pengiriman cepat.</p>
         <a href="{{ route('about') }}" class="btn-about"><i class="fa-solid fa-circle-info"></i> Selengkapnya Tentang Kami</a>
       </div>
@@ -1781,7 +1673,7 @@
           <div class="prod-card">
             <div class="prod-img">
               @if($med->gambar)
-                <img src="{{ url('storage/' . $med->gambar) }}" alt="{{ $med->nama_obat }}">
+                <img src="{{ $med->image_url }}" alt="{{ $med->nama_obat }}">
               @else
                 <div class="prod-img-fallback"><i class="fa-solid fa-pills"></i></div>
               @endif
@@ -1808,7 +1700,7 @@
               <div class="prod-actions">
                 <a href="{{ route('medicines.show', $med->id) }}" class="btn-detail">Lihat Detail <i class="fa-solid fa-arrow-right"></i></a>
                 @if($med->stok > 0)
-                  <button class="btn-cart" onclick="addToCart({{ $med->id }},'{{ addslashes($med->nama_obat) }}',{{ $med->harga }},'{{ $med->gambar ? url('storage/'.$med->gambar) : '' }}','{{ addslashes($med->brand ?: $med->kategori) }}',this)">
+                  <button class="btn-cart" onclick="addToCart({{ $med->id }},'{{ addslashes($med->nama_obat) }}',{{ $med->harga }},'{{ $med->gambar ? $med->image_url : '' }}','{{ addslashes($med->brand ?: $med->kategori) }}',this)">
                     <i class="fa-solid fa-cart-plus"></i> Keranjang
                   </button>
                 @endif
@@ -1825,6 +1717,49 @@
 
 @endsection
 
+<div class="outlet-modal-overlay" id="outletModalOverlay" onclick="closeAlfaOutletModal()"></div>
+<div class="outlet-modal" id="outletModal">
+  <div class="outlet-modal-head">
+    <div>
+      <h3>Pilih Apotek Alfa</h3>
+      <p>Pilih gerai yang ingin Anda kunjungi.</p>
+    </div>
+    <button type="button" class="outlet-modal-close" onclick="closeAlfaOutletModal()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="outlet-modal-list">
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sintang']) }}" class="outlet-choice">1. Alfa Sintang</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Air Upas']) }}" class="outlet-choice">2. Alfa Air Upas</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kendawangan']) }}" class="outlet-choice">3. Alfa Kendawangan</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Balai Berkuak']) }}" class="outlet-choice">4. Alfa Balai Berkuak</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Nanga Tayap']) }}" class="outlet-choice">5. Alfa Nanga Tayap</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Tumbang Titi']) }}" class="outlet-choice">6. Alfa Tumbang Titi</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sosok']) }}" class="outlet-choice">7. Alfa Sosok</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Bodok']) }}" class="outlet-choice">8. Alfa Bodok</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kembayan']) }}" class="outlet-choice">9. Alfa Kembayan</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Ambawang']) }}" class="outlet-choice">10. Alfa Ambawang</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Jungkat']) }}" class="outlet-choice">11. Alfa Jungkat</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Mempawah']) }}" class="outlet-choice">12. Alfa Mempawah</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Apotek Medistra Farma']) }}" class="outlet-choice">13. Apotek Medistra Farma</a>
+  </div>
+</div>
+
 @section('scripts')
+<script>
+function openAlfaOutletModal() {
+  document.getElementById('outletModalOverlay').classList.add('open');
+  document.getElementById('outletModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAlfaOutletModal() {
+  document.getElementById('outletModalOverlay').classList.remove('open');
+  document.getElementById('outletModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 @include('partials.cart')
 @endsection
+
+
+
+
+

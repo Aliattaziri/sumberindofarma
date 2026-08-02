@@ -1,6 +1,6 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
-@section('title', 'Import Obat - Admin Medikpedia')
+@section('title', 'Import Obat - Admin Sumberindo Farma Tama')
 @section('page-title', 'Import Data Obat')
 
 @section('styles')
@@ -27,10 +27,10 @@
     }
     .form-card-header .header-icon {
         width: 32px; height: 32px;
-        background: #e3f2fd;
+        background: #fef2f2;
         border-radius: 0.4rem;
         display: flex; align-items: center; justify-content: center;
-        color: #1E88E5; font-size: 0.9rem;
+        color: #B91C1C; font-size: 0.9rem;
     }
     .form-body {
         padding: 1.5rem;
@@ -64,8 +64,8 @@
         transition: all 0.2s;
     }
     .upload-zone:hover, .upload-zone.drag-over {
-        border-color: #1E88E5;
-        background: #f0f7ff;
+        border-color: #B91C1C;
+        background: #fef2f2;
     }
     .upload-zone .upload-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
     .upload-zone p { font-size: 0.85rem; color: #6b7280; margin: 0 0 0.75rem; }
@@ -99,7 +99,7 @@
         align-items: center;
         gap: 0.4rem;
         padding: 0.6rem 1.5rem;
-        background: #1E88E5;
+        background: #B91C1C;
         color: white;
         border: none;
         border-radius: 0.5rem;
@@ -108,7 +108,7 @@
         cursor: pointer;
         transition: all 0.2s;
     }
-    .btn-save:hover { background: #1565C0; transform: translateY(-1px); }
+    .btn-save:hover { background: #991B1B; transform: translateY(-1px); }
     .btn-save:disabled { background: #d1d5db; cursor: not-allowed; transform: none; }
     .btn-cancel {
         display: inline-flex;
@@ -128,20 +128,20 @@
 
     /* Info box */
     .info-box {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
         border-radius: 0.75rem;
         padding: 1.25rem 1.5rem;
         margin-bottom: 1.5rem;
     }
     .info-box h3 {
-        color: #1d4ed8;
+        color: #B91C1C;
         margin: 0 0 0.75rem;
         font-size: 0.95rem;
         font-weight: 700;
     }
     .info-box ol {
-        color: #1e40af;
+        color: #991B1B;
         margin: 0;
         padding-left: 1.25rem;
         line-height: 1.8;
@@ -149,7 +149,7 @@
     }
     .info-box li { margin-bottom: 0.5rem; }
     .info-box .success-note {
-        color: #059669;
+        color: #dc2626;
         margin: 0.75rem 0 0;
         font-size: 0.875rem;
         font-weight: 600;
@@ -192,7 +192,7 @@
         margin-bottom: 1.25rem;
     }
     .breadcrumb-custom a {
-        color: #1E88E5;
+        color: #B91C1C;
         text-decoration: none;
         font-weight: 600;
     }
@@ -229,7 +229,7 @@
         <li>Kolom GOLONGAN menentukan jenis: <strong>BEBAS</strong> = obat biasa, <strong>KERAS</strong> = obat resep</li>
     </ol>
     <p class="success-note">
-        ✅ Format kolom: <strong>KELOMPOK | PABRIK | NAMA PRODUK | SEDIAAN | RETAIL | STOK | KOMPOSISI | INDIKASI | GOLONGAN</strong>
+        ? Format kolom: <strong>KELOMPOK | PABRIK | NAMA PRODUK | SEDIAAN | RETAIL | STOK | KOMPOSISI | INDIKASI | GOLONGAN</strong>
     </p>
 </div>
 
@@ -241,7 +241,7 @@
     </div>
     <div class="form-body">
         <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-            <a href="{{ route('admin.medicines.import.template') }}" class="btn-save" style="background: #10b981; text-decoration: none;">
+            <a href="{{ route('admin.medicines.import.template') }}" class="btn-save" style="background: #ef4444; text-decoration: none;">
                 <i class="fa-solid fa-download"></i> Download Template Excel (.xlsx)
             </a>
             <span style="color: #6b7280; font-size: 0.875rem;">
@@ -291,20 +291,20 @@
             </table>
         </div>
 
-        <div style="margin-top: 1rem; padding: 0.75rem; background: #f8faff; border-radius: 0.5rem; border: 1px solid #e3f2fd;">
+        <div style="margin-top: 1rem; padding: 0.75rem; background: #f8faff; border-radius: 0.5rem; border: 1px solid #fef2f2;">
             <p style="font-size: 0.78rem; color: #6b7280; margin: 0; line-height: 1.6;">
-                <i class="fa-solid fa-circle-info" style="color: #1E88E5; margin-right: 0.3rem;"></i>
+                <i class="fa-solid fa-circle-info" style="color: #B91C1C; margin-right: 0.3rem;"></i>
                 <strong>Pabrik yang tersedia:</strong> {{ implode(', ', array_slice($categories, 0, 10)) }}... dan {{ count($categories) - 10 }} lainnya
             </p>
         </div>
 
-        <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fef3c7; border-radius: 0.5rem; border: 1px solid #fde68a;">
-            <p style="font-size: 0.78rem; color: #92400e; margin: 0; line-height: 1.6;">
+        <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fee2e2; border-radius: 0.5rem; border: 1px solid #fde68a;">
+            <p style="font-size: 0.78rem; color: #B91C1C; margin: 0; line-height: 1.6;">
                 <i class="fa-solid fa-lightbulb" style="margin-right: 0.3rem;"></i>
                 <strong>Kolom GOLONGAN:</strong> Gunakan <strong>BEBAS</strong> untuk obat biasa, <strong>KERAS</strong> untuk obat resep
             </p>
         </div>
-        <div style="margin-top: 0.75rem; padding: 0.75rem; background: #f0fdf4; border-radius: 0.5rem; border: 1px solid #bbf7d0;">
+        <div style="margin-top: 0.75rem; padding: 0.75rem; background: #fff5f5; border-radius: 0.5rem; border: 1px solid #bbf7d0;">
             <p style="font-size: 0.78rem; color: #14532d; margin: 0; line-height: 1.6;">
                 <i class="fa-solid fa-lightbulb" style="margin-right: 0.3rem;"></i>
                 <strong>Kolom KELOMPOK:</strong> Gunakan <strong>PBF</strong> atau <strong>APOTEK</strong> (opsional, boleh dikosongkan)
@@ -331,21 +331,21 @@
              ondragover="handleDragOver(event)"
              ondragleave="handleDragLeave(event)"
              ondrop="handleDrop(event)">
-            <div class="upload-icon">📂</div>
+            <div class="upload-icon">??</div>
             <p>Klik atau drag & drop file di sini</p>
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX — Maks. 2MB</small>
+            <small>Format: CSV, XLS, XLSX � Maks. 2MB</small>
             <p style="color: #9ca3af; font-size: 0.875rem; margin: 0.75rem 0 0;" id="fileLabel"></p>
         </div>
 
         <input type="file" id="fileInput" name="file" accept=".csv,.xls,.xlsx,text/csv"
                style="display: none;" onchange="updateFileLabel(this)">
 
-        <div style="margin-top: 1rem; padding: 0.75rem; background: #f8faff; border-radius: 0.5rem; border: 1px solid #e3f2fd;">
+        <div style="margin-top: 1rem; padding: 0.75rem; background: #f8faff; border-radius: 0.5rem; border: 1px solid #fef2f2;">
             <p style="font-size: 0.78rem; color: #6b7280; margin: 0; line-height: 1.6;">
-                <i class="fa-solid fa-circle-info" style="color: #1E88E5; margin-right: 0.3rem;"></i>
+                <i class="fa-solid fa-circle-info" style="color: #B91C1C; margin-right: 0.3rem;"></i>
                 Pastikan file sudah diisi dengan data yang benar sebelum diupload.
             </p>
         </div>
@@ -373,10 +373,10 @@ function updateFileLabel(input) {
 
     if (input.files && input.files[0]) {
         const name = input.files[0].name;
-        label.textContent = '✅ ' + name;
-        label.style.color = '#059669';
-        zone.style.borderColor = '#059669';
-        zone.style.background  = '#f0fdf4';
+        label.textContent = '? ' + name;
+        label.style.color = '#dc2626';
+        zone.style.borderColor = '#dc2626';
+        zone.style.background  = '#fff5f5';
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.cursor  = 'pointer';
@@ -386,8 +386,8 @@ function updateFileLabel(input) {
 function handleDragOver(e) {
     e.preventDefault();
     const zone = document.getElementById('dropZone');
-    zone.style.borderColor = '#1E88E5';
-    zone.style.background  = '#f0f7ff';
+    zone.style.borderColor = '#B91C1C';
+    zone.style.background  = '#fef2f2';
     zone.classList.add('drag-over');
 }
 
@@ -421,3 +421,7 @@ function submitForm() {
 }
 </script>
 @endsection
+
+
+
+
