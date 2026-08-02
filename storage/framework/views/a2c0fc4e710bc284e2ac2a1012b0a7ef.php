@@ -5,12 +5,6 @@
 /* ==============================================
    HOME PAGE - Clean GoApotik Style
    ============================================== */
-body {
-    padding-top: var(--navbar-height, 65px) !important;
-}
-main.page-offset {
-    padding-top: 0 !important;
-}
 </style>
 <style>
 /* SEARCH */
@@ -515,7 +509,12 @@ main.page-offset {
     gap: 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 1rem 2rem;
+    padding: 0 1rem 0;
+}
+
+.banner-promo-top, .banner-promo-item {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .banner-promo-item {
@@ -689,7 +688,6 @@ main.page-offset {
         }
     }
 </style>
-<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -896,7 +894,7 @@ main.page-offset {
 <div class="promo-section">
   <div class="container">
     <div class="promo-grid">
-      <a href="<?php echo e(route('products.pbf')); ?>" class="promo-card promo-contact">
+      <a href="<?php echo e(route('products.pbf.gate')); ?>" class="promo-card promo-contact">
         <div class="promo-card-content">
           <img src="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
@@ -1634,7 +1632,7 @@ main.page-offset {
       </div>
     </div>
     <div class="cat-grid">
-      <a href="<?php echo e(route('products.pbf')); ?>" class="cat-card">
+      <a href="<?php echo e(route('products.pbf.gate')); ?>" class="cat-card">
         <div class="cat-icon" style="background:#fee2e2;"><i class="fa-solid fa-box" style="color:#ef4444;"></i></div>
         <span>PBF</span>
       </a>
@@ -1740,8 +1738,6 @@ main.page-offset {
   </div>
 </section>
 
-<?php $__env->stopSection(); ?>
-
 <div class="outlet-modal-overlay" id="outletModalOverlay" onclick="closeAlfaOutletModal()"></div>
 <div class="outlet-modal" id="outletModal">
   <div class="outlet-modal-head">
@@ -1764,9 +1760,10 @@ main.page-offset {
     <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Ambawang'])); ?>" class="outlet-choice">10. Alfa Ambawang</a>
     <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Jungkat'])); ?>" class="outlet-choice">11. Alfa Jungkat</a>
     <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Mempawah'])); ?>" class="outlet-choice">12. Alfa Mempawah</a>
-    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Apotek Medistra Farma'])); ?>" class="outlet-choice">13. Apotek Medistra Farma</a>
   </div>
 </div>
+
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
 <script>

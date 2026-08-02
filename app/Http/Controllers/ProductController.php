@@ -104,12 +104,23 @@ class ProductController extends Controller
     ];
 
     /**
+     * Gate Produk PBF - form akses kode PBF
+     */
+    public function pbfGate(Request $request)
+    {
+        return view('products_pbf_gate');
+    }
+
+    /**
      * Halaman Produk PBF (frontend) — dilindungi kode akses
      */
     public function pbf(Request $request)
     {
-        if (! Auth::check() || ! Auth::user()->isSuperAdmin()) {
-            return redirect()->route('login')->with('error', 'Akses Produk PBF hanya untuk admin utama. Silakan login dengan akun admin utama.');
+        $hasPbfAccess = $request->session()->get('pbf_access', false);
+
+        if (! $hasPbfAccess && ! (Auth::check() && Auth::user()->isSuperAdmin())) {
+            return redirect()->route('products.pbf.gate')
+                ->with('error', 'Silakan masukkan kode akses PBF terlebih dahulu untuk membuka katalog.');
         }
 
         $search          = $request->get('search', '');
@@ -172,7 +183,8 @@ class ProductController extends Controller
                 ->withInput();
         }
 
-        if (in_array($kode, self::PBF_ACCESS_CODES)) {
+        // Kode akses valid: sumberindo111 sampai sumberindo999
+        if (preg_match('/^SUMBERINDO(?:111|[1-9][0-9]{2})$/', $kode)) {
             $request->session()->put('pbf_access', true);
             return redirect()->route('products.pbf')
                 ->with('pbf_success', '✅ Akses berhasil! Selamat datang di Katalog PBF.');

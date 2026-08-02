@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $__env->yieldContent('title', 'Sumberindo Farma Tama - Apotik Online'); ?></title>
-    <link rel="icon" type="image/png" href="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>">
+    <link rel="icon" type="image/png" href="<?php echo e(asset('favicon.png')); ?>?v=2">
+    <link rel="shortcut icon" href="<?php echo e(asset('favicon.png')); ?>?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('favicon.png')); ?>?v=2">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>
@@ -453,16 +455,16 @@
             left: 0;
             right: 0;
             margin: 0 !important;
-            z-index: 1000;
+            z-index: 1100;
             border-bottom: 2px solid rgba(124, 179, 66, 0.4);
         }
 
         body {
-            padding-top: var(--navbar-height, 65px);
+            padding-top: 0;
         }
 
         .page-offset {
-            padding-top: 0;
+            padding-top: var(--navbar-height, 65px);
         }
         .category-page-header,
         .products-header,
@@ -505,19 +507,20 @@
         }
 
         .navbar-brand:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.25);
         }
 
         .navbar-brand img {
-            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
-            height: 42px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.22));
+            height: 44px;
             object-fit: contain;
             margin-left: -4px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 0.85rem;
-            padding: 0.35rem;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 1rem;
+            padding: 0.4rem;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.75);
         }
 
         .navbar-menu {
@@ -544,20 +547,44 @@
         .navbar-menu .logout-btn {
             color: white;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: transform 0.2s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
             font-weight: 500;
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            padding: 0.5rem 0.7rem;
-            border-radius: 0.375rem;
-            font-size: 0.9rem;
+            gap: 0.45rem;
+            padding: 0.55rem 0.9rem;
+            border-radius: 0.65rem;
+            font-size: 0.95rem;
             white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar-menu a::before,
+        .navbar-menu .logout-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.08);
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            transform: scale(0.95);
+            border-radius: 0.65rem;
+            pointer-events: none;
+        }
+
+        .navbar-menu a:hover::before,
+        .navbar-menu .logout-btn:hover::before {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .navbar-menu a:hover,
         .navbar-menu .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.16);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
 
         .navbar-menu .logout-btn {
@@ -1104,9 +1131,6 @@
                         </li>
                         <li>
                             <a href="mailto:info@sumberindofarmatama.com"><i class="fa-solid fa-envelope footer-icon"></i>info@sumberindofarmatama.com</a>
-                        </li>
-                        <li>
-                            <span><i class="fa-solid fa-location-dot footer-icon"></i>Komp. Pergudangan Ocean 88 C2-3, Jl. Adisucipto, Arang Limbung, Kec. Sungai Raya, Kab. Kubu Raya, Kalimantan Barat</span>
                         </li>
                     </ul>
                 </div>

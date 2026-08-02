@@ -1,8 +1,6 @@
-@extends('layouts.frontend')
+<?php $__env->startSection('title', 'Akses Produk PBF - Sumberindo Farma Tama'); ?>
 
-@section('title', 'Akses Produk PBF - Sumberindo Farma Tama')
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
 .pbf-gate-wrap {
     min-height: 80vh;
@@ -246,15 +244,15 @@
 .pbf-info-note a { color: #dc2626; text-decoration: none; }
 .pbf-info-note a:hover { text-decoration: underline; }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-{{-- Page Header --}}
+
 <div class="products-header" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #991B1B 100%); padding: 3rem 0; position: relative; overflow: hidden;">
     <div class="container">
         <div class="breadcrumb-custom">
-            <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="<?php echo e(route('home')); ?>"><i class="fa-solid fa-house"></i> Home</a>
             <span>/</span>
             <span class="current">Produk PBF</span>
         </div>
@@ -272,7 +270,7 @@
 <div class="pbf-gate-wrap">
     <div class="pbf-gate-card">
 
-        {{-- Header kartu --}}
+        
         <div class="pbf-gate-header">
             <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
             <h1>Akses Terbatas</h1>
@@ -281,37 +279,41 @@
 
         <div class="pbf-gate-body">
 
-            {{-- Alert error --}}
-            @if ($errors->has('kode'))
+            
+            <?php if($errors->has('kode')): ?>
                 <div class="alert-error">
                     <i class="fa-solid fa-circle-xmark"></i>
-                    {{ $errors->first('kode') }}
-                </div>
-            @endif
+                    <?php echo e($errors->first('kode')); ?>
 
-            @if (session('error'))
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('error')): ?>
                 <div class="alert-error">
                     <i class="fa-solid fa-circle-xmark"></i>
-                    {{ session('error') }}
-                </div>
-            @endif
+                    <?php echo e(session('error')); ?>
 
-            {{-- Alert success (jika redirect setelah berhasil) --}}
-            @if (session('pbf_success'))
+                </div>
+            <?php endif; ?>
+
+            
+            <?php if(session('pbf_success')): ?>
                 <div class="alert-success">
                     <i class="fa-solid fa-circle-check"></i>
-                    {{ session('pbf_success') }}
-                </div>
-            @endif
+                    <?php echo e(session('pbf_success')); ?>
 
-            @if (session('pbf_info'))
+                </div>
+            <?php endif; ?>
+
+            <?php if(session('pbf_info')): ?>
                 <div class="alert-success">
                     <i class="fa-solid fa-circle-check"></i>
-                    {{ session('pbf_info') }}
-                </div>
-            @endif
+                    <?php echo e(session('pbf_info')); ?>
 
-            {{-- Panduan minta kode --}}
+                </div>
+            <?php endif; ?>
+
+            
             <div class="pbf-section-title">Cara mendapatkan kode akses</div>
 
             <div class="pbf-steps">
@@ -334,20 +336,20 @@
                 </div>
             </div>
 
-            {{-- Tombol WA --}}
-            <a href='https://wa.me/6285248965590?text={{ urlencode("Halo Sumberindo Farma Tama, saya ingin meminta kode akses untuk halaman Produk PBF.\n\nData saya:\n- Nama Perusahaan/Apotek: \n- Nomor SIA/SIPA: \n- Nama PIC: \n\nMohon informasi kode aksesnya. Terima kasih.") }}'
+            
+            <a href='https://wa.me/6285248965590?text=<?php echo e(urlencode("Halo Sumberindo Farma Tama, saya ingin meminta kode akses untuk halaman Produk PBF.\n\nData saya:\n- Nama Perusahaan/Apotek: \n- Nomor SIA/SIPA: \n- Nama PIC: \n\nMohon informasi kode aksesnya. Terima kasih.")); ?>'
                target="_blank"
                class="btn-wa-request">
                 <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i>
                 Minta Kode Akses via WhatsApp
             </a>
 
-            {{-- Divider --}}
+            
             <div class="pbf-section-title">Masukkan kode akses</div>
 
-            {{-- Form kode --}}
-            <form action="{{ route('products.pbf.verify') }}" method="POST">
-                @csrf
+            
+            <form action="<?php echo e(route('products.pbf.verify')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <label class="code-input-label" for="kode">
                     <i class="fa-solid fa-key" style="color:#ef4444;"></i>
                     Kode Akses
@@ -356,11 +358,11 @@
                     type="text"
                     id="kode"
                     name="kode"
-                    class="code-input {{ $errors->has('kode') ? 'is-invalid' : '' }}"
+                    class="code-input <?php echo e($errors->has('kode') ? 'is-invalid' : ''); ?>"
                     placeholder="Masukkan kode di sini..."
                     autocomplete="off"
                     autofocus
-                    value="{{ old('kode') }}"
+                    value="<?php echo e(old('kode')); ?>"
                     maxlength="30"
                 >
                 <button type="submit" class="btn-verify">
@@ -372,15 +374,17 @@
             <p class="pbf-info-note">
                 Kode akses bersifat rahasia dan hanya untuk mitra resmi.<br>
                 Butuh bantuan? <a href="https://wa.me/6285248965590" target="_blank">Chat Admin</a>
-                atau kunjungi <a href="{{ route('contact') }}">halaman kontak</a>.
+                atau kunjungi <a href="<?php echo e(route('contact')); ?>">halaman kontak</a>.
             </p>
 
         </div>
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
+
+<?php echo $__env->make('layouts.frontend', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/products_pbf_gate.blade.php ENDPATH**/ ?>
