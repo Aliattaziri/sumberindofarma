@@ -52,18 +52,12 @@
         <li>Data yang sudah ada (SKU atau nama produk sama) akan diperbarui, data baru akan ditambahkan</li>
         <li>Struktur file tidak harus persis sama; selama header yang dikenali ada, data tetap bisa dimasukkan</li>
     </ol>
-        @if(auth()->check() && auth()->user()->isSuperAdmin())
-            <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
-                ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | GRADE | KOMPOSISI | INDIKASI | KELOMPOK | KATEGORI</strong>
-            </p>
-        @else
-            <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
-                ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | GRADE | KOMPOSISI | INDIKASI | KATEGORI</strong>
-            </p>
+        <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
+            ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | KOMPOSISI | INDIKASI | KATEGORI</strong>
+        </p>
             <p style="color:#14532d;margin:0.75rem 0 0;font-size:0.875rem;">
                 Produk yang diimport oleh akun apotek akan otomatis disimpan sebagai <strong>APOTEK</strong> pada outlet Anda.
             </p>
-        @endif
             <a href="{{ route('admin.produk.import.template') }}" class="btn-save" style="background:#ef4444;text-decoration:none;">
                 <i class="fa-solid fa-download"></i> Download Template Excel
             </a>
@@ -81,10 +75,8 @@
                         <th>HARGA</th>
                         <th>STOK</th>
                         <th>TERJUAL</th>
-                        <th>GRADE</th>
                         <th>KOMPOSISI</th>
                         <th>INDIKASI</th>
-                        <th>KELOMPOK</th>
                         <th>KATEGORI</th>
                     </tr>
                 </thead>
@@ -99,10 +91,8 @@
                         <td>5000</td>
                         <td>100</td>
                         <td>20</td>
-                        <td>A</td>
                         <td>Paracetamol 500 mg</td>
                         <td>Demam & nyeri</td>
-                        <td>PBF</td>
                         <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">OBAT</span></td>
                     </tr>
                     <tr>
@@ -115,10 +105,8 @@
                         <td>85000</td>
                         <td>50</td>
                         <td>12</td>
-                        <td>B</td>
                         <td>Aqua, Glycerin, SPF30</td>
                         <td>Melembabkan & melindungi kulit</td>
-                        <td>APOTEK</td>
                         <td><span style="background:#fce4ec;color:#c2185b;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">SKINCARE & KOSMETIK</span></td>
                     </tr>
                     <tr>
@@ -131,10 +119,8 @@
                         <td>350000</td>
                         <td>20</td>
                         <td>5</td>
-                        <td>A</td>
                         <td>-</td>
                         <td>Mengukur tekanan darah</td>
-                        <td>PBF</td>
                         <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">ALAT KESEHATAN</span></td>
                     </tr>
                 </tbody>
@@ -148,12 +134,6 @@
                 <strong>SKINCARE & KOSMETIK</strong> &nbsp;|&nbsp;
                 <strong>ALAT KESEHATAN</strong>.
                 Jika tidak diisi atau tidak sesuai, otomatis masuk ke <strong>OBAT</strong>.
-            </p>
-        </div>
-        <div style="margin-top:0.75rem;padding:0.75rem;background:#fff5f5;border-radius:0.5rem;border:1px solid #bbf7d0;">
-            <p style="font-size:0.78rem;color:#14532d;margin:0;line-height:1.6;">
-                <i class="fa-solid fa-lightbulb" style="margin-right:0.3rem;"></i>
-                <strong>Kolom KELOMPOK:</strong> Gunakan <strong>PBF</strong> atau <strong>APOTEK</strong> (opsional, boleh dikosongkan)
             </p>
         </div>
     </div>

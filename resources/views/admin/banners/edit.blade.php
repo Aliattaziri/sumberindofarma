@@ -61,12 +61,19 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label">Gambar Banner</label>
-            <p class="form-hint" style="margin-bottom:0.5rem;">Gambar saat ini:</p>
-            <img src="{{ url('storage/'.$banner->gambar) }}" alt="{{ $banner->judul }}" class="current-img" id="currentImg">
-            <input type="file" name="gambar" id="gambarInput" accept="image/*" class="form-control" onchange="previewImg(this)">
-            <p class="form-hint">Kosongkan jika tidak ingin mengganti gambar. Ukuran: 3998×1224px</p>
+            <label class="form-label">Banner Media</label>
+            <p class="form-hint" style="margin-bottom:0.5rem;">Media saat ini:</p>
+            @if($banner->is_video)
+                <video class="current-img" controls muted>
+                    <source src="{{ url('storage/'.$banner->gambar) }}">
+                </video>
+            @else
+                <img src="{{ url('storage/'.$banner->gambar) }}" alt="{{ $banner->judul }}" class="current-img" id="currentImg">
+            @endif
+            <input type="file" name="gambar" id="gambarInput" accept="image/*,video/mp4,video/webm,video/quicktime" class="form-control" onchange="previewMedia(this)">
+            <p class="form-hint">Kosongkan jika tidak ingin mengganti media. Ukuran: 3998×1224px atau video maksimal 20MB</p>
             <img id="imgPreview" class="img-preview" src="#" alt="Preview Baru">
+            <video id="videoPreview" class="img-preview" controls style="display:none;"></video>
         </div>
 
         <div class="form-row">
@@ -108,17 +115,32 @@
 
 @section('scripts')
 <script>
-function previewImg(input) {
-    const preview = document.getElementById('imgPreview');
+function previewMedia(input) {
+    const imgPreview = document.getElementById('imgPreview');
+    const videoPreview = document.getElementById('videoPreview');
     const current = document.getElementById('currentImg');
+    if (current) {
+        current.style.opacity = '0.4';
+    }
+
     if (input.files && input.files[0]) {
+        const file = input.files[0];
         const reader = new FileReader();
+
         reader.onload = e => {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
-            current.style.opacity = '0.4';
+            if (file.type.startsWith('image/')) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = 'block';
+                if (videoPreview) videoPreview.style.display = 'none';
+            } else if (file.type.startsWith('video/')) {
+                if (videoPreview) {
+                    videoPreview.src = e.target.result;
+                    videoPreview.style.display = 'block';
+                }
+                if (imgPreview) imgPreview.style.display = 'none';
+            }
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(file);
     }
 }
 </script>

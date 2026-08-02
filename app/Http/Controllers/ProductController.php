@@ -208,15 +208,85 @@ class ProductController extends Controller
     /**
      * Halaman Produk Apotek (frontend)
      */
-    public function apotek(Request $request)
+    public function apotek(Request $request, ?string $slug = null)
     {
         $search          = $request->get('search', '');
         $kategori_produk = $request->get('kategori_produk', '');
         $perusahaan      = $request->get('perusahaan', '');
         $sort            = $request->get('sort', 'terbaru');
 
+        if ($slug) {
+            $perusahaan = str_replace(['-'], ' ', $slug);
+            $perusahaan = preg_replace('/\s+/', ' ', trim($perusahaan));
+            $perusahaan = ucwords($perusahaan);
+        }
+
         if (!$perusahaan && Auth::check() && Auth::user()->outlet_name) {
             $perusahaan = Auth::user()->outlet_name;
+        }
+
+        $outletMeta = [
+            'Alfa Sintang' => [
+                'wa' => '6285705935715',
+                'address' => 'Jl. MT. Haryono, Kapuas Kanan Hulu, Kec. Sintang, Kabupaten Sintang, Kalimantan Barat 78613',
+            ],
+            'Alfa Air Upas' => [
+                'wa' => '6281549233935',
+                'address' => 'MRMF+FM9, Air Upas, Kec. Air Upas, Kabupaten Ketapang, Kalimantan Barat 78863',
+            ],
+            'Alfa Kendawangan' => [
+                'wa' => '6282254239530',
+                'address' => 'F6F8+44V, Jl. Pangeran Adi, Kendawangan Kiri, Kec. Kendawangan, Kabupaten Ketapang, Kalimantan Barat 78862',
+            ],
+            'Alfa Balai Berkuak' => [
+                'wa' => '6282114422090',
+                'address' => 'Jl. Istana Jaya, Desa Balai Pinang (Dusun Balai Berkuak), Kecamatan Simpang Hulu, Kabupaten Ketapang, Kalimantan Barat, Kode Pos 78854.',
+            ],
+            'Alfa Nanga Tayap' => [
+                'wa' => '6285849263704',
+                'address' => 'FHG8+859, Nanga Tayap, Kec. Nanga Tayap, Kabupaten Ketapang, Kalimantan Barat 78873',
+            ],
+            'Alfa Tumbang Titi' => [
+                'wa' => '6285821960187',
+                'address' => 'Kawasan Tumbang Titi (area pusat kecamatan), Kecamatan Tumbang Titi, Kabupaten Ketapang, Kalimantan Barat, Kode Pos 78874',
+            ],
+            'Alfa Sosok' => [
+                'wa' => '6285796032370',
+                'address' => 'Sosok, Kec. Tayan Hulu, Kabupaten Sanggau, Kalimantan Barat 78562',
+            ],
+            'Alfa Bodok' => [
+                'wa' => '6283191511444',
+                'address' => '6C5M+89Q, Palem Jaya, Kec. Parindu, Kabupaten Sanggau, Kalimantan Barat 78561',
+            ],
+            'Alfa Kembayan' => [
+                'wa' => '6285796032366',
+                'address' => 'APOTEK ALFA, Tj. Merpati, Kec. Kembayan, Kabupaten Sanggau, Kalimantan Barat 78516',
+            ],
+            'Alfa Ambawang' => [
+                'wa' => '6285119413105',
+                'address' => 'Jl. Trans Kalimantan, Desa Jawa Tengah, Kec Sui Ambawang, Kabupaten Kubu Raya, Kalimantan Barat 78319',
+            ],
+            'Alfa Jungkat' => [
+                'wa' => '6285754979060',
+                'address' => 'Jl. Raya Jungkat, Sei Nipah, Kec. Jongkat, Kab. Mempawah, Kalimantan Barat 78351',
+            ],
+            'Alfa Mempawah' => [
+                'wa' => '6285820712029',
+                'address' => 'Jl. Sujarwo, Terusan, Kec. Mempawah Hilir, Kab. Mempawah, Kalimantan Barat 78912',
+            ],
+            'Apotek Medistra Farma' => [
+                'wa' => '6281345559456',
+                'phone' => '081345559456',
+                'address' => 'Jl. R. Suprapto No.48A, Tengah, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan Barat 78821',
+            ],
+        ];
+
+        $selectedOutlet = $perusahaan && isset($outletMeta[$perusahaan]) ? $perusahaan : 'Alfa Sintang';
+        $selectedOutletMeta = $outletMeta[$selectedOutlet] ?? $outletMeta['Alfa Sintang'];
+        $displayPerusahaan = str_starts_with($selectedOutlet, 'Alfa ') ? 'Apotek ' . $selectedOutlet : $selectedOutlet;
+
+        if (! $perusahaan) {
+            $perusahaan = $selectedOutlet;
         }
 
         $query = Medicine::where('kelompok', 'APOTEK');
@@ -257,7 +327,8 @@ class ProductController extends Controller
 
         return view('products_apotek', compact(
             'medicines', 'search', 'kategori_produk', 'perusahaan',
-            'sort', 'total', 'kategoriOptions', 'perusahaanList'
+            'sort', 'total', 'kategoriOptions', 'perusahaanList',
+            'selectedOutlet', 'selectedOutletMeta', 'outletMeta', 'displayPerusahaan'
         ));
     }
 

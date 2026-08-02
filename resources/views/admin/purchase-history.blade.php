@@ -34,6 +34,7 @@
                 <tr>
                     <th>Waktu</th>
                     <th>Nama Pembeli</th>
+                    <th>Asal Outlet</th>
                     <th>Jenis</th>
                     <th>Pembayaran</th>
                     <th>Status</th>
@@ -47,6 +48,13 @@
                     <tr>
                         <td style="font-size:0.82rem;color:#6b7280;">{{ $order->created_at->format('d M Y, H:i') }}</td>
                         <td><strong>{{ $order->buyer_name }}</strong></td>
+                        <td>
+                            @if($order->source_outlet)
+                                <span style="font-weight:600;color:#374151;">{{ $order->source_outlet }}</span>
+                            @else
+                                <span style="color:#9ca3af;font-style:italic;">—</span>
+                            @endif
+                        </td>
                         <td>
                             @if($order->buyer_type === 'apotik')
                                 <span class="badge badge-primary">Apotik</span>

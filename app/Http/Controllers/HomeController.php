@@ -6,6 +6,7 @@ use App\Models\Medicine;
 use App\Models\Banner;
 use App\Models\PromoProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class HomeController extends Controller
@@ -60,9 +61,16 @@ class HomeController extends Controller
     }
 
     // Detail obat
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $medicine = Medicine::findOrFail($id);
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+
+        if ($medicine->kelompok === 'PBF' && !($request->session()->get('pbf_access', false) || ($user?->isSuperAdmin() ?? false))) {
+            return redirect()->route('products.pbf')
+                ->with('error', 'Akses produk PBF hanya melalui halaman Produk PBF.');
+        }
 
         // Related products dari kategori yang sama
         $relatedMedicines = Medicine::where('kategori', $medicine->kategori)

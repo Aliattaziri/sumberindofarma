@@ -53,23 +53,28 @@ class ImageHelper
      * URL akses: https://domain.com/storage/banners/namafile.jpg
      * Nilai di DB: "banners/namafile.jpg"
      */
-    public static function storeBannerImage(UploadedFile $file): string
+    public static function storeBannerMedia(UploadedFile $file): string
     {
         $ext       = strtolower($file->getClientOriginalExtension());
-        $imageName = time() . '_' . uniqid() . '.' . $ext;
+        $mediaName = time() . '_' . uniqid() . '.' . $ext;
         $targetDir = storage_path('banners');
 
         if (!is_dir($targetDir)) {
             mkdir($targetDir, 0755, true);
         }
 
-        $file->move($targetDir, $imageName);
+        $file->move($targetDir, $mediaName);
 
-        return 'banners/' . $imageName;
+        return 'banners/' . $mediaName;
+    }
+
+    public static function storeBannerImage(UploadedFile $file): string
+    {
+        return self::storeBannerMedia($file);
     }
 
     /**
-     * Hapus gambar banner dari storage/banners/
+     * Hapus media banner dari storage/banners/
      * $path dari DB: "banners/namafile.jpg"
      */
     public static function deleteBannerImage(?string $path): void

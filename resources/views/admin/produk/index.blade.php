@@ -211,7 +211,6 @@
                     <th style="width:140px;">Foto</th>
                     <th>Nama Produk</th>
                     <th>Sediaan</th>
-                    <th>Kelompok</th>
                     <th>Kategori</th>
                     <th>Pabrik/Merek</th>
                     <th>Harga</th>
@@ -246,13 +245,7 @@
                         @endif
                     </td>
                     <td>
-                        @if($medicine->kelompok === 'PBF')
-                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fee2e2;color:#B91C1C;border-radius:4px;font-size:0.75rem;font-weight:700;">PBF</span>
-                        @elseif($medicine->kelompok === 'APOTEK')
-                            <span style="display:inline-block;padding:0.25rem 0.6rem;background:#fee2e2;color:#065f46;border-radius:4px;font-size:0.75rem;font-weight:700;">APOTEK</span>
-                        @else
-                            <span style="font-size:0.75rem;color:#9ca3af;">-</span>
-                        @endif
+                        <span style="font-size:0.75rem;color:#9ca3af;">-</span>
                     </td>
                     <td>
                         @php

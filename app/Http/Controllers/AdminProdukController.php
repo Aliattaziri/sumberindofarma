@@ -25,6 +25,7 @@ class AdminProdukController extends Controller
         'Alfa Ambawang',
         'Alfa Jungkat',
         'Alfa Mempawah',
+        'PBF',
         'Apotek Medistra Farma',
     ];
 
@@ -35,7 +36,9 @@ class AdminProdukController extends Controller
         $pabrik          = $request->get('pabrik', '');
 
         $query = Medicine::latest();
-        $outlet = Auth::user()?->outlet_name;
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        $outlet = $user?->outlet_name;
         if ($outlet) {
             $query->where('kategori', $outlet);
         }
@@ -82,7 +85,6 @@ class AdminProdukController extends Controller
             'sku'             => ['nullable', 'string', 'max:255'],
             'brand'           => ['nullable', 'string', 'max:255'],
             'terjual'         => ['nullable', 'integer', 'min:0'],
-            'grade'           => ['nullable', 'string'],
             'harga'           => ['required', 'numeric', 'min:0'],
             'stok'            => ['required', 'integer', 'min:0'],
             'sediaan'         => ['nullable', 'string', 'max:255'],
@@ -90,11 +92,10 @@ class AdminProdukController extends Controller
             'komposisi'       => ['nullable', 'string'],
             'indikasi'        => ['nullable', 'string'],
         ];
-        if (Auth::user()?->isSuperAdmin()) {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        if ($user?->isSuperAdmin()) {
             $rules['kategori'] = ['required', 'in:' . implode(',', $this->outletOptions)];
-        }
-        if (Auth::user()?->isSuperAdmin()) {
-            $rules['kelompok'] = ['nullable', 'in:PBF,APOTEK'];
         }
 
         $validated = $request->validate($rules);
@@ -103,11 +104,8 @@ class AdminProdukController extends Controller
             $validated['gambar'] = ImageHelper::storeProductImage($request->file('gambar'));
         }
 
-        if ($outlet = Auth::user()?->outlet_name) {
+        if ($outlet = $user?->outlet_name) {
             $validated['kategori'] = $outlet;
-            if (! Auth::user()->isSuperAdmin()) {
-                $validated['kelompok'] = 'APOTEK';
-            }
         }
 
         if (!empty(trim($validated['deskripsi'] ?? ''))) {
@@ -142,7 +140,6 @@ class AdminProdukController extends Controller
             'sku'             => ['nullable', 'string', 'max:255'],
             'brand'           => ['nullable', 'string', 'max:255'],
             'terjual'         => ['nullable', 'integer', 'min:0'],
-            'grade'           => ['nullable', 'string'],
             'harga'           => ['required', 'numeric', 'min:0'],
             'stok'            => ['required', 'integer', 'min:0'],
             'sediaan'         => ['nullable', 'string', 'max:255'],
@@ -151,11 +148,10 @@ class AdminProdukController extends Controller
             'indikasi'        => ['nullable', 'string'],
             'delete_gambar'   => ['nullable'],
         ];
-        if (Auth::user()?->isSuperAdmin()) {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        if ($user?->isSuperAdmin()) {
             $rules['kategori'] = ['required', 'in:' . implode(',', $this->outletOptions)];
-        }
-        if (Auth::user()?->isSuperAdmin()) {
-            $rules['kelompok'] = ['nullable', 'in:PBF,APOTEK'];
         }
 
         $validated = $request->validate($rules);

@@ -189,12 +189,13 @@
 
 {{-- ===== CART JAVASCRIPT ===== --}}
 <script>
-// Satu keranjang untuk semua halaman - key default: sumberindofarmatama_cart
-const WA = '6285248965590';
+const WA = (window.cartSettings && window.cartSettings.wa) ? String(window.cartSettings.wa).replace(/\D/g, '') : '6285248965590';
 const CART_DEFAULT_SETTINGS = {
   storageKey: 'sumberindofarmatama_cart',
   receiptStoreName: 'SUMBERINDO FARMA TAMA',
   receiptStoreAddress: 'Komp. Pergudangan Ocean 88 C2-3\nJl. Adisucipto\nArang Limbung\nKec. Sungai Raya\nKab. Kubu Raya\nKalimantan Barat',
+  receiptStorePhone: '+62 852-4896-5590',
+  wa: '6285248965590',
   receiptFilePrefix: 'struk-sumberindofarmatama'
 };
 const CART_CONFIG = Object.assign({}, CART_DEFAULT_SETTINGS, window.cartSettings || {});
@@ -467,6 +468,11 @@ function buildReceiptPdf(orderData) {
       doc.text(lineText, leftMargin + receiptWidth / 2, y, { align: 'center' });
       y += 14;
     });
+    if (CART_CONFIG.receiptStorePhone) {
+      doc.setFontSize(10);
+      doc.text(`Telp: ${CART_CONFIG.receiptStorePhone}`, leftMargin + receiptWidth / 2, y, { align: 'center' });
+      y += 14;
+    }
     if (CART_CONFIG.receiptStoreName === CART_DEFAULT_SETTINGS.receiptStoreName) {
       doc.setFontSize(13);
       doc.text('Apotik Online Terpercaya', leftMargin + receiptWidth / 2, y, { align: 'center' });
@@ -578,7 +584,8 @@ function buildReceiptPdf(orderData) {
   }
   doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
   line('Terima kasih telah berbelanja!', { align: 'center', spacing: 11 });
-  line('Hubungi kami via WhatsApp: +62 852-4896-5590', { align: 'center', spacing: 11 });
+  const receiptPhone = CART_CONFIG.receiptStorePhone || `+${WA}`;
+  line(`Hubungi kami via WhatsApp: ${receiptPhone}`, { align: 'center', spacing: 11 });
   return doc.output('bloburl');
 }
 
@@ -589,8 +596,12 @@ async function submitOrder() {
 
   const originalTotal = cart.reduce((s, it) => s + (it.price * it.qty), 0);
   const discountedTotal = cart.reduce((s, it) => s + (it.price * it.qty) - (it.discount || 0), 0);
+  const outletName = (window.cartSettings && window.cartSettings.receiptStoreName)
+    ? String(window.cartSettings.receiptStoreName)
+    : 'Sumberindo Farma Tama';
   const payload = {
     buyer_type: jenis,
+    source_outlet: outletName,
     items: cart.map(it => ({ id: it.id, nama_obat: it.name, quantity: it.qty, harga: it.price, catatan: it.note || '', potongan: it.discount || 0 })),
     total: discountedTotal,
     original_total: originalTotal,

@@ -40,14 +40,14 @@ class AdminBannerController extends Controller
         $data = $request->validate([
             "judul"        => ["required", "string", "max:255"],
             "subjudul"     => ["nullable", "string", "max:255"],
-            "gambar"       => ["required", "image", "mimes:jpeg,jpg,png,webp", new LandscapeImage],
+            "gambar"       => ["required", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:20480"],
             "url_tujuan"   => ["nullable", "string", "max:255"],
             "label_tombol" => ["nullable", "string", "max:50"],
             "urutan"       => ["nullable", "integer", "min:0"],
             "aktif"        => ["nullable"],
         ]);
 
-        $data["gambar"]       = ImageHelper::storeBannerImage($request->file("gambar"));
+        $data["gambar"]       = ImageHelper::storeBannerMedia($request->file("gambar"));
         $data["aktif"]        = $request->boolean("aktif", true);
         $data["label_tombol"] = $data["label_tombol"] ?? "Lihat Sekarang";
         $data["urutan"]       = $data["urutan"] ?? 0;
@@ -77,7 +77,7 @@ class AdminBannerController extends Controller
         $data = $request->validate([
             "judul"        => ["required", "string", "max:255"],
             "subjudul"     => ["nullable", "string", "max:255"],
-            "gambar"       => ["nullable", "image", "mimes:jpeg,jpg,png,webp", new LandscapeImage],
+            "gambar"       => ["nullable", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:20480"],
             "url_tujuan"   => ["nullable", "string", "max:255"],
             "label_tombol" => ["nullable", "string", "max:50"],
             "urutan"       => ["nullable", "integer", "min:0"],
@@ -86,7 +86,7 @@ class AdminBannerController extends Controller
 
         if ($request->hasFile("gambar")) {
             ImageHelper::deleteBannerImage($banner->gambar);
-            $data["gambar"] = ImageHelper::storeBannerImage($request->file("gambar"));
+            $data["gambar"] = ImageHelper::storeBannerMedia($request->file("gambar"));
         } else {
             unset($data["gambar"]);
         }

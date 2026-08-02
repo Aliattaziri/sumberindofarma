@@ -33,25 +33,14 @@ class AdminProdukImportController extends Controller
 
     public function downloadTemplate()
     {
-        if (auth()->check() && auth()->user()->isSuperAdmin()) {
-            $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'GRADE', 'KOMPOSISI', 'INDIKASI', 'KELOMPOK', 'KATEGORI'];
-            $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 8, 25, 30, 12, 22];
+        $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
+        $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 25, 30, 22];
 
-            $rows = [
-                ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'A', 'Paracetamol 500 mg',  'Demam & nyeri',                'PBF',    'OBAT'],
-                ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'B', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'APOTEK', 'SKINCARE & KOSMETIK'],
-                ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5',  'A', '-',                   'Mengukur tekanan darah',        'PBF',    'ALAT KESEHATAN'],
-            ];
-        } else {
-            $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'GRADE', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
-            $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 8, 25, 30, 22];
-
-            $rows = [
-                ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'A', 'Paracetamol 500 mg',  'Demam & nyeri',                'OBAT'],
-                ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'B', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'SKINCARE & KOSMETIK'],
-                ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5',  'A', '-',                   'Mengukur tekanan darah',        'ALAT KESEHATAN'],
-            ];
-        }
+        $rows = [
+            ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'Paracetamol 500 mg',  'Demam & nyeri',                'OBAT'],
+            ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'SKINCARE & KOSMETIK'],
+            ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5', '-',                   'Mengukur tekanan darah',        'ALAT KESEHATAN'],
+        ];
 
         return \App\Helpers\XlsxWriter::download('template_produk.xlsx', $columns, $rows, $widths);
     }
@@ -279,14 +268,6 @@ class AdminProdukImportController extends Controller
                 $sku      = trim((string) ($data['SKU'] ?? ''));
                 $brand    = trim((string) $this->getValue($data, ['BRAND', 'PABRIK', 'MERK']));
                 $terjual  = isset($data['TERJUAL']) ? (int) preg_replace('/[^0-9]/', '', (string) $data['TERJUAL']) : 0;
-                $gradeRaw = trim((string) ($data['GRADE'] ?? ''));
-                $grade    = '';
-                if ($gradeRaw !== '') {
-                    $grade = strtoupper($gradeRaw);
-                    $grade = preg_replace('/^GRADE\s*/i', '', $grade) ?? $grade;
-                    $grade = trim($grade);
-                }
-
                 // Sediaan
                 $sediaan = null;
                 if (isset($data['SEDIAAN']) && !empty($data['SEDIAAN'])) {
@@ -296,24 +277,11 @@ class AdminProdukImportController extends Controller
                     }
                 }
 
-                // Kelompok: PBF atau APOTEK — harus diketahui sebelum menentukan $match
-                if (auth()->check() && auth()->user()->isSuperAdmin()) {
-                    $kelompok = null;
-                    if (isset($data['KELOMPOK']) && !empty($data['KELOMPOK'])) {
-                        $k = strtoupper(trim($data['KELOMPOK']));
-                        if (in_array($k, ['PBF', 'APOTEK'])) {
-                            $kelompok = $k;
-                        }
-                    }
-                } else {
-                    $kelompok = 'APOTEK';
-                }
-
-                // Match key: sertakan kelompok agar PBF dan APOTEK tersimpan sebagai record terpisah
+                // Match key: gunakan SKU atau nama produk karena outlet sudah ditentukan oleh akun
                 if (!empty($sku)) {
-                    $match = ['sku' => $sku, 'kelompok' => $kelompok ?? ''];
+                    $match = ['sku' => $sku];
                 } else {
-                    $match = ['nama_obat' => $namaProduk, 'kelompok' => $kelompok ?? ''];
+                    $match = ['nama_obat' => $namaProduk];
                 }
 
                 // Susun deskripsi dari DESKRIPSI, KOMPOSISI, INDIKASI — fallback ke nama produk
@@ -332,14 +300,12 @@ class AdminProdukImportController extends Controller
                         'sku'              => $sku ?: null,
                         'nama_obat'        => $namaProduk,
                         'sediaan'          => $sediaan,
-                        'kelompok'         => $kelompok,
                         'kategori'         => $data['PABRIK'] ?? ($data['BRAND'] ?? ''),
                         'brand'            => $brand ?: null,
                         'kategori_produk'  => $katProduk,
                         'harga'            => $this->parseHarga($hargaRaw),
                         'stok'             => isset($data['STOK']) ? (int) preg_replace('/[^0-9]/', '', (string) $data['STOK']) : 0,
                         'terjual'          => $terjual,
-                        'grade'            => $grade ?: null,
                         'deskripsi'        => $deskripsiValue,
                         'komposisi'        => ($data['KOMPOSISI'] ?? '') ?: null,
                         'indikasi'         => ($data['INDIKASI'] ?? '') ?: null,
@@ -369,13 +335,11 @@ class AdminProdukImportController extends Controller
             'HARGA' => ['HARGA', 'RETAIL', 'PRICE'],
             'STOK' => ['STOK', 'STOCK', 'STOCKQTY', 'QTY', 'JUMLAH'],
             'TERJUAL' => ['TERJUAL', 'SALES', 'TERJUALSALES', 'TOTALTERJUAL'],
-            'GRADE' => ['GRADE', 'KELAS', 'CLASS'],
             'DESKRIPSI' => ['DESKRIPSI', 'DESCRIPTION'],
             'KOMPOSISI' => ['KOMPOSISI', 'COMPOSITION'],
             'INDIKASI' => ['INDIKASI', 'INDICATION', 'MANFAAT'],
             'KATEGORI' => ['KATEGORI', 'KATEGORIPRODUK', 'CATEGORY', 'TIPE', 'JENIS'],
             'SEDIAAN' => ['SEDIAAN', 'KEMASAN', 'PACKAGING'],
-            'KELOMPOK' => ['KELOMPOK', 'GROUP', 'GRUP'],
         ];
 
         foreach ($aliases as $key => $values) {

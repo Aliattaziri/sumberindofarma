@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1B">
+    <meta name="msapplication-TileColor" content="#991B1B">
+    <meta name="msapplication-TileImage" content="<?php echo e(asset('favicon.png')); ?>?v=20260803-4">
+    <meta property="og:image" content="<?php echo e(asset('favicon.png')); ?>?v=20260803-4">
+    <meta property="og:image:secure_url" content="<?php echo e(asset('favicon.png')); ?>?v=20260803-4">
+    <meta name="twitter:image" content="<?php echo e(asset('favicon.png')); ?>?v=20260803-4">
     <title><?php echo $__env->yieldContent('title', 'Sumberindo Farma Tama - Apotik Online'); ?></title>
-    <link rel="icon" type="image/png" href="<?php echo e(asset('favicon.png')); ?>?v=2">
-    <link rel="icon" href="<?php echo e(asset('favicon.ico')); ?>?v=2" sizes="any">
-    <link rel="shortcut icon" href="<?php echo e(asset('favicon.ico')); ?>?v=2">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('favicon.png')); ?>?v=2">
+    <link rel="icon" type="image/png" href="<?php echo e(asset('favicon.png')); ?>?v=20260803-4">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('favicon.png')); ?>?v=20260803-4">
+    <link rel="mask-icon" href="<?php echo e(asset('favicon.png')); ?>?v=20260803-4" color="#991B1B">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>

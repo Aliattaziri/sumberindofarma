@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1B">
+    <meta name="msapplication-TileColor" content="#991B1B">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta property="og:image:secure_url" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta name="twitter:image" content="{{ asset('favicon.png') }}?v=20260803-4">
     <title>@yield('title', 'Admin - Sumberindo Farma Tama')</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
-    <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=2">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=2">
-
-    <!-- Font Awesome (icons for admin UI) -->
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20260803-4">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=20260803-4">
+    <link rel="mask-icon" href="{{ asset('favicon.png') }}?v=20260803-4" color="#991B1B">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -682,7 +685,7 @@
                 </div>
             @endif
 
-            @if ($errors->any())
+            @if (isset($errors) && $errors->any())
                 <div class="alert alert-error" style="margin-bottom:1rem;">
                     <strong><i class="fa-solid fa-triangle-exclamation"></i> Terdapat kesalahan:</strong>
                     <ul style="margin:0.5rem 0 0 1.25rem;padding:0;">

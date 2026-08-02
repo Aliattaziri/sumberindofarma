@@ -13,6 +13,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
 {
+    protected function applyOutletScopeToPurchaseHistory($query)
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            return $query->whereRaw('1 = 0');
+        }
+
+        if ($user->isSuperAdmin()) {
+            return $query;
+        }
+
+        if ($user->isOutletAdmin()) {
+            return $query->where('source_outlet', $user->outlet_name);
+        }
+
+        return $query->whereRaw('1 = 0');
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -43,8 +62,16 @@ class AdminDashboardController extends Controller
         $latestBanners = Schema::hasTable('banners') ? Banner::orderBy('urutan')->orderBy('id')->limit(5)->get() : collect();
         $totalBanners  = Schema::hasTable('banners') ? Banner::count() : 0;
         $activeBanners = Schema::hasTable('banners') ? Banner::where('aktif', true)->count() : 0;
-        $totalOmzet    = Schema::hasTable('purchase_histories') ? (float) PurchaseHistory::sum('total') : 0;
-        $recentOrders  = Schema::hasTable('purchase_histories') ? PurchaseHistory::latest()->limit(5)->get() : collect();
+
+        $historyQuery = Schema::hasTable('purchase_histories') ? PurchaseHistory::query() : null;
+        $totalOmzet = 0;
+        $recentOrders = collect();
+
+        if ($historyQuery) {
+            $historyQuery = $this->applyOutletScopeToPurchaseHistory($historyQuery);
+            $totalOmzet = (float) $historyQuery->get()->sum(fn ($order) => $order->effective_total);
+            $recentOrders = $historyQuery->latest()->limit(5)->get();
+        }
 
         return view('admin.dashboard', compact(
             'totalProduk', 'totalStok', 'lowStok', 'latestProduk',
@@ -88,11 +115,18 @@ class AdminDashboardController extends Controller
 
     public function purchaseHistory()
     {
-        $orders = Schema::hasTable('purchase_histories')
-            ? PurchaseHistory::latest()->paginate(20)
+        $query = Schema::hasTable('purchase_histories') ? PurchaseHistory::query() : null;
+
+        if ($query) {
+            $query = $this->applyOutletScopeToPurchaseHistory($query);
+        }
+
+        $orders = $query
+            ? $query->latest()->paginate(20)
             : new \Illuminate\Pagination\LengthAwarePaginator([], 0, 20);
-        $total_omzet = Schema::hasTable('purchase_histories')
-            ? (float) PurchaseHistory::query()->get()->sum(fn($order) => $order->effective_total)
+
+        $total_omzet = $query
+            ? (float) $query->get()->sum(fn($order) => $order->effective_total)
             : 0;
 
         return view('admin.purchase-history', compact('orders', 'total_omzet'));
@@ -102,6 +136,11 @@ class AdminDashboardController extends Controller
     {
         if (!\Schema::hasTable('purchase_histories')) {
             return redirect()->route('admin.purchase-history.index')->with('error', 'Tabel purchase_histories tidak tersedia.');
+        }
+
+        $user = Auth::user();
+        if (! $user || (! $user->isSuperAdmin() && $order->source_outlet !== $user->outlet_name)) {
+            return redirect()->route('admin.purchase-history.index')->with('error', 'Anda tidak memiliki akses ke riwayat pembelian ini.');
         }
 
         $data = $request->validate([
@@ -141,6 +180,11 @@ class AdminDashboardController extends Controller
             return redirect()->route('admin.purchase-history.index')->with('error', 'Tabel purchase_histories tidak tersedia.');
         }
 
+        $user = Auth::user();
+        if (! $user || (! $user->isSuperAdmin() && $order->source_outlet !== $user->outlet_name)) {
+            return redirect()->route('admin.purchase-history.index')->with('error', 'Anda tidak dapat menghapus riwayat pembelian apotek lain.');
+        }
+
         $order->delete();
         return redirect()->route('admin.purchase-history.index')->with('success', 'Riwayat pembelian berhasil dihapus.');
     }
@@ -152,6 +196,11 @@ class AdminDashboardController extends Controller
     {
         if (!\Schema::hasTable('purchase_histories')) {
             return redirect()->route('admin.purchase-history.index')->with('error', 'Tabel purchase_histories tidak tersedia.');
+        }
+
+        $user = Auth::user();
+        if (! $user || ! $user->isSuperAdmin()) {
+            return redirect()->route('admin.purchase-history.index')->with('error', 'Hanya akun induk yang dapat menghapus semua riwayat pembelian.');
         }
 
         \App\Models\PurchaseHistory::query()->delete();
@@ -167,7 +216,8 @@ class AdminDashboardController extends Controller
             return redirect()->route('admin.purchase-history.index')->with('error', 'Tabel purchase_histories tidak tersedia.');
         }
 
-        $orders = PurchaseHistory::latest()->get();
+        $query = $this->applyOutletScopeToPurchaseHistory(PurchaseHistory::query());
+        $orders = $query->latest()->get();
 
         $headers = [
             'ID',

@@ -6,7 +6,8 @@
 <style>
     .apotek-hero {
         background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
-        padding: 3rem 0;
+        padding: calc(3rem + var(--navbar-height, 65px)) 0 3rem;
+        margin-top: calc(-1 * var(--navbar-height, 65px));
         color: #fff;
         border-radius: 0 0 28px 28px;
     }
@@ -175,6 +176,26 @@
     .stock-low { background: #fff7ed; color: #b45309; }
     .stock-out { background: #fef2f2; color: #991B1B; }
 
+    .outlet-info {
+        background: #fff7ed;
+        border: 1px solid #fde3c0;
+        border-radius: 16px;
+        padding: 1rem 1.2rem;
+        margin-top: 1rem;
+        color: #92400e;
+        max-width: 720px;
+    }
+
+    .outlet-info p {
+        margin: 0.35rem 0;
+        font-size: 0.94rem;
+        line-height: 1.5;
+    }
+
+    .outlet-info strong {
+        color: #b45309;
+    }
+
     .product-btn {
         margin-top: auto;
         display: inline-flex;
@@ -213,8 +234,8 @@
 @section('content')
 <section class="apotek-hero">
     <div class="container">
-        <div class="apotek-badge"><i class="fa-solid fa-store"></i> {{ $perusahaan ?: 'Apotek Medistra' }}</div>
-        <h1>Katalog Produk {{ $perusahaan ?: 'Apotek Medistra' }}</h1>
+        <div class="apotek-badge"><i class="fa-solid fa-store"></i> {{ $displayPerusahaan ?: 'Apotek Medistra' }}</div>
+        <h1>Katalog Produk {{ $displayPerusahaan ?: 'Apotek Medistra' }}</h1>
         <p>Temukan berbagai produk obat, suplemen, dan kebutuhan kesehatan yang tersedia untuk kebutuhan apotek dan pelanggan Anda.</p>
     </div>
 </section>
@@ -309,5 +330,14 @@
 @endsection
 
 @section('scripts')
+<script>
+    window.cartSettings = Object.assign({
+        storageKey: 'sumberindofarmatama_cart_{{ \Illuminate\Support\Str::slug($selectedOutlet ?? 'default') }}',
+        receiptStoreName: '{{ addslashes($selectedOutlet ?? 'Sumberindo Farma Tama') }}',
+        receiptStoreAddress: '{{ addslashes($selectedOutletMeta['address'] ?? 'Kalimantan Barat') }}',
+        receiptStorePhone: '{{ $selectedOutletMeta['phone'] ?? '' }}',
+        wa: '{{ $selectedOutletMeta['wa'] ?? '6285248965590' }}'
+    }, window.cartSettings || {});
+</script>
 @include('partials.cart')
 @endsection

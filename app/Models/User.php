@@ -90,6 +90,7 @@ class User extends Authenticatable
             'alfa.ambawang@sumberindofarma.com'      => 'Alfa Ambawang',
             'alfa.jungkat@sumberindofarma.com'       => 'Alfa Jungkat',
             'alfa.mempawah@sumberindofarma.com'      => 'Alfa Mempawah',
+            'pbf@sumberindofarma.com'                => 'PBF',
             'apotek.medistrafarma@sumberindofarma.com' => 'Apotek Medistra Farma',
             default => null,
         };

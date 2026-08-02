@@ -15,6 +15,7 @@ class AdminSeeder extends Seeder
     {
         $admins = [
             ['name' => 'admin utama', 'email' => 'sumberindofarmatama1@adminutama.com', 'password' => Hash::make('sumberindo999'), 'role' => 'admin'],
+            ['name' => 'pbf admin', 'email' => 'pbf@sumberindofarma.com', 'password' => Hash::make('SumberfarmaPBF2026!'), 'role' => 'admin'],
             ['name' => 'alfa sintang', 'email' => 'alfa.sintang@sumberindofarma.com', 'password' => Hash::make('sumberfarma100'), 'role' => 'admin'],
             ['name' => 'alfa airupas', 'email' => 'alfa.airupas@sumberindofarma.com', 'password' => Hash::make('sumberfarma101'), 'role' => 'admin'],
             ['name' => 'alfa kendawangan', 'email' => 'alfa.kendawangan@sumberindofarma.com', 'password' => Hash::make('sumberfarma102'), 'role' => 'admin'],

@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1B">
+    <meta name="msapplication-TileColor" content="#991B1B">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta property="og:image:secure_url" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta name="twitter:image" content="{{ asset('favicon.png') }}?v=20260803-4">
     <title>@yield('title', 'Sumberindo Farma Tama - Apotik Online')</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
-    <link rel="icon" href="{{ asset('favicon.ico') }}?v=2" sizes="any">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=2">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=2">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20260803-4">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=20260803-4">
+    <link rel="mask-icon" href="{{ asset('favicon.png') }}?v=20260803-4" color="#991B1B">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>

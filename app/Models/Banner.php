@@ -54,4 +54,14 @@ class Banner extends Model
 
         return url('storage/' . $this->gambar);
     }
+
+    public function getIsVideoAttribute(): bool
+    {
+        if (!$this->gambar) {
+            return false;
+        }
+
+        $extension = strtolower(pathinfo($this->gambar, PATHINFO_EXTENSION));
+        return in_array($extension, ['mp4', 'webm', 'mov']);
+    }
 }

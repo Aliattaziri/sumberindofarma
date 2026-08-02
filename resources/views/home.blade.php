@@ -167,7 +167,7 @@
 }
 
 .promo-goapotik {
-    background: linear-gradient(135deg, #047857 0%, #10b981 45%, #6ee7b7 100%);
+    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 40%, #1e88e5 75%, #42a5f5 100%);
 }
 
 .promo-goapotik-logo {
@@ -539,18 +539,33 @@
     background-repeat: no-repeat;
     filter: brightness(0.6);
     transition: transform 0.45s ease;
-}
+        object-fit: cover;
+    }
 
-.banner-promo-item:hover .banner-promo-bg {
-    transform: scale(1.04);
-}
+    .banner-promo-item:hover .banner-promo-bg {
+        transform: scale(1.04);
+    }
 
-.banner-promo-copy {
-    position: relative;
-    z-index: 2;
-    display: none !important;
-    flex-direction: column;
-    justify-content: flex-end;
+    .banner-volume-toggle {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 3;
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        border: none;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        font-size: 1.1rem;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .banner-volume-toggle:hover {
+        background: rgba(0, 0, 0, 0.75);
     min-height: 320px;
     padding: 1.75rem;
     background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.72) 100%);
@@ -667,18 +682,21 @@
     }
     .outlet-choice {
         display: block;
-        padding: 0.95rem 1.1rem;
-        border-radius: 16px;
-        background: #f8f8ff;
-        border: 1px solid #e5e7eb;
+        padding: 1rem 1.2rem;
+        border-radius: 18px;
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.12);
         color: #111827;
         text-decoration: none;
         font-weight: 700;
-        transition: background 0.2s ease, border-color 0.2s ease;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
     .outlet-choice:hover {
-        background: #fef2f2;
-        border-color: #fecaca;
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+        box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
     }
 
         .banner-promo-copy {
@@ -698,12 +716,38 @@
     <div class="banner-promo-top">
         @foreach($banners as $banner)
             <a href="{{ $banner->url_tujuan ?: 'javascript:void(0)' }}" class="banner-promo-item" target="_blank">
-                <div class="banner-promo-bg" style="background-image: url('{{ $banner->image_url }}');"></div>
+                @if($banner->is_video)
+                    <video class="banner-promo-bg" autoplay muted loop playsinline>
+                        <source src="{{ $banner->image_url }}">
+                    </video>
+                    <button type="button" class="banner-volume-toggle" aria-label="Toggle volume">🔈</button>
+                @else
+                    <div class="banner-promo-bg" style="background-image: url('{{ $banner->image_url }}');"></div>
+                @endif
                 <div class="banner-promo-copy"></div>
             </a>
         @endforeach
     </div>
 @endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.banner-promo-item').forEach(function(item) {
+        const video = item.querySelector('video');
+        const button = item.querySelector('.banner-volume-toggle');
+        if (!video || !button) {
+            return;
+        }
+
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            video.muted = !video.muted;
+            button.textContent = video.muted ? '🔈' : '🔊';
+        });
+    });
+});
+</script>
 
 <style>
 .search-engine-section {
@@ -901,16 +945,16 @@
           <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
             <h4>PBF</h4>
-            <p>Jelajahi produk PBF terbaik untuk mitra apotek dan distributor.</p>
+            <p>Jelajahi Katalog Produk PBF Terlengkap Kami</p>
           </div>
         </div>
       </a>
-      <a href="{{ route('products.apotek') }}" class="promo-card promo-goapotik">
+      <a href="{{ route('products.apotek', ['perusahaan' => 'Apotek Medistra Farma']) }}" class="promo-card promo-goapotik">
         <div class="promo-card-content">
-          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
+          <img src="{{ asset('logo apotek medistra farma.png') }}" alt="Apotek Medistra Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
-            <h4>Apotek Medistra</h4>
-            <p>Kunjungi toko kami di Apotek Medistra.</p>
+            <h4>Apotek Medistra Farma</h4>
+            <p>Kunjungi toko kami di Apotek Medistra Farma</p>
           </div>
         </div>
       </a>
@@ -919,7 +963,7 @@
           <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-pbf-logo">
           <div class="promo-card-text">
             <h4>Apotek Alfa Group</h4>
-            <p>Jelajahi katalog produk PBF terlengkap kami.</p>
+            <p>Kunjungi toko kami diberbagai tempat.</p>
           </div>
         </div>
       </a>
@@ -1624,36 +1668,6 @@
   </div>
 </div>
 
-{{-- KATEGORI --}}
-<section class="cat-section">
-  <div class="container">
-    <div class="sec-head">
-      <div class="sec-head-left">
-        <span class="sec-tag">🗂️ Kategori</span>
-        <h2 class="sec-title">Belanja Berdasarkan Kategori</h2>
-      </div>
-    </div>
-    <div class="cat-grid">
-      <a href="{{ route('products.pbf.gate') }}" class="cat-card">
-        <div class="cat-icon" style="background:#fee2e2;"><i class="fa-solid fa-box" style="color:#ef4444;"></i></div>
-        <span>PBF</span>
-      </a>
-      <a href="{{ route('products.index') }}?kategori_produk=OBAT" class="cat-card">
-        <div class="cat-icon" style="background:#fef2f2;"><i class="fa-solid fa-pills" style="color:#B91C1C;"></i></div>
-        <span>Obat</span>
-      </a>
-      <a href="{{ route('products.index') }}" class="cat-card">
-        <div class="cat-icon" style="background:#fef2f2;"><i class="fa-solid fa-capsules" style="color:#B91C1C;"></i></div>
-        <span>Obat Bebas</span>
-      </a>
-      <a href="{{ route('products.index') }}" class="cat-card">
-        <div class="cat-icon" style="background:#ede7f6;"><i class="fa-solid fa-tablets" style="color:#7b1fa2;"></i></div>
-        <span>Vitamin & Suplemen</span>
-      </a>
-    </div>
-  </div>
-</section>
-
 {{-- TENTANG SINGKAT --}}
 <div class="about-strip">
   <div class="container">
@@ -1708,7 +1722,7 @@
             </div>
             <div class="prod-body">
               @if($med->kategori)
-                <span class="prod-brand-tag">{{ $med->kategori }}</span>
+                <div class="prod-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.35rem;font-weight:600;">Toko: {{ $med->kategori }}</div>
               @endif
               <h3 class="prod-name">{{ $med->nama_obat }}</h3>
               <div class="prod-price">{{ $med->getFormattedPrice() }}</div>
@@ -1750,18 +1764,18 @@
     <button type="button" class="outlet-modal-close" onclick="closeAlfaOutletModal()"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <div class="outlet-modal-list">
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sintang']) }}" class="outlet-choice">1. Alfa Sintang</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Air Upas']) }}" class="outlet-choice">2. Alfa Air Upas</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kendawangan']) }}" class="outlet-choice">3. Alfa Kendawangan</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Balai Berkuak']) }}" class="outlet-choice">4. Alfa Balai Berkuak</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Nanga Tayap']) }}" class="outlet-choice">5. Alfa Nanga Tayap</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Tumbang Titi']) }}" class="outlet-choice">6. Alfa Tumbang Titi</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sosok']) }}" class="outlet-choice">7. Alfa Sosok</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Bodok']) }}" class="outlet-choice">8. Alfa Bodok</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kembayan']) }}" class="outlet-choice">9. Alfa Kembayan</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Ambawang']) }}" class="outlet-choice">10. Alfa Ambawang</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Jungkat']) }}" class="outlet-choice">11. Alfa Jungkat</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Mempawah']) }}" class="outlet-choice">12. Alfa Mempawah</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sintang']) }}" class="outlet-choice">1. Apotek Alfa Sintang</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Air Upas']) }}" class="outlet-choice">2. Apotek Alfa Air Upas</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kendawangan']) }}" class="outlet-choice">3. Apotek Alfa Kendawangan</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Balai Berkuak']) }}" class="outlet-choice">4. Apotek Alfa Balai Berkuak</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Nanga Tayap']) }}" class="outlet-choice">5. Apotek Alfa Nanga Tayap</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Tumbang Titi']) }}" class="outlet-choice">6. Apotek Alfa Tumbang Titi</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sosok']) }}" class="outlet-choice">7. Apotek Alfa Sosok</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Bodok']) }}" class="outlet-choice">8. Apotek Alfa Bodok</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kembayan']) }}" class="outlet-choice">9. Apotek Alfa Kembayan</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Ambawang']) }}" class="outlet-choice">10. Apotek Alfa Ambawang</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Jungkat']) }}" class="outlet-choice">11. Apotek Alfa Jungkat</a>
+    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Mempawah']) }}" class="outlet-choice">12. Apotek Alfa Mempawah</a>
   </div>
 </div>
 

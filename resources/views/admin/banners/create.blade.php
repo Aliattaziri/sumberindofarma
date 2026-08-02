@@ -71,14 +71,15 @@
         </div>
 
         <div class="form-group">
-            <label class="form-label">Gambar Banner <span class="req">*</span></label>
-            <input type="file" name="gambar" id="gambarInput" accept="image/*" class="form-control" onchange="previewImg(this)" required @disabled(isset($bannerTableReady) && !$bannerTableReady)>
+            <label class="form-label">Banner Media <span class="req">*</span></label>
+            <input type="file" name="gambar" id="gambarInput" accept="image/*,video/mp4,video/webm,video/quicktime" class="form-control" onchange="previewMedia(this)" required @disabled(isset($bannerTableReady) && !$bannerTableReady)>
             <div class="img-placeholder" onclick="document.getElementById('gambarInput').click()">
-                <i class="fa-solid fa-image" style="font-size:1.5rem;"></i>
-                <span>Klik untuk pilih gambar</span>
-                <span style="font-size:0.7rem;">JPG, PNG, WEBP — Ukuran: 3998×1224px (wajib)</span>
+                <i class="fa-solid fa-photo-video" style="font-size:1.5rem;"></i>
+                <span>Klik untuk pilih gambar atau video</span>
+                <span style="font-size:0.7rem;">JPG, PNG, WEBP, MP4, WebM, MOV — maks 20MB</span>
             </div>
-            <img id="imgPreview" class="img-preview" src="#" alt="Preview">
+            <img id="imgPreview" class="img-preview" src="#" alt="Preview" style="display:none;">
+            <video id="videoPreview" class="img-preview" controls style="display:none;"></video>
         </div>
 
         <div class="form-row">
@@ -121,17 +122,28 @@
 
 @section('scripts')
 <script>
-function previewImg(input) {
-    const preview = document.getElementById('imgPreview');
+function previewMedia(input) {
+    const imgPreview = document.getElementById('imgPreview');
+    const videoPreview = document.getElementById('videoPreview');
     const placeholder = document.querySelector('.img-placeholder');
     if (input.files && input.files[0]) {
+        const file = input.files[0];
         const reader = new FileReader();
+
         reader.onload = e => {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
             placeholder.style.display = 'none';
+            if (file.type.startsWith('image/')) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = 'block';
+                videoPreview.style.display = 'none';
+            } else if (file.type.startsWith('video/')) {
+                videoPreview.src = e.target.result;
+                videoPreview.style.display = 'block';
+                imgPreview.style.display = 'none';
+            }
         };
-        reader.readAsDataURL(input.files[0]);
+
+        reader.readAsDataURL(file);
     }
 }
 </script>

@@ -22,8 +22,12 @@ class CategoryController extends Controller
             abort(404, 'Kategori tidak ditemukan');
         }
 
-        // Query produk berdasarkan kategori
-        $query = Medicine::query();
+        if ($mainCategory === 'pbf') {
+            return redirect()->route('products.pbf');
+        }
+
+        // Query produk berdasarkan kategori, tanpa menyertakan produk PBF
+        $query = Medicine::nonPbf();
 
         // Filter berdasarkan kategori dan sub-kategori
         $query = $this->filterByCategory($query, $mainCategory, $subCategory);

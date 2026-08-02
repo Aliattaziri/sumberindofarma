@@ -118,20 +118,6 @@
                     @enderror
                 </div>
 
-                @if(auth()->check() && auth()->user()->isSuperAdmin())
-                    <div class="form-group">
-                        <label class="form-label">Kelompok</label>
-                        <select name="kelompok" class="form-input {{ $errors->has('kelompok') ? 'is-invalid' : '' }}">
-                            <option value="">— Pilih Kelompok —</option>
-                            <option value="PBF"    {{ old('kelompok', $medicine->kelompok) == 'PBF'    ? 'selected' : '' }}>PBF</option>
-                            <option value="APOTEK" {{ old('kelompok', $medicine->kelompok) == 'APOTEK' ? 'selected' : '' }}>APOTEK</option>
-                        </select>
-                        @error('kelompok')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                @endif
-
                 <div class="form-group">
                     <label class="form-label">Deskripsi Produk</label>
                     <textarea name="deskripsi" class="form-input {{ $errors->has('deskripsi') ? 'is-invalid' : '' }}" rows="3"
@@ -185,14 +171,6 @@
                         <input type="number" name="terjual" class="form-input {{ $errors->has('terjual') ? 'is-invalid' : '' }}"
                                min="0" value="{{ old('terjual', $medicine->terjual ?? 0) }}">
                         @error('terjual')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Grade</label>
-                        <input type="text" name="grade" class="form-input {{ $errors->has('grade') ? 'is-invalid' : '' }}"
-                               value="{{ old('grade', $medicine->grade) }}">
-                        @error('grade')
                             <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                         @enderror
                     </div>

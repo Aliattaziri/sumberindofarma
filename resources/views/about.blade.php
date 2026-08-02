@@ -3,21 +3,23 @@
 @section('title', 'Tentang Kami - Sumberindo Farma Tama')
 
 @section('styles')
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
-<link rel="shortcut icon" href="{{ asset('favicon.png') }}?v=2">
-<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=2">
 <style>
+    main.page-offset {
+        padding-top: 0 !important;
+    }
+
     .about-simple {
-        padding: 4rem 0 5rem;
+        padding: 0 0 5rem;
         background: linear-gradient(180deg, #fffaf9 0%, #fff 100%);
     }
 
     .about-hero {
         background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
         border-radius: 28px;
-        padding: 2.5rem;
+        padding: 1.5rem 2.5rem 2.5rem;
         color: #fff;
         box-shadow: 0 20px 50px rgba(185, 28, 28, 0.18);
+        margin-top: 0;
     }
 
     .about-hero h1 {
