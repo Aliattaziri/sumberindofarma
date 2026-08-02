@@ -578,7 +578,7 @@ function buildReceiptPdf(orderData) {
   }
   doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
   line('Terima kasih telah berbelanja!', { align: 'center', spacing: 11 });
-  line('Hubungi kami via WhatsApp: 085890007359', { align: 'center', spacing: 11 });
+  line('Hubungi kami via WhatsApp: +62 852-4896-5590', { align: 'center', spacing: 11 });
   return doc.output('bloburl');
 }
 

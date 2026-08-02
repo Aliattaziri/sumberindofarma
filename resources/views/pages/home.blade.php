@@ -605,7 +605,7 @@
                 </div>
                 
                 <h1 class="hero-title">
-                    <span style="color:#B91C1C;">Medik</span><span style="color:#ef4444;">pedia</span>
+                    PT. SUMBERINDO FARMA TAMA
                 </h1>
                 <p class="hero-subtitle">
                     Distributor Obat & Suplemen Terpercaya

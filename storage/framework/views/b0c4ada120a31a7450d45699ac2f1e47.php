@@ -3,6 +3,9 @@
 <?php $__env->startSection('title', 'Tentang Kami - Sumberindo Farma Tama'); ?>
 
 <?php $__env->startSection('styles'); ?>
+<link rel="icon" type="image/png" href="<?php echo e(asset('favicon.png')); ?>?v=2">
+<link rel="shortcut icon" href="<?php echo e(asset('favicon.png')); ?>?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('favicon.png')); ?>?v=2">
 <style>
     .about-simple {
         padding: 4rem 0 5rem;

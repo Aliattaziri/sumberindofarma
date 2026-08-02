@@ -3,6 +3,9 @@
 @section('title', 'Tentang Kami - Sumberindo Farma Tama')
 
 @section('styles')
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=2">
+<link rel="shortcut icon" href="{{ asset('favicon.png') }}?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=2">
 <style>
     .about-simple {
         padding: 4rem 0 5rem;

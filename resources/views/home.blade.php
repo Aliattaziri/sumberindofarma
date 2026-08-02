@@ -1660,7 +1660,7 @@
     <div class="about-box">
       <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Tama" class="about-logo">
       <div class="about-info">
-        <h3><span style="color:#B91C1C;">Medik</span><span style="color:#ef4444;">pedia</span> — Distributor Farmasi Terpercaya</h3>
+        <h3>PT. SUMBERINDO FARMA TAMA — Distributor Farmasi Terpercaya</h3>
         <p>Sejak 2016 melayani kebutuhan medis masyarakat & praktisi kesehatan di seluruh Indonesia. Produk original, harga distributor, pengiriman cepat.</p>
         <a href="{{ route('about') }}" class="btn-about"><i class="fa-solid fa-circle-info"></i> Selengkapnya Tentang Kami</a>
       </div>
