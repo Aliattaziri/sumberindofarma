@@ -473,6 +473,40 @@ main.page-offset {
     .cart-total-row strong { font-size: 1rem; }
     .btn-order-wa { padding: 0.8rem; font-size: 0.92rem; border-radius: 10px; }
     .btn-clear-cart { margin-top: 0.35rem; font-size: 0.75rem; }
+    .banner-promo-top {
+        justify-items: center;
+        justify-content: center;
+    }
+    .banner-promo-item {
+        aspect-ratio: 19 / 6;
+        min-height: 0;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .banner-promo-copy {
+        min-height: 0;
+        padding: 1rem 1rem 1rem;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%);
+    }
+    .banner-promo-label {
+        font-size: 0.72rem;
+        padding: 0.28rem 0.75rem;
+    }
+    .banner-promo-item h2 {
+        font-size: 1.1rem;
+    }
+    .banner-promo-item p {
+        font-size: 0.85rem;
+        max-width: 100%;
+        margin: 0.55rem auto 0;
+    }
+    .banner-promo-btn {
+        margin: 0.95rem auto 0;
+    }
 }
 
 .banner-promo-top {
@@ -481,19 +515,26 @@ main.page-offset {
     gap: 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 1rem 2rem;
+    padding: 0 1rem 0;
+}
+
+.banner-promo-top, .banner-promo-item {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .banner-promo-item {
     position: relative;
     overflow: hidden;
     border-radius: 28px;
-    min-height: 320px;
     display: block;
     color: #fff;
     text-decoration: none;
     background: #111;
     box-shadow: 0 18px 54px rgba(0, 0, 0, 0.16);
+    aspect-ratio: 19 / 6;
+    min-height: 0;
+    height: auto;
 }
 
 .banner-promo-bg {
@@ -513,7 +554,7 @@ main.page-offset {
 .banner-promo-copy {
     position: relative;
     z-index: 2;
-    display: flex;
+    display: none !important;
     flex-direction: column;
     justify-content: flex-end;
     min-height: 320px;
@@ -661,20 +702,11 @@ main.page-offset {
      BANNER PROMO SLIDESHOW
      ============================================================ --}}
 @if($banners->count())
-    <div class="banner-promo-top">
+    <div class="banner-promo-top" style="margin-top: 0;">
         @foreach($banners as $banner)
             <a href="{{ $banner->url_tujuan ?: 'javascript:void(0)' }}" class="banner-promo-item" target="_blank">
                 <div class="banner-promo-bg" style="background-image: url('{{ $banner->image_url }}');"></div>
-                <div class="banner-promo-copy">
-                    <span class="banner-promo-label">Promo</span>
-                    <h2>{{ $banner->judul }}</h2>
-                    @if(!empty($banner->subjudul))
-                        <p>{{ $banner->subjudul }}</p>
-                    @endif
-                    @if(!empty($banner->url_tujuan))
-                        <span class="banner-promo-btn">{{ $banner->label_tombol ?: 'Lihat Promo' }}</span>
-                    @endif
-                </div>
+                <div class="banner-promo-copy"></div>
             </a>
         @endforeach
     </div>
