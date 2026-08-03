@@ -1,6 +1,6 @@
-@extends('layouts.frontend')
-@section('title', 'Sumberindo Farma Tama - Distributor Farmasi Terpercaya')
-@section('styles')
+
+<?php $__env->startSection('title', 'Sumberindo Farma Tama - Distributor Farmasi Terpercaya'); ?>
+<?php $__env->startSection('styles'); ?>
 <style>
 /* ==============================================
    HOME PAGE - Clean GoApotik Style
@@ -817,28 +817,26 @@
 
 </style>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-{{-- ============================================================
-     BANNER PROMO SLIDESHOW
-     ============================================================ --}}
-@if($banners->count())
+
+<?php if($banners->count()): ?>
     <div class="banner-promo-top">
-        @foreach($banners as $banner)
-            <a href="{{ $banner->url_tujuan ?: 'javascript:void(0)' }}" class="banner-promo-item" target="_blank">
-                @if($banner->is_video)
+        <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <a href="<?php echo e($banner->url_tujuan ?: 'javascript:void(0)'); ?>" class="banner-promo-item" target="_blank">
+                <?php if($banner->is_video): ?>
                     <video class="banner-promo-bg" autoplay muted loop playsinline>
-                        <source src="{{ $banner->image_url }}">
+                        <source src="<?php echo e($banner->image_url); ?>">
                     </video>
                     <button type="button" class="banner-volume-toggle" aria-label="Toggle volume">🔈</button>
-                @else
-                    <div class="banner-promo-bg" style="background-image: url('{{ $banner->image_url }}');"></div>
-                @endif
+                <?php else: ?>
+                    <div class="banner-promo-bg" style="background-image: url('<?php echo e($banner->image_url); ?>');"></div>
+                <?php endif; ?>
                 <div class="banner-promo-copy"></div>
             </a>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
-@endif
+<?php endif; ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -859,22 +857,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-{{-- PROMO --}}
+
 <div class="promo-section">
   <div class="container">
     <div class="promo-grid">
-      <a href="{{ route('products.pbf.gate') }}" class="promo-card promo-contact">
+      <a href="<?php echo e(route('products.pbf.gate')); ?>" class="promo-card promo-contact">
         <div class="promo-card-content">
-          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
+          <img src="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
             <h4>PBF</h4>
             <p>Jelajahi Katalog Produk PBF Terlengkap Kami</p>
           </div>
         </div>
       </a>
-      <a href="{{ route('products.apotek', ['perusahaan' => 'Apotek Medistra Farma']) }}" class="promo-card promo-goapotik">
+      <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Apotek Medistra Farma'])); ?>" class="promo-card promo-goapotik">
         <div class="promo-card-content">
-          <img src="{{ asset('logo apotek medistra farma.png') }}" alt="Apotek Medistra Farma" class="promo-goapotik-logo">
+          <img src="<?php echo e(asset('logo apotek medistra farma.png')); ?>" alt="Apotek Medistra Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
             <h4>Apotek Medistra Farma</h4>
             <p>Kunjungi toko kami di Apotek Medistra Farma</p>
@@ -883,7 +881,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </a>
       <a href="javascript:void(0)" onclick="openAlfaOutletModal()" class="promo-card promo-pbf">
         <div class="promo-card-content">
-          <img src="{{ asset('apotek alfa group logo.png') }}" alt="Apotek Alfa Group" class="promo-pbf-logo">
+          <img src="<?php echo e(asset('apotek alfa group logo.png')); ?>" alt="Apotek Alfa Group" class="promo-pbf-logo">
           <div class="promo-card-text">
             <h4>Apotek Alfa Group</h4>
             <p>Kunjungi toko kami diberbagai tempat.</p>
@@ -894,8 +892,8 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-{{-- PROMO PRODUK --}}
-@if(isset($promoProducts) && $promoProducts->count())
+
+<?php if(isset($promoProducts) && $promoProducts->count()): ?>
 <style>
 /* =============================================
    PROMO PRODUK — Simple & Elegant Background
@@ -1083,26 +1081,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <div class="promo-products-track-wrap">
       <div class="promo-products-track">
-        @foreach($promoProducts as $promo)
-          @if($promo->url_tujuan)
-            <a href="{{ $promo->url_tujuan }}" class="promo-photo-card" title="{{ $promo->judul }}" data-tooltip="{{ $promo->judul }}">
-          @else
-            <span class="promo-photo-card" title="{{ $promo->judul }}" data-tooltip="{{ $promo->judul }}">
-          @endif
-            <img src="{{ url('storage/'.$promo->gambar) }}" alt="{{ $promo->judul }}" loading="lazy">
-          @if($promo->url_tujuan)
+        <?php $__currentLoopData = $promoProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $promo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <?php if($promo->url_tujuan): ?>
+            <a href="<?php echo e($promo->url_tujuan); ?>" class="promo-photo-card" title="<?php echo e($promo->judul); ?>" data-tooltip="<?php echo e($promo->judul); ?>">
+          <?php else: ?>
+            <span class="promo-photo-card" title="<?php echo e($promo->judul); ?>" data-tooltip="<?php echo e($promo->judul); ?>">
+          <?php endif; ?>
+            <img src="<?php echo e(url('storage/'.$promo->gambar)); ?>" alt="<?php echo e($promo->judul); ?>" loading="lazy">
+          <?php if($promo->url_tujuan): ?>
             </a>
-          @else
+          <?php else: ?>
             </span>
-          @endif
-        @endforeach
+          <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
     </div>
   </div>
 </section>
-@endif
+<?php endif; ?>
 
-{{-- WHY US --}}
+
 <style>
 /* =============================================
    KENAPA PILIH KAMI — Modern Card Section
@@ -1287,7 +1285,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <section class="why-cards-section">
   <div class="container">
 
-    {{-- Section heading --}}
+    
     <div class="why-section-head">
       <div>
         <span class="why-section-tag"><i class="fa-solid fa-star"></i> Kenapa Pilih Kami?</span>
@@ -1298,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <div class="why-cards-grid">
 
-      {{-- Card 1 --}}
+      
       <div class="why-card">
         <div class="why-card-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
         <div class="why-card-content">
@@ -1308,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
 
-      {{-- Card 2 --}}
+      
       <div class="why-card">
         <div class="why-card-icon-wrap"><i class="fa-solid fa-truck-fast"></i></div>
         <div class="why-card-content">
@@ -1318,7 +1316,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
       </div>
 
-      {{-- Card 3 --}}
+      
       <div class="why-card">
         <div class="why-card-icon-wrap"><i class="fa-solid fa-tag"></i></div>
         <div class="why-card-content">
@@ -1332,7 +1330,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-{{-- CTA WHATSAPP --}}
+
 <div class="cta-section">
   <div class="container">
     <div class="cta-box">
@@ -1347,15 +1345,15 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-{{-- TENTANG SINGKAT --}}
+
 <div class="about-strip">
   <div class="container">
     <div class="about-box">
-      <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Tama" class="about-logo">
+      <img src="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>" alt="Sumberindo Farma Tama" class="about-logo">
       <div class="about-info">
         <h3>PT. SUMBERINDO FARMA TAMA — Distributor Farmasi Terpercaya</h3>
         <p>Sejak 2016 melayani kebutuhan medis masyarakat & praktisi kesehatan di seluruh Indonesia. Produk original, harga distributor, pengiriman cepat.</p>
-        <a href="{{ route('about') }}" class="btn-about"><i class="fa-solid fa-circle-info"></i> Selengkapnya Tentang Kami</a>
+        <a href="<?php echo e(route('about')); ?>" class="btn-about"><i class="fa-solid fa-circle-info"></i> Selengkapnya Tentang Kami</a>
       </div>
       <div class="about-stats">
         <div class="about-stat-item"><span class="n">15+</span><span class="l">Tahun Pengalaman</span></div>
@@ -1434,24 +1432,24 @@ document.addEventListener('DOMContentLoaded', function() {
     <button type="button" class="outlet-modal-close" onclick="closeAlfaOutletModal()"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <div class="outlet-modal-list">
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sintang']) }}" class="outlet-choice">1. Apotek Alfa Sintang</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Air Upas']) }}" class="outlet-choice">2. Apotek Alfa Air Upas</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kendawangan']) }}" class="outlet-choice">3. Apotek Alfa Kendawangan</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Balai Berkuak']) }}" class="outlet-choice">4. Apotek Alfa Balai Berkuak</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Nanga Tayap']) }}" class="outlet-choice">5. Apotek Alfa Nanga Tayap</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Tumbang Titi']) }}" class="outlet-choice">6. Apotek Alfa Tumbang Titi</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sosok']) }}" class="outlet-choice">7. Apotek Alfa Sosok</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Bodok']) }}" class="outlet-choice">8. Apotek Alfa Bodok</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kembayan']) }}" class="outlet-choice">9. Apotek Alfa Kembayan</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Ambawang']) }}" class="outlet-choice">10. Apotek Alfa Ambawang</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Jungkat']) }}" class="outlet-choice">11. Apotek Alfa Jungkat</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Mempawah']) }}" class="outlet-choice">12. Apotek Alfa Mempawah</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Sintang'])); ?>" class="outlet-choice">1. Apotek Alfa Sintang</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Air Upas'])); ?>" class="outlet-choice">2. Apotek Alfa Air Upas</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Kendawangan'])); ?>" class="outlet-choice">3. Apotek Alfa Kendawangan</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Balai Berkuak'])); ?>" class="outlet-choice">4. Apotek Alfa Balai Berkuak</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Nanga Tayap'])); ?>" class="outlet-choice">5. Apotek Alfa Nanga Tayap</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Tumbang Titi'])); ?>" class="outlet-choice">6. Apotek Alfa Tumbang Titi</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Sosok'])); ?>" class="outlet-choice">7. Apotek Alfa Sosok</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Bodok'])); ?>" class="outlet-choice">8. Apotek Alfa Bodok</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Kembayan'])); ?>" class="outlet-choice">9. Apotek Alfa Kembayan</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Ambawang'])); ?>" class="outlet-choice">10. Apotek Alfa Ambawang</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Jungkat'])); ?>" class="outlet-choice">11. Apotek Alfa Jungkat</a>
+    <a href="<?php echo e(route('products.apotek', ['perusahaan' => 'Alfa Mempawah'])); ?>" class="outlet-choice">12. Apotek Alfa Mempawah</a>
   </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
 function openAlfaOutletModal() {
   document.getElementById('outletModalOverlay').classList.add('open');
@@ -1464,9 +1462,11 @@ function closeAlfaOutletModal() {
   document.body.style.overflow = '';
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
 
+
+<?php echo $__env->make('layouts.frontend', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/home.blade.php ENDPATH**/ ?>

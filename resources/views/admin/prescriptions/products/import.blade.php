@@ -50,7 +50,7 @@
     .btn-save {
         display: inline-flex; align-items: center; gap: 0.4rem;
         padding: 0.6rem 1.5rem; background: #dc2626; color: white; border: none;
-        border-radius: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        border-radius: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: none !important;
     }
     .btn-save:hover { background: #b91c1c; transform: translateY(-1px); }
     .btn-save:disabled { background: #d1d5db; cursor: not-allowed; transform: none; }
@@ -58,7 +58,7 @@
         display: inline-flex; align-items: center; gap: 0.4rem;
         padding: 0.6rem 1.25rem; background: white; color: #6b7280;
         border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.9rem;
-        font-weight: 600; text-decoration: none; transition: all 0.2s;
+        font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: none !important;
     }
     .btn-cancel:hover { background: #f9fafb; color: #374151; }
     .info-box {
@@ -115,12 +115,12 @@
     <ol>
         <li>Download Template Excel (.xls) di bawah</li>
         <li>Buka template tersebut dengan <strong>Microsoft Excel</strong> jika ingin mengedit isi datanya</li>
-        <li>Isi data produk di sheet <strong>"Data Produk Resep"</strong></li>
-        <li>Upload file <strong>.xls</strong> hasil template langsung</li>
+        <li>Isi data produk di sheet <strong>"Template"</strong></li>
+        <li>Upload file <strong>.xls / .xlsx / .csv</strong> hasil template</li>
         <li>Semua produk yang diimpor otomatis ditandai sebagai <strong>Produk Resep (KERAS)</strong></li>
     </ol>
     <p class="success-note">
-        ? Format kolom: <strong>PABRIK | NAMA PRODUK | SEDIAAN | RETAIL | KOMPOSISI | INDIKASI</strong>
+        Format kolom: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | KOMPOSISI | INDIKASI | KATEGORI</strong>
     </p>
 </div>
 
@@ -146,38 +146,62 @@
             <table>
                 <thead>
                     <tr>
+                        <th>SKU</th>
                         <th>PABRIK</th>
+                        <th>BRAND</th>
                         <th>NAMA PRODUK</th>
+                        <th>SEDIAAN</th>
                         <th>DESKRIPSI</th>
-                        <th>RETAIL</th>
+                        <th>HARGA</th>
+                        <th>STOK</th>
+                        <th>TERJUAL</th>
                         <th>KOMPOSISI</th>
                         <th>INDIKASI</th>
+                        <th>KATEGORI</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>KALBE</td>
-                        <td>Amoxicillin 500mg</td>
-                        <td>Antibiotik resep untuk infeksi bakteri</td>
-                        <td>15000</td>
-                        <td>Amoxicillin 500 mg</td>
-                        <td>Infeksi bakteri</td>
+                        <td>SKU-001</td>
+                        <td>KIMIA FARMA</td>
+                        <td>KIMIA FARMA</td>
+                        <td>Paracetamol 500mg</td>
+                        <td>fls</td>
+                        <td>Pereda demam dan nyeri ringan</td>
+                        <td>5000</td>
+                        <td>100</td>
+                        <td>20</td>
+                        <td>Paracetamol 500 mg</td>
+                        <td>Demam &amp; nyeri</td>
+                        <td>OBAT</td>
                     </tr>
                     <tr>
-                        <td>BERNOFARM</td>
-                        <td>Ciprofloxacin 500mg</td>
-                        <td>Antibiotik oral untuk infeksi berat</td>
-                        <td>25000</td>
-                        <td>Ciprofloxacin 500 mg</td>
-                        <td>Infeksi bakteri</td>
+                        <td>SKU-002</td>
+                        <td>WARDAH</td>
+                        <td>WARDAH</td>
+                        <td>Pelembab Wajah SPF30</td>
+                        <td>box</td>
+                        <td>Moisturizer ringan untuk kulit sensitif</td>
+                        <td>85000</td>
+                        <td>50</td>
+                        <td>12</td>
+                        <td>Aqua, Glycerin, SPF30</td>
+                        <td>Melembabkan &amp; melindungi kulit</td>
+                        <td>SKINCARE &amp; KOSMETIK</td>
                     </tr>
                     <tr>
-                        <td>DEXA</td>
-                        <td>Metformin 500mg</td>
-                        <td>Obat diabetes untuk kontrol gula darah</td>
-                        <td>12000</td>
-                        <td>Metformin 500 mg</td>
-                        <td>Diabetes tipe 2</td>
+                        <td>SKU-003</td>
+                        <td>OMRON</td>
+                        <td>OMRON</td>
+                        <td>Tensimeter Digital</td>
+                        <td>-</td>
+                        <td>Alat pemeriksa tekanan darah portabel</td>
+                        <td>350000</td>
+                        <td>20</td>
+                        <td>5</td>
+                        <td>-</td>
+                        <td>Mengukur tekanan darah</td>
+                        <td>ALAT KESEHATAN</td>
                     </tr>
                 </tbody>
             </table>
@@ -214,7 +238,7 @@
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX � Maks. 2MB</small>
+            <small>Format: CSV, XLS, XLSX - Maks. 10MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
 

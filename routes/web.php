@@ -19,6 +19,22 @@ use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminPromoProductController;
 use App\Http\Controllers\PurchaseHistoryController;
 
+// Favicon fallbacks for hosting setups that move public assets
+Route::get('/favicon.ico', function () {
+    $candidates = [
+        public_path('favicon.ico'),
+        base_path('favicon.ico'),
+    ];
+
+    foreach ($candidates as $path) {
+        if (is_file($path)) {
+            return response()->file($path, ['Content-Type' => 'image/x-icon']);
+        }
+    }
+
+    abort(404);
+});
+
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
@@ -68,6 +84,7 @@ Route::post('/customer/logout', [AuthController::class, 'customerLogout'])->name
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/stats', [AdminDashboardController::class, 'stats'])->name('dashboard.stats');
+    Route::get('/dashboard/global-stats', [AdminDashboardController::class, 'globalStats'])->name('dashboard.global-stats');
     Route::get('/purchase-history', [AdminDashboardController::class, 'purchaseHistory'])->name('purchase-history.index');
     Route::get('/purchase-history/export', [AdminDashboardController::class, 'exportPurchaseHistory'])->name('purchase-history.export');
     Route::post('/purchase-history/{order}/approval', [AdminDashboardController::class, 'updateApprovalStatus'])->name('purchase-history.approval');

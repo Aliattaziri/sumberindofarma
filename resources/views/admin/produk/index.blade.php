@@ -158,11 +158,11 @@
     <a href="{{ route('admin.produk.index', array_merge(request()->except('kategori_produk'), [])) }}"
        class="kat-tab {{ !$kategori_produk ? 'active' : '' }}">
         🛒 Semua
-        <span class="kat-count">{{ $total }}</span>
+        <span class="kat-count">{{ $totalAll ?? $total }}</span>
     </a>
     @foreach($kategoriOptions as $kat)
         @php
-            $count = \App\Models\Medicine::where('kategori_produk', $kat)->count();
+            $count = $kategoriCounts[$kat] ?? 0;
             $icon  = match($kat) {
                 'OBAT'                => '💊',
                 'SKINCARE & KOSMETIK' => '✨',

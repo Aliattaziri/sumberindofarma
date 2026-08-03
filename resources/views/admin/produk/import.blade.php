@@ -11,10 +11,10 @@
     .header-icon { width:32px; height:32px; background:#fef2f2; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; color:#B91C1C; font-size:0.9rem; }
     .form-body { padding:1.5rem; }
     .form-footer { padding:1rem 1.5rem; border-top:1px solid #f3f4f6; display:flex; gap:0.6rem; align-items:center; }
-    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#B91C1C; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#B91C1C; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; box-shadow:none !important; }
     .btn-save:hover { background:#991B1B; transform:translateY(-1px); }
     .btn-save:disabled { background:#d1d5db; cursor:not-allowed; transform:none; }
-    .btn-cancel { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:white; color:#6b7280; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
+    .btn-cancel { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:white; color:#6b7280; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.2s; box-shadow:none !important; }
     .btn-cancel:hover { background:#f9fafb; color:#374151; }
     .upload-zone { border:2px dashed #d1d5db; border-radius:0.6rem; padding:2rem 1rem; text-align:center; background:#fafafa; cursor:pointer; transition:all 0.2s; }
     .upload-zone:hover, .upload-zone.drag-over { border-color:#B91C1C; background:#fef2f2; }
@@ -173,18 +173,6 @@
                     </a>
                 </div>
             </form>
-    </div>
-    <div class="form-footer" style="justify-content:flex-end; flex-wrap:wrap;">
-        <form action="{{ route('admin.produk.import.process') }}" method="POST" enctype="multipart/form-data" id="submitForm" style="display:none;">
-            @csrf
-            <input type="file" id="fileInputHidden" name="file" style="display:none;">
-        </form>
-        <button type="button" class="btn-save" id="submitBtn" onclick="submitForm()" disabled style="opacity:0.5;cursor:not-allowed;">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Import Sekarang
-        </button>
-        <a href="{{ route('admin.produk.index') }}" class="btn-cancel">
-            <i class="fa-solid fa-xmark"></i> Batal
-        </a>
     </div>
 </div>
 

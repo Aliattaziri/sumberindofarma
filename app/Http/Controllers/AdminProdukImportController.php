@@ -6,6 +6,7 @@ use App\Models\Medicine;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AdminProdukImportController extends Controller
 {
@@ -296,6 +297,7 @@ class AdminProdukImportController extends Controller
         $imported      = 0;
         $skipped       = 0;
         $validKategori = Companies::LIST;
+        $outlet = Auth::user()?->outlet_name;
 
         DB::beginTransaction();
         try {
@@ -311,6 +313,11 @@ class AdminProdukImportController extends Controller
                 if (empty($namaProduk)) {
                     $skipped++;
                     continue;
+                }
+
+                $pabrikValue = trim((string) ($data['PABRIK'] ?? ($data['BRAND'] ?? '')));
+                if ($outlet) {
+                    $pabrikValue = $outlet;
                 }
 
                 $katRaw    = strtoupper(trim((string) ($data['KATEGORI'] ?? '')));
@@ -331,9 +338,9 @@ class AdminProdukImportController extends Controller
 
                 // Match key: gunakan SKU atau nama produk karena outlet sudah ditentukan oleh akun
                 if (!empty($sku)) {
-                    $match = ['sku' => $sku];
+                    $match = ['sku' => $sku, 'kategori' => $pabrikValue];
                 } else {
-                    $match = ['nama_obat' => $namaProduk];
+                    $match = ['nama_obat' => $namaProduk, 'kategori' => $pabrikValue];
                 }
 
                 // Susun deskripsi dari DESKRIPSI, KOMPOSISI, INDIKASI — fallback ke nama produk
@@ -352,7 +359,7 @@ class AdminProdukImportController extends Controller
                         'sku'              => $sku ?: null,
                         'nama_obat'        => $namaProduk,
                         'sediaan'          => $sediaan,
-                        'kategori'         => $data['PABRIK'] ?? ($data['BRAND'] ?? ''),
+                        'kategori'         => $pabrikValue,
                         'brand'            => $brand ?: null,
                         'kategori_produk'  => $katProduk,
                         'harga'            => $this->parseHarga($hargaRaw),

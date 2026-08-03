@@ -107,6 +107,7 @@
         font-weight: 700;
         cursor: pointer;
         transition: all 0.2s;
+        box-shadow: none !important;
     }
     .btn-save:hover { background: #991B1B; transform: translateY(-1px); }
     .btn-save:disabled { background: #d1d5db; cursor: not-allowed; transform: none; }
@@ -123,6 +124,7 @@
         font-weight: 600;
         text-decoration: none;
         transition: all 0.2s;
+        box-shadow: none !important;
     }
     .btn-cancel:hover { background: #f9fafb; color: #374151; }
 

@@ -27,7 +27,7 @@
     .btn-save {
         display: inline-flex; align-items: center; gap: 0.4rem;
         padding: 0.6rem 1.5rem; background: #dc2626; color: white; border: none;
-        border-radius: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        border-radius: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: none !important;
     }
     .btn-save:hover { background: #b91c1c; transform: translateY(-1px); }
     .btn-save:disabled { background: #d1d5db; cursor: not-allowed; transform: none; }
@@ -35,7 +35,7 @@
         display: inline-flex; align-items: center; gap: 0.4rem;
         padding: 0.6rem 1.25rem; background: white; color: #6b7280;
         border: 1px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.9rem;
-        font-weight: 600; text-decoration: none; transition: all 0.2s;
+        font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: none !important;
     }
     .btn-cancel:hover { background: #f9fafb; color: #374151; }
     .btn-choose {

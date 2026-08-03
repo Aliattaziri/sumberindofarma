@@ -35,36 +35,42 @@ class AdminProdukController extends Controller
         $kategori_produk = $request->get('kategori_produk', '');
         $brand           = $request->get('brand', '');
 
-        $query = Medicine::latest();
+        $baseQuery = Medicine::query();
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
         $outlet = $user?->outlet_name;
         if ($outlet) {
-            $query->where('kategori', $outlet);
+            $baseQuery->where('kategori', $outlet);
         }
 
         if ($search) {
-            $query->where(function ($q) use ($search) {
+            $baseQuery->where(function ($q) use ($search) {
                 $q->where('nama_obat', 'like', "%{$search}%")
                   ->orWhere('kategori', 'like', "%{$search}%")
                   ->orWhere('deskripsi', 'like', "%{$search}%");
             });
         }
 
-        if ($kategori_produk) {
-            $query->where('kategori_produk', $kategori_produk);
+        if ($brand) {
+            $baseQuery->where('brand', 'like', "%{$brand}%");
         }
 
-        if ($brand) {
-            $query->where('brand', 'like', "%{$brand}%");
+        $query = (clone $baseQuery)->latest();
+        if ($kategori_produk) {
+            $query->where('kategori_produk', $kategori_produk);
         }
 
         $medicines       = $query->paginate(15)->withQueryString();
         $total           = (clone $query)->count();
         $kategoriOptions = Companies::LIST;
+        $kategoriCounts  = [];
+        foreach ($kategoriOptions as $kat) {
+            $kategoriCounts[$kat] = (clone $baseQuery)->where('kategori_produk', $kat)->count();
+        }
+        $totalAll = array_sum($kategoriCounts);
 
         return view('admin.produk.index', compact(
-            'medicines', 'search', 'kategori_produk', 'brand', 'total', 'kategoriOptions'
+            'medicines', 'search', 'kategori_produk', 'brand', 'total', 'kategoriOptions', 'kategoriCounts', 'totalAll'
         ));
     }
 

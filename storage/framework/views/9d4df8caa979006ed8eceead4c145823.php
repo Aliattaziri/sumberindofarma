@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#991B1B">
     <meta name="msapplication-TileColor" content="#991B1B">
-    @php
+    <?php
         $faviconV = @filemtime(public_path('favicon.ico')) ?: '20260803-13';
-    @endphp
-    <meta name="msapplication-TileImage" content="/favicon.ico?v={{ $faviconV }}">
-    <meta property="og:image" content="{{ asset('logo pt sumber indo farma tama.png') }}?v=20260803-8">
-    <meta property="og:image:secure_url" content="{{ asset('logo pt sumber indo farma tama.png') }}?v=20260803-8">
-    <meta name="twitter:image" content="{{ asset('logo pt sumber indo farma tama.png') }}?v=20260803-8">
-    <title>@yield('title', 'Sumberindo Farma Tama - Apotik Online')</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v={{ $faviconV }}">
-    <link rel="shortcut icon" href="/favicon.ico?v={{ $faviconV }}">
-    <link rel="apple-touch-icon" href="/favicon.ico?v={{ $faviconV }}">
+    ?>
+    <meta name="msapplication-TileImage" content="/favicon.ico?v=<?php echo e($faviconV); ?>">
+    <meta property="og:image" content="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>?v=20260803-8">
+    <meta property="og:image:secure_url" content="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>?v=20260803-8">
+    <meta name="twitter:image" content="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>?v=20260803-8">
+    <title><?php echo $__env->yieldContent('title', 'Sumberindo Farma Tama - Apotik Online'); ?></title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
+    <link rel="shortcut icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
+    <link rel="apple-touch-icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>
@@ -37,7 +37,7 @@
             cursor: not-allowed !important;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('css/fix-cursor.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/fix-cursor.css')); ?>">
     
     <!-- Fix Cursor Script - Load ASAP -->
     <script>
@@ -61,7 +61,7 @@
     <!-- Font Awesome (switched to jsDelivr mirror to avoid CDN font issues) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
     
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
     <style>
         /* ===== BOOTSTRAP GRID REPLACEMENT ===== */
@@ -989,7 +989,7 @@
         }
     </style>
 
-    @yield('styles')
+    <?php echo $__env->yieldContent('styles'); ?>
 </head>
 <body>
 
@@ -1046,8 +1046,8 @@
 
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="{{ route('login') }}" class="navbar-brand" title="Login Admin PT SUMBERINDO FARMA TAMA">
-                <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma Logo">
+            <a href="<?php echo e(route('login')); ?>" class="navbar-brand" title="Login Admin PT SUMBERINDO FARMA TAMA">
+                <img src="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>" alt="Sumberindo Farma Logo">
                 PT SUMBERINDO FARMA TAMA
             </a>
             
@@ -1059,62 +1059,64 @@
             </button>
 
             <ul class="navbar-menu" id="navbarMenu">
-                <li><a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a href="{{ route('about') }}"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a></li>
-                <li><a href="{{ route('contact') }}"><i class="fa-solid fa-headset"></i> Hubungi Kami</a></li>
+                <li><a href="<?php echo e(route('home')); ?>"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="<?php echo e(route('about')); ?>"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a></li>
+                <li><a href="<?php echo e(route('contact')); ?>"><i class="fa-solid fa-headset"></i> Hubungi Kami</a></li>
 
-                @auth
-                    @if(auth()->user()->isAdmin())
-                        <li><a href="{{ route('admin.dashboard') }}" class="admin-link"><i class="fa-solid fa-gauge"></i> Admin Panel</a></li>
+                <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user()->isAdmin()): ?>
+                        <li><a href="<?php echo e(route('admin.dashboard')); ?>" class="admin-link"><i class="fa-solid fa-gauge"></i> Admin Panel</a></li>
                         <li>
-                            <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
-                                @csrf
+                            <form action="<?php echo e(route('logout')); ?>" method="POST" style="margin: 0;">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
                             </form>
                         </li>
-                    @elseif(auth()->user()->isUser())
+                    <?php elseif(auth()->user()->isUser()): ?>
                         <li>
-                            <form action="{{ route('customer.logout') }}" method="POST" style="margin: 0;">
-                                @csrf
+                            <form action="<?php echo e(route('customer.logout')); ?>" method="POST" style="margin: 0;">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="logout-btn">
-                                    <i class="fa-solid fa-right-from-bracket"></i> Logout ({{ auth()->user()->name }})
+                                    <i class="fa-solid fa-right-from-bracket"></i> Logout (<?php echo e(auth()->user()->name); ?>)
                                 </button>
                             </form>
                         </li>
-                    @endif
-                @endauth
+                    <?php endif; ?>
+                <?php endif; ?>
             </ul>
 
-            {{-- Cart button --}}
-            @if(Route::is(['products.*', 'medicines.show']))
-                <button class="cart-nav-btn" id="cartNavBtn" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.apotek') }}#keranjang';}" title="Keranjang Belanja" style="display:none;">
+            
+            <?php if(Route::is(['products.*', 'medicines.show'])): ?>
+                <button class="cart-nav-btn" id="cartNavBtn" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='<?php echo e(route('products.apotek')); ?>#keranjang';}" title="Keranjang Belanja" style="display:none;">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span class="cart-badge" id="cartBadgeNav">0</span>
                 </button>
-            @endif
+            <?php endif; ?>
         </div>
     </nav>
 
     <!-- Content -->
     <main class="page-offset">
         <!-- Alert Messages -->
-        @if ($message = Session::get('success'))
+        <?php if($message = Session::get('success')): ?>
             <div class="container" style="padding-top:0.75rem;">
                 <div class="alert alert-success">
-                    {{ $message }}
+                    <?php echo e($message); ?>
+
                 </div>
             </div>
-        @endif
+        <?php endif; ?>
 
-        @if ($message = Session::get('error'))
+        <?php if($message = Session::get('error')): ?>
             <div class="container" style="padding-top:0.75rem;">
                 <div class="alert alert-error">
-                    {{ $message }}
+                    <?php echo e($message); ?>
+
                 </div>
             </div>
-        @endif
+        <?php endif; ?>
 
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
     <!-- Footer -->
@@ -1132,7 +1134,7 @@
                 <div>
                     <h3>Informasi</h3>
                     <ul>
-                        <li><a href="{{ route('contact') }}"><i class="fa-solid fa-headset fa-fw footer-icon"></i>Hubungi Kami</a></li>
+                        <li><a href="<?php echo e(route('contact')); ?>"><i class="fa-solid fa-headset fa-fw footer-icon"></i>Hubungi Kami</a></li>
                         <li><a href="#"><i class="fa-solid fa-shield-halved fa-fw footer-icon"></i>Kebijakan Privasi</a></li>
                     </ul>
                 </div>
@@ -1275,11 +1277,11 @@
 
     <script>
         window.cartSettings = Object.assign({
-            storageKey: @json(auth()->check() ? 'sumberindofarmatama_cart_user_' . auth()->user()->id : 'sumberindofarmatama_cart')
+            storageKey: <?php echo json_encode(auth()->check() ? 'sumberindofarmatama_cart_user_' . auth()->user()->id : 'sumberindofarmatama_cart', 15, 512) ?>
         }, window.cartSettings || {});
     </script>
 
-    @yield('scripts')
+    <?php echo $__env->yieldContent('scripts'); ?>
 
     <script>
         // ===== SMOOTH SCROLL =====
@@ -1483,8 +1485,8 @@
     </script>
     
     <!-- Fix Cursor Script -->
-    <script src="{{ asset('js/fix-cursor-override.js') }}"></script>
-    <script src="{{ asset('js/fix-cursor.js') }}"></script>
+    <script src="<?php echo e(asset('js/fix-cursor-override.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/fix-cursor.js')); ?>"></script>
 </body>
 </html>
 
@@ -1492,3 +1494,4 @@
 
 
 
+<?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/layouts/frontend.blade.php ENDPATH**/ ?>

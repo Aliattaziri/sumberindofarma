@@ -6,6 +6,7 @@ use App\Models\Medicine;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Helpers\ImageHelper;
 
 class AdminPrescriptionProductController extends Controller
@@ -15,12 +16,19 @@ class AdminPrescriptionProductController extends Controller
     // List produk resep
     public function index(Request $request)
     {
+        $user            = Auth::user();
+        $outlet          = $user?->outlet_name;
         $search          = $request->input('search');
         $kategori        = $request->input('kategori');
         $kategori_produk = $request->input('kategori_produk');
         $brand           = $request->input('brand');
 
         $query = Medicine::where('is_resep', true)->latest();
+
+        if ($outlet) {
+            $query->where('kategori', $outlet);
+            $kategori = $outlet;
+        }
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -30,7 +38,7 @@ class AdminPrescriptionProductController extends Controller
             });
         }
 
-        if ($kategori) {
+        if ($kategori && !$outlet) {
             $query->where('kategori', $kategori);
         }
 
@@ -58,6 +66,7 @@ class AdminPrescriptionProductController extends Controller
     // Simpan produk resep baru
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validated = $request->validate([
             'nama_obat' => ['required', 'string', 'max:255'],
             'kategori'  => ['required', 'string'],
@@ -86,6 +95,10 @@ class AdminPrescriptionProductController extends Controller
             $validated['gambar'] = ImageHelper::storeProductImage($request->file('gambar'));
         }
 
+        if ($user?->outlet_name) {
+            $validated['kategori'] = $user->outlet_name;
+        }
+
         Medicine::create($validated);
 
         return redirect()->route('admin.prescriptions.products.index')
@@ -98,6 +111,7 @@ class AdminPrescriptionProductController extends Controller
         if (!$product->is_resep) {
             abort(404);
         }
+        $this->authorizeOutletProduct($product);
 
         return view('admin.prescriptions.products.edit', [
             'medicine'   => $product,
@@ -111,6 +125,8 @@ class AdminPrescriptionProductController extends Controller
         if (!$product->is_resep) {
             abort(404);
         }
+        $this->authorizeOutletProduct($product);
+        $user = Auth::user();
 
         $validated = $request->validate([
             'nama_obat' => ['required', 'string', 'max:255'],
@@ -146,6 +162,10 @@ class AdminPrescriptionProductController extends Controller
             $validated['gambar'] = null;
         }
 
+        if ($user?->outlet_name) {
+            $validated['kategori'] = $user->outlet_name;
+        }
+
         $product->update($validated);
 
         $queryParams = $this->buildIndexQueryParams($request);
@@ -160,6 +180,7 @@ class AdminPrescriptionProductController extends Controller
         if (!$product->is_resep) {
             abort(404);
         }
+        $this->authorizeOutletProduct($product);
 
         ImageHelper::deleteProductImage($product->gambar);
         $product->delete();
@@ -190,6 +211,7 @@ class AdminPrescriptionProductController extends Controller
         if (!$product->is_resep) {
             abort(404);
         }
+        $this->authorizeOutletProduct($product);
 
         $validated = $request->validate([
             'stok' => ['required', 'integer', 'min:0'],
@@ -212,6 +234,7 @@ class AdminPrescriptionProductController extends Controller
         if (!$product->is_resep) {
             abort(404);
         }
+        $this->authorizeOutletProduct($product);
 
         $validated = $request->validate([
             'harga' => ['required', 'numeric', 'min:0'],
@@ -227,5 +250,13 @@ class AdminPrescriptionProductController extends Controller
         }
 
         return back()->with('success', 'Harga produk resep berhasil diupdate!');
+    }
+
+    private function authorizeOutletProduct(Medicine $product): void
+    {
+        $outlet = Auth::user()?->outlet_name;
+        if ($outlet && $product->kategori !== $outlet) {
+            abort(403);
+        }
     }
 }

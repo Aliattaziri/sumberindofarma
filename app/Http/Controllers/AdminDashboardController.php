@@ -13,6 +13,57 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
 {
+    protected function buildGlobalDashboardData(): array
+    {
+        $totalProdukGlobal = Medicine::count();
+
+        $orders = Schema::hasTable('purchase_histories')
+            ? PurchaseHistory::query()->latest()->get()
+            : collect();
+
+        $totalOmzetGlobal = (float) $orders->sum(fn ($order) => $order->effective_total);
+        $totalTransaksiGlobal = $orders->count();
+
+        $historyByOutlet = $orders
+            ->groupBy(fn ($order) => $order->source_outlet ?: 'Tanpa Outlet')
+            ->map(function ($group, $outlet) {
+                $omzet = (float) $group->sum(fn ($o) => $o->effective_total);
+
+                return [
+                    'outlet' => $outlet,
+                    'transaksi' => $group->count(),
+                    'omzet' => $omzet,
+                ];
+            })
+            ->sortByDesc('omzet')
+            ->values();
+
+        $historyByChannel = $orders
+            ->groupBy(fn ($order) => $order->buyer_type === 'apotik' ? 'Apotek / Produk Apotek' : 'Umum / Produk Publik')
+            ->map(function ($group, $channel) {
+                $omzet = (float) $group->sum(fn ($o) => $o->effective_total);
+
+                return [
+                    'channel' => $channel,
+                    'transaksi' => $group->count(),
+                    'omzet' => $omzet,
+                ];
+            })
+            ->sortByDesc('omzet')
+            ->values();
+
+        $recentGlobalOrders = $orders->take(10)->values();
+
+        return [
+            'totalProdukGlobal' => $totalProdukGlobal,
+            'totalOmzetGlobal' => $totalOmzetGlobal,
+            'totalTransaksiGlobal' => $totalTransaksiGlobal,
+            'historyByOutlet' => $historyByOutlet,
+            'historyByChannel' => $historyByChannel,
+            'recentGlobalOrders' => $recentGlobalOrders,
+        ];
+    }
+
     protected function applyOutletScopeToPurchaseHistory($query)
     {
         $user = Auth::user();
@@ -35,6 +86,11 @@ class AdminDashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if ($user && $user->isSuperAdmin()) {
+            return view('admin.dashboard-global', $this->buildGlobalDashboardData());
+        }
+
         $query = Medicine::query();
 
         if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
@@ -110,6 +166,34 @@ class AdminDashboardController extends Controller
             'total'         => (clone $query)->count(),
             'lowStok'       => (clone $query)->where('stok', '<', 5)->count(),
             'latestProduk'  => $latestProduk,
+        ]);
+    }
+
+    public function globalStats()
+    {
+        $user = Auth::user();
+        if (! $user || ! $user->isSuperAdmin()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $data = $this->buildGlobalDashboardData();
+
+        return response()->json([
+            'totalProdukGlobal' => $data['totalProdukGlobal'],
+            'totalOmzetGlobal' => (float) $data['totalOmzetGlobal'],
+            'totalTransaksiGlobal' => $data['totalTransaksiGlobal'],
+            'historyByOutlet' => $data['historyByOutlet']->values()->all(),
+            'historyByChannel' => $data['historyByChannel']->values()->all(),
+            'recentGlobalOrders' => $data['recentGlobalOrders']->map(function ($order) {
+                return [
+                    'waktu' => optional($order->created_at)->format('d M Y H:i'),
+                    'outlet' => $order->source_outlet ?: '-',
+                    'pembeli' => $order->buyer_name ?: '-',
+                    'kanal' => $order->buyer_type === 'apotik' ? 'Apotek' : 'Umum',
+                    'omzet' => (float) $order->effective_total,
+                ];
+            })->values()->all(),
+            'generatedAt' => now()->format('H:i:s'),
         ]);
     }
 

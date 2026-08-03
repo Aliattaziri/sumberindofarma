@@ -18,8 +18,10 @@ class DatabaseSeeder extends Seeder
         // Seed admin users
         $this->call(AdminSeeder::class);
 
-        // Seed medicines
-        $this->call(MedicineSeeder::class);
+        // IMPORTANT:
+        // Do not seed demo medicines by default, especially on hosting/production.
+        // Run MedicineSeeder manually only when you explicitly need sample data.
+        // $this->call(MedicineSeeder::class);
 
         // Seed news
         $this->call(NewsSeeder::class);

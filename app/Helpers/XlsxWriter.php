@@ -38,7 +38,6 @@ class XlsxWriter
         return response($xlsx, 200, [
             'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-            'Content-Length'      => strlen($xlsx),
             'Pragma'              => 'no-cache',
             'Cache-Control'       => 'no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0',
             'Expires'             => '0',
@@ -373,7 +372,6 @@ PS1;
         return response($xml, 200, [
             'Content-Type'        => 'application/vnd.ms-excel',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-            'Content-Length'      => strlen($xml),
             'Pragma'              => 'no-cache',
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
             'Expires'             => '0',
