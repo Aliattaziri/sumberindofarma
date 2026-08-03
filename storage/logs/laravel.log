@@ -7940,3 +7940,27 @@
 #4 Standard input code(8): PhpOffice/PhpSpreadsheet/IOFactory::load('storage/app/lat...')
 #5 {main}
 "} 
+[2026-08-03 07:33:53] local.ERROR: Undefined variable $errors (View: C:\Users\Ali Attaziri\sumberindofarma\resources\views\admin\produk\import.blade.php) {"exception":"[object] (Illuminate\\View\\ViewException(code: 0): Undefined variable $errors (View: C:\\Users\\Ali Attaziri\\sumberindofarma\\resources\\views\\admin\\produk\\import.blade.php) at C:/Users/Ali Attaziri/sumberindofarma/storage/framework/views/237df5a1164f31d35fe5c39289898d6d.php:147)
+[stacktrace]
+#0 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(59): Illuminate/View/Engines/CompilerEngine->handleViewException(Object(ErrorException), 0)
+#1 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(76): Illuminate/View/Engines/PhpEngine->evaluatePath('C://Users//Ali At...', Array)
+#2 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate/View/Engines/CompilerEngine->get('C://Users//Ali At...', Array)
+#3 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate/View/View->getContents()
+#4 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate/View/View->renderContents()
+#5 C:/Users/Ali Attaziri/sumberindofarma/temp_render_view.php(6): Illuminate/View/View->render()
+#6 {main}
+
+[previous exception] [object] (ErrorException(code: 0): Undefined variable $errors at C:/Users/Ali Attaziri/sumberindofarma/storage/framework/views/237df5a1164f31d35fe5c39289898d6d.php:147)
+[stacktrace]
+#0 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate/Foundation/Bootstrap/HandleExceptions->handleError(2, 'Undefined varia...', 'C://Users//Ali At...', 147)
+#1 C:/Users/Ali Attaziri/sumberindofarma/storage/framework/views/237df5a1164f31d35fe5c39289898d6d.php(147): Illuminate/Foundation/Bootstrap/HandleExceptions->Illuminate/Foundation/Bootstrap/{closure}(2, 'Undefined varia...', 'C://Users//Ali At...', 147)
+#2 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('C://Users//Ali At...')
+#3 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate/Filesystem/Filesystem::Illuminate/Filesystem/{closure}()
+#4 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(57): Illuminate/Filesystem/Filesystem->getRequire('C://Users//Ali At...', Array)
+#5 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(76): Illuminate/View/Engines/PhpEngine->evaluatePath('C://Users//Ali At...', Array)
+#6 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate/View/Engines/CompilerEngine->get('C://Users//Ali At...', Array)
+#7 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate/View/View->getContents()
+#8 C:/Users/Ali Attaziri/sumberindofarma/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate/View/View->renderContents()
+#9 C:/Users/Ali Attaziri/sumberindofarma/temp_render_view.php(6): Illuminate/View/View->render()
+#10 {main}
+"} 

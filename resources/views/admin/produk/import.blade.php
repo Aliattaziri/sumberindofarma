@@ -146,7 +146,7 @@
         <h3>Upload File</h3>
     </div>
     <div class="form-body">
-        @if($errors->any())
+        @if(isset($errors) && $errors->any())
             <div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:0.5rem;padding:1rem;margin-bottom:1rem;color:#7f1d1d;font-size:0.875rem;">
                 <i class="fa-solid fa-circle-exclamation"></i> {{ $errors->first('file') }}
             </div>
@@ -161,7 +161,18 @@
             <small>Format: CSV, XLS, XLSX - Maks. 10MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
-        <input type="file" id="fileInput" name="file" accept=".csv,.xls,.xlsx,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" onchange="updateFileLabel(this)">
+            <form action="{{ route('admin.produk.import.process') }}" method="POST" enctype="multipart/form-data" id="submitForm">
+                @csrf
+                <input type="file" id="fileInput" name="file" accept=".csv,.xls,.xlsx,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="updateFileLabel(this)">
+                <div class="form-footer" style="justify-content:flex-end; flex-wrap:wrap; padding-left:0; padding-right:0; border-top:none;">
+                    <button type="button" class="btn-save" id="submitBtn" onclick="submitForm()" disabled style="opacity:0.5;cursor:not-allowed;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Import Sekarang
+                    </button>
+                    <a href="{{ route('admin.produk.index') }}" class="btn-cancel">
+                        <i class="fa-solid fa-xmark"></i> Batal
+                    </a>
+                </div>
+            </form>
     </div>
     <div class="form-footer" style="justify-content:flex-end; flex-wrap:wrap;">
         <form action="{{ route('admin.produk.import.process') }}" method="POST" enctype="multipart/form-data" id="submitForm" style="display:none;">
@@ -203,9 +214,6 @@ function handleDrop(e) {
 function submitForm() {
     const fileInput = document.getElementById('fileInput');
     if (fileInput.files.length > 0) {
-        const dt = new DataTransfer();
-        dt.items.add(fileInput.files[0]);
-        document.getElementById('fileInputHidden').files = dt.files;
         document.getElementById('submitForm').submit();
     }
 }

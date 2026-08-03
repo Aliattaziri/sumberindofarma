@@ -121,57 +121,50 @@ class AdminMedicineImportController extends Controller
      * XLSX PARSER (modern .xlsx via ZipArchive)
      * =========================
      */
-    private function importXlsx(string $path)
+    private function importExcelXml($content)
     {
-        $zip = new \ZipArchive();
+        try {
+            $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
+            $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
 
-        if ($zip->open($path) !== true) {
-            return back()->withErrors(['file' => 'File XLSX tidak bisa dibuka']);
-        }
+            $dom = new \DOMDocument();
+            if (!@$dom->loadXML($content, LIBXML_NONET | LIBXML_COMPACT)) {
+                return back()->withErrors(['file' => 'File rusak atau tidak terbaca']);
+            }
 
-        // Baca shared strings
-        $sharedStrings = [];
-        $ssXml = $zip->getFromName('xl/sharedStrings.xml');
-        if ($ssXml) {
-            libxml_use_internal_errors(true);
-            $ssXml = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $ssXml);
-            $ss    = simplexml_load_string($ssXml);
-            if ($ss) {
-                foreach ($ss->si as $si) {
-                    // Gabungkan semua node <t> (untuk rich text)
-                    $text = '';
-                    foreach ($si->r as $r) {
-                        $text .= (string)$r->t;
-                    }
-                    if (empty($text)) {
-                        $text = (string)$si->t;
-                    }
-                    $sharedStrings[] = trim($text);
+            $xpath = new \DOMXPath($dom);
+            $rowNodes = $xpath->query('//*[local-name()="Worksheet"]//*[local-name()="Table"]//*[local-name()="Row"]');
+
+            if (!$rowNodes || $rowNodes->length < 2) {
+                return back()->withErrors(['file' => 'Data kosong']);
+            }
+
+            $rows = [];
+            foreach ($rowNodes as $rowNode) {
+                $rowData = [];
+                $cellNodes = $xpath->query('./*[local-name()="Cell"]', $rowNode);
+
+                foreach ($cellNodes as $cellNode) {
+                    $dataNodes = $xpath->query('./*[local-name()="Data"]', $cellNode);
+                    $rowData[] = trim((string) ($dataNodes->item(0)?->textContent ?? ''));
+                }
+
+                if (!empty(array_filter($rowData))) {
+                    $rows[] = $rowData;
                 }
             }
+
+            if (count($rows) < 2) {
+                return back()->withErrors(['file' => 'Data kosong']);
+            }
+        } catch (\Throwable $e) {
+            return back()->withErrors(['file' => 'File rusak atau tidak terbaca: ' . $e->getMessage()]);
         }
 
-        // Baca sheet pertama
-        $sheetXml = $zip->getFromName('xl/worksheets/sheet1.xml');
-        $zip->close();
+        $header = array_map(fn($h) => strtoupper(trim($h)), $rows[0]);
 
-        if (!$sheetXml) {
-            return back()->withErrors(['file' => 'Sheet tidak ditemukan di XLSX']);
-        }
-
-        libxml_use_internal_errors(true);
-        $sheetXml = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $sheetXml);
-        $sheet    = simplexml_load_string($sheetXml);
-
-        if (!$sheet) {
-            return back()->withErrors(['file' => 'File XLSX rusak']);
-        }
-
-        $rows = [];
-
-        foreach ($sheet->sheetData->row as $row) {
-            $r          = [];
-            $lastColIdx = -1;
+        return $this->processArrayRows($header, array_slice($rows, 1));
+    }
 
             foreach ($row->c as $cell) {
                 // Hitung index kolom dari atribut r (contoh: A1, B2, AA3)
@@ -223,41 +216,58 @@ class AdminMedicineImportController extends Controller
      */
     private function importExcelXml($content)
     {
-        libxml_use_internal_errors(true);
+        try {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xml();
+            $spreadsheet = $reader->loadSpreadsheetFromString($content);
+            $sheet = $spreadsheet->getActiveSheet();
 
-        $content = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $content);
+            $highestRow = $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+            $rows = [];
 
-        $xml = simplexml_load_string($content);
-
-        if (!$xml) {
-            return back()->withErrors(['file' => 'File rusak']);
-        }
-
-        $rows = [];
-
-        foreach ($xml->Worksheet[0]->Table->Row as $row) {
-            $r = [];
-            foreach ($row->Cell as $cell) {
-                $r[] = trim((string)$cell->Data);
+            for ($rowIndex = 1; $rowIndex <= $highestRow; $rowIndex++) {
+                $row = [];
+                for ($columnIndex = 1; $columnIndex <= \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); $columnIndex++) {
+                    $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($columnIndex) . $rowIndex;
+                    $row[] = trim((string) $sheet->getCell($cell)->getFormattedValue());
+                }
+                $rows[] = $row;
             }
-            $rows[] = $r;
+        } catch (\Throwable $e) {
+            return back()->withErrors(['file' => 'File rusak atau tidak terbaca: ' . $e->getMessage()]);
         }
+                        $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
+                        $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
 
-        if (count($rows) < 2) {
-            return back()->withErrors(['file' => 'Data kosong']);
-        }
+                        $dom = new \DOMDocument();
+                        if (!@$dom->loadXML($content, LIBXML_NONET | LIBXML_COMPACT)) {
+                            return back()->withErrors(['file' => 'File rusak atau tidak terbaca']);
+                        }
 
-        $header = array_map(fn($h) => strtoupper(trim($h)), $rows[0]);
+                        $xpath = new \DOMXPath($dom);
+                        $rowNodes = $xpath->query('//*[local-name()="Worksheet"]//*[local-name()="Table"]//*[local-name()="Row"]');
 
+                        if (!$rowNodes || $rowNodes->length < 2) {
+                            return back()->withErrors(['file' => 'Data kosong']);
+                        }
+
+                        foreach ($rowNodes as $rowNode) {
+                            $rowData = [];
+                            $cellNodes = $xpath->query('./*[local-name()="Cell"]', $rowNode);
+
+                            foreach ($cellNodes as $cellNode) {
+                                $dataNodes = $xpath->query('./*[local-name()="Data"]', $cellNode);
+                                $rowData[] = trim((string) ($dataNodes->item(0)?->textContent ?? ''));
+                            }
+
+                            $rows[] = $rowData;
         return $this->processArrayRows($header, array_slice($rows, 1));
     }
 
-    /**
+                            if (!empty(array_filter($rowData))) {
+                                $rows[] = $rowData;
+                            }
      * =========================
-     * PROCESS CSV ROW
-     * =========================
-     */
-    private function processRows($header, $lines, $delimiter)
     {
         $rows = [];
 

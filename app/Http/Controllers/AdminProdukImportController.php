@@ -116,23 +116,42 @@ class AdminProdukImportController extends Controller
 
     private function importSpreadsheetXml(string $content)
     {
-        libxml_use_internal_errors(true);
+        try {
+            $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
+            $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
 
-        $content = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $content);
-        $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
-
-        $xml = @simplexml_load_string($content);
-        if (!$xml || !isset($xml->Worksheet->Table)) {
-            return back()->withErrors(['file' => 'File Excel XML tidak bisa dibaca.']);
-        }
-
-        $rows = [];
-        foreach ($xml->Worksheet->Table->Row as $row) {
-            $rowData = [];
-            foreach ($row->Cell as $cell) {
-                $rowData[] = trim((string) $cell->Data);
+            $dom = new \DOMDocument();
+            if (!@$dom->loadXML($content, LIBXML_NONET | LIBXML_COMPACT)) {
+                return back()->withErrors(['file' => 'File Excel XML tidak bisa dibaca.']);
             }
-            $rows[] = $rowData;
+
+            $xpath = new \DOMXPath($dom);
+            $rowNodes = $xpath->query('//*[local-name()="Worksheet"]//*[local-name()="Table"]//*[local-name()="Row"]');
+
+            if (!$rowNodes || $rowNodes->length < 2) {
+                return back()->withErrors(['file' => 'File Excel kosong atau hanya berisi header.']);
+            }
+
+            $rows = [];
+            foreach ($rowNodes as $rowNode) {
+                $rowData = [];
+                $cellNodes = $xpath->query('./*[local-name()="Cell"]', $rowNode);
+
+                foreach ($cellNodes as $cellNode) {
+                    $dataNodes = $xpath->query('./*[local-name()="Data"]', $cellNode);
+                    $rowData[] = trim((string) ($dataNodes->item(0)?->textContent ?? ''));
+                }
+
+                if (!empty(array_filter($rowData))) {
+                    $rows[] = $rowData;
+                }
+            }
+
+            if (count($rows) < 2) {
+                return back()->withErrors(['file' => 'File Excel kosong atau hanya berisi header.']);
+            }
+        } catch (\Throwable $e) {
+            return back()->withErrors(['file' => 'File Excel XML tidak bisa dibaca: ' . $e->getMessage()]);
         }
 
         return $this->processRows($rows);
@@ -141,19 +160,22 @@ class AdminProdukImportController extends Controller
     private function parseSharedStrings(string $xml): array
     {
         $sharedStrings = [];
-        if (empty($xml)) return $sharedStrings;
+        if (empty($xml)) {
+            return $sharedStrings;
+        }
 
-        // Hapus namespace agar simplexml tidak gagal parse
         $xml = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $xml);
         $ss  = @simplexml_load_string($xml);
-        if (!$ss) return $sharedStrings;
+        if (!$ss) {
+            return $sharedStrings;
+        }
 
         foreach ($ss->si as $si) {
             $text = '';
             foreach ($si->r as $r) {
                 $text .= (string) $r->t;
             }
-            if (empty($text)) {
+            if ($text === '') {
                 $text = (string) $si->t;
             }
             $sharedStrings[] = trim($text);

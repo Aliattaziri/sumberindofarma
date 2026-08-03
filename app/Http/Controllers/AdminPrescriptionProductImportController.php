@@ -114,7 +114,7 @@ class AdminPrescriptionProductImportController extends Controller
 
         // Kasus 2: File .xlsx (ZIP-based) — tidak bisa diparse tanpa ext-zip
         if (strpos($content, 'PK') === 0) {
-            return back()->withErrors([
+                return $this->importExcelXml($content);
                 'file' => 'Format .xlsx tidak didukung langsung. Silakan buka file di Excel → Save As → pilih "CSV (Comma delimited)" → upload file CSV tersebut.',
             ]);
         }
@@ -143,51 +143,45 @@ class AdminPrescriptionProductImportController extends Controller
      */
     private function importExcelXml(string $content): mixed
     {
-        // Suppress XML errors, parse dengan libxml
-        libxml_use_internal_errors(true);
+        try {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xml();
+            $spreadsheet = $reader->loadSpreadsheetFromString($content);
+            $sheet = $spreadsheet->getActiveSheet();
 
-        // Hapus namespace agar SimpleXML mudah parse
-        $content = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $content);
-        $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
+            $highestRow = $sheet->getHighestRow();
+                $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
+                $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
 
-        $xml = simplexml_load_string($content);
+                $dom = new \DOMDocument();
+                if (!@$dom->loadXML($content, LIBXML_NONET | LIBXML_COMPACT)) {
+                    return back()->withErrors(['file' => 'File Excel tidak bisa dibaca. Pastikan file tidak rusak.']);
+                }
 
-        if ($xml === false) {
-            return back()->withErrors(['file' => 'File Excel tidak bisa dibaca. Pastikan file tidak rusak.']);
-        }
+                $xpath = new \DOMXPath($dom);
+                $rowNodes = $xpath->query('//*[local-name()="Worksheet"]//*[local-name()="Table"]//*[local-name()="Row"]');
 
-        // Cari worksheet pertama (sheet "Data Produk Resep")
-        $worksheet = null;
-        foreach ($xml->Worksheet as $ws) {
-            $name = (string) $ws->attributes()['Name'] ?? '';
-            // Ambil sheet pertama yang bukan "Petunjuk"
-            if (strtolower($name) !== 'petunjuk') {
-                $worksheet = $ws;
-                break;
-            }
-        }
+                if (!$rowNodes || $rowNodes->length < 2) {
+                    return back()->withErrors(['file' => 'File Excel kosong atau hanya berisi header.']);
+                }
 
-        if (!$worksheet || !isset($worksheet->Table)) {
-            return back()->withErrors(['file' => 'Sheet "Data Produk Resep" tidak ditemukan di file Excel.']);
-        }
+                $rows = [];
+                foreach ($rowNodes as $rowNode) {
+                    $rowData = [];
+                    $cellNodes = $xpath->query('./*[local-name()="Cell"]', $rowNode);
 
-        $rows = [];
-        foreach ($worksheet->Table->Row as $row) {
-            $rowData = [];
-            foreach ($row->Cell as $cell) {
-                $rowData[] = trim((string) $cell->Data);
-            }
-            $rows[] = $rowData;
-        }
+                    foreach ($cellNodes as $cellNode) {
+                        $dataNodes = $xpath->query('./*[local-name()="Data"]', $cellNode);
+                        $rowData[] = trim((string) ($dataNodes->item(0)?->textContent ?? ''));
+                    }
 
-        if (count($rows) < 2) {
-            return back()->withErrors(['file' => 'File Excel kosong atau hanya berisi header.']);
-        }
+                    if (!empty(array_filter($rowData))) {
+                        $rows[] = $rowData;
+                    }
+                }
 
-        // Baris pertama = header
-        $header   = array_map('trim', $rows[0]);
-        $required = ['NAMA PRODUK', 'RETAIL'];
-        $hasPabrik   = in_array('PABRIK', $header);
+                if (count($rows) < 2) {
+                    return back()->withErrors(['file' => 'File Excel kosong atau hanya berisi header.']);
+                }
         $hasKomposisi = in_array('KOMPOSISI', $header);
         $hasIndikasi = in_array('INDIKASI', $header);
         $missing  = array_diff($required, $header);

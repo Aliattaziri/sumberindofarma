@@ -223,9 +223,9 @@
     <h3><i class="fa-solid fa-circle-info"></i> Petunjuk Import</h3>
     <ol>
         <li>Download Template Excel (.xls) di bawah</li>
-        <li>Buka file CSV dengan <strong>Microsoft Excel</strong></li>
+        <li>Buka template tersebut dengan <strong>Microsoft Excel</strong> jika ingin mengedit isi datanya</li>
         <li>Isi data obat di sheet <strong>"Data Obat"</strong></li>
-        <li>Upload file <strong>.csv</strong> hasil template</li>
+        <li>Upload file <strong>.xls</strong> hasil template langsung</li>
         <li>Kolom GOLONGAN menentukan jenis: <strong>BEBAS</strong> = obat biasa, <strong>KERAS</strong> = obat resep</li>
     </ol>
     <p class="success-note">
