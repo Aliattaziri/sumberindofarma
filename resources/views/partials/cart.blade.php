@@ -199,6 +199,11 @@ const CART_DEFAULT_SETTINGS = {
   receiptFilePrefix: 'struk-sumberindofarmatama'
 };
 const CART_CONFIG = Object.assign({}, CART_DEFAULT_SETTINGS, window.cartSettings || {});
+if (!CART_CONFIG.storageKey) {
+  const basePath = window.location.pathname.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+  CART_CONFIG.storageKey = 'sumberindofarmatama_cart_' + basePath;
+}
+window.hasProductCart = true;
 let cart = JSON.parse(localStorage.getItem(CART_CONFIG.storageKey) || '[]');
 
 function save() {

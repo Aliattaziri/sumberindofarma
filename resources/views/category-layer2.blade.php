@@ -575,7 +575,7 @@
         <div class="breadcrumb-custom">
             <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
             <span>/</span>
-            <a href="{{ route('products.index') }}">Katalog</a>
+            <a href="{{ route('products.apotek') }}">Katalog</a>
             <span>/</span>
             <span class="current">{{ ucfirst($mainCategory) }}</span>
         </div>

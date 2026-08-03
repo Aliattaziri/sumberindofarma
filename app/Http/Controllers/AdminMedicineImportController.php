@@ -49,7 +49,7 @@ class AdminMedicineImportController extends Controller
             ['PBF',    'OMRON',       'Tensimeter Digital',  '',    '350000', '20',  '-',                  'Mengukur tekanan darah', 'BEBAS'],
         ];
 
-        return \App\Helpers\XlsxWriter::download('template_medicines.xlsx', $columns, $rows, $widths);
+        return \App\Helpers\XlsxWriter::downloadSpreadsheetXml('template_medicines.xls', $columns, $rows, $widths);
     }
 
     /**
@@ -332,14 +332,6 @@ class AdminMedicineImportController extends Controller
                 // Terjual
                 $terjual = (int) preg_replace('/[^0-9]/', '', $data['TERJUAL'] ?? '0');
 
-                // Grade
-                $gradeRaw = trim((string) ($data['GRADE'] ?? ''));
-                $grade = null;
-                if ($gradeRaw !== '') {
-                    $grade = strtoupper($gradeRaw);
-                    $grade = preg_replace('/^GRADE\s*/i', '', $grade) ?? $grade;
-                    $grade = trim($grade);
-                }
 
                 // SKU
                 $sku = !empty($data['SKU']) ? $data['SKU'] : null;
@@ -384,7 +376,7 @@ class AdminMedicineImportController extends Controller
                     'harga'          => $harga,
                     'stok'           => $stok,
                     'terjual'        => $terjual,
-                    'grade'          => $grade,
+                    // grade intentionally omitted to avoid exposing it publicly
                     'deskripsi'      => $deskripsi,
                     'komposisi'      => !empty($data['KOMPOSISI']) ? $data['KOMPOSISI'] : null,
                     'indikasi'       => !empty($data['INDIKASI'])  ? $data['INDIKASI']  : null,

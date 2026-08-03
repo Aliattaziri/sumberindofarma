@@ -53,10 +53,14 @@ class Medicine extends Model
      */
     public function scopeNonPbf($query)
     {
-        return $query->where(function ($q) {
-            $q->whereNull('kelompok')
-              ->orWhere('kelompok', '!=', 'PBF');
-        });
+                // Exclude products that are marked as PBF either via `kelompok` or via `kategori` (some imports used kategori='PBF')
+                return $query->where(function ($q) {
+                        $q->whereNull('kelompok')
+                            ->orWhere('kelompok', '!=', 'PBF');
+                })->where(function ($q) {
+                        $q->whereNull('kategori')
+                            ->orWhereRaw("UPPER(kategori) != 'PBF'");
+                });
     }
 
     public function isAvailable(): bool

@@ -4,7 +4,7 @@
 <style>
     .products-header {
         background: linear-gradient(135deg, #0047b3 0%, #0f4c81 40%, #fb8c00 100%);
-        padding: 4.5rem 0 3rem;
+        padding: calc(1rem + var(--navbar-height, 65px)) 0 3rem;
         position: relative;
         overflow: hidden;
         color: white;
@@ -497,7 +497,14 @@
                 <select name="kategori_produk" class="filter-select">
                     <option value="">Semua Kategori</option>
                     <?php $__currentLoopData = $kategoriOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <?php $icon = match($k) { 'OBAT' => '??', 'SKINCARE & KOSMETIK' => '?', 'ALAT KESEHATAN' => '??', default => '??' }; ?>
+                        <?php
+                            $icon = match($k) {
+                                'OBAT' => '💊',
+                                'SKINCARE & KOSMETIK' => '✨',
+                                'ALAT KESEHATAN' => '🩺',
+                                default => ''
+                            };
+                        ?>
                         <option value="<?php echo e($k); ?>" <?php if(($kategori_produk ?? '') === $k): echo 'selected'; endif; ?>><?php echo e($icon); ?> <?php echo e($k); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
@@ -517,7 +524,7 @@
                     <option value="terbaru"    <?php if($sort === 'terbaru'): echo 'selected'; endif; ?>>Terbaru</option>
                     <option value="harga_asc"  <?php if($sort === 'harga_asc'): echo 'selected'; endif; ?>>Harga Terendah</option>
                     <option value="harga_desc" <?php if($sort === 'harga_desc'): echo 'selected'; endif; ?>>Harga Tertinggi</option>
-                    <option value="nama"       <?php if($sort === 'nama'): echo 'selected'; endif; ?>>Nama A�Z</option>
+                    <option value="nama"       <?php if($sort === 'nama'): echo 'selected'; endif; ?>>Nama A-Z</option>
                 </select>
             </div>
             <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
@@ -525,18 +532,18 @@
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
                 <?php if($search || ($kategori_produk ?? '') || $perusahaan || $sort !== 'terbaru'): ?>
-                    <a href="<?php echo e(route('products.pbf')); ?>" class="btn-reset">? Reset</a>
+                    <a href="<?php echo e(route('products.pbf')); ?>" class="btn-reset"><i class="fa-solid fa-xmark"></i> Reset</a>
                 <?php endif; ?>
             </div>
         </form>
 
         <div class="result-info">
             <p>
-                Menampilkan <strong><?php echo e($medicines->firstItem() ?? 0); ?>�<?php echo e($medicines->lastItem() ?? 0); ?></strong>
+                Menampilkan <strong><?php echo e($medicines->firstItem() ?? 0); ?>-<?php echo e($medicines->lastItem() ?? 0); ?></strong>
                 dari <strong><?php echo e($medicines->total()); ?></strong> produk
-                <?php if($search): ?> � "<strong><?php echo e($search); ?></strong>" <?php endif; ?>
-                <?php if($kategori_produk ?? ''): ?> � <strong><?php echo e($kategori_produk); ?></strong> <?php endif; ?>
-                <?php if($perusahaan): ?> � <strong><?php echo e($perusahaan); ?></strong> <?php endif; ?>
+                <?php if($search): ?> - "<strong><?php echo e($search); ?></strong>" <?php endif; ?>
+                <?php if($kategori_produk ?? ''): ?> - <strong><?php echo e($kategori_produk); ?></strong> <?php endif; ?>
+                <?php if($perusahaan): ?> - <strong><?php echo e($perusahaan); ?></strong> <?php endif; ?>
             </p>
         </div>
 
@@ -587,9 +594,9 @@
                 <p class="info">Halaman <?php echo e($medicines->currentPage()); ?> dari <?php echo e($medicines->lastPage()); ?></p>
                 <div class="pagination-btns">
                     <?php if($medicines->onFirstPage()): ?>
-                        <span class="page-btn disabled">�</span>
+                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
                     <?php else: ?>
-                        <a href="<?php echo e($medicines->previousPageUrl()); ?>" class="page-btn">�</a>
+                        <a href="<?php echo e($medicines->previousPageUrl()); ?>" class="page-btn"><i class="fa-solid fa-chevron-left"></i></a>
                     <?php endif; ?>
 
                     <?php $__currentLoopData = $medicines->getUrlRange(1, $medicines->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -598,14 +605,14 @@
                         <?php elseif($page == 1 || $page == $medicines->lastPage() || abs($page - $medicines->currentPage()) <= 2): ?>
                             <a href="<?php echo e($url); ?>" class="page-btn"><?php echo e($page); ?></a>
                         <?php elseif(abs($page - $medicines->currentPage()) == 3): ?>
-                            <span class="page-btn disabled">�</span>
+                            <span class="page-btn disabled">...</span>
                         <?php endif; ?>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     <?php if($medicines->hasMorePages()): ?>
-                        <a href="<?php echo e($medicines->nextPageUrl()); ?>" class="page-btn"></a>
+                        <a href="<?php echo e($medicines->nextPageUrl()); ?>" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
                     <?php else: ?>
-                        <span class="page-btn disabled"></span>
+                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -622,7 +629,7 @@
                     <?php endif; ?>
                 </p>
                 <?php if($search || ($kategori_produk ?? '') || $perusahaan): ?>
-                    <a href="<?php echo e(route('products.pbf')); ?>" class="btn-reset" style="display:inline-block;margin-top:1rem;">? Hapus Filter</a>
+                    <a href="<?php echo e(route('products.pbf')); ?>" class="btn-reset" style="display:inline-block;margin-top:1rem;"><i class="fa-solid fa-xmark"></i> Hapus Filter</a>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -634,14 +641,14 @@
 
 <?php $__env->startSection('scripts'); ?>
 <script>
-window.cartSettings = {
-    storageKey: 'sumberindofarmatama_cart_pbf',
+window.cartSettings = Object.assign({}, window.cartSettings || {}, {
+    storageKey: <?php echo json_encode(auth()->check() ? 'sumberindofarmatama_cart_user_' . auth()->user()->id . '_pbf' : 'sumberindofarmatama_cart_pbf', 15, 512) ?>,
     receiptStoreName: 'Sumberindo Farma Tama',
     receiptStoreAddress: 'Komp. Pergudangan Ocean 88 C2-3\nJl. Adisucipto\nArang Limbung\nKec. Sungai Raya\nKab. Kubu Raya\nKalimantan Barat',
     receiptFilePrefix: 'struk-sumberindo-farma'
-};
+});
 </script>
-<?php echo $__env->make('partials.cart', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php echo $__env->make('partials.cart_pbf', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 

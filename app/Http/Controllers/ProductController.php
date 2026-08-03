@@ -6,6 +6,7 @@ use App\Models\Medicine;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -76,13 +77,36 @@ class ProductController extends Controller
     /**
      * Halaman show detail produk (public)
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $medicine = Medicine::findOrFail($id);
-        $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
-                                    ->where('id', '!=', $medicine->id)
-                                    ->limit(4)
-                                    ->get();
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+
+        $isPbf = (strtoupper(trim((string) ($medicine->kelompok ?? ''))) === 'PBF') || (strtoupper(trim((string) ($medicine->kategori ?? ''))) === 'PBF');
+
+        if ($isPbf && !($request->session()->get('pbf_access', false) || ($user?->isSuperAdmin() ?? false))) {
+            return redirect()->route('products.pbf')
+                ->with('error', 'Silakan buka katalog PBF untuk melihat produk ini.');
+        }
+
+        if ($isPbf) {
+            $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
+                                        ->where(function ($q) {
+                                            $q->where('kelompok', 'PBF')
+                                              ->orWhereRaw("UPPER(kategori) = 'PBF'");
+                                        })
+                                        ->where('id', '!=', $medicine->id)
+                                        ->limit(4)
+                                        ->get();
+        } else {
+            $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
+                                        ->where('id', '!=', $medicine->id)
+                                        ->nonPbf()
+                                        ->limit(4)
+                                        ->get();
+        }
+
         return view('medicines.detail', compact('medicine', 'relatedMedicines'));
     }
 
@@ -118,7 +142,9 @@ class ProductController extends Controller
     {
         $hasPbfAccess = $request->session()->get('pbf_access', false);
 
-        if (! $hasPbfAccess && ! (Auth::check() && Auth::user()->isSuperAdmin())) {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        if (! $hasPbfAccess && ! ($user?->isSuperAdmin() ?? false)) {
             return redirect()->route('products.pbf.gate')
                 ->with('error', 'Silakan masukkan kode akses PBF terlebih dahulu untuk membuka katalog.');
         }
@@ -128,7 +154,19 @@ class ProductController extends Controller
         $perusahaan      = $request->get('perusahaan', '');
         $sort            = $request->get('sort', 'terbaru');
 
-        $query = Medicine::where('kelompok', 'PBF');
+                $query = Medicine::where(function ($q) {
+                        $q->where(function ($sub) {
+                                $sub->where('kelompok', 'PBF')
+                                    ->orWhereRaw('UPPER(kelompok) = ?', ['PBF'])
+                                    ->orWhereRaw('LOWER(kelompok) LIKE ?', ['%pbf%'])
+                                    ->orWhereRaw('UPPER(kategori) = ?', ['PBF'])
+                                    ->orWhereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
+                            })
+                            ->orWhere(function ($sub) {
+                                $sub->whereNotNull('kategori')
+                                    ->whereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
+                            });
+                });
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -153,16 +191,51 @@ class ProductController extends Controller
             default      => $query->latest(),
         };
 
-        $medicines       = $query->paginate(12)->withQueryString();
-        $total           = Medicine::where('kelompok', 'PBF')->count();
+                $medicines       = $query->paginate(12)->withQueryString();
+                $total           = Medicine::where(function ($q) {
+                                                                $q->where(function ($sub) {
+                                                                        $sub->where('kelompok', 'PBF')
+                                                                            ->orWhereRaw('UPPER(kelompok) = ?', ['PBF'])
+                                                                            ->orWhereRaw('LOWER(kelompok) LIKE ?', ['%pbf%'])
+                                                                            ->orWhereRaw('UPPER(kategori) = ?', ['PBF'])
+                                                                            ->orWhereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
+                                                                    })
+                                                                    ->orWhere(function ($sub) {
+                                                                        $sub->whereNotNull('kategori')
+                                                                            ->whereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
+                                                                    });
+                                                        })->count();
         $kategoriOptions = Companies::LIST;
-        $perusahaanList  = Medicine::where('kelompok', 'PBF')
+                $perusahaanList  = Medicine::where(function ($q) {
+                                                                $q->where(function ($sub) {
+                                                                        $sub->where('kelompok', 'PBF')
+                                                                            ->orWhereRaw('UPPER(kelompok) = ?', ['PBF'])
+                                                                            ->orWhereRaw('LOWER(kelompok) LIKE ?', ['%pbf%'])
+                                                                            ->orWhereRaw('UPPER(kategori) = ?', ['PBF'])
+                                                                            ->orWhereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
+                                                                    })
+                                                                    ->orWhere(function ($sub) {
+                                                                        $sub->whereNotNull('kategori')
+                                                                            ->whereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
+                                                                    });
+                                                        })
                             ->select('kategori')
                             ->whereNotNull('kategori')
                             ->where('kategori', '!=', '')
                             ->distinct()
                             ->orderBy('kategori')
                             ->pluck('kategori');
+
+        // Jika ada view khusus untuk perusahaan PBF, gunakan itu
+        if ($perusahaan) {
+            $viewName = 'products_pbf_' . Str::slug($perusahaan);
+            if (view()->exists($viewName)) {
+                return view($viewName, compact(
+                    'medicines', 'search', 'kategori_produk', 'perusahaan',
+                    'sort', 'total', 'kategoriOptions', 'perusahaanList'
+                ));
+            }
+        }
 
         return view('products_pbf', compact(
             'medicines', 'search', 'kategori_produk', 'perusahaan',
@@ -178,19 +251,19 @@ class ProductController extends Controller
         $kode = strtoupper(trim($request->input('kode', '')));
 
         if (empty($kode)) {
-            return redirect()->route('products.pbf')
+            return redirect()->route('products.pbf.gate')
                 ->withErrors(['kode' => '⚠️ Kode akses tidak boleh kosong. Silakan masukkan kode Anda.'])
                 ->withInput();
         }
 
-        // Kode akses valid: sumberindo111 sampai sumberindo999
-        if (preg_match('/^SUMBERINDO(?:111|[1-9][0-9]{2})$/', $kode)) {
+        // Kode akses PBF aktif dengan format SUMBERINDO111 sampai SUMBERINDO999.
+        if (preg_match('/^SUMBERINDO(?:1[1-9][0-9]|[2-9][0-9]{2})$/', $kode)) {
             $request->session()->put('pbf_access', true);
             return redirect()->route('products.pbf')
                 ->with('pbf_success', '✅ Akses berhasil! Selamat datang di Katalog PBF.');
         }
 
-        return redirect()->route('products.pbf')
+        return redirect()->route('products.pbf.gate')
             ->withErrors(['kode' => '❌ Kode akses salah atau tidak valid. Periksa kembali atau hubungi admin via WhatsApp.'])
             ->withInput();
     }
@@ -289,7 +362,44 @@ class ProductController extends Controller
             $perusahaan = $selectedOutlet;
         }
 
-        $query = Medicine::where('kelompok', 'APOTEK');
+        $outletAliases = [
+            'Alfa Sintang' => ['alfa sintang', 'apotek alfa sintang', 'apotek alfa sintang'],
+            'Alfa Air Upas' => ['alfa air upas', 'apotek alfa air upas', 'apotek alfa air upas'],
+            'Alfa Kendawangan' => ['alfa kendawangan', 'apotek alfa kendawangan', 'apotek alfa kendawangan'],
+            'Alfa Balai Berkuak' => ['alfa balai berkuak', 'apotek alfa balai berkuak'],
+            'Alfa Nanga Tayap' => ['alfa nanga tayap', 'apotek alfa nanga tayap'],
+            'Alfa Tumbang Titi' => ['alfa tumbang titi', 'apotek alfa tumbang titi'],
+            'Alfa Sosok' => ['alfa sosok', 'apotek alfa sosok'],
+            'Alfa Bodok' => ['alfa bodok', 'apotek alfa bodok'],
+            'Alfa Kembayan' => ['alfa kembayan', 'apotek alfa kembayan'],
+            'Alfa Ambawang' => ['alfa ambawang', 'apotek alfa ambawang'],
+            'Alfa Jungkat' => ['alfa jungkat', 'apotek alfa jungkat'],
+            'Alfa Mempawah' => ['alfa mempawah', 'apotek alfa mempawah'],
+            'Apotek Medistra Farma' => ['apotek medistra farma', 'medistra farma', 'apotek medistra'],
+        ];
+
+        $normalizedPerusahaan = strtolower(trim($perusahaan));
+        $matchedOutlet = null;
+        foreach ($outletAliases as $outlet => $aliases) {
+            if ($normalizedPerusahaan === strtolower($outlet) || in_array($normalizedPerusahaan, array_map('strtolower', $aliases), true)) {
+                $matchedOutlet = $outlet;
+                break;
+            }
+        }
+        if ($matchedOutlet) {
+            $perusahaan = $matchedOutlet;
+        }
+
+        // Query products for the selected outlet. Some imports leave `kelompok` empty,
+        // so filter by `kategori` (outlet name) and also match known outlet aliases.
+        $query = Medicine::query()->where(function ($q) use ($perusahaan) {
+            $q->where('kategori', $perusahaan)
+              ->orWhereRaw('LOWER(kategori) = ?', [strtolower($perusahaan)])
+              ->orWhereRaw('LOWER(kategori) LIKE ?', ['%' . strtolower($perusahaan) . '%'])
+              ->orWhere(function ($alias) use ($perusahaan) {
+                  $alias->where('kategori', 'like', '%' . $perusahaan . '%');
+              });
+        })->nonPbf();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -315,15 +425,32 @@ class ProductController extends Controller
         };
 
         $medicines       = $query->paginate(12)->withQueryString();
-        $total           = Medicine::where('kelompok', 'APOTEK')->count();
+        $total           = Medicine::query()->where(function ($q) use ($perusahaan) {
+                                $q->where('kategori', $perusahaan)
+                                  ->orWhereRaw('LOWER(kategori) = ?', [strtolower($perusahaan)])
+                                  ->orWhereRaw('LOWER(kategori) LIKE ?', ['%' . strtolower($perusahaan) . '%'])
+                                  ->orWhere(function ($alias) use ($perusahaan) {
+                                      $alias->where('kategori', 'like', '%' . $perusahaan . '%');
+                                  });
+                            })->nonPbf()->count();
         $kategoriOptions = Companies::LIST;
-        $perusahaanList  = Medicine::where('kelompok', 'APOTEK')
-                            ->select('kategori')
-                            ->whereNotNull('kategori')
-                            ->where('kategori', '!=', '')
-                            ->distinct()
-                            ->orderBy('kategori')
-                            ->pluck('kategori');
+        $perusahaanList  = Medicine::nonPbf()
+                    ->select('kategori')
+                    ->whereNotNull('kategori')
+                    ->where('kategori', '!=', '')
+                    ->distinct()
+                    ->orderBy('kategori')
+                    ->pluck('kategori');
+
+        // Jika ada view khusus untuk outlet ini, gunakan view tersebut
+        $apotekView = 'products_apotek_' . Str::slug($selectedOutlet);
+        if (view()->exists($apotekView)) {
+            return view($apotekView, compact(
+                'medicines', 'search', 'kategori_produk', 'perusahaan',
+                'sort', 'total', 'kategoriOptions', 'perusahaanList',
+                'selectedOutlet', 'selectedOutletMeta', 'outletMeta', 'displayPerusahaan'
+            ));
+        }
 
         return view('products_apotek', compact(
             'medicines', 'search', 'kategori_produk', 'perusahaan',

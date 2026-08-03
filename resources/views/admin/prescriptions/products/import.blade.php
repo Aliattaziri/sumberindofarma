@@ -113,7 +113,7 @@
 <div class="info-box">
     <h3><i class="fa-solid fa-circle-info"></i> Petunjuk Import</h3>
     <ol>
-        <li>Download Template Excel (.xlsx) di bawah</li>
+        <li>Download Template Excel (.xls) di bawah</li>
         <li>Buka file CSV dengan <strong>Microsoft Excel</strong></li>
         <li>Isi data produk di sheet <strong>"Data Produk Resep"</strong></li>
         <li>Upload file <strong>.csv</strong> hasil template</li>
@@ -135,7 +135,7 @@
             <a href="{{ route('admin.prescription-products.import.template') }}"
                style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.5rem;background:#ef4444;color:white;border-radius:0.5rem;font-size:0.9rem;font-weight:700;text-decoration:none;transition:all 0.2s;"
                onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
-                <i class="fa-solid fa-download"></i> Download Template Excel (.xlsx)
+                <i class="fa-solid fa-download"></i> Download Template Excel (.xls)
             </a>
             <span style="color:#6b7280;font-size:0.875rem;">
                 Langsung rapi saat dibuka di Microsoft Excel
@@ -214,7 +214,7 @@
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX — Maks. 2MB</small>
+            <small>Format: CSV, XLS, XLSX ï¿½ Maks. 2MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
 

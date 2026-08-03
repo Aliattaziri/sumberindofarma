@@ -614,7 +614,6 @@
                     Sumberindo Farma Tama adalah distributor resmi obat-obatan dan suplemen kesehatan dari 76+ perusahaan farmasi terkemuka. Melayani apotek, klinik, dan rumah sakit di seluruh Indonesia dengan jaminan kualitas dan harga kompetitif.
                 </p>
                 <div class="hero-buttons">
-                    <a href="{{ route('products.index') }}" class="btn-hero-primary">📋 Katalog Produk</a>
                     <a href="{{ route('contact') }}" class="btn-hero-outline"><i class="fa-solid fa-handshake"></i> Jadi Mitra</a>
                 </div>
             </div>
@@ -754,15 +753,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- ===== CTA ===== -->
-<section class="cta-section">
-    <div class="container">
-        <h2>Dapatkan Penawaran Spesial Hari Ini</h2>
-        <p>Daftar sekarang dan dapatkan diskon 10% untuk pembelian pertama Anda</p>
-        <a href="{{ route('products.index') }}" class="btn-cta">🛒 Mulai Belanja</a>
     </div>
 </section>
 

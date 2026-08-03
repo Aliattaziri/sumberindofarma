@@ -38,7 +38,7 @@ Route::get('/storage/{folder}/{filename}', function (string $folder, string $fil
 })->where(['folder' => 'banners|medicines|promos', 'filename' => '.+'])->name('storage.image');
 
 // Products routes
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::redirect('/products', '/products-apotek')->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/products-pbf-gate', [ProductController::class, 'pbfGate'])->name('products.pbf.gate');
 Route::get('/products-pbf', [ProductController::class, 'pbf'])->name('products.pbf');
@@ -77,6 +77,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Medicines management
     Route::resource('medicines', AdminMedicineController::class);
     Route::post('medicines/{medicine}/update-stock', [AdminMedicineController::class, 'updateStock'])->name('medicines.update-stock');
+    Route::post('medicines/{medicine}/update-price', [AdminMedicineController::class, 'updatePrice'])->name('medicines.update-price');
     Route::get('medicines-import', [AdminMedicineImportController::class, 'showImportForm'])->name('medicines.import');
     Route::post('medicines-import', [AdminMedicineImportController::class, 'import'])->name('medicines.import.process');
     Route::get('medicines-import/template', [AdminMedicineImportController::class, 'downloadTemplate'])->name('medicines.import.template');
@@ -84,12 +85,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Prescriptions management
     Route::resource('prescriptions', AdminPrescriptionController::class);
     Route::post('prescriptions/{prescription}/update-stock', [AdminPrescriptionController::class, 'updateStock'])->name('prescriptions.update-stock');
+    Route::post('prescriptions/{prescription}/update-price', [AdminPrescriptionController::class, 'updatePrice'])->name('prescriptions.update-price');
     Route::get('prescriptions-import', [AdminPrescriptionImportController::class, 'showImportForm'])->name('prescriptions.import');
     Route::post('prescriptions-import', [AdminPrescriptionImportController::class, 'import'])->name('prescriptions.import.process');
 
     // Prescription Products management
     Route::resource('prescription-products', AdminPrescriptionProductController::class);
     Route::post('prescription-products/{prescriptionProduct}/update-stock', [AdminPrescriptionProductController::class, 'updateStock'])->name('prescription-products.update-stock');
+    Route::post('prescription-products/{prescriptionProduct}/update-price', [AdminPrescriptionProductController::class, 'updatePrice'])->name('prescription-products.update-price');
     Route::get('prescription-products-import', [AdminPrescriptionProductImportController::class, 'showImportForm'])->name('prescription-products.import');
     Route::post('prescription-products-import', [AdminPrescriptionProductImportController::class, 'import'])->name('prescription-products.import.process');
     Route::get('prescription-products-import/template', [AdminPrescriptionProductImportController::class, 'downloadTemplate'])->name('prescription-products.import.template');
@@ -98,6 +101,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('produk/bulk-delete', [AdminProdukController::class, 'destroyMany'])->name('produk.destroyMany');
     Route::resource('produk', AdminProdukController::class);
     Route::post('produk/{produk}/update-stock', [AdminProdukController::class, 'updateStock'])->name('produk.update-stock');
+    Route::post('produk/{produk}/update-price', [AdminProdukController::class, 'updatePrice'])->name('produk.update-price');
     Route::get('produk-import', [AdminProdukImportController::class, 'showImportForm'])->name('produk.import');
     Route::post('produk-import', [AdminProdukImportController::class, 'import'])->name('produk.import.process');
     Route::get('produk-import/template', [AdminProdukImportController::class, 'downloadTemplate'])->name('produk.import.template');

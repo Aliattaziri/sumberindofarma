@@ -222,7 +222,7 @@
 <div class="info-box">
     <h3><i class="fa-solid fa-circle-info"></i> Petunjuk Import</h3>
     <ol>
-        <li>Download Template Excel (.xlsx) di bawah</li>
+        <li>Download Template Excel (.xls) di bawah</li>
         <li>Buka file CSV dengan <strong>Microsoft Excel</strong></li>
         <li>Isi data obat di sheet <strong>"Data Obat"</strong></li>
         <li>Upload file <strong>.csv</strong> hasil template</li>
@@ -242,7 +242,7 @@
     <div class="form-body">
         <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
             <a href="{{ route('admin.medicines.import.template') }}" class="btn-save" style="background: #ef4444; text-decoration: none;">
-                <i class="fa-solid fa-download"></i> Download Template Excel (.xlsx)
+                <i class="fa-solid fa-download"></i> Download Template Excel (.xls)
             </a>
             <span style="color: #6b7280; font-size: 0.875rem;">
                 Langsung rapi saat dibuka di Microsoft Excel
@@ -336,7 +336,7 @@
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX — Maks. 2MB</small>
+            <small>Format: CSV, XLS, XLSX ï¿½ Maks. 2MB</small>
             <p style="color: #9ca3af; font-size: 0.875rem; margin: 0.75rem 0 0;" id="fileLabel"></p>
         </div>
 

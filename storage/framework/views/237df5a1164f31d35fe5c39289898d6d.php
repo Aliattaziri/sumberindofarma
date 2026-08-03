@@ -43,7 +43,7 @@
 <div class="info-box">
     <h3><i class="fa-solid fa-circle-info"></i> Petunjuk Import</h3>
     <ol>
-        <li>Download Template Excel (.xlsx) di bawah</li>
+        <li>Download template Excel (.xls) yang ditampilkan di bawah</li>
         <li>Isi data produk sesuai kolom yang tersedia</li>
         <li>Kolom <strong>KATEGORI</strong> harus salah satu dari: <strong>OBAT</strong>, <strong>SKINCARE & KOSMETIK</strong>, <strong>ALAT KESEHATAN</strong></li>
         <li>Upload file <strong>.csv</strong>, <strong>.xls</strong>, atau <strong>.xlsx</strong></li>
@@ -51,13 +51,13 @@
         <li>Struktur file tidak harus persis sama; selama header yang dikenali ada, data tetap bisa dimasukkan</li>
     </ol>
         <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
-            ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | GRADE | KOMPOSISI | INDIKASI | KATEGORI</strong>
+            ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | KOMPOSISI | INDIKASI | KATEGORI</strong>
         </p>
             <p style="color:#14532d;margin:0.75rem 0 0;font-size:0.875rem;">
                 Produk yang diimport oleh akun apotek akan otomatis disimpan sebagai <strong>APOTEK</strong> pada outlet Anda.
             </p>
             <a href="<?php echo e(route('admin.produk.import.template')); ?>" class="btn-save" style="background:#ef4444;text-decoration:none;">
-                <i class="fa-solid fa-download"></i> Download Template Excel
+                <i class="fa-solid fa-download"></i> Download Template Excel (.xls)
             </a>
         </div>
         <div class="template-table">
@@ -73,7 +73,6 @@
                         <th>HARGA</th>
                         <th>STOK</th>
                         <th>TERJUAL</th>
-                        <th>GRADE</th>
                         <th>KOMPOSISI</th>
                         <th>INDIKASI</th>
                         <th>KATEGORI</th>
@@ -90,7 +89,6 @@
                         <td>5000</td>
                         <td>100</td>
                         <td>20</td>
-                        <td>A</td>
                         <td>Paracetamol 500 mg</td>
                         <td>Demam & nyeri</td>
                         <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">OBAT</span></td>
@@ -105,7 +103,6 @@
                         <td>85000</td>
                         <td>50</td>
                         <td>12</td>
-                        <td>B</td>
                         <td>Aqua, Glycerin, SPF30</td>
                         <td>Melembabkan & melindungi kulit</td>
                         <td><span style="background:#fce4ec;color:#c2185b;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">SKINCARE & KOSMETIK</span></td>
@@ -120,7 +117,6 @@
                         <td>350000</td>
                         <td>20</td>
                         <td>5</td>
-                        <td>A</td>
                         <td>-</td>
                         <td>Mengukur tekanan darah</td>
                         <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">ALAT KESEHATAN</span></td>
@@ -161,7 +157,7 @@
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX � Maks. 10MB</small>
+            <small>Format: CSV, XLS, XLSX - Maks. 10MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
         <input type="file" id="fileInput" name="file" accept=".csv,.xls,.xlsx,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" onchange="updateFileLabel(this)">

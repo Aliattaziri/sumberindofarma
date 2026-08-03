@@ -178,14 +178,16 @@
 }
 
 .promo-pbf {
-    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 45%, #fde68a 100%);
+    background: radial-gradient(circle at 20% 25%, rgba(255,255,255,0.14), transparent 25%),
+                linear-gradient(135deg, #111111 0%, #1d1d1d 45%, #2f2f2f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .promo-pbf-logo {
     height: 80px;
     object-fit: contain;
     flex-shrink: 0;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .pbf-subtitle {
@@ -960,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </a>
       <a href="javascript:void(0)" onclick="openAlfaOutletModal()" class="promo-card promo-pbf">
         <div class="promo-card-content">
-          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-pbf-logo">
+          <img src="{{ asset('apotek alfa group logo.png') }}" alt="Apotek Alfa Group" class="promo-pbf-logo">
           <div class="promo-card-text">
             <h4>Apotek Alfa Group</h4>
             <p>Kunjungi toko kami diberbagai tempat.</p>
@@ -1190,11 +1192,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>Cari</span>
                 </button>
             </form>
-            <button class="cart-btn-home" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.index') }}';}">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span>Keranjang</span>
-                <span class="cart-badge-home" id="cartBadgeHome">0</span>
-            </button>
+            @if(Route::is(['products.*', 'medicines.show']))
+                <button class="cart-btn-home" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.index') }}';}">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Keranjang</span>
+                    <span class="cart-badge-home" id="cartBadgeHome">0</span>
+                </button>
+            @endif
         </div>
     </div>
 </div>
@@ -1326,12 +1330,7 @@ document.addEventListener('DOMContentLoaded', function() {
             @else
               <span class="stock-out"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
             @endif
-            <a href="{{ route('medicines.show', $med->id) }}" class="btn-detail">Lihat Detail <i class="fa-solid fa-arrow-right"></i></a>
-            @if($med->stok > 0)
-            <button class="btn-cart" onclick="addToCart({{ $med->id }},'{{ addslashes($med->nama_obat) }}',{{ $med->harga }},'{{ $med->gambar ? $med->image_url : '' }}','{{ addslashes($med->brand ?: $med->kategori) }}',this)">
-              <i class="fa-solid fa-cart-plus"></i> Keranjang
-            </button>
-            @endif
+            <a href="{{ route('products.apotek', ['perusahaan' => $med->kategori ?? '']) }}" class="btn-detail">Lihat <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </div>
         @endforeach
@@ -1688,72 +1687,6 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-{{-- SEMUA PRODUK DI BAWAH ABOUT STRIP --}}
-<section class="prod-section" style="padding-top:1rem; padding-bottom:2rem; background:#f8fbff;">
-  <div class="container">
-    <div class="sec-head" style="margin-bottom:1rem;">
-      <div class="sec-head-left">
-        <span class="sec-tag">🛍️ Semua Produk</span>
-        <h2 class="sec-title">Katalog Produk Lengkap</h2>
-      </div>
-      <a href="{{ route('products.index') }}" class="sec-link">Lihat Semua <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-    @if($allProducts->count() > 0)
-      <div class="prod-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem;">
-        <style>
-          @media (max-width: 576px) {
-            .prod-grid {
-              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-              gap: 0.75rem !important;
-            }
-          }
-        </style>
-        @foreach($allProducts as $med)
-          <div class="prod-card">
-            <div class="prod-img">
-              @if($med->gambar)
-                <img src="{{ $med->image_url }}" alt="{{ $med->nama_obat }}">
-              @else
-                <div class="prod-img-fallback"><i class="fa-solid fa-pills"></i></div>
-              @endif
-              @if($med->kategori_produk)
-                <span class="prod-badge-label">{{ $med->kategori_produk==='SKINCARE & KOSMETIK'?'✨':($med->kategori_produk==='ALAT KESEHATAN'?'🩺':'💊') }}</span>
-              @endif
-            </div>
-            <div class="prod-body">
-              @if($med->kategori)
-                <div class="prod-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.35rem;font-weight:600;">Toko: {{ $med->kategori }}</div>
-              @endif
-              <h3 class="prod-name">{{ $med->nama_obat }}</h3>
-              <div class="prod-price">{{ $med->getFormattedPrice() }}</div>
-              @if($med->sediaan_label)
-                <div style="font-size:0.75rem;color:#6b7280;margin-bottom:0.35rem;display:flex;align-items:center;gap:0.35rem;">
-                  <i class="fa-solid fa-cube"></i> <span>{{ $med->sediaan_label }}</span>
-                </div>
-              @endif
-              @if($med->stok > 0)
-                <div class="prod-stock">Stok: {{ $med->stok }}</div>
-              @else
-                <div class="prod-stock prod-stock-out">Habis</div>
-              @endif
-              <div class="prod-actions">
-                <a href="{{ route('medicines.show', $med->id) }}" class="btn-detail">Lihat Detail <i class="fa-solid fa-arrow-right"></i></a>
-                @if($med->stok > 0)
-                  <button class="btn-cart" onclick="addToCart({{ $med->id }},'{{ addslashes($med->nama_obat) }}',{{ $med->harga }},'{{ $med->gambar ? $med->image_url : '' }}','{{ addslashes($med->brand ?: $med->kategori) }}',this)">
-                    <i class="fa-solid fa-cart-plus"></i> Keranjang
-                  </button>
-                @endif
-              </div>
-            </div>
-          </div>
-        @endforeach
-      </div>
-    @else
-      <p style="color:#475569;">Belum ada produk untuk ditampilkan saat ini.</p>
-    @endif
-  </div>
-</section>
-
 <div class="outlet-modal-overlay" id="outletModalOverlay" onclick="closeAlfaOutletModal()"></div>
 <div class="outlet-modal" id="outletModal">
   <div class="outlet-modal-head">
@@ -1794,7 +1727,6 @@ function closeAlfaOutletModal() {
   document.body.style.overflow = '';
 }
 </script>
-@include('partials.cart')
 @endsection
 
 

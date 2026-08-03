@@ -79,11 +79,47 @@
         margin-top: 1.5rem;
     }
 
-    .gallery-section h2 {
+    .gallery-section h2,
+    .branches-section h2 {
         font-size: 1.25rem;
         font-weight: 800;
         color: #1f2937;
         margin-bottom: 1rem;
+    }
+
+    .branches-section {
+        margin-top: 1.5rem;
+    }
+
+    .branch-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .branch-card {
+        background: #fff;
+        border: 1px solid #f3d7d7;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .branch-card h3 {
+        margin: 0 0 0.65rem;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .branch-card p {
+        margin: 0.35rem 0;
+        color: #4b5563;
+        line-height: 1.65;
+        font-size: 0.95rem;
     }
 
     .gallery-grid {
@@ -158,7 +194,7 @@
             <h1>Tentang Sumberindo Farma Tama</h1>
             <p>Kami adalah distributor farmasi dan apotik online yang fokus membantu masyarakat serta mitra kesehatan mendapatkan produk terpercaya, cepat, dan mudah diakses.</p>
             <div class="btn-row">
-                <a href="<?php echo e(route('products.index')); ?>" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> Lihat Produk</a>
+                <a href="<?php echo e(route('products.apotek')); ?>" class="btn-primary"><i class="fa-solid fa-cart-shopping"></i> Lihat Produk</a>
                 <a href="<?php echo e(route('contact')); ?>" class="btn-secondary"><i class="fa-solid fa-phone"></i> Hubungi Kami</a>
             </div>
         </div>
@@ -199,6 +235,77 @@
                     <div class="gallery-caption">Warehouse 3</div>
                 </div>
             </div>
+        </div>
+
+        <div class="branches-section">
+            <h2>Cabang Apotek PT Sumberindo Farma Tama</h2>
+            <ul class="branch-list">
+                <li class="branch-card">
+                    <h3>1. Apotek Alfa Sintang</h3>
+                    <p>Alamat: Jl. MT. Haryono, Kapuas Kanan Hulu, Kec. Sintang, Kabupaten Sintang, Kalimantan Barat 78613</p>
+                    <p>Telepon: 0857-0593-5715</p>
+                </li>
+                <li class="branch-card">
+                    <h3>2. Apotek Alfa Air Upas</h3>
+                    <p>Alamat: MRMF+FM9, Air Upas, Kec. Air Upas, Kabupaten Ketapang, Kalimantan Barat 78863</p>
+                    <p>Telepon: 0815-4923-3935</p>
+                </li>
+                <li class="branch-card">
+                    <h3>3. Apotek Alfa Kendawangan</h3>
+                    <p>Alamat: F6F8+44V, Jl. Pangeran Adi, Kendawangan Kiri, Kec. Kendawangan, Kabupaten Ketapang, Kalimantan Barat 78862</p>
+                    <p>Telepon: 0822-5423-9530</p>
+                </li>
+                <li class="branch-card">
+                    <h3>4. Apotek Alfa Balai Berkuak</h3>
+                    <p>Alamat: Jl. Istana Jaya, Desa Balai Pinang (Dusun Balai Berkuak), Kecamatan Simpang Hulu, Kabupaten Ketapang, Kalimantan Barat 78854</p>
+                    <p>Telepon: 0821-1442-2090</p>
+                </li>
+                <li class="branch-card">
+                    <h3>5. Apotek Alfa Nanga Tayap</h3>
+                    <p>Alamat: FHG8+859, Nanga Tayap, Kec. Nanga Tayap, Kabupaten Ketapang, Kalimantan Barat 78873</p>
+                    <p>Telepon: 0858-4926-3704</p>
+                </li>
+                <li class="branch-card">
+                    <h3>6. Apotek Alfa Tumbang Titi</h3>
+                    <p>Alamat: Kawasan Tumbang Titi (area pusat kecamatan), Kecamatan Tumbang Titi, Kabupaten Ketapang, Kalimantan Barat 78874</p>
+                    <p>Telepon: 0858-2196-0187</p>
+                </li>
+                <li class="branch-card">
+                    <h3>7. Apotek Alfa Sosok</h3>
+                    <p>Alamat: Sosok, Kec. Tayan Hulu, Kabupaten Sanggau, Kalimantan Barat 78562</p>
+                    <p>Telepon: 0857-9603-2370</p>
+                </li>
+                <li class="branch-card">
+                    <h3>8. Apotek Alfa Bodok</h3>
+                    <p>Alamat: 6C5M+89Q, Palem Jaya, Kec. Parindu, Kabupaten Sanggau, Kalimantan Barat 78561</p>
+                    <p>Telepon: 0831-9151-1444</p>
+                </li>
+                <li class="branch-card">
+                    <h3>9. Apotek Alfa Kembayan</h3>
+                    <p>Alamat: APOTEK ALFA, Tj. Merpati, Kec. Kembayan, Kabupaten Sanggau, Kalimantan Barat 78516</p>
+                    <p>Telepon: 0857-9603-2366</p>
+                </li>
+                <li class="branch-card">
+                    <h3>10. Apotek Alfa Ambawang</h3>
+                    <p>Alamat: Jl. Trans Kalimantan, Desa Jawa Tengah, Kec. Sui Ambawang, Kabupaten Kubu Raya, Kalimantan Barat 78319</p>
+                    <p>Telepon: 0851-1941-3105</p>
+                </li>
+                <li class="branch-card">
+                    <h3>11. Apotek Alfa Jungkat</h3>
+                    <p>Alamat: Jl. Raya Jungkat, Sei Nipah, Kec. Jongkat, Kab. Mempawah, Kalimantan Barat 78351</p>
+                    <p>Telepon: 0857-5497-9060</p>
+                </li>
+                <li class="branch-card">
+                    <h3>12. Apotek Alfa Mempawah</h3>
+                    <p>Alamat: Jl. Sujarwo, Terusan, Kec. Mempawah Hilir, Kab. Mempawah, Kalimantan Barat 78912</p>
+                    <p>Telepon: 0858-2071-2029</p>
+                </li>
+                <li class="branch-card">
+                    <h3>13. Apotek Medistra Farma</h3>
+                    <p>Alamat: Jl. R. Suprapto No.48A, Tengah, Kec. Delta Pawan, Kabupaten Ketapang, Kalimantan Barat 78821</p>
+                    <p>Telepon: 0813-4555-9456</p>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

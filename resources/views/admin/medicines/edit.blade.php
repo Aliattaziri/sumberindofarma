@@ -318,16 +318,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Grade</label>
-                    <input type="text" name="grade"
-                           class="form-input {{ $errors->has('grade') ? 'is-invalid' : '' }}"
-                           placeholder="Contoh: A / B / C"
-                           value="{{ old('grade', $medicine->grade) }}">
-                    @error('grade')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
+                {{-- Grade removed to avoid exposing it in product flows --}}
 
                 <div class="form-group">
                     <label class="form-label">Komposisi <span class="req">*</span></label>

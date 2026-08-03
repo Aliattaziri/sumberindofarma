@@ -6,7 +6,7 @@
 <style>
     .apotek-hero {
         background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
-        padding: calc(3rem + var(--navbar-height, 65px)) 0 3rem;
+        padding: calc(1rem + var(--navbar-height, 65px)) 0 3rem;
         margin-top: calc(-1 * var(--navbar-height, 65px));
         color: #fff;
         border-radius: 0 0 28px 28px;
@@ -331,13 +331,18 @@
 
 @section('scripts')
 <script>
-    window.cartSettings = Object.assign({
-        storageKey: 'sumberindofarmatama_cart_{{ \Illuminate\Support\Str::slug($selectedOutlet ?? 'default') }}',
+    @php
+        $cartScope = 'apotek_' . preg_replace('/[^a-z0-9]+/', '_', strtolower($selectedOutlet ?? 'default'));
+    @endphp
+    window.cartSettings = Object.assign({}, window.cartSettings || {}, {
+        storageKey: @json(auth()->check()
+            ? 'sumberindofarmatama_cart_user_' . auth()->user()->id . '_' . $cartScope
+            : 'sumberindofarmatama_cart_' . $cartScope),
         receiptStoreName: '{{ addslashes($selectedOutlet ?? 'Sumberindo Farma Tama') }}',
         receiptStoreAddress: '{{ addslashes($selectedOutletMeta['address'] ?? 'Kalimantan Barat') }}',
         receiptStorePhone: '{{ $selectedOutletMeta['phone'] ?? '' }}',
         wa: '{{ $selectedOutletMeta['wa'] ?? '6285248965590' }}'
-    }, window.cartSettings || {});
+    });
 </script>
-@include('partials.cart')
+@include('partials.cart_store')
 @endsection

@@ -22,9 +22,14 @@ class AdminProdukImportController extends Controller
 
         $file      = $request->file('file');
         $extension = strtolower($file->getClientOriginalExtension());
+        $content   = file_get_contents($file->getRealPath());
 
         if ($extension === 'xlsx') {
             return $this->importXlsx($file);
+        }
+
+        if (strpos($content, '<Workbook') !== false || strpos($content, 'urn:schemas-microsoft-com:office:spreadsheet') !== false) {
+            return $this->importSpreadsheetXml($content);
         }
 
         // CSV dan XLS (text-based)
@@ -33,6 +38,7 @@ class AdminProdukImportController extends Controller
 
     public function downloadTemplate()
     {
+        $filename = 'template_produk_' . now()->format('Ymd_His') . '.xls';
         $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
         $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 25, 30, 22];
 
@@ -42,7 +48,7 @@ class AdminProdukImportController extends Controller
             ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5', '-',                   'Mengukur tekanan darah',        'ALAT KESEHATAN'],
         ];
 
-        return \App\Helpers\XlsxWriter::download('template_produk.xlsx', $columns, $rows, $widths);
+        return \App\Helpers\XlsxWriter::downloadSpreadsheetXml($filename, $columns, $rows, $widths);
     }
 
     // ─── XLSX Parser (pure PHP, no ZipArchive needed) ────────────────────────
@@ -106,6 +112,30 @@ class AdminProdukImportController extends Controller
         } finally {
             @unlink($tmpZip);
         }
+    }
+
+    private function importSpreadsheetXml(string $content)
+    {
+        libxml_use_internal_errors(true);
+
+        $content = preg_replace('/xmlns[^=]*="[^"]*"/i', '', $content);
+        $content = preg_replace('/<\?mso-application[^?]*\?>/i', '', $content);
+
+        $xml = @simplexml_load_string($content);
+        if (!$xml || !isset($xml->Worksheet->Table)) {
+            return back()->withErrors(['file' => 'File Excel XML tidak bisa dibaca.']);
+        }
+
+        $rows = [];
+        foreach ($xml->Worksheet->Table->Row as $row) {
+            $rowData = [];
+            foreach ($row->Cell as $cell) {
+                $rowData[] = trim((string) $cell->Data);
+            }
+            $rows[] = $rowData;
+        }
+
+        return $this->processRows($rows);
     }
 
     private function parseSharedStrings(string $xml): array

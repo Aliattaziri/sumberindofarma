@@ -24,7 +24,7 @@ class AdminPrescriptionProductImportController extends Controller
             ['DEXA',      'Metformin 500mg',     '',    '12000', 'Metformin 500 mg',     'Diabetes tipe 2'],
         ];
 
-        return \App\Helpers\XlsxWriter::download('template_import_produk_resep.xlsx', $columns, $rows, $widths);
+        return \App\Helpers\XlsxWriter::downloadSpreadsheetXml('template_import_produk_resep.xls', $columns, $rows, $widths);
     }
 
     /**

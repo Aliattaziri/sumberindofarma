@@ -6,7 +6,7 @@
 <style>
     .products-header {
         background: linear-gradient(135deg, #0047b3 0%, #0f4c81 40%, #fb8c00 100%);
-        padding: 4.5rem 0 3rem;
+        padding: calc(1rem + var(--navbar-height, 65px)) 0 3rem;
         position: relative;
         overflow: hidden;
         color: white;
@@ -498,7 +498,14 @@
                 <select name="kategori_produk" class="filter-select">
                     <option value="">Semua Kategori</option>
                     @foreach($kategoriOptions as $k)
-                        @php $icon = match($k) { 'OBAT' => '??', 'SKINCARE & KOSMETIK' => '?', 'ALAT KESEHATAN' => '??', default => '??' }; @endphp
+                        @php
+                            $icon = match($k) {
+                                'OBAT' => '💊',
+                                'SKINCARE & KOSMETIK' => '✨',
+                                'ALAT KESEHATAN' => '🩺',
+                                default => ''
+                            };
+                        @endphp
                         <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $icon }} {{ $k }}</option>
                     @endforeach
                 </select>
@@ -518,7 +525,7 @@
                     <option value="terbaru"    @selected($sort === 'terbaru')>Terbaru</option>
                     <option value="harga_asc"  @selected($sort === 'harga_asc')>Harga Terendah</option>
                     <option value="harga_desc" @selected($sort === 'harga_desc')>Harga Tertinggi</option>
-                    <option value="nama"       @selected($sort === 'nama')>Nama A�Z</option>
+                    <option value="nama"       @selected($sort === 'nama')>Nama A-Z</option>
                 </select>
             </div>
             <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
@@ -526,18 +533,18 @@
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
                 @if($search || ($kategori_produk ?? '') || $perusahaan || $sort !== 'terbaru')
-                    <a href="{{ route('products.pbf') }}" class="btn-reset">? Reset</a>
+                    <a href="{{ route('products.pbf') }}" class="btn-reset"><i class="fa-solid fa-xmark"></i> Reset</a>
                 @endif
             </div>
         </form>
 
         <div class="result-info">
             <p>
-                Menampilkan <strong>{{ $medicines->firstItem() ?? 0 }}�{{ $medicines->lastItem() ?? 0 }}</strong>
+                Menampilkan <strong>{{ $medicines->firstItem() ?? 0 }}-{{ $medicines->lastItem() ?? 0 }}</strong>
                 dari <strong>{{ $medicines->total() }}</strong> produk
-                @if($search) � "<strong>{{ $search }}</strong>" @endif
-                @if($kategori_produk ?? '') � <strong>{{ $kategori_produk }}</strong> @endif
-                @if($perusahaan) � <strong>{{ $perusahaan }}</strong> @endif
+                @if($search) - "<strong>{{ $search }}</strong>" @endif
+                @if($kategori_produk ?? '') - <strong>{{ $kategori_produk }}</strong> @endif
+                @if($perusahaan) - <strong>{{ $perusahaan }}</strong> @endif
             </p>
         </div>
 
@@ -588,9 +595,9 @@
                 <p class="info">Halaman {{ $medicines->currentPage() }} dari {{ $medicines->lastPage() }}</p>
                 <div class="pagination-btns">
                     @if($medicines->onFirstPage())
-                        <span class="page-btn disabled">�</span>
+                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
                     @else
-                        <a href="{{ $medicines->previousPageUrl() }}" class="page-btn">�</a>
+                        <a href="{{ $medicines->previousPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-left"></i></a>
                     @endif
 
                     @foreach($medicines->getUrlRange(1, $medicines->lastPage()) as $page => $url)
@@ -599,14 +606,14 @@
                         @elseif($page == 1 || $page == $medicines->lastPage() || abs($page - $medicines->currentPage()) <= 2)
                             <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
                         @elseif(abs($page - $medicines->currentPage()) == 3)
-                            <span class="page-btn disabled">�</span>
+                            <span class="page-btn disabled">...</span>
                         @endif
                     @endforeach
 
                     @if($medicines->hasMorePages())
-                        <a href="{{ $medicines->nextPageUrl() }}" class="page-btn"></a>
+                        <a href="{{ $medicines->nextPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
                     @else
-                        <span class="page-btn disabled"></span>
+                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
                     @endif
                 </div>
             </div>
@@ -623,7 +630,7 @@
                     @endif
                 </p>
                 @if($search || ($kategori_produk ?? '') || $perusahaan)
-                    <a href="{{ route('products.pbf') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;">? Hapus Filter</a>
+                    <a href="{{ route('products.pbf') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;"><i class="fa-solid fa-xmark"></i> Hapus Filter</a>
                 @endif
             </div>
         @endif
@@ -635,14 +642,14 @@
 
 @section('scripts')
 <script>
-window.cartSettings = {
-    storageKey: 'sumberindofarmatama_cart_pbf',
+window.cartSettings = Object.assign({}, window.cartSettings || {}, {
+    storageKey: @json(auth()->check() ? 'sumberindofarmatama_cart_user_' . auth()->user()->id . '_pbf' : 'sumberindofarmatama_cart_pbf'),
     receiptStoreName: 'Sumberindo Farma Tama',
     receiptStoreAddress: 'Komp. Pergudangan Ocean 88 C2-3\nJl. Adisucipto\nArang Limbung\nKec. Sungai Raya\nKab. Kubu Raya\nKalimantan Barat',
     receiptFilePrefix: 'struk-sumberindo-farma'
-};
+});
 </script>
-@include('partials.cart')
+@include('partials.cart_pbf')
 @endsection
 
 

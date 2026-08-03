@@ -15,8 +15,10 @@ class AdminPrescriptionProductController extends Controller
     // List produk resep
     public function index(Request $request)
     {
-        $search   = $request->input('search');
-        $kategori = $request->input('kategori');
+        $search          = $request->input('search');
+        $kategori        = $request->input('kategori');
+        $kategori_produk = $request->input('kategori_produk');
+        $brand           = $request->input('brand');
 
         $query = Medicine::where('is_resep', true)->latest();
 
@@ -32,10 +34,19 @@ class AdminPrescriptionProductController extends Controller
             $query->where('kategori', $kategori);
         }
 
-        $medicines  = $query->paginate(10)->withQueryString();
-        $categories = Companies::LIST;
+        if ($kategori_produk) {
+            $query->where('kategori_produk', $kategori_produk);
+        }
 
-        return view('admin.prescriptions.products.index', compact('medicines', 'search', 'kategori', 'categories'));
+        if ($brand) {
+            $query->where('brand', 'like', "%{$brand}%");
+        }
+
+        $medicines       = $query->paginate(10)->withQueryString();
+        $categories      = Companies::LIST;
+        $kategoriOptions = Companies::LIST;
+
+        return view('admin.prescriptions.products.index', compact('medicines', 'search', 'kategori', 'brand', 'categories', 'kategori_produk', 'kategoriOptions'));
     }
 
     // Form tambah produk resep
@@ -186,6 +197,35 @@ class AdminPrescriptionProductController extends Controller
 
         $product->update(['stok' => $validated['stok']]);
 
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Stok produk resep berhasil diupdate!',
+                'stok' => $product->stok,
+            ]);
+        }
+
         return back()->with('success', 'Stok produk resep berhasil diupdate!');
+    }
+
+    public function updatePrice(Request $request, Medicine $product)
+    {
+        if (!$product->is_resep) {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'harga' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        $product->update(['harga' => $validated['harga']]);
+
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Harga produk resep berhasil diupdate!',
+                'harga' => 'Rp ' . number_format($product->harga, 0, ',', '.'),
+            ]);
+        }
+
+        return back()->with('success', 'Harga produk resep berhasil diupdate!');
     }
 }

@@ -33,7 +33,7 @@ class AdminProdukController extends Controller
     {
         $search          = $request->get('search', '');
         $kategori_produk = $request->get('kategori_produk', '');
-        $pabrik          = $request->get('pabrik', '');
+        $brand           = $request->get('brand', '');
 
         $query = Medicine::latest();
         /** @var \App\Models\User|null $user */
@@ -55,8 +55,8 @@ class AdminProdukController extends Controller
             $query->where('kategori_produk', $kategori_produk);
         }
 
-        if ($pabrik) {
-            $query->where('kategori', $pabrik);
+        if ($brand) {
+            $query->where('brand', 'like', "%{$brand}%");
         }
 
         $medicines       = $query->paginate(15)->withQueryString();
@@ -64,7 +64,7 @@ class AdminProdukController extends Controller
         $kategoriOptions = Companies::LIST;
 
         return view('admin.produk.index', compact(
-            'medicines', 'search', 'kategori_produk', 'pabrik', 'total', 'kategoriOptions'
+            'medicines', 'search', 'kategori_produk', 'brand', 'total', 'kategoriOptions'
         ));
     }
 
@@ -255,7 +255,30 @@ class AdminProdukController extends Controller
     {
         $validated = $request->validate(['stok' => ['required', 'integer', 'min:0']]);
         $produk->update(['stok' => $validated['stok']]);
+
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Stok berhasil diupdate!',
+                'stok' => $produk->stok,
+            ]);
+        }
+
         return back()->with('success', 'Stok berhasil diupdate!');
+    }
+
+    public function updatePrice(Request $request, Medicine $produk)
+    {
+        $validated = $request->validate(['harga' => ['required', 'numeric', 'min:0']]);
+        $produk->update(['harga' => $validated['harga']]);
+
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Harga berhasil diupdate!',
+                'harga' => 'Rp ' . number_format($produk->harga, 0, ',', '.'),
+            ]);
+        }
+
+        return back()->with('success', 'Harga berhasil diupdate!');
     }
 
     public function show(Medicine $produk)

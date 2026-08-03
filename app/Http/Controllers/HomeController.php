@@ -14,13 +14,12 @@ class HomeController extends Controller
     // Halaman utama
     public function index(Request $request)
     {
-        // Produk unggulan grade A — hanya non-PBF
+        // Produk unggulan — hanya non-PBF, tidak lagi memakai field `grade`
         $featuredProducts = Medicine::where('stok', '>', 0)
-                                    ->whereRaw('UPPER(grade) = ?', ['A'])
-                                    ->nonPbf()
-                                    ->latest()
-                                    ->limit(20)
-                                    ->get();
+                        ->nonPbf()
+                        ->latest()
+                        ->limit(20)
+                        ->get();
 
         // Semua produk yang tersedia untuk section "Semua Produk"
         $allProducts = Medicine::where('stok', '>', 0)
@@ -67,16 +66,29 @@ class HomeController extends Controller
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
 
-        if ($medicine->kelompok === 'PBF' && !($request->session()->get('pbf_access', false) || ($user?->isSuperAdmin() ?? false))) {
+        $isPbf = (strtoupper(trim((string) ($medicine->kelompok ?? ''))) === 'PBF') || (strtoupper(trim((string) ($medicine->kategori ?? ''))) === 'PBF');
+
+        if ($isPbf && !($request->session()->get('pbf_access', false) || ($user?->isSuperAdmin() ?? false))) {
             return redirect()->route('products.pbf')
                 ->with('error', 'Akses produk PBF hanya melalui halaman Produk PBF.');
         }
-
         // Related products dari kategori yang sama
-        $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
-                                    ->where('id', '!=', $medicine->id)
-                                    ->limit(4)
-                                    ->get();
+        if ($isPbf) {
+            $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
+                                        ->where(function ($q) {
+                                            $q->where('kelompok', 'PBF')
+                                              ->orWhereRaw("UPPER(kategori) = 'PBF'");
+                                        })
+                                        ->where('id', '!=', $medicine->id)
+                                        ->limit(4)
+                                        ->get();
+        } else {
+            $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
+                                        ->where('id', '!=', $medicine->id)
+                                        ->nonPbf()
+                                        ->limit(4)
+                                        ->get();
+        }
 
         return view('medicines.detail', [
             'medicine' => $medicine,
@@ -90,8 +102,10 @@ class HomeController extends Controller
         // Hanya tampilkan produk OTC di halaman kategori publik
         $medicines = Medicine::where('kategori', $kategori)
                             ->where('is_resep', false)
+                            ->nonPbf()
                             ->paginate(12);
         $allCategories = Medicine::where('is_resep', false)
+                                ->nonPbf()
                                 ->distinct()
                                 ->pluck('kategori');
 

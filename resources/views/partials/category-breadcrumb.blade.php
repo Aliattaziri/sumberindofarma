@@ -6,7 +6,7 @@
                 <i class="fa-solid fa-home"></i> Home
             </a>
             <span>/</span>
-            <a href="{{ route('products.index') }}" style="color: #B91C1C; text-decoration: none; font-weight: 600;">
+            <a href="{{ route('products.apotek') }}" style="color: #B91C1C; text-decoration: none; font-weight: 600;">
                 Katalog
             </a>
             @if(isset($mainCategory))

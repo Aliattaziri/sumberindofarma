@@ -172,7 +172,34 @@ class AdminPrescriptionController extends Controller
 
         $prescription->update(['stok' => $validated['stok']]);
 
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Stok berhasil diupdate!',
+                'stok' => $prescription->stok,
+            ]);
+        }
+
         return back()->with('success', 'Stok berhasil diupdate!');
+    }
+
+    public function updatePrice(Request $request, Medicine $prescription)
+    {
+        if (!$prescription->is_resep) abort(404);
+
+        $validated = $request->validate([
+            'harga' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        $prescription->update(['harga' => $validated['harga']]);
+
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Harga berhasil diupdate!',
+                'harga' => 'Rp ' . number_format($prescription->harga, 0, ',', '.'),
+            ]);
+        }
+
+        return back()->with('success', 'Harga berhasil diupdate!');
     }
 
     // FORM IMPORT

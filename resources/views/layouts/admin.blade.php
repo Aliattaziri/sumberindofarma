@@ -9,11 +9,12 @@
     <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260803-4">
     <meta property="og:image:secure_url" content="{{ asset('favicon.png') }}?v=20260803-4">
     <meta name="twitter:image" content="{{ asset('favicon.png') }}?v=20260803-4">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin - Sumberindo Farma Tama')</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20260803-4">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon.png') }}?v=20260803-4">
     <link rel="mask-icon" href="{{ asset('favicon.png') }}?v=20260803-4" color="#991B1B">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>

@@ -15,9 +15,11 @@ class AdminMedicineController extends Controller
     // List obat
     public function index(Request $request)
     {
-        $search   = $request->input('search');
-        $kategori = $request->input('kategori');
-        $tipe     = $request->input('tipe'); // 'biasa' atau 'resep'
+        $search          = $request->input('search');
+        $kategori        = $request->input('kategori');
+        $kategori_produk = $request->input('kategori_produk');
+        $brand           = $request->input('brand');
+        $tipe            = $request->input('tipe'); // 'biasa' atau 'resep'
 
         $query = Medicine::where('is_grosir', false)->latest();
 
@@ -33,16 +35,25 @@ class AdminMedicineController extends Controller
             $query->where('kategori', $kategori);
         }
 
+        if ($kategori_produk) {
+            $query->where('kategori_produk', $kategori_produk);
+        }
+
+        if ($brand) {
+            $query->where('brand', 'like', "%{$brand}%");
+        }
+
         if ($tipe === 'resep') {
             $query->where('is_resep', true);
         } elseif ($tipe === 'biasa') {
             $query->where('is_resep', false);
         }
 
-        $medicines  = $query->paginate(10)->withQueryString();
-        $categories = Companies::LIST;
+        $medicines       = $query->paginate(10)->withQueryString();
+        $categories      = Companies::LIST;
+        $kategoriOptions = Companies::LIST;
 
-        return view('admin.medicines.index', compact('medicines', 'search', 'kategori', 'tipe', 'categories'));
+        return view('admin.medicines.index', compact('medicines', 'search', 'kategori', 'brand', 'tipe', 'categories', 'kategori_produk', 'kategoriOptions'));
     }
 
     // Form tambah obat
@@ -110,7 +121,7 @@ class AdminMedicineController extends Controller
             'harga'     => ['required', 'numeric', 'min:0'],
             'stok'      => ['required', 'integer', 'min:0'],
             'sediaan'   => ['nullable', 'string', 'max:255'],
-            'grade'     => ['nullable', 'string', 'max:10'],
+            // 'grade' removed to avoid exposing grade in product flows
             'komposisi' => ['required', 'string', 'max:255'],
             'indikasi'  => ['required', 'string', 'max:255'],
             'golongan'  => ['required', 'in:BEBAS,KERAS'],
@@ -120,7 +131,7 @@ class AdminMedicineController extends Controller
 
         // Tentukan is_resep berdasarkan golongan
         $validated['is_resep'] = ($validated['golongan'] === 'KERAS');
-        $validated['grade'] = !empty(trim((string) ($validated['grade'] ?? ''))) ? strtoupper(trim($validated['grade'])) : null;
+        // grade removed — do not store or modify grade here
         // Produk retail tidak pernah grosir
         $validated['is_grosir'] = false;
         
@@ -187,6 +198,31 @@ class AdminMedicineController extends Controller
 
         $medicine->update(['stok' => $validated['stok']]);
 
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Stok berhasil diupdate!',
+                'stok' => $medicine->stok,
+            ]);
+        }
+
         return back()->with('success', 'Stok berhasil diupdate!');
+    }
+
+    public function updatePrice(Request $request, Medicine $medicine)
+    {
+        $validated = $request->validate([
+            'harga' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        $medicine->update(['harga' => $validated['harga']]);
+
+        if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
+            return response()->json([
+                'message' => 'Harga berhasil diupdate!',
+                'harga' => $medicine->getFormattedPrice(),
+            ]);
+        }
+
+        return back()->with('success', 'Harga berhasil diupdate!');
     }
 }

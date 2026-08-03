@@ -15,7 +15,7 @@ class PrescriptionController extends Controller
         $sort       = $request->get('sort', 'terbaru');
 
         // Produk Grosir = produk dengan is_grosir = true
-        $query = Medicine::where('is_grosir', true);
+        $query = Medicine::where('is_grosir', true)->nonPbf();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -38,7 +38,7 @@ class PrescriptionController extends Controller
 
         $medicines   = $query->paginate(12)->withQueryString();
         $perusahaans = Companies::LIST;
-        $total       = Medicine::where('is_grosir', true)->count();
+        $total       = Medicine::where('is_grosir', true)->nonPbf()->count();
 
         return view('prescriptions', compact('medicines', 'search', 'perusahaan', 'sort', 'perusahaans', 'total'));
     }

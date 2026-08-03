@@ -216,6 +216,29 @@
 
     /* Price */
     .price-text { font-weight: 600; color: #B91C1C; }
+    .inline-input {
+        width: 100%;
+        max-width: 110px;
+        padding: 0.35rem 0.5rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.45rem;
+        background: white;
+        color: #1f2937;
+        font-size: 0.85rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .inline-input.inline-price {
+        max-width: 240px;
+        min-width: 160px;
+    }
+    .inline-input.inline-stock {
+        max-width: 120px;
+    }
+    .inline-input:focus {
+        outline: none;
+        border-color: #B91C1C;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+    }
 
     /* Action buttons */
     .action-wrap { display: flex; gap: 0.4rem; }
@@ -325,6 +348,17 @@
                 </div>
             </div>
             <div class="search-field" style="max-width:220px;">
+                <label>Kategori Produk</label>
+                <div class="search-input-wrap">
+                    <select name="kategori_produk">
+                        <option value="">Semua Kategori</option>
+                        @foreach($kategoriOptions as $kat)
+                            <option value="{{ $kat }}" {{ ($kategori_produk ?? '') === $kat ? 'selected' : '' }}>{{ $kat }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="search-field" style="max-width:220px;">
                 <label>Perusahaan</label>
                 <div class="search-input-wrap">
                     <select name="kategori">
@@ -335,11 +369,17 @@
                     </select>
                 </div>
             </div>
+            <div class="search-field" style="max-width:220px;">
+                <label>Pabrik / Merek</label>
+                <div class="search-input-wrap">
+                    <input type="text" name="brand" value="{{ $brand ?? '' }}" placeholder="Cari pabrik atau merek...">
+                </div>
+            </div>
             <div class="search-actions">
                 <button type="submit" class="btn-search">
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
-                @if($search || $kategori)
+                @if($search || $kategori || $brand || ($kategori_produk ?? false))
                     <a href="{{ route('admin.medicines.index') }}" class="btn-reset">
                         <i class="fa-solid fa-xmark"></i> Reset
                     </a>
@@ -358,9 +398,11 @@
                     <th>Nama Obat</th>
                     <th>Sediaan</th>
                     <th>Kelompok</th>
+                    <th>Kategori Produk</th>
                     <th>Perusahaan</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
+                    <th>Pabrik / Merek</th>
+                    <th style="width:220px;">Harga</th>
+                    <th style="width:110px;">Stok</th>
                     <th>Tipe</th>
                     <th>Ditambahkan</th>
                     <th style="width:140px;">Aksi</th>
@@ -399,19 +441,51 @@
                         @endif
                     </td>
                     <td>
+                        @php
+                            $prodCategoryIcon = match($medicine->kategori_produk) {
+                                'SKINCARE & KOSMETIK' => '✨',
+                                'ALAT KESEHATAN'      => '🩺',
+                                default               => '💊',
+                            };
+                        @endphp
+                        <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.82rem;color:#6b7280;">
+                            <span>{{ $prodCategoryIcon }}</span>
+                            <span>{{ $medicine->kategori_produk ?? 'OBAT' }}</span>
+                        </span>
+                    </td>
+                    <td>
                         <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->kategori }}</span>
                     </td>
                     <td>
-                        <span class="price-text">{{ $medicine->getFormattedPrice() }}</span>
+                        <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->brand ?: '-' }}</span>
                     </td>
                     <td>
-                        @if($medicine->stok > 10)
-                            <span class="stock-badge stock-ok">{{ $medicine->stok }}</span>
-                        @elseif($medicine->stok > 0)
-                            <span class="stock-badge stock-low">{{ $medicine->stok }}</span>
-                        @else
-                            <span class="stock-badge stock-empty">Habis</span>
-                        @endif
+                        <div style="display:flex;flex-direction:column;gap:0.25rem;">
+                            <input type="number"
+                                   class="inline-input inline-price"
+                               min="0"
+                               step="100"
+                               value="{{ $medicine->harga }}"
+                               placeholder="Harga"
+                               title="Ubah harga obat"
+                               data-update-url="{{ route('admin.medicines.update-price', $medicine->id) }}"
+                               aria-label="Harga {{ $medicine->nama_obat }}">
+                            <span style="font-size:0.75rem;color:#6b7280;">Klik Enter untuk simpan</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display:flex;flex-direction:column;gap:0.25rem;">
+                            <input type="number"
+                                   class="inline-input inline-stock"
+                                   min="0"
+                                   step="1"
+                                   value="{{ $medicine->stok }}"
+                                   placeholder="Stok"
+                                   title="Ubah stok obat"
+                                   data-update-url="{{ route('admin.medicines.update-stock', $medicine->id) }}"
+                                   aria-label="Stok {{ $medicine->nama_obat }}">
+                            <span style="font-size:0.75rem;color:#6b7280;">Diperbarui langsung</span>
+                        </div>
                     </td>
                     <td>
                         @if($medicine->is_resep)
@@ -454,7 +528,7 @@
         {{-- Pagination --}}
         <div class="pagination-wrap">
             <div class="pagination-info">
-                Menampilkan {{ $medicines->firstItem() }}–{{ $medicines->lastItem() }} dari {{ $medicines->total() }} obat
+                Menampilkan {{ $medicines->firstItem() }}-{{ $medicines->lastItem() }} dari {{ $medicines->total() }} obat
             </div>
             <div class="pagination-pages">
                 {{-- Prev --}}
@@ -511,6 +585,67 @@
     </div>
 @endif
 
+@endsection
+
+@section('scripts')
+<script>
+(function() {
+    const token = document.head.querySelector('meta[name="csrf-token"]')?.content;
+
+    async function sendUpdate(input, fieldName) {
+        const url = input.dataset.updateUrl;
+        if (!url || !token) return;
+
+        const payload = { [fieldName]: input.value };
+
+        input.disabled = true;
+        input.classList.add('saving');
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => null);
+                throw new Error(data?.message || 'Gagal menyimpan perubahan');
+            }
+
+            const data = await response.json();
+            input.title = data.message || 'Tersimpan';
+        } catch (error) {
+            console.error(error);
+            alert(error.message || 'Terjadi kesalahan saat menyimpan');
+        } finally {
+            input.disabled = false;
+            setTimeout(() => input.title = '', 1500);
+        }
+    }
+
+    function attachInlineUpdate(selector, fieldName) {
+        document.querySelectorAll(selector).forEach(function(input) {
+            input.addEventListener('change', function() {
+                sendUpdate(input, fieldName);
+            });
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    input.blur();
+                }
+            });
+        });
+    }
+
+    attachInlineUpdate('.inline-price', 'harga');
+    attachInlineUpdate('.inline-stock', 'stok');
+})();
+</script>
 @endsection
 
 

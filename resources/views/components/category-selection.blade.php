@@ -358,15 +358,15 @@
                         <span>KECANTIKAN</span>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="{{ route('products.index') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
+                        <a href="{{ route('products.apotek') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
                             <i class="fa-solid fa-th-large"></i>
                             <span>Skincare</span>
                         </a>
-                        <a href="{{ route('products.index') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
+                        <a href="{{ route('products.apotek') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
                             <i class="fa-solid fa-th-large"></i>
                             <span>Kosmetik</span>
                         </a>
-                        <a href="{{ route('products.index') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
+                        <a href="{{ route('products.apotek') }}?kategori_produk=SKINCARE+%26+KOSMETIK" class="dropdown-item">
                             <i class="fa-solid fa-th-large"></i>
                             <span>Material Klinik</span>
                         </a>
@@ -382,7 +382,7 @@
                         <span>ALKES</span>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="{{ route('products.index') }}?kategori_produk=ALAT+KESEHATAN" class="dropdown-item">
+                        <a href="{{ route('products.apotek') }}?kategori_produk=ALAT+KESEHATAN" class="dropdown-item">
                             <i class="fa-solid fa-th-large"></i>
                             <span>Semua ALKES</span>
                         </a>

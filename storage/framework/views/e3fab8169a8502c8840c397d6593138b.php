@@ -320,7 +320,7 @@
                 <h4><i class="fa-brands fa-whatsapp"></i> Hubungi Admin via WhatsApp</h4>
                 <div class="pbf-step">
                     <span class="pbf-step-num">1</span>
-                    <p>Klik tombol di bawah � pesan sudah disiapkan otomatis untuk Anda.</p>
+                    <p>Klik tombol di bawah - pesan sudah disiapkan otomatis untuk Anda.</p>
                 </div>
                 <div class="pbf-step">
                     <span class="pbf-step-num">2</span>

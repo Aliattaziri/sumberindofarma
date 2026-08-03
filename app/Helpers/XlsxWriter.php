@@ -23,16 +23,512 @@ class XlsxWriter
         array  $rows,
         array  $widths = []
     ) {
+        // Prefer the minimal XLSX builder first because it is the most
+        // deterministic across browsers, VS Code preview, and Excel imports.
         $xlsx = self::build($headers, $rows, $widths);
+
+        if ($xlsx === null) {
+            $xlsx = self::buildWithNativeExcel($headers, $rows, $widths);
+        }
+
+        if ($xlsx === null) {
+            $xlsx = self::buildPhpSpreadsheet($headers, $rows, $widths);
+        }
 
         return response($xlsx, 200, [
             'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
             'Content-Length'      => strlen($xlsx),
             'Pragma'              => 'no-cache',
+            'Cache-Control'       => 'no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0',
+            'Expires'             => '0',
+            'Last-Modified'       => gmdate('D, d M Y H:i:s') . ' GMT',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
+    /**
+     * Build a native XLSX with PhpSpreadsheet.
+     */
+    private static function buildPhpSpreadsheet(array $headers, array $rows, array $widths = []): ?string
+    {
+        if (!class_exists('PhpOffice\\PhpSpreadsheet\\Spreadsheet')) {
+            return null;
+        }
+
+        try {
+            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setTitle('Template');
+
+            $headerFill = [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'E5E7EB'],
+            ];
+
+            $borderStyle = [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                'color' => ['rgb' => 'D1D5DB'],
+            ];
+
+            $headerRow = 1;
+            foreach ($headers as $index => $header) {
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($index + 1);
+                $cell = $columnLetter . $headerRow;
+                $sheet->setCellValue($cell, $header);
+                $sheet->getStyle($cell)->applyFromArray([
+                    'font' => ['bold' => true, 'color' => ['rgb' => '1F2937']],
+                    'fill' => $headerFill,
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                        'wrapText' => true,
+                    ],
+                    'borders' => [
+                        'top' => $borderStyle,
+                        'bottom' => $borderStyle,
+                        'left' => $borderStyle,
+                        'right' => $borderStyle,
+                    ],
+                ]);
+            }
+
+            $sheet->getRowDimension(1)->setRowHeight(28);
+
+            foreach ($rows as $rowIndex => $row) {
+                $excelRow = $rowIndex + 2;
+                $sheet->getRowDimension($excelRow)->setRowHeight(48);
+
+                foreach ($headers as $columnIndex => $header) {
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($columnIndex + 1);
+                    $cell = $columnLetter . $excelRow;
+                    $value = $row[$columnIndex] ?? '';
+                    $sheet->setCellValueExplicit($cell, (string) $value, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+
+                    $style = [
+                        'font' => ['color' => ['rgb' => '4B5563']],
+                        'alignment' => [
+                            'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                            'wrapText' => true,
+                        ],
+                        'borders' => [
+                            'top' => $borderStyle,
+                            'bottom' => $borderStyle,
+                            'left' => $borderStyle,
+                            'right' => $borderStyle,
+                        ],
+                        'fill' => [
+                            'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                            'startColor' => ['rgb' => 'FFFFFF'],
+                        ],
+                    ];
+
+                    if ($columnIndex === 6 || $columnIndex === 7 || $columnIndex === 8) {
+                        $style['alignment']['horizontal'] = \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER;
+                    }
+
+                    if ($columnIndex === 11) {
+                        $kategori = strtoupper(trim((string) $value));
+                        $style['font']['bold'] = true;
+                        $style['alignment']['horizontal'] = \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER;
+
+                        if ($kategori === 'OBAT') {
+                            $style['font']['color'] = ['rgb' => '991B1B'];
+                            $style['fill']['startColor'] = ['rgb' => 'FEE2E2'];
+                        } elseif ($kategori === 'SKINCARE & KOSMETIK') {
+                            $style['font']['color'] = ['rgb' => 'BE185D'];
+                            $style['fill']['startColor'] = ['rgb' => 'FCE7F3'];
+                        } elseif ($kategori === 'ALAT KESEHATAN') {
+                            $style['font']['color'] = ['rgb' => 'B91C1C'];
+                            $style['fill']['startColor'] = ['rgb' => 'FEF2F2'];
+                        }
+                    }
+
+                    $sheet->getStyle($cell)->applyFromArray($style);
+                }
+            }
+
+            foreach ($headers as $index => $header) {
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($index + 1);
+                $sheet->getColumnDimension($columnLetter)->setWidth($widths[$index] ?? 20);
+            }
+
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+            $tempPath = tempnam(sys_get_temp_dir(), 'xlsx_');
+            if ($tempPath === false) {
+                return null;
+            }
+
+            $xlsxPath = $tempPath . '.xlsx';
+            @unlink($tempPath);
+            $writer->save($xlsxPath);
+            $binary = file_get_contents($xlsxPath);
+
+            @unlink($xlsxPath);
+            $spreadsheet->disconnectWorksheets();
+
+            return $binary !== false ? $binary : null;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Build a real XLSX through Excel COM automation on Windows.
+     * Returns null when Excel automation is unavailable.
+     */
+    private static function buildWithNativeExcel(array $headers, array $rows, array $widths = []): ?string
+    {
+        if (PHP_OS_FAMILY !== 'Windows' || !function_exists('shell_exec')) {
+            return null;
+        }
+
+        $tempBase   = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'xlsx_' . uniqid();
+        $jsonPath   = $tempBase . '.json';
+        $scriptPath = $tempBase . '.ps1';
+        $outputPath = $tempBase . '.xlsx';
+
+        $payload = [
+            'sheetName' => 'Template',
+            'headers'   => array_values($headers),
+            'rows'      => array_values($rows),
+            'widths'    => array_values($widths),
+        ];
+
+        file_put_contents($jsonPath, json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+
+        $script = <<<'PS1'
+param(
+    [string]$JsonPath,
+    [string]$OutputPath
+)
+
+$ErrorActionPreference = 'Stop';
+Add-Type -AssemblyName System.Drawing;
+
+$payload = Get-Content -LiteralPath $JsonPath -Raw | ConvertFrom-Json;
+$excel = $null;
+$workbook = $null;
+$sheet = $null;
+
+try {
+    $excel = New-Object -ComObject Excel.Application;
+    $excel.Visible = $false;
+    $excel.DisplayAlerts = $false;
+    $excel.ScreenUpdating = $false;
+
+    $workbook = $excel.Workbooks.Add();
+    $sheet = $workbook.Worksheets.Item(1);
+    $sheet.Name = [string]$payload.sheetName;
+
+    $headerColor = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(229, 231, 235));
+    $headerTextColor = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(31, 41, 55));
+    $bodyTextColor = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(75, 85, 99));
+    $borderColor = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(209, 213, 219));
+    $obatFill = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(254, 226, 226));
+    $obatFont = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(153, 27, 27));
+    $skincareFill = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(252, 231, 243));
+    $skincareFont = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(190, 24, 93));
+    $alatFill = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(254, 242, 242));
+    $alatFont = [System.Drawing.ColorTranslator]::ToOle([System.Drawing.Color]::FromArgb(185, 28, 28));
+
+    $columnCount = [int]$payload.headers.Count;
+    for ($index = 0; $index -lt $columnCount; $index++) {
+        $sheet.Columns.Item($index + 1).ColumnWidth = [double]$payload.widths[$index];
+    }
+
+    for ($index = 0; $index -lt $columnCount; $index++) {
+        $cell = $sheet.Cells.Item(1, $index + 1);
+        $cell.Value2 = [string]$payload.headers[$index];
+    }
+
+    $headerRange = $sheet.Range($sheet.Cells.Item(1, 1), $sheet.Cells.Item(1, $columnCount));
+    $headerRange.Font.Bold = $true;
+    $headerRange.Font.Color = $headerTextColor;
+    $headerRange.Interior.Color = $headerColor;
+    $headerRange.WrapText = $true;
+    $headerRange.HorizontalAlignment = -4108;
+    $headerRange.VerticalAlignment = -4108;
+    $headerRange.Borders.LineStyle = 1;
+    $headerRange.Borders.Weight = 2;
+    $sheet.Rows.Item(1).RowHeight = 28;
+
+    for ($rowIndex = 0; $rowIndex -lt $payload.rows.Count; $rowIndex++) {
+        $excelRow = $rowIndex + 2;
+        $row = $payload.rows[$rowIndex];
+        $sheet.Rows.Item($excelRow).RowHeight = 48;
+
+        for ($colIndex = 0; $colIndex -lt $columnCount; $colIndex++) {
+            $value = '';
+            if ($colIndex -lt $row.Count) {
+                $value = [string]$row[$colIndex];
+            }
+
+            $cell = $sheet.Cells.Item($excelRow, $colIndex + 1);
+            $cell.Value2 = $value;
+            $cell.Font.Color = $bodyTextColor;
+            $cell.VerticalAlignment = -4108;
+            $cell.WrapText = $true;
+            $cell.Borders.LineStyle = 1;
+            $cell.Borders.Weight = 2;
+            $cell.Borders.Color = $borderColor;
+
+            if ($colIndex -eq 6 -or $colIndex -eq 7 -or $colIndex -eq 8) {
+                $numeric = 0;
+                if ([double]::TryParse($value, [ref]$numeric)) {
+                    $cell.Value2 = $numeric;
+                    $cell.HorizontalAlignment = -4108;
+                    $cell.NumberFormat = '0';
+                }
+            }
+
+            if ($colIndex -eq 11) {
+                if ([string]::IsNullOrWhiteSpace($value)) {
+                    $kategori = '';
+                } else {
+                    $kategori = $value.Trim().ToUpperInvariant();
+                }
+                $cell.HorizontalAlignment = -4108;
+                $cell.WrapText = $true;
+                switch ($kategori) {
+                    'OBAT' {
+                        $cell.Interior.Color = $obatFill;
+                        $cell.Font.Bold = $true;
+                        $cell.Font.Color = $obatFont;
+                    }
+                    'SKINCARE & KOSMETIK' {
+                        $cell.Interior.Color = $skincareFill;
+                        $cell.Font.Bold = $true;
+                        $cell.Font.Color = $skincareFont;
+                    }
+                    'ALAT KESEHATAN' {
+                        $cell.Interior.Color = $alatFill;
+                        $cell.Font.Bold = $true;
+                        $cell.Font.Color = $alatFont;
+                    }
+                }
+            }
+        }
+    }
+
+    $workbook.SaveAs($OutputPath, 51);
+    $workbook.Close($false);
+    $excel.Quit();
+
+    return $OutputPath;
+}
+finally {
+    if ($sheet -ne $null) {
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($sheet) | Out-Null;
+    }
+    if ($workbook -ne $null) {
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($workbook) | Out-Null;
+    }
+    if ($excel -ne $null) {
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($excel) | Out-Null;
+    }
+    if (Test-Path -LiteralPath $JsonPath) {
+        Remove-Item -LiteralPath $JsonPath -Force;
+    }
+    if (Test-Path -LiteralPath $OutputPath) {
+        # keep file for caller
+    }
+}
+PS1;
+
+        file_put_contents($scriptPath, $script);
+
+        $command = 'powershell -NoProfile -Sta -ExecutionPolicy Bypass -File ' . escapeshellarg($scriptPath)
+            . ' -JsonPath ' . escapeshellarg($jsonPath)
+            . ' -OutputPath ' . escapeshellarg($outputPath);
+
+        $output = shell_exec($command);
+
+        @unlink($scriptPath);
+
+        if (!file_exists($outputPath) || filesize($outputPath) === 0) {
+            @unlink($jsonPath);
+            @unlink($outputPath);
+            return null;
+        }
+
+        $xlsx = file_get_contents($outputPath);
+        @unlink($jsonPath);
+        @unlink($outputPath);
+
+        return $xlsx !== false ? $xlsx : null;
+    }
+
+    /**
+     * Generate SpreadsheetML (.xls XML) dan kembalikan sebagai HTTP response download.
+     */
+    public static function downloadSpreadsheetXml(
+        string $filename,
+        array  $headers,
+        array  $rows,
+        array  $widths = []
+    ) {
+        $xml = self::buildSpreadsheetXml($headers, $rows, $widths);
+
+        return response($xml, 200, [
+            'Content-Type'        => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Length'      => strlen($xml),
+            'Pragma'              => 'no-cache',
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
             'Expires'             => '0',
         ]);
+    }
+
+    /**
+     * Build SpreadsheetML XML string.
+     */
+    public static function buildSpreadsheetXml(array $headers, array $rows, array $widths = []): string
+    {
+        $escape = static fn($value) => htmlspecialchars((string) $value, ENT_XML1 | ENT_QUOTES, 'UTF-8');
+        $normalize = static fn($value) => strtoupper(trim((string) $value));
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml .= '<?mso-application progid="Excel.Sheet"?>';
+        $xml .= '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"';
+        $xml .= ' xmlns:o="urn:schemas-microsoft-com:office:office"';
+        $xml .= ' xmlns:x="urn:schemas-microsoft-com:office:excel"';
+        $xml .= ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
+
+        $xml .= '<Styles>';
+        $xml .= '<Style ss:ID="Default" ss:Name="Normal">';
+        $xml .= '<Alignment ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml .= '<Font ss:FontName="Calibri" ss:Size="11"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '<Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>';
+        $xml .= '<NumberFormat/>';
+        $xml .= '<Protection/>';
+        $xml .= '</Style>';
+        $xml .= '<Style ss:ID="Header">';
+        $xml .= '<Font ss:Bold="1" ss:Color="#1F2937"/>';
+        $xml .= '<Interior ss:Color="#E5E7EB" ss:Pattern="Solid"/>';
+        $xml .= '<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '</Style>';
+        $xml .= '<Style ss:ID="Body">';
+        $xml .= '<Alignment ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml .= '<Font ss:FontName="Calibri" ss:Size="11" ss:Color="#4B5563"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '<Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>';
+        $xml .= '</Style>';
+        $xml .= '<Style ss:ID="Number">';
+        $xml .= '<Alignment ss:Horizontal="Center" ss:Vertical="Center"/>';
+        $xml .= '<Font ss:FontName="Calibri" ss:Size="11" ss:Color="#4B5563"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '<Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>';
+        $xml .= '</Style>';
+        $xml .= '<Style ss:ID="CategoryObat">';
+        $xml .= '<Font ss:Bold="1" ss:Color="#991B1B"/>';
+        $xml .= '<Interior ss:Color="#FEE2E2" ss:Pattern="Solid"/>';
+        $xml .= '<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '</Style>';
+        $xml .= '<Style ss:ID="CategorySkincare">';
+        $xml .= '<Font ss:Bold="1" ss:Color="#BE185D"/>';
+        $xml .= '<Interior ss:Color="#FCE7F3" ss:Pattern="Solid"/>';
+        $xml .= '<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '</Style>';
+        $xml .= '<Style ss:ID="CategoryAlat">';
+        $xml .= '<Font ss:Bold="1" ss:Color="#B91C1C"/>';
+        $xml .= '<Interior ss:Color="#FEF2F2" ss:Pattern="Solid"/>';
+        $xml .= '<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>';
+        $xml .= '<Borders>';
+        $xml .= '<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#D1D5DB"/>';
+        $xml .= '</Borders>';
+        $xml .= '</Style>';
+        $xml .= '</Styles>';
+
+        $xml .= '<Worksheet ss:Name="Template">';
+        $xml .= '<Table>';
+
+        foreach ($headers as $ci => $header) {
+            $width = $widths[$ci] ?? 20;
+            $xml .= '<Column ss:Width="' . (float) $width . '"/>';
+        }
+
+        $xml .= '<Row ss:AutoFitHeight="0" ss:Height="24">';
+        foreach ($headers as $header) {
+            $xml .= '<Cell ss:StyleID="Header"><Data ss:Type="String">' . $escape($header) . '</Data></Cell>';
+        }
+        $xml .= '</Row>';
+
+        foreach ($rows as $row) {
+            $xml .= '<Row ss:AutoFitHeight="0" ss:Height="48">';
+            foreach ($headers as $index => $header) {
+                $value = $row[$index] ?? '';
+                $type  = is_numeric($value) ? 'Number' : 'String';
+                $style = 'Body';
+
+                if ($index === 6) {
+                    $style = 'Number';
+                } elseif ($index === 7 || $index === 8) {
+                    $style = 'Number';
+                } elseif ($index === 11) {
+                    $kategori = $normalize($value);
+                    if ($kategori === 'OBAT') {
+                        $style = 'CategoryObat';
+                    } elseif ($kategori === 'SKINCARE & KOSMETIK') {
+                        $style = 'CategorySkincare';
+                    } elseif ($kategori === 'ALAT KESEHATAN') {
+                        $style = 'CategoryAlat';
+                    } else {
+                        $style = 'Body';
+                    }
+                }
+
+                $xml .= '<Cell ss:StyleID="' . $style . '"><Data ss:Type="' . $type . '">' . $escape($value) . '</Data></Cell>';
+            }
+            $xml .= '</Row>';
+        }
+
+        $xml .= '</Table>';
+        $xml .= '<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">';
+        $xml .= '<ProtectObjects>False</ProtectObjects>';
+        $xml .= '<ProtectScenarios>False</ProtectScenarios>';
+        $xml .= '</WorksheetOptions>';
+        $xml .= '</Worksheet>';
+        $xml .= '</Workbook>';
+
+        return $xml;
     }
 
     /**
@@ -43,8 +539,10 @@ class XlsxWriter
         // ── 1. Build sheet XML ────────────────────────────────────────────────
         $sharedStrings = [];
         $siIndex       = [];
+        $sharedStringRefs = 0;
 
-        $getSi = function (string $val) use (&$sharedStrings, &$siIndex): int {
+        $getSi = function (string $val) use (&$sharedStrings, &$siIndex, &$sharedStringRefs): int {
+            $sharedStringRefs++;
             if (!isset($siIndex[$val])) {
                 $siIndex[$val]   = count($sharedStrings);
                 $sharedStrings[] = $val;
@@ -132,9 +630,11 @@ class XlsxWriter
         }
 
         $lastCol  = self::colLetter(count($headers) - 1);
+        $lastRow  = count($rows) + 1;
         $sheetXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
             . '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'
             . ' xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'
+            . '<dimension ref="A1:' . $lastCol . $lastRow . '"/>'
             . '<sheetViews><sheetView workbookViewId="0" showGridLines="1"><selection activeCell="A2" sqref="A2"/></sheetView></sheetViews>'
             . '<sheetFormatPr defaultRowHeight="15"/>'
             . '<cols>' . $colDefs . '</cols>'
@@ -147,10 +647,11 @@ class XlsxWriter
         foreach ($sharedStrings as $s) {
             $ssItems .= '<si><t xml:space="preserve">' . htmlspecialchars($s, ENT_XML1 | ENT_QUOTES) . '</t></si>';
         }
-        $ssCount = count($sharedStrings);
+        $ssCount = $sharedStringRefs;
+        $ssUniqueCount = count($sharedStrings);
         $ssXml   = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
             . '<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'
-            . ' count="' . $ssCount . '" uniqueCount="' . $ssCount . '">'
+            . ' count="' . $ssCount . '" uniqueCount="' . $ssUniqueCount . '">'
             . $ssItems . '</sst>';
 
         // ── 3. Styles XML ─────────────────────────────────────────────────────

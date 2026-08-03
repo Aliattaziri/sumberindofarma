@@ -346,7 +346,7 @@
         <div class="breadcrumb-custom">
             <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
             <span>/</span>
-            <a href="{{ route('products.index') }}">Produk</a>
+            <a href="{{ route('products.apotek') }}">Produk</a>
             <span>/</span>
             <span class="current">{{ Str::limit($medicine->nama_obat, 30) }}</span>
         </div>
@@ -455,7 +455,7 @@
                     </button>
                 </div>
 
-                <a href="{{ route('products.index') }}" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem;border:1.5px solid #e5e7eb;border-radius:10px;color:#6b7280;text-decoration:none;font-weight:600;font-size:0.875rem;transition:all 0.2s;">
+                <a href="{{ route('products.apotek') }}" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem;border:1.5px solid #e5e7eb;border-radius:10px;color:#6b7280;text-decoration:none;font-weight:600;font-size:0.875rem;transition:all 0.2s;">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog
                 </a>
             </div>
@@ -464,7 +464,7 @@
 
     @if($relatedMedicines->count() > 0)
     <div class="related-section">
-        <h2><i class="fa-solid fa-pills"></i> Produk Serupa � {{ $medicine->kategori }}</h2>
+        <h2><i class="fa-solid fa-pills"></i> Produk Serupa - {{ $medicine->kategori }}</h2>
         <div class="related-grid">
             @foreach($relatedMedicines as $related)
                 <a href="{{ route('medicines.show', $related->id) }}" class="related-card">

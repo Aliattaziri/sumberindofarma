@@ -45,7 +45,7 @@
 <div class="info-box">
     <h3><i class="fa-solid fa-circle-info"></i> Petunjuk Import</h3>
     <ol>
-        <li>Download Template Excel (.xlsx) di bawah</li>
+        <li>Download template Excel (.xls) yang ditampilkan di bawah</li>
         <li>Isi data produk sesuai kolom yang tersedia</li>
         <li>Kolom <strong>KATEGORI</strong> harus salah satu dari: <strong>OBAT</strong>, <strong>SKINCARE & KOSMETIK</strong>, <strong>ALAT KESEHATAN</strong></li>
         <li>Upload file <strong>.csv</strong>, <strong>.xls</strong>, atau <strong>.xlsx</strong></li>
@@ -59,7 +59,7 @@
                 Produk yang diimport oleh akun apotek akan otomatis disimpan sebagai <strong>APOTEK</strong> pada outlet Anda.
             </p>
             <a href="{{ route('admin.produk.import.template') }}" class="btn-save" style="background:#ef4444;text-decoration:none;">
-                <i class="fa-solid fa-download"></i> Download Template Excel
+                <i class="fa-solid fa-download"></i> Download Template Excel (.xls)
             </a>
         </div>
         <div class="template-table">
@@ -158,7 +158,7 @@
             <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
                 <i class="fa-solid fa-folder-open"></i> Pilih File
             </button>
-            <small>Format: CSV, XLS, XLSX � Maks. 10MB</small>
+            <small>Format: CSV, XLS, XLSX - Maks. 10MB</small>
             <p style="color:#9ca3af;font-size:0.875rem;margin:0.75rem 0 0;" id="fileLabel"></p>
         </div>
         <input type="file" id="fileInput" name="file" accept=".csv,.xls,.xlsx,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" onchange="updateFileLabel(this)">

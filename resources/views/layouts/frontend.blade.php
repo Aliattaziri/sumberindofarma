@@ -55,8 +55,8 @@
         })();
     </script>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Font Awesome (switched to jsDelivr mirror to avoid CDN font issues) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -472,8 +472,8 @@
         .page-offset {
             padding-top: var(--navbar-height, 65px);
         }
+
         .category-page-header,
-        .products-header,
         .contact-header,
         .farma-header,
         .act-header,
@@ -481,6 +481,11 @@
         .medicines-detail-header,
         .about-page-header {
             padding-top: calc(var(--navbar-height, 65px) + 2.5rem) !important;
+            padding-bottom: 2.5rem;
+        }
+
+        .products-header {
+            padding-top: calc(var(--navbar-height, 65px) + 1rem) !important;
             padding-bottom: 2.5rem;
         }
 
@@ -1052,7 +1057,6 @@
 
             <ul class="navbar-menu" id="navbarMenu">
                 <li><a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a href="{{ route('products.index') }}"><i class="fa-solid fa-pills"></i> Produk Kami</a></li>
                 <li><a href="{{ route('about') }}"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a></li>
                 <li><a href="{{ route('contact') }}"><i class="fa-solid fa-headset"></i> Hubungi Kami</a></li>
 
@@ -1079,10 +1083,12 @@
             </ul>
 
             {{-- Cart button --}}
-            <button class="cart-nav-btn" id="cartNavBtn" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.index') }}#keranjang';}" title="Keranjang Belanja" style="display:none;">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-badge" id="cartBadgeNav">0</span>
-            </button>
+            @if(Route::is(['products.*', 'medicines.show']))
+                <button class="cart-nav-btn" id="cartNavBtn" onclick="if(typeof openCart==='function'){openCart();}else{window.location.href='{{ route('products.apotek') }}#keranjang';}" title="Keranjang Belanja" style="display:none;">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cartBadgeNav">0</span>
+                </button>
+            @endif
         </div>
     </nav>
 
@@ -1114,7 +1120,7 @@
             <div class="footer-content">
                 <div>
                     <h3><i class="fa-solid fa-pills"></i> Sumberindo Farma Tama</h3>
-                    <p>Apotik online terpercaya dengan koleksi obat lengkap dan layanan cepat.</p>
+                    <p>Perusahaan distribusi farmasi (PBF) yang menyediakan produk resmi untuk apotek dan fasilitas kesehatan.</p>
                     <div class="footer-socials">
                         <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="social-circle" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://wa.me/6285248965590" class="social-circle" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -1242,7 +1248,7 @@
             links.classList.toggle('open');
             toggle.classList.toggle('open');
         }
-        // Desktop: selalu tampil � jangan pakai inline style agar tidak override CSS
+        // Desktop: selalu tampil - jangan pakai inline style agar tidak override CSS
         function checkFloatDesktop() {
             const links = document.getElementById('floatLinks');
             if (window.innerWidth > 768) {
@@ -1399,8 +1405,12 @@
     </script>
 
     <script>
-        // Cart badge sync - gunakan key khusus jika halaman mendefinisikan cartSettings
+        // Cart badge sync - hanya tampilkan jika halaman benar-benar memiliki cart partial
         (function() {
+            if (!window.hasProductCart) {
+                return;
+            }
+
             // Migrasi sekali: jika ada key lama retail/grosir, gabungkan ke key utama
             ['sumberindofarmatama_cart_retail', 'sumberindofarmatama_cart_grosir'].forEach(function(oldKey) {
                 try {
@@ -1417,7 +1427,10 @@
                 } catch(e) {}
             });
 
-            const storageKey = (window.cartSettings && window.cartSettings.storageKey) ? window.cartSettings.storageKey : 'sumberindofarmatama_cart';
+            const defaultPathKey = 'sumberindofarmatama_cart_' + window.location.pathname.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+            const storageKey = (window.cartSettings && window.cartSettings.storageKey)
+                ? window.cartSettings.storageKey
+                : defaultPathKey;
             const cart = JSON.parse(localStorage.getItem(storageKey) || '[]');
             const total = cart.reduce(function(s, i) { return s + i.qty; }, 0);
             
