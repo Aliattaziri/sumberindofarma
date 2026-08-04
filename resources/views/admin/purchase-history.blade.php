@@ -58,6 +58,10 @@
                         <td>
                             @if($order->buyer_type === 'apotik')
                                 <span class="badge badge-primary">Apotik</span>
+                            @elseif($order->buyer_type === 'toko_obat')
+                                <span class="badge" style="background:#fff7ed;color:#c2410c;">Toko Obat</span>
+                            @elseif($order->buyer_type === 'pbf')
+                                <span class="badge" style="background:#eff6ff;color:#1d4ed8;">PBF</span>
                             @else
                                 <span class="badge badge-secondary">Umum</span>
                             @endif
@@ -315,7 +319,7 @@
                 <div>: <strong>${order.buyer_name || '-'}</strong></div>
 
                 <div class="detail-label">Jenis</div>
-                <div>: ${order.buyer_type === 'apotik' ? 'Apotik' : 'Umum'}</div>
+                <div>: ${order.buyer_type === 'apotik' ? 'Apotik' : order.buyer_type === 'toko_obat' ? 'Toko Obat' : order.buyer_type === 'pbf' ? 'PBF' : 'Umum'}</div>
 
                 <div class="detail-label">Kontak</div>
                 <div>: ${order.phone || '-'}</div>
@@ -330,6 +334,24 @@
                 <div>: ${order.sia || '-'}</div>
                 <div class="detail-label">SIPA</div>
                 <div>: ${order.sipa || '-'}</div>
+            `;
+        } else if (order.buyer_type === 'toko_obat') {
+            detailHtml += `
+                <div class="detail-label">NIB</div>
+                <div>: ${order.sia || '-'}</div>
+                <div class="detail-label">NPWP Sarana</div>
+                <div>: ${order.no_izin_pbf || '-'}</div>
+                <div class="detail-label">KTP Pemilik</div>
+                <div>: ${order.apj || '-'}</div>
+                <div class="detail-label">SIPTTK PJ + KTP PJ</div>
+                <div>: ${order.sipa || '-'}</div>
+            `;
+        } else if (order.buyer_type === 'pbf') {
+            detailHtml += `
+                <div class="detail-label">No. Izin PBF</div>
+                <div>: ${order.no_izin_pbf || '-'}</div>
+                <div class="detail-label">APJ</div>
+                <div>: ${order.apj || '-'}</div>
             `;
         }
         

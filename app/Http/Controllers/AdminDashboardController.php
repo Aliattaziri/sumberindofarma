@@ -39,7 +39,14 @@ class AdminDashboardController extends Controller
             ->values();
 
         $historyByChannel = $orders
-            ->groupBy(fn ($order) => $order->buyer_type === 'apotik' ? 'Apotek / Produk Apotek' : 'Umum / Produk Publik')
+            ->groupBy(function ($order) {
+                return match ($order->buyer_type) {
+                    'apotik' => 'Apotek / Produk Apotek',
+                    'toko_obat' => 'Toko Obat',
+                    'pbf' => 'PBF',
+                    default => 'Umum / Produk Publik',
+                };
+            })
             ->map(function ($group, $channel) {
                 $omzet = (float) $group->sum(fn ($o) => $o->effective_total);
 
@@ -189,7 +196,12 @@ class AdminDashboardController extends Controller
                     'waktu' => optional($order->created_at)->format('d M Y H:i'),
                     'outlet' => $order->source_outlet ?: '-',
                     'pembeli' => $order->buyer_name ?: '-',
-                    'kanal' => $order->buyer_type === 'apotik' ? 'Apotek' : 'Umum',
+                    'kanal' => match ($order->buyer_type) {
+                        'apotik' => 'Apotek',
+                        'toko_obat' => 'Toko Obat',
+                        'pbf' => 'PBF',
+                        default => 'Umum',
+                    },
                     'omzet' => (float) $order->effective_total,
                 ];
             })->values()->all(),
@@ -342,7 +354,12 @@ class AdminDashboardController extends Controller
                         $index === 0 ? $order->id                                              : '',
                         $index === 0 ? $order->created_at->format('d/m/Y H:i')                : '',
                         $index === 0 ? ($order->buyer_name ?? '')                             : '',
-                        $index === 0 ? ($order->buyer_type === 'apotik' ? 'Apotik' : 'Umum') : '',
+                        $index === 0 ? (match ($order->buyer_type) {
+                            'apotik' => 'Apotik',
+                            'toko_obat' => 'Toko Obat',
+                            'pbf' => 'PBF',
+                            default => 'Umum',
+                        }) : '',
                         $index === 0 ? ($order->phone ?? '')                                   : '',
                         $index === 0 ? ($order->address ?? '')                                 : '',
                         $index === 0 ? ($order->kecamatan ?? '')                               : '',
@@ -362,7 +379,12 @@ class AdminDashboardController extends Controller
                     $order->id,
                     $order->created_at->format('d/m/Y H:i'),
                     $order->buyer_name ?? '',
-                    $order->buyer_type === 'apotik' ? 'Apotik' : 'Umum',
+                    match ($order->buyer_type) {
+                        'apotik' => 'Apotik',
+                        'toko_obat' => 'Toko Obat',
+                        'pbf' => 'PBF',
+                        default => 'Umum',
+                    },
                     $order->phone    ?? '',
                     $order->address  ?? '',
                     $order->kecamatan ?? '',

@@ -1313,7 +1313,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="why-card-icon-wrap"><i class="fa-solid fa-truck-fast"></i></div>
         <div class="why-card-content">
           <h4>Pengiriman Cepat & Aman</h4>
-          <p>Langsung dari distributor ke seluruh Indonesia. Sistem logistik handal dengan cold chain untuk produk berkebutuhan khusus.</p>
+                    <p>Didukung sistem distribusi yang efisien dan mitra logistik terpercaya untuk memastikan pesanan tiba tepat waktu, aman, dan dalam kondisi terbaik.</p>
           <span class="why-card-badge"><i class="fa-solid fa-location-dot"></i> Seluruh Indonesia</span>
         </div>
       </div>
@@ -1375,9 +1375,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="pbf-profile-tag"><i class="fa-solid fa-building-shield"></i> Profil PBF</span>
                     <h3>PT. SUMBERINDO FARMA TAMA adalah Perusahaan Besar Farmasi (PBF)</h3>
                     <p>
-                        Kami berperan sebagai mitra distribusi farmasi resmi yang menyalurkan produk obat dan alat kesehatan
-                        dari prinsipal ke fasilitas pelayanan kesehatan, apotek, klinik, dan jaringan mitra secara terkontrol,
-                        aman, dan sesuai ketentuan distribusi farmasi.
+                        PT. Sumberindo Farma Tama merupakan Pedagang Besar Farmasi (PBF) yang menyediakan layanan distribusi
+                        farmasi profesional. Dengan mengedepankan kepatuhan terhadap regulasi, kualitas layanan, dan integritas
+                        operasional, kami mendistribusikan obat dan alat kesehatan dari prinsipal kepada fasilitas pelayanan
+                        kesehatan melalui sistem distribusi yang aman, efisien, dan dapat diandalkan.
                     </p>
                     <div class="pbf-keypoints">
                         <span><i class="fa-solid fa-circle-check"></i> Distributor Resmi</span>

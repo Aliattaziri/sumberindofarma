@@ -1,12 +1,6 @@
-{{--
-  =====================================================================
-  SHARED CART PARTIAL - resources/views/partials/cart.blade.php
-  Include ini di @section('scripts') semua halaman yang butuh keranjang:
-      @include('partials.cart')
-  =====================================================================
---}}
 
-{{-- ===== CART CSS ===== --}}
+
+
 <style>
 .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .cart-overlay.open { opacity: 1; pointer-events: all; }
@@ -77,7 +71,7 @@
 }
 </style>
 
-{{-- ===== CART DRAWER HTML ===== --}}
+
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head">
@@ -94,7 +88,7 @@
   </div>
 </div>
 
-{{-- ===== ORDER MODAL ===== --}}
+
 <div class="modal-overlay" id="orderOverlay" onclick="closeOrder()"></div>
 <div class="modal-box" id="orderModal">
   <div class="modal-head">
@@ -210,7 +204,7 @@
   </div>
 </div>
 
-{{-- ===== CART JAVASCRIPT ===== --}}
+
 <script>
 const WA = (window.cartSettings && window.cartSettings.wa) ? String(window.cartSettings.wa).replace(/\D/g, '') : '6285248965590';
 const CART_DEFAULT_SETTINGS = {
@@ -710,9 +704,9 @@ async function submitOrder() {
   }
 
   try {
-    const response = await fetch('{{ route("orders.history.store") }}', {
+    const response = await fetch('<?php echo e(route("orders.history.store")); ?>', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>', 'Accept': 'application/json' },
       body: JSON.stringify(payload)
     });
     if (!response.ok) { const e = await response.json(); throw (e.errors || new Error('Gagal menyimpan pesanan.')); }
@@ -780,3 +774,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+<?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/partials/cart.blade.php ENDPATH**/ ?>

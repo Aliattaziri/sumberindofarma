@@ -10,7 +10,7 @@ class PurchaseHistoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'buyer_type'      => ['required', 'string', 'in:umum,apotik,pbf'],
+            'buyer_type'      => ['required', 'string', 'in:umum,apotik,toko_obat,pbf'],
             'buyer_name'      => ['required', 'string', 'max:255'],
             'source_outlet'   => ['nullable', 'string', 'max:255'],
             'phone'           => ['nullable', 'string', 'max:255'],

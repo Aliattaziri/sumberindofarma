@@ -234,33 +234,18 @@
                         Persyaratan Dokumen Pemesanan
                     </div>
 
-                    {{-- RS / Klinik --}}
+                    {{-- Apotek / RS / Klinik --}}
                     <div class="doc-type doc-type-blue">
                         <div class="doc-type-header">
                             <div class="doc-type-icon"><i class="fa-solid fa-hospital"></i></div>
-                            RS / Klinik
+                            Apotek / RS / Klinik
                         </div>
                         <ul class="doc-list">
-                            <li>Surat Pemesanan</li>
-                            <li>SP Khusus</li>
-                            <li>Surat Izin RS / Klinik</li>
-                            <li>Dokumen Pendukung Lainnya</li>
-                        </ul>
-                    </div>
-
-                    {{-- Apotek --}}
-                    <div class="doc-type doc-type-green">
-                        <div class="doc-type-header">
-                            <div class="doc-type-icon"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
-                            Apotek
-                        </div>
-                        <ul class="doc-list">
-                            <li>SP</li>
-                            <li>SP Khusus</li>
-                            <li>SIA</li>
-                            <li>SIPA</li>
-                            <li>KTP</li>
-                            <li>NPWP</li>
+                            <li>NIB</li>
+                            <li>Sertifikat Standar</li>
+                            <li>SIPA + KTP APJ</li>
+                            <li>NPWP Sarana</li>
+                            <li>KTP Pemilik</li>
                         </ul>
                     </div>
 
@@ -271,8 +256,26 @@
                             Toko Obat
                         </div>
                         <ul class="doc-list">
-                            <li>SP Asli + Stempel</li>
+                            <li>NIB</li>
+                            <li>NPWP Sarana</li>
                             <li>KTP Pemilik</li>
+                            <li>SIPTTK PJ + KTP PJ</li>
+                        </ul>
+                    </div>
+
+                    {{-- PBF --}}
+                    <div class="doc-type doc-type-green">
+                        <div class="doc-type-header">
+                            <div class="doc-type-icon"><i class="fa-solid fa-warehouse"></i></div>
+                            PBF
+                        </div>
+                        <ul class="doc-list">
+                            <li>NIB</li>
+                            <li>Sertifikat Standar</li>
+                            <li>Sertifikat CDOB/CDAKB</li>
+                            <li>STR APJ + KTP</li>
+                            <li>KTP Pemilik</li>
+                            <li>NPWP PBF</li>
                         </ul>
                     </div>
                 </div>

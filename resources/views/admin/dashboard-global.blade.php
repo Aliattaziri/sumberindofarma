@@ -610,7 +610,7 @@
                         <td>{{ $order->created_at->format('d M Y H:i') }}</td>
                         <td>{{ $order->source_outlet ?: '-' }}</td>
                         <td>{{ $order->buyer_name ?: '-' }}</td>
-                        <td>{{ $order->buyer_type === 'apotik' ? 'Apotek' : 'Umum' }}</td>
+                        <td>{{ $order->buyer_type === 'apotik' ? 'Apotek' : ($order->buyer_type === 'toko_obat' ? 'Toko Obat' : ($order->buyer_type === 'pbf' ? 'PBF' : 'Umum')) }}</td>
                         <td>Rp {{ number_format($order->effective_total, 0, ',', '.') }}</td>
                     </tr>
                 @empty

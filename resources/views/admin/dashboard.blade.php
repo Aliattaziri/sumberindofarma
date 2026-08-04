@@ -124,7 +124,7 @@
                     <tr>
                         <td style="font-size:0.82rem;color:#6b7280;">{{ $order->created_at->format('d M Y H:i') }}</td>
                         <td><strong>{{ $order->buyer_name }}</strong></td>
-                        <td>{{ $order->buyer_type === 'apotik' ? 'Apotik' : 'Umum' }}</td>
+                        <td>{{ $order->buyer_type === 'apotik' ? 'Apotik' : ($order->buyer_type === 'toko_obat' ? 'Toko Obat' : ($order->buyer_type === 'pbf' ? 'PBF' : 'Umum')) }}</td>
                         <td>{{ 'Rp ' . number_format($order->total, 0, ',', '.') }}</td>
                         <td style="font-size:0.82rem;color:#6b7280;">{{ $order->sia ?? $order->sipa ?? '-' }}</td>
                     </tr>
