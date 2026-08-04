@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#991B1B">
     <meta name="msapplication-TileColor" content="#991B1B">
+    <meta name="application-name" content="Sumberindo Farma Tama">
+    <meta name="apple-mobile-web-app-title" content="Sumberindo Farma Tama">
     <meta property="og:image" content="{{ asset('logo pt sumber indo farma tama.png') }}?v=20260803-8">
     <meta property="og:image:secure_url" content="{{ asset('logo pt sumber indo farma tama.png') }}?v=20260803-8">
     <meta name="twitter:image" content="{{ asset('logo pt sumber indo farma tama.png') }}?v=20260803-8">
@@ -17,6 +19,8 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v={{ $faviconV }}">
     <link rel="shortcut icon" href="/favicon.ico?v={{ $faviconV }}">
     <link rel="apple-touch-icon" href="/favicon.ico?v={{ $faviconV }}">
+    <link rel="apple-touch-icon-precomposed" href="/favicon.ico?v={{ $faviconV }}">
+    <link rel="manifest" href="/site.webmanifest?v={{ $faviconV }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 

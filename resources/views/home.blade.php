@@ -418,48 +418,101 @@
 }
 .pbf-gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.9rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 1rem;
+    align-items: stretch;
 }
 .pbf-photo-template {
     background: #fff;
-    border: 2px dashed #f9bcbc;
+    border: 1px solid #f3c9c9;
     border-radius: 16px;
-    min-height: 170px;
-    padding: 1rem;
+    min-height: 0;
+    padding: 0.72rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: border-color 0.25s ease, transform 0.25s ease;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.pbf-gallery-grid > .pbf-photo-template:not(.pbf-photo-template-featured) {
+    min-height: 228px;
+    background: linear-gradient(180deg, #ffffff 0%, #fff6f6 100%);
+    box-shadow: 0 8px 18px rgba(127, 29, 29, 0.07);
 }
 .pbf-photo-template:hover {
     border-color: #ef4444;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(185, 28, 28, 0.14);
+    background: #fff;
 }
-.pbf-photo-template .icon {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #fff1f1, #ffe2e2);
-    color: #B91C1C;
-    display: flex;
-    align-items: center;
+.pbf-photo-template img {
+    width: 100%;
+    height: 122px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #fee2e2;
+    margin-bottom: 0.62rem;
+    background: #fff5f5;
+}
+.pbf-photo-template-featured {
+    grid-column: 2 / span 2;
+    grid-row: span 2;
+    min-height: 420px;
+    padding: 0.95rem;
+    border: 1px solid #f3a4a4;
+    box-shadow: 0 18px 34px rgba(153, 27, 27, 0.14);
+    background: linear-gradient(180deg, #ffffff 0%, #fff5f5 100%);
     justify-content: center;
-    font-size: 1.2rem;
+}
+.pbf-photo-template-featured h4 {
+    width: 100%;
+    text-align: center;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+}
+.pbf-photo-empty {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    border: 1px dashed #ef9f9f;
+    background: repeating-linear-gradient(
+        -45deg,
+        #fff8f8,
+        #fff8f8 10px,
+        #ffeaea 10px,
+        #ffeaea 20px
+    );
     margin-bottom: 0.7rem;
+    position: relative;
+}
+.pbf-photo-empty::after {
+    content: 'FOTO MENYUSUL';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    color: #be123c;
+    background: rgba(255, 255, 255, 0.84);
+    border: 1px solid #fecaca;
+    border-radius: 999px;
+    padding: 0.35rem 0.7rem;
 }
 .pbf-photo-template h4 {
     margin: 0 0 0.3rem;
-    font-size: 0.9rem;
+    font-size: 0.83rem;
     color: #374151;
     font-weight: 800;
+    line-height: 1.35;
 }
 .pbf-photo-template p {
     margin: 0;
-    font-size: 0.78rem;
-    color: #9ca3af;
+    font-size: 0.72rem;
+    color: #94a3b8;
     line-height: 1.5;
 }
 
@@ -542,6 +595,12 @@
     .about-stats { width: 100%; grid-template-columns: repeat(4,1fr); }
     .pbf-profile-wrap { padding: 1.2rem; border-radius: 18px; }
     .pbf-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pbf-photo-template-featured {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        min-height: 320px;
+    }
+    .pbf-photo-empty { height: 220px; }
 }
 @media (max-width: 480px) {
     .promo-grid { grid-template-columns: 1fr; gap: 0.75rem; padding: 0 0.5rem; }
@@ -558,7 +617,12 @@
     .hero-btns { flex-direction: column; }
     .about-stats { grid-template-columns: repeat(2,1fr); }
     .pbf-gallery-grid { grid-template-columns: 1fr; }
-    .pbf-photo-template { min-height: 142px; }
+    .pbf-photo-template { min-height: 0; }
+    .pbf-photo-template-featured {
+        grid-column: auto;
+        min-height: 255px;
+    }
+    .pbf-photo-empty { height: 170px; }
     .form-row { grid-template-columns: 1fr; }
     .cart-head { padding: 0.95rem 1rem; }
     .cart-head h2 { font-size: 0.98rem; }
@@ -1495,36 +1559,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <div class="pbf-gallery-grid">
                 <div class="pbf-photo-template">
-                    <div class="icon"><i class="fa-solid fa-building"></i></div>
-                    <h4>Foto Kantor Utama</h4>
-                    <p>Template untuk foto fasad kantor PT. Sumberindo Farma Tama.</p>
+                    <img src="{{ asset('foto kantor utama SFT.jpg') }}" alt="Foto Kantor Utama Sumberindo Farma Tama">
+                    <h4>Kantor Utama</h4>
+                    <p>Fasad kantor utama PT. Sumberindo Farma Tama.</p>
                 </div>
                 <div class="pbf-photo-template">
-                    <div class="icon"><i class="fa-solid fa-warehouse"></i></div>
-                    <h4>Foto Gudang Distribusi</h4>
-                    <p>Template untuk dokumentasi gudang penyimpanan dan area loading.</p>
+                    <img src="{{ asset('foto kantor utama SFT (2).jpg') }}" alt="Foto Kantor Utama Sumberindo Farma Tama Sudut Lain">
+                    <h4>Kantor Utama - Sudut Lain</h4>
+                    <p>Tampilan area kantor dari sisi berbeda.</p>
                 </div>
                 <div class="pbf-photo-template">
-                    <div class="icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-                    <h4>Foto Aktivitas Operasional</h4>
-                    <p>Template untuk proses sortir, packing, dan kontrol kualitas.</p>
+                    <img src="{{ asset('foto gudang distribusi SFT.jpeg') }}" alt="Foto Gudang Distribusi Sumberindo Farma Tama">
+                    <h4>Gudang Distribusi</h4>
+                    <p>Gudang penyimpanan dan area distribusi farmasi.</p>
                 </div>
                 <div class="pbf-photo-template">
-                    <div class="icon"><i class="fa-solid fa-truck"></i></div>
-                    <h4>Foto Armada Pengiriman</h4>
-                    <p>Template untuk kendaraan distribusi dan jalur logistik.</p>
+                    <img src="{{ asset('foto gudang distribusi SFT (2).jpeg') }}" alt="Foto Gudang Distribusi Area Penyimpanan">
+                    <h4>Gudang Distribusi - Penyimpanan</h4>
+                    <p>Area penyimpanan produk dengan tata kelola rapi.</p>
+                </div>
+                <div class="pbf-photo-template pbf-photo-template-featured">
+                    <div class="pbf-photo-empty" aria-hidden="true"></div>
+                    <h4>Tim Profesional - Customer Service</h4>
                 </div>
                 <div class="pbf-photo-template">
-                    <div class="icon"><i class="fa-solid fa-users"></i></div>
-                    <h4>Foto Tim Profesional</h4>
-                    <p>Template untuk tim operasional, sales, dan pelayanan pelanggan.</p>
+                    <img src="{{ asset('foto gudang distribusi SFT (3).jpeg') }}" alt="Foto Gudang Distribusi Area Loading">
+                    <h4>Gudang Distribusi - Area Loading</h4>
+                    <p>Dokumentasi area loading untuk proses keluar-masuk barang.</p>
                 </div>
                 <div class="pbf-photo-template">
-                    <div class="icon"><i class="fa-solid fa-handshake-angle"></i></div>
-                    <h4>Foto Kemitraan</h4>
-                    <p>Template untuk kegiatan kolaborasi dengan mitra dan principal.</p>
+                    <img src="{{ asset('BAGIAN PICKER.jpg') }}" alt="Foto Aktivitas Operasional Sumberindo Farma Tama">
+                    <h4>Aktivitas Operasional - Picker</h4>
+                    <p>Proses picking produk pada operasional harian.</p>
+                </div>
+                <div class="pbf-photo-template">
+                    <img src="{{ asset('BAGIAN CHECKER.jpg') }}" alt="Foto Aktivitas Operasional Bagian Checker">
+                    <h4>Aktivitas Operasional - Checker</h4>
+                    <p>Proses pengecekan barang sebelum distribusi.</p>
+                </div>
+                <div class="pbf-photo-template">
+                    <img src="{{ asset('MOBIL BOX.jpg') }}" alt="Foto Armada Pengiriman Sumberindo Farma Tama">
+                    <h4>Armada Pengiriman - Mobil Box</h4>
+                    <p>Armada box untuk distribusi produk farmasi.</p>
+                </div>
+                <div class="pbf-photo-template">
+                    <img src="{{ asset('MOBIL LUXIO HITAM.jpg') }}" alt="Foto Armada Pengiriman Mobil Luxio Hitam">
+                    <h4>Armada Pengiriman - Luxio</h4>
+                    <p>Kendaraan distribusi pendukung pengiriman harian.</p>
+                </div>
+                <div class="pbf-photo-template">
+                    <img src="{{ asset('MOBIL TOSA.jpg') }}" alt="Foto Armada Pengiriman Mobil Tosa">
+                    <h4>Armada Pengiriman - Tosa</h4>
+                    <p>Armada operasional untuk rute distribusi tertentu.</p>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

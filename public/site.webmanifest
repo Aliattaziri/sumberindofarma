@@ -1,0 +1,17 @@
+{
+  "name": "Sumberindo Farma Tama",
+  "short_name": "Sumberindo",
+  "description": "Distributor Farmasi Terpercaya",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#991B1B",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

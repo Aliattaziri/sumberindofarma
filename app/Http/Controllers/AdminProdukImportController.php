@@ -137,10 +137,23 @@ class AdminProdukImportController extends Controller
             foreach ($rowNodes as $rowNode) {
                 $rowData = [];
                 $cellNodes = $xpath->query('./*[local-name()="Cell"]', $rowNode);
+                $colIndex = 0;
 
                 foreach ($cellNodes as $cellNode) {
+                    // Spreadsheet XML bisa skip kolom kosong via ss:Index,
+                    // jadi kita isi placeholder agar posisi kolom tetap sejajar header.
+                    $indexAttr = $xpath->evaluate('string(@*[local-name()="Index"])', $cellNode);
+                    if ($indexAttr !== '') {
+                        $targetIndex = max(0, ((int) $indexAttr) - 1);
+                        while ($colIndex < $targetIndex) {
+                            $rowData[] = '';
+                            $colIndex++;
+                        }
+                    }
+
                     $dataNodes = $xpath->query('./*[local-name()="Data"]', $cellNode);
                     $rowData[] = trim((string) ($dataNodes->item(0)?->textContent ?? ''));
+                    $colIndex++;
                 }
 
                 if (!empty(array_filter($rowData))) {
@@ -327,13 +340,10 @@ class AdminProdukImportController extends Controller
                 $sku      = trim((string) ($data['SKU'] ?? ''));
                 $brand    = trim((string) $this->getValue($data, ['BRAND', 'PABRIK', 'MERK']));
                 $terjual  = isset($data['TERJUAL']) ? (int) preg_replace('/[^0-9]/', '', (string) $data['TERJUAL']) : 0;
-                // Sediaan
+                // Simpan sediaan apa adanya agar sesuai file import.
                 $sediaan = null;
                 if (isset($data['SEDIAAN']) && !empty($data['SEDIAAN'])) {
-                    $sediaan = strtolower(trim($data['SEDIAAN']));
-                    if (!in_array($sediaan, ['fls', 'box'])) {
-                        $sediaan = null;
-                    }
+                    $sediaan = strtolower(trim((string) $data['SEDIAAN']));
                 }
 
                 // Match key: gunakan SKU atau nama produk karena outlet sudah ditentukan oleh akun

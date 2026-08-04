@@ -219,24 +219,6 @@
             </div>
         </div>
 
-        <div class="gallery-section">
-            <h2>Warehouse Kami</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="{{ asset('warehouse1.jpg') }}" alt="Warehouse 1">
-                    <div class="gallery-caption">Warehouse 1</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('warehouse2.jpg') }}" alt="Warehouse 2">
-                    <div class="gallery-caption">Warehouse 2</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('warehouse3.jpg') }}" alt="Warehouse 3">
-                    <div class="gallery-caption">Warehouse 3</div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </section>
 @endsection

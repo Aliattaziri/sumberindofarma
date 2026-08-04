@@ -138,6 +138,10 @@
 
 @section('content')
 
+@php
+    $showOutletColumn = auth()->user()?->isSuperAdmin() ?? false;
+@endphp
+
 <div class="page-header">
     <div class="page-header-left">
         <h2>🛒 Daftar Produk</h2>
@@ -252,7 +256,9 @@
                     <th>Nama Produk</th>
                     <th>Sediaan</th>
                     <th>Kategori Produk</th>
-                    <th>Outlet / Apotek</th>
+                    @if($showOutletColumn)
+                        <th>Outlet / Apotek</th>
+                    @endif
                     <th>Pabrik / Merek</th>
                     <th style="width:220px;">Harga</th>
                     <th style="width:110px;">Stok</th>
@@ -298,9 +304,11 @@
                             <span>{{ $medicine->kategori_produk ?? 'OBAT' }}</span>
                         </span>
                     </td>
-                    <td>
-                        <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->kategori }}</span>
-                    </td>
+                    @if($showOutletColumn)
+                        <td>
+                            <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->kategori }}</span>
+                        </td>
+                    @endif
                     <td>
                         <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->brand ?: '-' }}</span>
                     </td>
