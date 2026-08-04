@@ -469,8 +469,19 @@
 .pbf-photo-template-featured h4 {
     width: 100%;
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 1.16rem;
     margin-bottom: 0;
+}
+.pbf-photo-template-featured img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 12px;
+    border: 1px solid #fecaca;
+    background: linear-gradient(180deg, #fffafa 0%, #fff1f1 100%);
+    padding: 0.2rem;
+    margin-bottom: 0.7rem;
 }
 .pbf-photo-empty {
     width: 100%;
@@ -600,6 +611,7 @@
         grid-row: auto;
         min-height: 320px;
     }
+    .pbf-photo-template-featured img { height: 260px; }
     .pbf-photo-empty { height: 220px; }
 }
 @media (max-width: 480px) {
@@ -622,6 +634,7 @@
         grid-column: auto;
         min-height: 255px;
     }
+    .pbf-photo-template-featured img { height: 210px; }
     .pbf-photo-empty { height: 170px; }
     .form-row { grid-template-columns: 1fr; }
     .cart-head { padding: 0.95rem 1rem; }
@@ -1579,8 +1592,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Area penyimpanan produk dengan tata kelola rapi.</p>
                 </div>
                 <div class="pbf-photo-template pbf-photo-template-featured">
-                    <div class="pbf-photo-empty" aria-hidden="true"></div>
-                    <h4>Tim Profesional - Customer Service</h4>
+                    <img src="{{ asset('STRUKTUR PT SFT.png') }}" alt="Struktur PT Sumberindo Farma Tama">
+                    <h4>Tim Profesional</h4>
                 </div>
                 <div class="pbf-photo-template">
                     <img src="{{ asset('foto gudang distribusi SFT (3).jpeg') }}" alt="Foto Gudang Distribusi Area Loading">
