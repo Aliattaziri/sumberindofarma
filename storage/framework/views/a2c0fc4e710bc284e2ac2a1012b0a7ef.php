@@ -576,7 +576,6 @@
     .btn-order-wa { padding: 0.8rem; font-size: 0.92rem; border-radius: 10px; }
     .btn-clear-cart { margin-top: 0.35rem; font-size: 0.75rem; }
     .banner-promo-top {
-        justify-items: center;
         justify-content: center;
     }
     .banner-promo-item {
@@ -584,15 +583,15 @@
         min-height: 0;
         width: 100%;
         max-width: 100%;
-        margin: 0 auto;
+        margin: 0;
     }
     .banner-promo-copy {
         min-height: 0;
-        padding: 1rem 1rem 1rem;
+        padding: 0;
         justify-content: flex-end;
         align-items: center;
         text-align: center;
-        background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%);
+        background: linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(0,0,0,0.26) 82%, rgba(0,0,0,0.48) 100%);
     }
     .banner-promo-label {
         font-size: 0.72rem;
@@ -612,12 +611,19 @@
 }
 
 .banner-promo-top {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1rem;
-    max-width: 1200px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 0 1rem 0;
+    padding: 0;
+}
+
+.banner-promo-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
+    will-change: transform;
 }
 
 .banner-promo-top, .banner-promo-item {
@@ -626,6 +632,7 @@
 }
 
 .banner-promo-item {
+    flex: 0 0 100%;
     position: relative;
     overflow: hidden;
     border-radius: 28px;
@@ -645,7 +652,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: brightness(0.6);
+    filter: brightness(0.74);
     transition: transform 0.45s ease;
     object-fit: cover;
 }
@@ -677,14 +684,16 @@
 }
 
 .banner-promo-copy {
-    position: relative;
+    position: absolute;
+    inset: 0;
     z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    min-height: 320px;
-    padding: 1.75rem;
-    background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.72) 100%);
+    min-height: 0;
+    padding: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.24) 78%, rgba(0,0,0,0.52) 100%);
 }
 
 .banner-promo-label {
@@ -724,6 +733,35 @@
     background: rgba(255,255,255,0.95);
     color: #B91C1C;
     font-weight: 700;
+}
+
+.banner-slider-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+}
+
+.banner-slider-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(127, 29, 29, 0.28);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.banner-slider-dot.active {
+    background: #B91C1C;
+    transform: scale(1.15);
 }
 
     .outlet-modal-overlay {
@@ -822,24 +860,90 @@
 
 <?php if($banners->count()): ?>
     <div class="banner-promo-top">
-        <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <a href="<?php echo e($banner->url_tujuan ?: 'javascript:void(0)'); ?>" class="banner-promo-item" target="_blank">
-                <?php if($banner->is_video): ?>
-                    <video class="banner-promo-bg" autoplay muted loop playsinline>
-                        <source src="<?php echo e($banner->image_url); ?>">
-                    </video>
-                    <button type="button" class="banner-volume-toggle" aria-label="Toggle volume">🔈</button>
-                <?php else: ?>
-                    <div class="banner-promo-bg" style="background-image: url('<?php echo e($banner->image_url); ?>');"></div>
-                <?php endif; ?>
-                <div class="banner-promo-copy"></div>
-            </a>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <div class="banner-promo-track" id="bannerPromoTrack">
+            <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <a href="<?php echo e($banner->url_tujuan ?: 'javascript:void(0)'); ?>" class="banner-promo-item" target="_blank">
+                    <?php if($banner->is_video): ?>
+                        <video class="banner-promo-bg" autoplay muted loop playsinline>
+                            <source src="<?php echo e($banner->image_url); ?>">
+                        </video>
+                        <button type="button" class="banner-volume-toggle" aria-label="Toggle volume">🔈</button>
+                    <?php else: ?>
+                        <div class="banner-promo-bg" style="background-image: url('<?php echo e($banner->image_url); ?>');"></div>
+                    <?php endif; ?>
+                    <div class="banner-promo-copy"></div>
+                </a>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+        <?php if($banners->count() > 1): ?>
+            <div class="banner-slider-dots" id="bannerSliderDots" aria-label="Navigasi banner">
+                <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <button type="button" class="banner-slider-dot <?php echo e($loop->first ? 'active' : ''); ?>" data-slide-index="<?php echo e($loop->index); ?>" aria-label="Banner <?php echo e($loop->iteration); ?>"></button>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        <?php endif; ?>
     </div>
 <?php endif; ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.banner-promo-top');
+    const track = document.getElementById('bannerPromoTrack');
+    const slides = track ? Array.from(track.querySelectorAll('.banner-promo-item')) : [];
+    const dots = Array.from(document.querySelectorAll('.banner-slider-dot'));
+
+    if (slider && track && slides.length > 1) {
+        let currentIndex = 0;
+        let autoTimer = null;
+        const intervalMs = 4200;
+
+        const setActiveDot = function(index) {
+            dots.forEach(function(dot, dotIndex) {
+                dot.classList.toggle('active', dotIndex === index);
+            });
+        };
+
+        const goToSlide = function(index) {
+            currentIndex = (index + slides.length) % slides.length;
+            track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+            setActiveDot(currentIndex);
+        };
+
+        const startAutoSlide = function() {
+            if (autoTimer) clearInterval(autoTimer);
+            autoTimer = setInterval(function() {
+                goToSlide(currentIndex + 1);
+            }, intervalMs);
+        };
+
+        dots.forEach(function(dot) {
+            dot.addEventListener('click', function(event) {
+                event.preventDefault();
+                goToSlide(Number(dot.dataset.slideIndex || 0));
+                startAutoSlide();
+            });
+        });
+
+        slider.addEventListener('mouseenter', function() {
+            if (autoTimer) clearInterval(autoTimer);
+        });
+
+        slider.addEventListener('mouseleave', function() {
+            startAutoSlide();
+        });
+
+        slider.addEventListener('touchstart', function() {
+            if (autoTimer) clearInterval(autoTimer);
+        }, { passive: true });
+
+        slider.addEventListener('touchend', function() {
+            startAutoSlide();
+        }, { passive: true });
+
+        goToSlide(0);
+        startAutoSlide();
+    }
+
     document.querySelectorAll('.banner-promo-item').forEach(function(item) {
         const video = item.querySelector('video');
         const button = item.querySelector('.banner-volume-toggle');
