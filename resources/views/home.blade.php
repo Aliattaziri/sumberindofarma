@@ -456,6 +456,11 @@
     margin-bottom: 0.62rem;
     background: #fff5f5;
 }
+.pbf-photo-template-adelia img {
+    object-fit: cover;
+    object-position: center 78%;
+    background: #fff5f5;
+}
 .pbf-photo-template-featured {
     grid-column: 2 / span 2;
     grid-row: span 2;
@@ -1624,6 +1629,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="{{ asset('MOBIL LUXIO HITAM.jpg') }}" alt="Foto Armada Pengiriman Mobil Luxio Hitam">
                     <h4>Armada Pengiriman - Luxio</h4>
                     <p>Kendaraan distribusi pendukung pengiriman harian.</p>
+                </div>
+                <div class="pbf-photo-template pbf-photo-template-adelia">
+                    <img src="{{ asset('MOBIL EKSPEDISI ADELIA .png') }}" alt="Foto Armada Pengiriman Mobil Ekspedisi Adelia">
+                    <h4>Armada Pengiriman - Ekspedisi Adelia</h4>
+                    <p>Armada ekspedisi untuk mendukung distribusi produk ke pelanggan.</p>
                 </div>
                 <div class="pbf-photo-template">
                     <img src="{{ asset('MOBIL TOSA.jpg') }}" alt="Foto Armada Pengiriman Mobil Tosa">
