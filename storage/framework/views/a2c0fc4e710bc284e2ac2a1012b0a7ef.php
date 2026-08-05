@@ -1614,6 +1614,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Armada box untuk distribusi produk farmasi.</p>
                 </div>
                 <div class="pbf-photo-template">
+                    <img src="<?php echo e(asset('AKTIVITAS KARYAWAN SFT.jpg')); ?>" alt="Foto Aktivitas Karyawan Sumberindo Farma Tama">
+                    <h4>Aktivitas Karyawan</h4>
+                    <p>Dokumentasi kegiatan karyawan di lingkungan kerja SFT.</p>
+                </div>
+                <div class="pbf-photo-template">
                     <img src="<?php echo e(asset('MOBIL LUXIO HITAM.jpg')); ?>" alt="Foto Armada Pengiriman Mobil Luxio Hitam">
                     <h4>Armada Pengiriman - Luxio</h4>
                     <p>Kendaraan distribusi pendukung pengiriman harian.</p>

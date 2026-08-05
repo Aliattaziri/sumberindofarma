@@ -7,17 +7,10 @@
             $faviconV = @filemtime(public_path('favicon.ico')) ?: '20260804-01';
         ?>
         <meta name="theme-color" content="#991B1B">
-        <meta name="msapplication-TileColor" content="#991B1B">
-        <meta name="msapplication-TileImage" content="/favicon.ico?v=<?php echo e($faviconV); ?>">
-        <meta name="application-name" content="Sumberindo Farma Tama">
-        <meta name="apple-mobile-web-app-title" content="Sumberindo Farma Tama">
 
         <title><?php echo e(config('app.name', 'Laravel')); ?></title>
         <link rel="icon" type="image/x-icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
         <link rel="shortcut icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
-        <link rel="apple-touch-icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
-        <link rel="apple-touch-icon-precomposed" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
-        <link rel="manifest" href="/site.webmanifest?v=<?php echo e($faviconV); ?>">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

@@ -8,18 +8,12 @@
     <?php
         $faviconV = @filemtime(public_path('favicon.ico')) ?: '20260803-13';
     ?>
-    <meta name="msapplication-TileImage" content="/favicon.ico?v=<?php echo e($faviconV); ?>">
-    <meta name="application-name" content="Sumberindo Farma Tama">
-    <meta name="apple-mobile-web-app-title" content="Sumberindo Farma Tama">
     <meta property="og:image" content="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>?v=20260803-8">
     <meta property="og:image:secure_url" content="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>?v=20260803-8">
     <meta name="twitter:image" content="<?php echo e(asset('logo pt sumber indo farma tama.png')); ?>?v=20260803-8">
     <title><?php echo $__env->yieldContent('title', 'Sumberindo Farma Tama - Apotik Online'); ?></title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
     <link rel="shortcut icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
-    <link rel="apple-touch-icon" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
-    <link rel="apple-touch-icon-precomposed" href="/favicon.ico?v=<?php echo e($faviconV); ?>">
-    <link rel="manifest" href="/site.webmanifest?v=<?php echo e($faviconV); ?>">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>

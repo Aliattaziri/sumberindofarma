@@ -7,16 +7,9 @@
         $faviconV = @filemtime(public_path('favicon.ico')) ?: '20260804-01';
     @endphp
     <meta name="theme-color" content="#991B1B">
-    <meta name="msapplication-TileColor" content="#991B1B">
-    <meta name="msapplication-TileImage" content="/favicon.ico?v={{ $faviconV }}">
-    <meta name="application-name" content="Sumberindo Farma Tama">
-    <meta name="apple-mobile-web-app-title" content="Sumberindo Farma Tama">
     <title>@yield('title', 'Sumberindo Farma Tama - Apotik Online Terpercaya')</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v={{ $faviconV }}">
     <link rel="shortcut icon" href="/favicon.ico?v={{ $faviconV }}">
-    <link rel="apple-touch-icon" href="/favicon.ico?v={{ $faviconV }}">
-    <link rel="apple-touch-icon-precomposed" href="/favicon.ico?v={{ $faviconV }}">
-    <link rel="manifest" href="/site.webmanifest?v={{ $faviconV }}">
     
     <!-- FIX CURSOR - MUST BE FIRST TO OVERRIDE EVERYTHING -->
     <style>
