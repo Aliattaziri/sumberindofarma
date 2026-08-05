@@ -1,8 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Tambah Banner - Admin Sumberindo Farma Tama')
-@section('page-title', '🖼️ Tambah Banner Slideshow')
+<?php $__env->startSection('title', 'Tambah Banner - Admin Sumberindo Farma Tama'); ?>
+<?php $__env->startSection('page-title', '🖼️ Tambah Banner Slideshow'); ?>
 
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
 .form-card { background:#fff; border-radius:1rem; padding:1.75rem; border:1px solid #e5e7eb; box-shadow:0 1px 4px rgba(0,0,0,0.06); max-width:680px; }
 .form-group { margin-bottom:1.25rem; }
@@ -30,39 +29,39 @@
 .btn-back:hover { background:#f9fafb; color:#374151; }
 @media(max-width:600px) { .form-row { grid-template-columns:1fr; } }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div style="margin-bottom:1.25rem;">
-    <a href="{{ route('admin.banners.index') }}" style="color:#6b7280;text-decoration:none;font-size:0.85rem;">
+    <a href="<?php echo e(route('admin.banners.index')); ?>" style="color:#6b7280;text-decoration:none;font-size:0.85rem;">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Banner
     </a>
 </div>
 
 <div class="form-card">
-    @if(isset($bannerTableReady) && !$bannerTableReady)
+    <?php if(isset($bannerTableReady) && !$bannerTableReady): ?>
     <div style="background:#fee2e2;color:#B91C1C;padding:0.85rem 1.1rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.85rem;">
         <strong>Fitur banner belum aktif.</strong>
         Tabel <code>banners</code> belum tersedia di database, jadi form ini belum bisa menyimpan data.
         Jalankan migrasi terlebih dahulu agar banner bisa ditambahkan.
     </div>
-    @endif
+    <?php endif; ?>
 
-    @if($errors->any())
+    <?php if($errors->any()): ?>
     <div style="background:#fee2e2;color:#7f1d1d;padding:0.85rem 1.1rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.85rem;">
         <strong>Ada kesalahan:</strong>
         <ul style="margin:0.4rem 0 0 1rem;">
-            @foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><li><?php echo e($e); ?></li><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
-    @endif
+    <?php endif; ?>
 
-    <form action="{{ route('admin.banners.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    <form action="<?php echo e(route('admin.banners.store')); ?>" method="POST" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?>
 
         <div class="form-group">
             <label class="form-label">Banner Media <span class="req">*</span></label>
-            <input type="file" name="gambar" id="gambarInput" accept="image/*,video/mp4,video/webm,video/quicktime" class="form-control" onchange="previewMedia(this)" required @disabled(isset($bannerTableReady) && !$bannerTableReady)>
+            <input type="file" name="gambar" id="gambarInput" accept="image/*,video/mp4,video/webm,video/quicktime" class="form-control" onchange="previewMedia(this)" required <?php if(isset($bannerTableReady) && !$bannerTableReady): echo 'disabled'; endif; ?>>
             <div class="img-placeholder" onclick="document.getElementById('gambarInput').click()">
                 <i class="fa-solid fa-photo-video" style="font-size:1.5rem;"></i>
                 <span>Klik untuk pilih gambar atau video</span>
@@ -75,7 +74,7 @@
         <div class="form-row">
             <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">URL Tujuan (opsional)</label>
-                <input type="text" name="url_tujuan" class="form-control" placeholder="/products atau https://..." value="{{ old('url_tujuan') }}" @disabled(isset($bannerTableReady) && !$bannerTableReady)>
+                <input type="text" name="url_tujuan" class="form-control" placeholder="/products atau https://..." value="<?php echo e(old('url_tujuan')); ?>" <?php if(isset($bannerTableReady) && !$bannerTableReady): echo 'disabled'; endif; ?>>
                 <p class="form-hint">Link ketika banner diklik</p>
             </div>
         </div>
@@ -83,14 +82,14 @@
         <div class="form-row" style="margin-top:1.25rem;">
             <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Urutan Tampil</label>
-                <input type="number" name="urutan" class="form-control" placeholder="0" min="0" value="{{ old('urutan', 0) }}" @disabled(isset($bannerTableReady) && !$bannerTableReady)>
+                <input type="number" name="urutan" class="form-control" placeholder="0" min="0" value="<?php echo e(old('urutan', 0)); ?>" <?php if(isset($bannerTableReady) && !$bannerTableReady): echo 'disabled'; endif; ?>>
                 <p class="form-hint">Angka kecil tampil lebih dulu</p>
             </div>
             <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Status</label>
                 <div class="toggle-wrap">
                     <label class="toggle-switch">
-                        <input type="checkbox" name="aktif" value="1" checked @disabled(isset($bannerTableReady) && !$bannerTableReady)>
+                        <input type="checkbox" name="aktif" value="1" checked <?php if(isset($bannerTableReady) && !$bannerTableReady): echo 'disabled'; endif; ?>>
                         <span class="toggle-slider"></span>
                     </label>
                     <label>Aktif (tampil di website)</label>
@@ -99,14 +98,14 @@
         </div>
 
         <div class="btn-actions">
-            <button type="submit" class="btn-save" @disabled(isset($bannerTableReady) && !$bannerTableReady)><i class="fa-solid fa-floppy-disk"></i> Simpan Banner</button>
-            <a href="{{ route('admin.banners.index') }}" class="btn-back"><i class="fa-solid fa-xmark"></i> Batal</a>
+            <button type="submit" class="btn-save" <?php if(isset($bannerTableReady) && !$bannerTableReady): echo 'disabled'; endif; ?>><i class="fa-solid fa-floppy-disk"></i> Simpan Banner</button>
+            <a href="<?php echo e(route('admin.banners.index')); ?>" class="btn-back"><i class="fa-solid fa-xmark"></i> Batal</a>
         </div>
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
 function previewMedia(input) {
     const imgPreview = document.getElementById('imgPreview');
@@ -133,8 +132,10 @@ function previewMedia(input) {
     }
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/admin/banners/create.blade.php ENDPATH**/ ?>

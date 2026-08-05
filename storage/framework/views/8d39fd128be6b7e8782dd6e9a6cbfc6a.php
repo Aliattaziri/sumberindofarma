@@ -1,9 +1,7 @@
-@extends('layouts.admin')
+<?php $__env->startSection('title', 'Produk Kami - Admin Sumberindo Farma Tama'); ?>
+<?php $__env->startSection('page-title', '🛒 Produk Kami'); ?>
 
-@section('title', 'Produk Kami - Admin Sumberindo Farma Tama')
-@section('page-title', '🛒 Produk Kami')
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
     .page-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap; }
     .page-header-left h2 { font-size:1.1rem; font-weight:700; color:#1f2937; margin:0 0 0.25rem; }
@@ -134,38 +132,38 @@
         .search-field { min-width:100%; }
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-@php
+<?php
     $showOutletColumn = auth()->user()?->isSuperAdmin() ?? false;
-@endphp
+?>
 
 <div class="page-header">
     <div class="page-header-left">
         <h2>🛒 Daftar Produk</h2>
-        <p>Total <strong>{{ $total }}</strong> produk terdaftar</p>
+        <p>Total <strong><?php echo e($total); ?></strong> produk terdaftar</p>
     </div>
     <div class="page-header-actions">
-        <a href="{{ route('admin.produk.import') }}" class="btn-icon btn-icon-outline">
+        <a href="<?php echo e(route('admin.produk.import')); ?>" class="btn-icon btn-icon-outline">
             <i class="fa-solid fa-file-import"></i> Import Excel
         </a>
-        <a href="{{ route('admin.produk.create') }}" class="btn-icon btn-icon-primary">
+        <a href="<?php echo e(route('admin.produk.create')); ?>" class="btn-icon btn-icon-primary">
             <i class="fa-solid fa-plus"></i> Tambah Produk
         </a>
     </div>
 </div>
 
-{{-- Kategori Tabs --}}
+
 <div class="kat-tabs">
-    <a href="{{ route('admin.produk.index', array_merge(request()->except('kategori_produk'), [])) }}"
-       class="kat-tab {{ !$kategori_produk ? 'active' : '' }}">
+    <a href="<?php echo e(route('admin.produk.index', array_merge(request()->except('kategori_produk'), []))); ?>"
+       class="kat-tab <?php echo e(!$kategori_produk ? 'active' : ''); ?>">
         🛒 Semua
-        <span class="kat-count">{{ $totalAll ?? $total }}</span>
+        <span class="kat-count"><?php echo e($totalAll ?? $total); ?></span>
     </a>
-    @foreach($kategoriOptions as $kat)
-        @php
+    <?php $__currentLoopData = $kategoriOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
             $count = $kategoriCounts[$kat] ?? 0;
             $icon  = match($kat) {
                 'OBAT'                => '💊',
@@ -173,27 +171,28 @@
                 'ALAT KESEHATAN'      => '🩺',
                 default               => '📦',
             };
-        @endphp
-        <a href="{{ route('admin.produk.index', array_merge(request()->except('kategori_produk'), ['kategori_produk' => $kat])) }}"
-           class="kat-tab {{ $kategori_produk === $kat ? 'active' : '' }}">
-            {{ $icon }} {{ $kat }}
-            <span class="kat-count">{{ $count }}</span>
+        ?>
+        <a href="<?php echo e(route('admin.produk.index', array_merge(request()->except('kategori_produk'), ['kategori_produk' => $kat]))); ?>"
+           class="kat-tab <?php echo e($kategori_produk === $kat ? 'active' : ''); ?>">
+            <?php echo e($icon); ?> <?php echo e($kat); ?>
+
+            <span class="kat-count"><?php echo e($count); ?></span>
         </a>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
 
-{{-- Search --}}
+
 <div class="search-card">
-    <form method="GET" action="{{ route('admin.produk.index') }}">
-        @if($kategori_produk)
-            <input type="hidden" name="kategori_produk" value="{{ $kategori_produk }}">
-        @endif
+    <form method="GET" action="<?php echo e(route('admin.produk.index')); ?>">
+        <?php if($kategori_produk): ?>
+            <input type="hidden" name="kategori_produk" value="<?php echo e($kategori_produk); ?>">
+        <?php endif; ?>
         <div class="search-row">
             <div class="search-field">
                 <label>Cari Produk</label>
                 <div class="search-input-wrap">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" name="search" value="{{ $search }}" placeholder="Nama produk, pabrik, deskripsi...">
+                    <input type="text" name="search" value="<?php echo e($search); ?>" placeholder="Nama produk, pabrik, deskripsi...">
                 </div>
             </div>
             <div class="search-field" style="max-width:220px;">
@@ -201,41 +200,41 @@
                 <div class="search-input-wrap">
                     <select name="kategori_produk">
                         <option value="">Semua Kategori</option>
-                        @foreach($kategoriOptions as $kat)
-                            <option value="{{ $kat }}" {{ $kategori_produk === $kat ? 'selected' : '' }}>{{ $kat }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $kategoriOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($kat); ?>" <?php echo e($kategori_produk === $kat ? 'selected' : ''); ?>><?php echo e($kat); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
             </div>
             <div class="search-field" style="max-width:220px;">
                 <label>Pabrik / Merek</label>
                 <div class="search-input-wrap">
-                    <input type="text" name="brand" value="{{ $brand ?? '' }}" placeholder="Cari pabrik atau merek...">
+                    <input type="text" name="brand" value="<?php echo e($brand ?? ''); ?>" placeholder="Cari pabrik atau merek...">
                 </div>
             </div>
             <div class="search-actions">
                 <button type="submit" class="btn-search">
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
-                @if($search || $brand || $kategori_produk)
-                    <a href="{{ route('admin.produk.index') }}" class="btn-reset">
+                <?php if($search || $brand || $kategori_produk): ?>
+                    <a href="<?php echo e(route('admin.produk.index')); ?>" class="btn-reset">
                         <i class="fa-solid fa-xmark"></i> Reset
                     </a>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
     </form>
 </div>
 
-@if($medicines->count() > 0)
+<?php if($medicines->count() > 0): ?>
     <div class="data-table-wrap">
-        <form id="bulkDeleteForm" method="POST" action="{{ route('admin.produk.destroyMany') }}" novalidate>
-            @csrf
-            @method('DELETE')
-            <input type="hidden" name="search" value="{{ $search }}">
-            <input type="hidden" name="kategori_produk" value="{{ $kategori_produk }}">
-            <input type="hidden" name="brand" value="{{ $brand ?? '' }}">
-            <input type="hidden" name="page" value="{{ request('page', 1) }}">
+        <form id="bulkDeleteForm" method="POST" action="<?php echo e(route('admin.produk.destroyMany')); ?>" novalidate>
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('DELETE'); ?>
+            <input type="hidden" name="search" value="<?php echo e($search); ?>">
+            <input type="hidden" name="kategori_produk" value="<?php echo e($kategori_produk); ?>">
+            <input type="hidden" name="brand" value="<?php echo e($brand ?? ''); ?>">
+            <input type="hidden" name="page" value="<?php echo e(request('page', 1)); ?>">
 
             <div class="bulk-actions">
                 <label class="bulk-actions-left">
@@ -256,9 +255,9 @@
                     <th>Nama Produk</th>
                     <th>Sediaan</th>
                     <th>Kategori Produk</th>
-                    @if($showOutletColumn)
+                    <?php if($showOutletColumn): ?>
                         <th>Outlet / Apotek</th>
-                    @endif
+                    <?php endif; ?>
                     <th>Pabrik / Merek</th>
                     <th style="width:220px;">Harga</th>
                     <th style="width:110px;">Stok</th>
@@ -267,50 +266,52 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($medicines as $medicine)
+                <?php $__currentLoopData = $medicines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $medicine): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td style="text-align:center;">
-                        <input type="checkbox" class="product-checkbox" name="produk_ids[]" value="{{ $medicine->id }}">
+                        <input type="checkbox" class="product-checkbox" name="produk_ids[]" value="<?php echo e($medicine->id); ?>">
                     </td>
                     <td style="vertical-align:top;">
-                        @if($medicine->gambar)
-                            <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}" class="med-img">
-                        @else
+                        <?php if($medicine->gambar): ?>
+                            <img src="<?php echo e(url('storage/' . $medicine->gambar)); ?>" alt="<?php echo e($medicine->nama_obat); ?>" class="med-img">
+                        <?php else: ?>
                             <div class="med-img-placeholder">
-                                {{ match($medicine->kategori_produk) { 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '💊' } }}
+                                <?php echo e(match($medicine->kategori_produk) { 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '💊' }); ?>
+
                             </div>
-                        @endif
+                        <?php endif; ?>
                     </td>
-                    <td><div class="med-name">{{ $medicine->nama_obat }}</div></td>
+                    <td><div class="med-name"><?php echo e($medicine->nama_obat); ?></div></td>
                     <td>
-                        @if($medicine->sediaan)
+                        <?php if($medicine->sediaan): ?>
                             <span style="display:inline-block;padding:0.25rem 0.5rem;background:#fee2e2;color:#0369a1;border-radius:4px;font-size:0.75rem;font-weight:600;text-transform:uppercase;">
-                                {{ $medicine->sediaan }}
+                                <?php echo e($medicine->sediaan); ?>
+
                             </span>
-                        @else
+                        <?php else: ?>
                             <span style="font-size:0.75rem;color:#9ca3af;">-</span>
-                        @endif
+                        <?php endif; ?>
                     </td>
                     <td>
-                        @php
+                        <?php
                             $prodCategoryIcon = match($medicine->kategori_produk) {
                                 'SKINCARE & KOSMETIK' => '✨',
                                 'ALAT KESEHATAN'      => '🩺',
                                 default               => '💊',
                             };
-                        @endphp
+                        ?>
                         <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.82rem;color:#6b7280;">
-                            <span>{{ $prodCategoryIcon }}</span>
-                            <span>{{ $medicine->kategori_produk ?? 'OBAT' }}</span>
+                            <span><?php echo e($prodCategoryIcon); ?></span>
+                            <span><?php echo e($medicine->kategori_produk ?? 'OBAT'); ?></span>
                         </span>
                     </td>
-                    @if($showOutletColumn)
+                    <?php if($showOutletColumn): ?>
                         <td>
-                            <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->kategori }}</span>
+                            <span style="font-size:0.82rem;color:#6b7280;"><?php echo e($medicine->kategori); ?></span>
                         </td>
-                    @endif
+                    <?php endif; ?>
                     <td>
-                        <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->brand ?: '-' }}</span>
+                        <span style="font-size:0.82rem;color:#6b7280;"><?php echo e($medicine->brand ?: '-'); ?></span>
                     </td>
                     <td>
                         <div style="display:flex;flex-direction:column;gap:0.25rem;">
@@ -318,11 +319,11 @@
                                    class="inline-input inline-price"
                                    min="0"
                                    step="100"
-                                   value="{{ $medicine->harga }}"
+                                   value="<?php echo e($medicine->harga); ?>"
                                    placeholder="Rp"
                                    title="Ubah harga produk langsung"
-                                   data-update-url="{{ route('admin.produk.update-price', $medicine->id) }}"
-                                   aria-label="Harga {{ $medicine->nama_obat }}">
+                                   data-update-url="<?php echo e(route('admin.produk.update-price', $medicine->id)); ?>"
+                                   aria-label="Harga <?php echo e($medicine->nama_obat); ?>">
                             <span style="font-size:0.75rem;color:#6b7280;">Tekan Enter untuk simpan</span>
                         </div>
                     </td>
@@ -332,81 +333,81 @@
                                    class="inline-input inline-stock"
                                    min="0"
                                    step="1"
-                                   value="{{ $medicine->stok }}"
+                                   value="<?php echo e($medicine->stok); ?>"
                                    placeholder="Stok"
                                    title="Ubah stok produk langsung"
-                                   data-update-url="{{ route('admin.produk.update-stock', $medicine->id) }}"
-                                   aria-label="Stok {{ $medicine->nama_obat }}">
+                                   data-update-url="<?php echo e(route('admin.produk.update-stock', $medicine->id)); ?>"
+                                   aria-label="Stok <?php echo e($medicine->nama_obat); ?>">
                             <span style="font-size:0.75rem;color:#6b7280;">Diperbarui otomatis saat keluar</span>
                         </div>
                     </td>
-                    <td style="font-size:0.82rem;color:#9ca3af;">{{ $medicine->created_at->format('d M Y') }}</td>
+                    <td style="font-size:0.82rem;color:#9ca3af;"><?php echo e($medicine->created_at->format('d M Y')); ?></td>
                     <td>
                         <div class="action-wrap">
-                            <a href="{{ route('admin.produk.edit', ['produk' => $medicine->id, 'search' => $search, 'kategori_produk' => $kategori_produk, 'brand' => $brand ?? '', 'page' => request('page')]) }}" class="btn-edit">
+                            <a href="<?php echo e(route('admin.produk.edit', ['produk' => $medicine->id, 'search' => $search, 'kategori_produk' => $kategori_produk, 'brand' => $brand ?? '', 'page' => request('page')])); ?>" class="btn-edit">
                                 <i class="fa-solid fa-pen"></i> Edit
                             </a>
                             <button type="button" class="btn-del"
-                                onclick="confirmDelete({{ $medicine->id }}, '{{ addslashes($medicine->nama_obat) }}')">
+                                onclick="confirmDelete(<?php echo e($medicine->id); ?>, '<?php echo e(addslashes($medicine->nama_obat)); ?>')">
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
             </table>
         </form>
 
         <div class="pagination-wrap">
             <div class="pagination-info">
-                Menampilkan {{ $medicines->firstItem() }}-{{ $medicines->lastItem() }} dari {{ $medicines->total() }} produk
+                Menampilkan <?php echo e($medicines->firstItem()); ?>-<?php echo e($medicines->lastItem()); ?> dari <?php echo e($medicines->total()); ?> produk
             </div>
             <div class="pagination-pages">
-                @if($medicines->onFirstPage())
+                <?php if($medicines->onFirstPage()): ?>
                     <span class="page-btn disabled">‹</span>
-                @else
-                    <a href="{{ $medicines->previousPageUrl() }}" class="page-btn">‹</a>
-                @endif
-                @foreach($medicines->getUrlRange(1, $medicines->lastPage()) as $page => $url)
-                    @if(abs($page - $medicines->currentPage()) <= 2 || $page == 1 || $page == $medicines->lastPage())
-                        @if($page == $medicines->currentPage())
-                            <span class="page-btn active">{{ $page }}</span>
-                        @else
-                            <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
-                        @endif
-                    @elseif(abs($page - $medicines->currentPage()) == 3)
+                <?php else: ?>
+                    <a href="<?php echo e($medicines->previousPageUrl()); ?>" class="page-btn">‹</a>
+                <?php endif; ?>
+                <?php $__currentLoopData = $medicines->getUrlRange(1, $medicines->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if(abs($page - $medicines->currentPage()) <= 2 || $page == 1 || $page == $medicines->lastPage()): ?>
+                        <?php if($page == $medicines->currentPage()): ?>
+                            <span class="page-btn active"><?php echo e($page); ?></span>
+                        <?php else: ?>
+                            <a href="<?php echo e($url); ?>" class="page-btn"><?php echo e($page); ?></a>
+                        <?php endif; ?>
+                    <?php elseif(abs($page - $medicines->currentPage()) == 3): ?>
                         <span class="page-btn disabled" style="border:none;background:none;">…</span>
-                    @endif
-                @endforeach
-                @if($medicines->hasMorePages())
-                    <a href="{{ $medicines->nextPageUrl() }}" class="page-btn">›</a>
-                @else
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php if($medicines->hasMorePages()): ?>
+                    <a href="<?php echo e($medicines->nextPageUrl()); ?>" class="page-btn">›</a>
+                <?php else: ?>
                     <span class="page-btn disabled">›</span>
-                @endif
+                <?php endif; ?>
             </div>
         </div>
     </div>
-@else
+<?php else: ?>
     <div class="empty-state">
         <div class="empty-icon">🛒</div>
         <h3>Belum ada produk</h3>
         <p>Mulai tambahkan produk atau import dari file Excel/CSV.</p>
         <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
-            <a href="{{ route('admin.produk.import') }}" class="btn-icon btn-icon-outline">
+            <a href="<?php echo e(route('admin.produk.import')); ?>" class="btn-icon btn-icon-outline">
                 <i class="fa-solid fa-file-import"></i> Import Excel
             </a>
-            <a href="{{ route('admin.produk.create') }}" class="btn-icon btn-icon-primary">
+            <a href="<?php echo e(route('admin.produk.create')); ?>" class="btn-icon btn-icon-primary">
                 <i class="fa-solid fa-plus"></i> Tambah Produk
             </a>
         </div>
     </div>
-@endif
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-{{-- Modal Konfirmasi Hapus --}}
+<?php $__env->startSection('scripts'); ?>
+
 <div class="modal-overlay" id="deleteModal">
     <div class="modal-box">
         <div class="modal-icon">🗑️</div>
@@ -421,21 +422,21 @@
     </div>
 </div>
 
-{{-- Hidden form untuk DELETE --}}
+
 <form id="deleteForm" method="POST" style="display:none;">
-    @csrf
-    @method('DELETE')
-    <input type="hidden" name="search" value="{{ $search }}">
-    <input type="hidden" name="kategori_produk" value="{{ $kategori_produk }}">
-    <input type="hidden" name="brand" value="{{ $brand ?? '' }}">
-    <input type="hidden" name="page" value="{{ request('page', 1) }}">
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('DELETE'); ?>
+    <input type="hidden" name="search" value="<?php echo e($search); ?>">
+    <input type="hidden" name="kategori_produk" value="<?php echo e($kategori_produk); ?>">
+    <input type="hidden" name="brand" value="<?php echo e($brand ?? ''); ?>">
+    <input type="hidden" name="page" value="<?php echo e(request('page', 1)); ?>">
 </form>
 
 <script>
 const deleteRoutes = {
-    @foreach($medicines as $medicine)
-    {{ $medicine->id }}: '{{ route('admin.produk.destroy', $medicine->id) }}',
-    @endforeach
+    <?php $__currentLoopData = $medicines; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $medicine): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php echo e($medicine->id); ?>: '<?php echo e(route('admin.produk.destroy', $medicine->id)); ?>',
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 };
 
 function confirmDelete(id, name) {
@@ -585,9 +586,11 @@ document.getElementById('deleteModal').addEventListener('click', function(e) {
     if (e.target === this) closeDeleteModal();
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
 
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/admin/produk/index.blade.php ENDPATH**/ ?>

@@ -16,7 +16,6 @@ use App\Http\Controllers\AdminPrescriptionProductImportController;
 use App\Http\Controllers\AdminProdukController;
 use App\Http\Controllers\AdminProdukImportController;
 use App\Http\Controllers\AdminBannerController;
-use App\Http\Controllers\AdminPromoProductController;
 use App\Http\Controllers\PurchaseHistoryController;
 
 // Favicon fallbacks for hosting setups that move public assets
@@ -127,7 +126,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('banners', AdminBannerController::class);
     Route::post('banners/{banner}/toggle', [AdminBannerController::class, 'toggleAktif'])->name('banners.toggle');
 
-    // Promo Produk management
-    Route::resource('promo-products', AdminPromoProductController::class);
-    Route::post('promo-products/{promoProduct}/toggle', [AdminPromoProductController::class, 'toggleAktif'])->name('promo-products.toggle');
 });

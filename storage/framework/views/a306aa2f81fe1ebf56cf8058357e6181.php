@@ -1,8 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Banner Slideshow - Admin Sumberindo Farma Tama')
-@section('page-title', '🖼️ Banner Slideshow')
+<?php $__env->startSection('title', 'Banner Slideshow - Admin Sumberindo Farma Tama'); ?>
+<?php $__env->startSection('page-title', '🖼️ Banner Slideshow'); ?>
 
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
 .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap; }
 .page-header h2 { font-size:1.1rem; font-weight:700; color:#1f2937; margin:0 0 0.2rem; }
@@ -45,71 +44,74 @@
 .btn-cancel { padding:0.6rem 1.5rem; background:#fff; color:#374151; border:1.5px solid #e5e7eb; border-radius:0.5rem; font-size:0.875rem; font-weight:600; cursor:pointer; }
 .btn-danger { padding:0.6rem 1.5rem; background:#ef4444; color:#fff; border:none; border-radius:0.5rem; font-size:0.875rem; font-weight:600; cursor:pointer; }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="page-header">
     <div>
         <h2>Kelola Banner Slideshow</h2>
         <p>Banner ditampilkan sebagai slideshow di halaman utama website</p>
     </div>
-    <a href="{{ route('admin.banners.create') }}" class="btn-add">
+    <a href="<?php echo e(route('admin.banners.create')); ?>" class="btn-add">
         <i class="fa-solid fa-plus"></i> Tambah Banner
     </a>
 </div>
 
-@if(session('success'))
+<?php if(session('success')): ?>
 <div style="background:#fee2e2;color:#065f46;padding:0.85rem 1.25rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.875rem;font-weight:600;">
-    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
-</div>
-@endif
+    <i class="fa-solid fa-circle-check"></i> <?php echo e(session('success')); ?>
 
-@if($banners->count())
+</div>
+<?php endif; ?>
+
+<?php if($banners->count()): ?>
 <div class="banner-grid">
-    @foreach($banners as $banner)
+    <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div class="banner-card">
-        <img src="{{ url('storage/'.$banner->gambar) }}" alt="{{ $banner->judul }}" class="banner-img">
+        <img src="<?php echo e(url('storage/'.$banner->gambar)); ?>" alt="<?php echo e($banner->judul); ?>" class="banner-img">
         <div class="banner-body">
-            <h3 class="banner-title">{{ $banner->judul }}</h3>
-            @if($banner->subjudul)<p class="banner-sub">{{ $banner->subjudul }}</p>@endif
+            <h3 class="banner-title"><?php echo e($banner->judul); ?></h3>
+            <?php if($banner->subjudul): ?><p class="banner-sub"><?php echo e($banner->subjudul); ?></p><?php endif; ?>
             <div class="banner-meta">
-                <span class="{{ $banner->aktif ? 'badge-aktif' : 'badge-nonaktif' }}">
-                    {{ $banner->aktif ? '● Aktif' : '○ Nonaktif' }}
+                <span class="<?php echo e($banner->aktif ? 'badge-aktif' : 'badge-nonaktif'); ?>">
+                    <?php echo e($banner->aktif ? '● Aktif' : '○ Nonaktif'); ?>
+
                 </span>
-                <span class="badge-urutan">Urutan: {{ $banner->urutan }}</span>
-                @if($banner->url_tujuan)
+                <span class="badge-urutan">Urutan: <?php echo e($banner->urutan); ?></span>
+                <?php if($banner->url_tujuan): ?>
                 <span style="font-size:0.72rem;color:#6b7280;"><i class="fa-solid fa-link"></i> Ada link</span>
-                @endif
+                <?php endif; ?>
             </div>
             <div class="banner-actions">
-                <a href="{{ route('admin.banners.edit', $banner) }}" class="btn-edit">
+                <a href="<?php echo e(route('admin.banners.edit', $banner)); ?>" class="btn-edit">
                     <i class="fa-solid fa-pen"></i> Edit
                 </a>
-                <button class="btn-toggle {{ $banner->aktif ? 'btn-toggle-on' : 'btn-toggle-off' }}"
-                    onclick="toggleBanner({{ $banner->id }}, this)">
-                    <i class="fa-solid {{ $banner->aktif ? 'fa-eye-slash' : 'fa-eye' }}"></i>
-                    {{ $banner->aktif ? 'Nonaktifkan' : 'Aktifkan' }}
+                <button class="btn-toggle <?php echo e($banner->aktif ? 'btn-toggle-on' : 'btn-toggle-off'); ?>"
+                    onclick="toggleBanner(<?php echo e($banner->id); ?>, this)">
+                    <i class="fa-solid <?php echo e($banner->aktif ? 'fa-eye-slash' : 'fa-eye'); ?>"></i>
+                    <?php echo e($banner->aktif ? 'Nonaktifkan' : 'Aktifkan'); ?>
+
                 </button>
-                <button class="btn-del" onclick="confirmDelete({{ $banner->id }}, '{{ addslashes($banner->judul) }}')">
+                <button class="btn-del" onclick="confirmDelete(<?php echo e($banner->id); ?>, '<?php echo e(addslashes($banner->judul)); ?>')">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
         </div>
     </div>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
-@else
+<?php else: ?>
 <div class="empty-state">
     <i class="fa-solid fa-image"></i>
     <h3 style="color:#374151;margin-bottom:0.5rem;">Belum ada banner</h3>
     <p>Tambahkan banner slideshow untuk ditampilkan di halaman utama.</p>
-    <a href="{{ route('admin.banners.create') }}" class="btn-add" style="margin-top:1rem;display:inline-flex;">
+    <a href="<?php echo e(route('admin.banners.create')); ?>" class="btn-add" style="margin-top:1rem;display:inline-flex;">
         <i class="fa-solid fa-plus"></i> Tambah Banner Pertama
     </a>
 </div>
-@endif
+<?php endif; ?>
 
-{{-- Delete Modal --}}
+
 <div class="modal-overlay" id="deleteModal">
     <div class="modal-box">
         <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗑️</div>
@@ -118,15 +120,15 @@
         <div class="modal-actions">
             <button class="btn-cancel" onclick="closeModal()">Batal</button>
             <form id="deleteForm" method="POST">
-                @csrf @method('DELETE')
+                <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                 <button type="submit" class="btn-danger">Ya, Hapus</button>
             </form>
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
 function confirmDelete(id, judul) {
     document.getElementById('deleteMsg').textContent = 'Banner "' + judul + '" akan dihapus permanen.';
@@ -136,7 +138,7 @@ function confirmDelete(id, judul) {
 function closeModal() { document.getElementById('deleteModal').classList.remove('show'); }
 
 async function toggleBanner(id, btn) {
-    const res  = await fetch('/admin/banners/' + id + '/toggle', { method:'POST', headers:{'X-CSRF-TOKEN':'{{ csrf_token() }}','Accept':'application/json'} });
+    const res  = await fetch('/admin/banners/' + id + '/toggle', { method:'POST', headers:{'X-CSRF-TOKEN':'<?php echo e(csrf_token()); ?>','Accept':'application/json'} });
     const data = await res.json();
     const aktif = data.aktif;
     btn.className = 'btn-toggle ' + (aktif ? 'btn-toggle-on' : 'btn-toggle-off');
@@ -146,8 +148,10 @@ async function toggleBanner(id, btn) {
     badge.textContent = aktif ? '● Aktif' : '○ Nonaktif';
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/admin/banners/index.blade.php ENDPATH**/ ?>

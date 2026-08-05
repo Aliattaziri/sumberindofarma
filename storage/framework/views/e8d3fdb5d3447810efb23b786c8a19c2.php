@@ -1,8 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Edit Banner - Admin Sumberindo Farma Tama')
-@section('page-title', '🖼️ Edit Banner Slideshow')
+<?php $__env->startSection('title', 'Edit Banner - Admin Sumberindo Farma Tama'); ?>
+<?php $__env->startSection('page-title', '🖼️ Edit Banner Slideshow'); ?>
 
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
 .form-card { background:#fff; border-radius:1rem; padding:1.75rem; border:1px solid #e5e7eb; box-shadow:0 1px 4px rgba(0,0,0,0.06); max-width:680px; }
 .form-group { margin-bottom:1.25rem; }
@@ -28,40 +27,40 @@
 .btn-back:hover { background:#f9fafb; color:#374151; }
 @media(max-width:600px) { .form-row { grid-template-columns:1fr; } }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div style="margin-bottom:1.25rem;">
-    <a href="{{ route('admin.banners.index') }}" style="color:#6b7280;text-decoration:none;font-size:0.85rem;">
+    <a href="<?php echo e(route('admin.banners.index')); ?>" style="color:#6b7280;text-decoration:none;font-size:0.85rem;">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Banner
     </a>
 </div>
 
 <div class="form-card">
-    @if($errors->any())
+    <?php if($errors->any()): ?>
     <div style="background:#fee2e2;color:#7f1d1d;padding:0.85rem 1.1rem;border-radius:0.5rem;margin-bottom:1.25rem;font-size:0.85rem;">
         <strong>Ada kesalahan:</strong>
         <ul style="margin:0.4rem 0 0 1rem;">
-            @foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><li><?php echo e($e); ?></li><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
-    @endif
+    <?php endif; ?>
 
-    <form action="{{ route('admin.banners.update', $banner) }}" method="POST" enctype="multipart/form-data">
-        @csrf @method('PUT')
+    <form action="<?php echo e(route('admin.banners.update', $banner)); ?>" method="POST" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
 
         <div class="form-group">
             <label class="form-label">Banner Media</label>
             <p class="form-hint" style="margin-bottom:0.5rem;">Media saat ini:</p>
-            @if($banner->is_video)
+            <?php if($banner->is_video): ?>
                 <video class="current-img" controls muted>
-                    <source src="{{ url('storage/'.$banner->gambar) }}">
+                    <source src="<?php echo e(url('storage/'.$banner->gambar)); ?>">
                 </video>
-            @else
-                <img src="{{ url('storage/'.$banner->gambar) }}" alt="{{ $banner->judul }}" class="current-img" id="currentImg">
-            @endif
+            <?php else: ?>
+                <img src="<?php echo e(url('storage/'.$banner->gambar)); ?>" alt="<?php echo e($banner->judul); ?>" class="current-img" id="currentImg">
+            <?php endif; ?>
             <input type="file" name="gambar" id="gambarInput" accept="image/*,video/mp4,video/webm,video/quicktime" class="form-control" onchange="previewMedia(this)">
-            <p class="form-hint">Kosongkan jika tidak ingin mengganti media. Ukuran: 3998×1224px atau video maksimal 100MB</p>
+            <p class="form-hint">Kosongkan jika tidak ingin mengganti media. Ukuran: 3998×1224px atau video maksimal 20MB</p>
             <img id="imgPreview" class="img-preview" src="#" alt="Preview Baru">
             <video id="videoPreview" class="img-preview" controls style="display:none;"></video>
         </div>
@@ -69,21 +68,21 @@
         <div class="form-row">
             <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">URL Tujuan (opsional)</label>
-                <input type="text" name="url_tujuan" class="form-control" value="{{ old('url_tujuan', $banner->url_tujuan) }}" placeholder="/products">
+                <input type="text" name="url_tujuan" class="form-control" value="<?php echo e(old('url_tujuan', $banner->url_tujuan)); ?>" placeholder="/products">
             </div>
         </div>
 
         <div class="form-row" style="margin-top:1.25rem;">
             <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Urutan Tampil</label>
-                <input type="number" name="urutan" class="form-control" min="0" value="{{ old('urutan', $banner->urutan) }}">
+                <input type="number" name="urutan" class="form-control" min="0" value="<?php echo e(old('urutan', $banner->urutan)); ?>">
                 <p class="form-hint">Angka kecil tampil lebih dulu</p>
             </div>
             <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Status</label>
                 <div class="toggle-wrap">
                     <label class="toggle-switch">
-                        <input type="checkbox" name="aktif" value="1" {{ $banner->aktif ? 'checked' : '' }}>
+                        <input type="checkbox" name="aktif" value="1" <?php echo e($banner->aktif ? 'checked' : ''); ?>>
                         <span class="toggle-slider"></span>
                     </label>
                     <label>Aktif (tampil di website)</label>
@@ -93,13 +92,13 @@
 
         <div class="btn-actions">
             <button type="submit" class="btn-save"><i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan</button>
-            <a href="{{ route('admin.banners.index') }}" class="btn-back"><i class="fa-solid fa-xmark"></i> Batal</a>
+            <a href="<?php echo e(route('admin.banners.index')); ?>" class="btn-back"><i class="fa-solid fa-xmark"></i> Batal</a>
         </div>
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
 function previewMedia(input) {
     const imgPreview = document.getElementById('imgPreview');
@@ -130,7 +129,9 @@ function previewMedia(input) {
     }
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/admin/banners/edit.blade.php ENDPATH**/ ?>

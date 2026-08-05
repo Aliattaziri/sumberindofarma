@@ -38,18 +38,17 @@ class AdminBannerController extends Controller
         }
 
         $data = $request->validate([
-            "judul"        => ["required", "string", "max:255"],
-            "subjudul"     => ["nullable", "string", "max:255"],
-            "gambar"       => ["required", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:20480"],
+            "gambar"       => ["required", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:102400"],
             "url_tujuan"   => ["nullable", "string", "max:255"],
-            "label_tombol" => ["nullable", "string", "max:50"],
             "urutan"       => ["nullable", "integer", "min:0"],
             "aktif"        => ["nullable"],
         ]);
 
         $data["gambar"]       = ImageHelper::storeBannerMedia($request->file("gambar"));
+        $data["judul"]        = "Banner Slideshow";
+        $data["subjudul"]     = null;
         $data["aktif"]        = $request->boolean("aktif", true);
-        $data["label_tombol"] = $data["label_tombol"] ?? "Lihat Sekarang";
+        $data["label_tombol"] = "Lihat Sekarang";
         $data["urutan"]       = $data["urutan"] ?? 0;
 
         Banner::create($data);
@@ -75,11 +74,8 @@ class AdminBannerController extends Controller
         }
 
         $data = $request->validate([
-            "judul"        => ["required", "string", "max:255"],
-            "subjudul"     => ["nullable", "string", "max:255"],
-            "gambar"       => ["nullable", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:20480"],
+            "gambar"       => ["nullable", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:102400"],
             "url_tujuan"   => ["nullable", "string", "max:255"],
-            "label_tombol" => ["nullable", "string", "max:50"],
             "urutan"       => ["nullable", "integer", "min:0"],
             "aktif"        => ["nullable"],
         ]);
@@ -92,7 +88,9 @@ class AdminBannerController extends Controller
         }
 
         $data["aktif"]        = $request->boolean("aktif", false);
-        $data["label_tombol"] = $data["label_tombol"] ?? "Lihat Sekarang";
+        $data["judul"]        = $banner->judul ?: "Banner Slideshow";
+        $data["subjudul"]     = $banner->subjudul;
+        $data["label_tombol"] = $banner->label_tombol ?: "Lihat Sekarang";
         $data["urutan"]       = $data["urutan"] ?? 0;
 
         $banner->update($data);
