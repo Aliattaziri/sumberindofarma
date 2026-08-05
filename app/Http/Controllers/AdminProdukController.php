@@ -31,6 +31,10 @@ class AdminProdukController extends Controller
 
     public function index(Request $request)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $search          = $request->get('search', '');
         $kategori_produk = $request->get('kategori_produk', '');
         $brand           = $request->get('brand', '');
@@ -76,6 +80,10 @@ class AdminProdukController extends Controller
 
     public function create()
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         return view('admin.produk.create', [
             'kategoriOptions' => $this->kategoriProduk,
             'outletOptions'  => $this->outletOptions,
@@ -84,6 +92,10 @@ class AdminProdukController extends Controller
 
     public function store(Request $request)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
             'kategori_produk' => ['required', 'in:' . implode(',', Companies::LIST)],
@@ -128,6 +140,10 @@ class AdminProdukController extends Controller
 
     public function edit(Medicine $produk)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $this->authorizeOutletProduct($produk);
 
         return view('admin.produk.edit', [
@@ -139,6 +155,10 @@ class AdminProdukController extends Controller
 
     public function update(Request $request, Medicine $produk)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
             'kategori_produk' => ['required', 'in:' . implode(',', Companies::LIST)],
@@ -190,6 +210,10 @@ class AdminProdukController extends Controller
 
     public function destroy(Request $request, Medicine $produk)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $this->authorizeOutletProduct($produk);
         ImageHelper::deleteProductImage($produk->gambar);
         $produk->delete();
@@ -202,6 +226,10 @@ class AdminProdukController extends Controller
 
     public function destroyMany(Request $request)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $selectedIds = $request->input('produk_ids', []);
 
         if (empty($selectedIds) || !is_array($selectedIds)) {
@@ -259,6 +287,10 @@ class AdminProdukController extends Controller
 
     public function updateStock(Request $request, Medicine $produk)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $validated = $request->validate(['stok' => ['required', 'integer', 'min:0']]);
         $produk->update(['stok' => $validated['stok']]);
 
@@ -274,6 +306,10 @@ class AdminProdukController extends Controller
 
     public function updatePrice(Request $request, Medicine $produk)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $validated = $request->validate(['harga' => ['required', 'numeric', 'min:0']]);
         $produk->update(['harga' => $validated['harga']]);
 
@@ -289,6 +325,23 @@ class AdminProdukController extends Controller
 
     public function show(Medicine $produk)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         return redirect()->route('admin.produk.index');
+    }
+
+    private function blockSuperAdminProductControl()
+    {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+
+        if ($user && $user->isSuperAdmin()) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Akun admin utama tidak memiliki akses kontrol produk.');
+        }
+
+        return null;
     }
 }

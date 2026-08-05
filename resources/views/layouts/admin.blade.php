@@ -624,12 +624,14 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                @if(!auth()->user()->isSuperAdmin())
                 <li>
                     <a href="{{ route('admin.produk.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.produk')) active @endif">
                         <i class="fa-solid fa-pills"></i>
                         <span>Produk Kami</span>
                     </a>
                 </li>
+                @endif
                 <li>
                     <a href="{{ route('admin.banners.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.banners')) active @endif">
                         <i class="fa-solid fa-image"></i>

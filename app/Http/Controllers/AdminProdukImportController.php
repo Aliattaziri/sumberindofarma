@@ -12,11 +12,19 @@ class AdminProdukImportController extends Controller
 {
     public function showImportForm()
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         return view('admin.produk.import');
     }
 
     public function import(Request $request)
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $request->validate([
             'file' => ['required', 'file', 'max:10240'],
         ]);
@@ -39,6 +47,10 @@ class AdminProdukImportController extends Controller
 
     public function downloadTemplate()
     {
+        if ($redirect = $this->blockSuperAdminProductControl()) {
+            return $redirect;
+        }
+
         $filename = 'template_produk_' . now()->format('Ymd_His') . '.xls';
         $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
         $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 25, 30, 22];
@@ -50,6 +62,19 @@ class AdminProdukImportController extends Controller
         ];
 
         return \App\Helpers\XlsxWriter::downloadSpreadsheetXml($filename, $columns, $rows, $widths);
+    }
+
+    private function blockSuperAdminProductControl()
+    {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+
+        if ($user && $user->isSuperAdmin()) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Akun admin utama tidak memiliki akses kontrol produk.');
+        }
+
+        return null;
     }
 
     // ─── XLSX Parser (pure PHP, no ZipArchive needed) ────────────────────────

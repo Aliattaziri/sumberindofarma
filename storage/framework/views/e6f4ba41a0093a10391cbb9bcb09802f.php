@@ -624,12 +624,14 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <?php if(!auth()->user()->isSuperAdmin()): ?>
                 <li>
                     <a href="<?php echo e(route('admin.produk.index')); ?>" class="<?php if(str_contains(Route::current()->getName() ?? '', 'admin.produk')): ?> active <?php endif; ?>">
                         <i class="fa-solid fa-pills"></i>
                         <span>Produk Kami</span>
                     </a>
                 </li>
+                <?php endif; ?>
                 <li>
                     <a href="<?php echo e(route('admin.banners.index')); ?>" class="<?php if(str_contains(Route::current()->getName() ?? '', 'admin.banners')): ?> active <?php endif; ?>">
                         <i class="fa-solid fa-image"></i>
