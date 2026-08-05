@@ -944,7 +944,7 @@
     <div class="banner-promo-top">
         <div class="banner-promo-track" id="bannerPromoTrack">
             <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <a href="<?php echo e($banner->url_tujuan ?: 'javascript:void(0)'); ?>" class="banner-promo-item" target="_blank">
+                <a href="<?php echo e($banner->url_tujuan ?: 'javascript:void(0)'); ?>" class="banner-promo-item" target="_blank" rel="noopener noreferrer">
                     <?php if($banner->is_video): ?>
                         <video class="banner-promo-bg" autoplay muted loop playsinline>
                             <source src="<?php echo e($banner->image_url); ?>">

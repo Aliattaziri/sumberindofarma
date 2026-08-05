@@ -60,7 +60,7 @@
                 <img src="<?php echo e(url('storage/'.$banner->gambar)); ?>" alt="<?php echo e($banner->judul); ?>" class="current-img" id="currentImg">
             <?php endif; ?>
             <input type="file" name="gambar" id="gambarInput" accept="image/*,video/mp4,video/webm,video/quicktime" class="form-control" onchange="previewMedia(this)">
-            <p class="form-hint">Kosongkan jika tidak ingin mengganti media. Ukuran: 3998×1224px atau video maksimal 20MB</p>
+            <p class="form-hint">Kosongkan jika tidak ingin mengganti media. Ukuran: 3998×1224px atau video maksimal 100MB</p>
             <img id="imgPreview" class="img-preview" src="#" alt="Preview Baru">
             <video id="videoPreview" class="img-preview" controls style="display:none;"></video>
         </div>

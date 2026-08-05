@@ -64,4 +64,29 @@ class Banner extends Model
         $extension = strtolower(pathinfo($this->gambar, PATHINFO_EXTENSION));
         return in_array($extension, ['mp4', 'webm', 'mov']);
     }
+
+    public function getUrlTujuanAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        $url = trim((string) $value);
+        if ($url === '') {
+            return null;
+        }
+
+        // Keep internal and already-schemed links as-is.
+        if (
+            str_starts_with($url, '/') ||
+            str_starts_with($url, '#') ||
+            str_starts_with($url, '?') ||
+            preg_match('/^[a-z][a-z0-9+.-]*:/i', $url)
+        ) {
+            return $url;
+        }
+
+        // Normalize host-only URLs like "www.youtube.com".
+        return 'https://' . ltrim($url, '/');
+    }
 }

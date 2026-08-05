@@ -946,7 +946,7 @@
     <div class="banner-promo-top">
         <div class="banner-promo-track" id="bannerPromoTrack">
             @foreach($banners as $banner)
-                <a href="{{ $banner->url_tujuan ?: 'javascript:void(0)' }}" class="banner-promo-item" target="_blank">
+                <a href="{{ $banner->url_tujuan ?: 'javascript:void(0)' }}" class="banner-promo-item" target="_blank" rel="noopener noreferrer">
                     @if($banner->is_video)
                         <video class="banner-promo-bg" autoplay muted loop playsinline>
                             <source src="{{ $banner->image_url }}">
