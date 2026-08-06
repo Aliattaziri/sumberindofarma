@@ -158,9 +158,9 @@
 }
 
 .promo-pbf {
-    background: radial-gradient(circle at 20% 25%, rgba(255,255,255,0.14), transparent 25%),
-                linear-gradient(135deg, #111111 0%, #1d1d1d 45%, #2f2f2f 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: radial-gradient(circle at 20% 25%, rgba(255,255,255,0.16), transparent 26%),
+                linear-gradient(135deg, #fb923c 0%, #f97316 48%, #ea580c 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .promo-pbf-logo {
@@ -616,6 +616,9 @@
         grid-row: auto;
         min-height: 320px;
     }
+    .pbf-gallery-grid .mobile-order-1 { order: -3; }
+    .pbf-gallery-grid .mobile-order-2 { order: -2; }
+    .pbf-gallery-grid .mobile-order-3 { order: -1; }
     .pbf-photo-template-featured img { height: 260px; }
     .pbf-photo-empty { height: 220px; }
 }
@@ -1054,6 +1057,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
             <h4>PBF</h4>
+                        <span class="pbf-subtitle">PT.SUMBERINDO FARMA TAMA</span>
             <p>Jelajahi Katalog Produk PBF Terlengkap Kami</p>
           </div>
         </div>
@@ -1586,7 +1590,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h4>Kantor Utama - Sudut Lain</h4>
                     <p>Tampilan area kantor dari sisi berbeda.</p>
                 </div>
-                <div class="pbf-photo-template">
+                <div class="pbf-photo-template mobile-order-2">
                     <img src="{{ asset('foto gudang distribusi SFT.jpeg') }}" alt="Foto Gudang Distribusi Sumberindo Farma Tama">
                     <h4>Gudang Distribusi</h4>
                     <p>Gudang penyimpanan dan area distribusi farmasi.</p>
@@ -1596,7 +1600,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h4>Gudang Distribusi - Penyimpanan</h4>
                     <p>Area penyimpanan produk dengan tata kelola rapi.</p>
                 </div>
-                <div class="pbf-photo-template pbf-photo-template-featured">
+                <div class="pbf-photo-template pbf-photo-template-featured mobile-order-1">
                     <img src="{{ asset('STRUKTUR PT SFT.jpeg') }}" alt="Struktur PT Sumberindo Farma Tama">
                     <h4>Tim Profesional</h4>
                 </div>
@@ -1615,7 +1619,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h4>Aktivitas Operasional - Checker</h4>
                     <p>Proses pengecekan barang sebelum distribusi.</p>
                 </div>
-                <div class="pbf-photo-template">
+                <div class="pbf-photo-template mobile-order-3">
                     <img src="{{ asset('MOBIL BOX.jpg') }}" alt="Foto Armada Pengiriman Sumberindo Farma Tama">
                     <h4>Armada Pengiriman - Mobil Box</h4>
                     <p>Armada box untuk distribusi produk farmasi.</p>
