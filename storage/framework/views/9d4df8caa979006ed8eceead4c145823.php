@@ -1125,7 +1125,7 @@
                     <h3><i class="fa-solid fa-pills"></i> Sumberindo Farma Tama</h3>
                     <p>Perusahaan distribusi farmasi (PBF) yang menyediakan produk resmi untuk apotek dan fasilitas kesehatan.</p>
                     <div class="footer-socials">
-                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="social-circle" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-circle" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://wa.me/6285248965590" class="social-circle" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
@@ -1221,7 +1221,7 @@
             <div class="float-item">
                 <span class="float-tooltip">Instagram</span>
                 <span class="float-label-mobile">Instagram</span>
-                <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="float-btn"
+                <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="float-btn"
                    style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;font-size:1.4rem;box-shadow:0 4px 16px rgba(220,39,67,0.45);">
                     <i class="fa-brands fa-instagram"></i>
                 </a>

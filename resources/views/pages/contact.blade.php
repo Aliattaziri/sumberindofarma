@@ -58,10 +58,10 @@
                         <i class="fas fa-share-alt" style="color: var(--primary-color); margin-right: 10px;"></i>Ikuti Kami
                     </h4>
                     <div class="d-flex gap-2">
-                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="#" class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; padding: 0;">

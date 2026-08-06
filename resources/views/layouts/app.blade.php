@@ -343,7 +343,7 @@
                     <p>Apotik online terpercaya menyediakan obat dan suplemen berkualitas dengan harga terjangkau.</p>
                     <div class="mt-3">
 
-                        <a href="https://www.instagram.com/sumberindofarmatama/" target="_blank" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a>
                         <a href="https://wa.me/6285248965590" target="_blank" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
