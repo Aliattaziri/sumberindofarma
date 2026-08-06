@@ -479,13 +479,13 @@
 }
 .pbf-photo-template-featured img {
     width: 100%;
-    height: 330px;
-    object-fit: cover;
-    object-position: center top;
+    height: 380px;
+    object-fit: contain;
+    object-position: center center;
     border-radius: 12px;
     border: 1px solid #fecaca;
-    background: linear-gradient(180deg, #fffafa 0%, #fff1f1 100%);
-    padding: 0.2rem;
+    background: #fff;
+    padding: 0;
     margin-bottom: 0.7rem;
 }
 .pbf-photo-empty {
@@ -1595,7 +1595,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Area penyimpanan produk dengan tata kelola rapi.</p>
                 </div>
                 <div class="pbf-photo-template pbf-photo-template-featured">
-                    <img src="<?php echo e(asset('STRUKTUR PT SFT.png')); ?>" alt="Struktur PT Sumberindo Farma Tama">
+                    <img src="<?php echo e(asset('STRUKTUR PT SFT.jpeg')); ?>" alt="Struktur PT Sumberindo Farma Tama">
                     <h4>Tim Profesional</h4>
                 </div>
                 <div class="pbf-photo-template">
