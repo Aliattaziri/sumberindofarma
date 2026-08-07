@@ -49,9 +49,9 @@ class AdminBannerController extends Controller
         $data["judul"]        = "Banner Slideshow";
         $data["subjudul"]     = null;
         $data["aktif"]        = $request->boolean("aktif", true);
-        $data["url_tujuan"]   = $data["url_tujuan"] ?? null;
-        $data["label_tombol"] = ($data["url_tujuan"] && !empty(trim($data["label_tombol"] ?? "")))
-                                    ? trim($data["label_tombol"])
+        $data["url_tujuan"]   = $data["url_tujuan"] ?: null;
+        $data["label_tombol"] = ($data["url_tujuan"] && !empty(trim((string)($data["label_tombol"] ?? ""))))
+                                    ? trim((string)$data["label_tombol"])
                                     : null;
         $data["urutan"]       = $data["urutan"] ?? 0;
 
@@ -97,9 +97,9 @@ class AdminBannerController extends Controller
         $data["subjudul"]     = $banner->subjudul;
         $urlTujuan            = $data["url_tujuan"] ?? null;
         $labelInput           = $data["label_tombol"] ?? null;
-        $data["url_tujuan"]   = $urlTujuan;
-        $data["label_tombol"] = ($urlTujuan && !empty(trim($labelInput ?? "")))
-                                    ? trim($labelInput)
+        $data["url_tujuan"]   = $urlTujuan ?: null;
+        $data["label_tombol"] = ($urlTujuan && !empty(trim((string)($labelInput ?? ""))))
+                                    ? trim((string)$labelInput)
                                     : null;
         $data["urutan"]       = $data["urutan"] ?? 0;
 
