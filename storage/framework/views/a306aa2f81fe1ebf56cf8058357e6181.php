@@ -81,6 +81,11 @@
                 <?php if($banner->url_tujuan): ?>
                 <span style="font-size:0.72rem;color:#6b7280;"><i class="fa-solid fa-link"></i> Ada link</span>
                 <?php endif; ?>
+                <?php if($banner->url_tujuan && $banner->label_tombol): ?>
+                <span style="font-size:0.72rem;padding:0.2rem 0.65rem;border-radius:20px;background:#f0fdf4;color:#166534;font-weight:600;"><i class="fa-solid fa-rectangle-ad"></i> <?php echo e($banner->label_tombol); ?></span>
+                <?php elseif($banner->url_tujuan && !$banner->label_tombol): ?>
+                <span style="font-size:0.72rem;color:#f59e0b;"><i class="fa-solid fa-triangle-exclamation"></i> Link tanpa tombol</span>
+                <?php endif; ?>
             </div>
             <div class="banner-actions">
                 <a href="<?php echo e(route('admin.banners.edit', $banner)); ?>" class="btn-edit">

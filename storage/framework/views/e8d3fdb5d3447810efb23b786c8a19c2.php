@@ -67,8 +67,15 @@
 
         <div class="form-row">
             <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">URL Tujuan (opsional)</label>
-                <input type="text" name="url_tujuan" class="form-control" value="<?php echo e(old('url_tujuan', $banner->url_tujuan)); ?>" placeholder="/products">
+                <label class="form-label">URL Tujuan <span style="font-weight:400;color:#9ca3af;">(opsional)</span></label>
+                <input type="text" name="url_tujuan" id="urlTujuanInput" class="form-control" value="<?php echo e(old('url_tujuan', $banner->url_tujuan)); ?>" placeholder="/products atau https://..." oninput="syncButtonField()">
+                <p class="form-hint">Link ketika tombol banner diklik</p>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Teks Tombol <span style="font-weight:400;color:#9ca3af;">(opsional)</span></label>
+                <input type="text" name="label_tombol" id="labelTombolInput" class="form-control" value="<?php echo e(old('label_tombol', $banner->label_tombol)); ?>" placeholder="Cth: Lihat Produk" maxlength="80">
+                <p class="form-hint" id="labelHint" style="color:#f59e0b;display:none;"><i class="fa-solid fa-triangle-exclamation"></i> Isi URL dulu agar tombol muncul</p>
+                <p class="form-hint" id="labelHintOk" style="display:none;">Tombol akan tampil di atas banner</p>
             </div>
         </div>
 
@@ -104,30 +111,40 @@ function previewMedia(input) {
     const imgPreview = document.getElementById('imgPreview');
     const videoPreview = document.getElementById('videoPreview');
     const current = document.getElementById('currentImg');
-    if (current) {
-        current.style.opacity = '0.4';
-    }
-
+    if (current) current.style.opacity = '0.4';
     if (input.files && input.files[0]) {
         const file = input.files[0];
         const reader = new FileReader();
-
         reader.onload = e => {
             if (file.type.startsWith('image/')) {
                 imgPreview.src = e.target.result;
                 imgPreview.style.display = 'block';
                 if (videoPreview) videoPreview.style.display = 'none';
             } else if (file.type.startsWith('video/')) {
-                if (videoPreview) {
-                    videoPreview.src = e.target.result;
-                    videoPreview.style.display = 'block';
-                }
+                if (videoPreview) { videoPreview.src = e.target.result; videoPreview.style.display = 'block'; }
                 if (imgPreview) imgPreview.style.display = 'none';
             }
         };
         reader.readAsDataURL(file);
     }
 }
+
+function syncButtonField() {
+    const url    = document.getElementById('urlTujuanInput');
+    const label  = document.getElementById('labelTombolInput');
+    const hint   = document.getElementById('labelHint');
+    const hintOk = document.getElementById('labelHintOk');
+    if (!url || !label) return;
+    const hasUrl = url.value.trim().length > 0;
+    label.disabled = !hasUrl;
+    if (hint)   hint.style.display   = hasUrl ? 'none' : (label.value.trim() ? 'block' : 'none');
+    if (hintOk) hintOk.style.display = (hasUrl && label.value.trim()) ? 'block' : 'none';
+    if (!hasUrl) label.value = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    syncButtonField();
+});
 </script>
 <?php $__env->stopSection(); ?>
 

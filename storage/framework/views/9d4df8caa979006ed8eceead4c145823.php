@@ -64,8 +64,7 @@
     <style>
         /* ===== BOOTSTRAP GRID REPLACEMENT ===== */
         *, *::before, *::after { box-sizing: border-box; }
-        html, body { overflow-x: hidden; max-width: 100%; }
-        html { min-height: 100%; }
+        html, body { overflow-x: hidden; max-width: 100%; }        html { min-height: 100%; }
         body { margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         img, svg, video { max-width: 100%; height: auto; display: block; }
         button, input, textarea, select { max-width: 100%; }
@@ -282,90 +281,57 @@
             z-index: 0;
         }
 
-        /* ===== PARTIKEL STATIS - dikurangi opacity agar tidak ganggu konten ===== */
+        /* ===== BACKGROUND DEKORATIF ===== */
         .med-particles {
             position: fixed;
-            top: 65px;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            opacity: 0.45;
         }
 
-        .mp {
+        /* Blob / lingkaran blur besar */
+        .mp-blob {
             position: absolute;
-            transform: rotate(var(--r, 0deg)) scale(var(--s, 1));
-            opacity: var(--o, 0.25);
-        }
-
-        .mp-capsule {
-            width: 60px; height: 26px;
-            border-radius: 13px;
-            background: linear-gradient(90deg, #B91C1C 50%, #ef4444 50%);
-            box-shadow: 0 2px 8px rgba(220,38,38,0.25), inset 0 1px 3px rgba(255,255,255,0.4);
-        }
-
-        .mp-tablet {
-            width: 42px; height: 26px;
-            border-radius: 13px;
-            background: #fee2e2;
-            border: 2.5px solid #42a5f5;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(66,165,245,0.2);
-        }
-        .mp-tablet::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 18%; right: 18%;
-            height: 2px;
-            background: #42a5f5;
-            transform: translateY(-50%);
-            border-radius: 1px;
-        }
-
-        .mp-pill {
-            width: 24px; height: 24px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #ffffff, #fee2e2);
-            border: 2px solid rgba(102,187,106,0.6);
-            box-shadow: 0 2px 8px rgba(220,38,38,0.2);
+            filter: blur(60px);
+            opacity: var(--o, 0.18);
         }
 
-        .mp-cross {
-            width: 28px; height: 28px;
-            position: relative;
-            filter: drop-shadow(0 2px 4px rgba(220,38,38,0.18));
-        }
-        .mp-cross::before,
-        .mp-cross::after {
-            content: '';
+        /* Ring / cincin outline */
+        .mp-ring {
             position: absolute;
-            background: #B91C1C;
-            border-radius: 3px;
-        }
-        .mp-cross::before {
-            width: 10px; height: 28px;
-            left: 50%; transform: translateX(-50%);
-        }
-        .mp-cross::after {
-            width: 28px; height: 10px;
-            top: 50%; transform: translateY(-50%);
+            border-radius: 50%;
+            border: 1px solid rgba(185,28,28,var(--bo, 0.10));
+            background: transparent;
+            opacity: var(--o, 1);
         }
 
-        .mp-icon {
-            font-size: 1.6rem;
-            color: #991B1B;
-            transform: rotate(var(--r, 0deg)) scale(var(--s, 1));
-            filter: drop-shadow(0 2px 4px rgba(21,101,192,0.2));
+        /* Persegi panjang miring */
+        .mp-rect {
+            position: absolute;
+            border-radius: 10px;
+            background: rgba(185,28,28,var(--o, 0.05));
+            transform: rotate(var(--r, 30deg));
         }
 
-        /* Variasi warna ikon */
-        .mp-icon:nth-child(odd)  { color: #388e3c; }
-        .mp-icon:nth-child(3n)   { color: #0288d1; }
-        .mp-icon:nth-child(4n)   { color: #B91C1C; }
+        /* Garis panjang diagonal */
+        .mp-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(185,28,28,0.15), transparent);
+            transform: rotate(var(--r, -25deg));
+            transform-origin: left center;
+        }
+
+        /* Dot grid pattern (pseudo-element trick) */
+        .mp-dotgrid {
+            position: absolute;
+            background-image: radial-gradient(circle, rgba(185,28,28,0.13) 1px, transparent 1px);
+            background-size: 22px 22px;
+            opacity: var(--o, 0.6);
+            border-radius: 4px;
+        }
     </style>
     
     <style>
@@ -393,7 +359,12 @@
         html {
             scroll-behavior: smooth;
             scroll-padding-top: var(--navbar-height, 65px);
-            background: linear-gradient(160deg, #fef2f2 0%, #fef2f2 35%, #fee2e2 70%, #fef2f2 100%);
+            background:
+                radial-gradient(ellipse 80% 50% at 10% 0%,   rgba(253,232,232,0.85) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 90% 20%,  rgba(254,226,226,0.60) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 60% at 50% 80%,  rgba(254,242,242,0.70) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 40% at 80% 100%, rgba(253,232,232,0.50) 0%, transparent 55%),
+                #fff8f8;
             background-attachment: fixed;
             min-height: 100%;
         }
@@ -991,55 +962,40 @@
 </head>
 <body>
 
-    <!-- ===== PARTIKEL STATIS MEDIS ===== -->
+    <!-- ===== BACKGROUND DEKORATIF ===== -->
     <div class="med-particles" aria-hidden="true">
-        <!-- Kapsul -->
-        <span class="mp mp-capsule" style="top:4%;left:3%;--r:15deg;--s:0.9;--o:0.30;"></span>
-        <span class="mp mp-capsule" style="top:18%;left:88%;--r:-20deg;--s:1.1;--o:0.28;"></span>
-        <span class="mp mp-capsule" style="top:35%;left:12%;--r:30deg;--s:0.8;--o:0.32;"></span>
-        <span class="mp mp-capsule" style="top:55%;left:92%;--r:-10deg;--s:1.0;--o:0.27;"></span>
-        <span class="mp mp-capsule" style="top:72%;left:5%;--r:25deg;--s:0.95;--o:0.30;"></span>
-        <span class="mp mp-capsule" style="top:88%;left:78%;--r:-35deg;--s:0.85;--o:0.28;"></span>
-        <span class="mp mp-capsule" style="top:45%;left:50%;--r:12deg;--s:0.75;--o:0.25;"></span>
-        <span class="mp mp-capsule" style="top:62%;left:35%;--r:-18deg;--s:1.05;--o:0.27;"></span>
 
-        <!-- Tablet bulat -->
-        <span class="mp mp-tablet" style="top:8%;left:22%;--s:1.0;--o:0.30;"></span>
-        <span class="mp mp-tablet" style="top:28%;left:68%;--s:1.2;--o:0.27;"></span>
-        <span class="mp mp-tablet" style="top:50%;left:80%;--s:0.9;--o:0.29;"></span>
-        <span class="mp mp-tablet" style="top:78%;left:42%;--s:1.1;--o:0.28;"></span>
-        <span class="mp mp-tablet" style="top:92%;left:15%;--s:0.85;--o:0.26;"></span>
-        <span class="mp mp-tablet" style="top:15%;left:55%;--s:0.95;--o:0.27;"></span>
+        
+        <span class="mp-blob" style="width:700px;height:700px;top:-200px;left:-200px;background:radial-gradient(circle,#fca5a5,#fee2e2);--o:0.22;"></span>
+        <span class="mp-blob" style="width:500px;height:500px;top:30%;right:-180px;background:radial-gradient(circle,#fecaca,transparent);--o:0.18;"></span>
+        <span class="mp-blob" style="width:600px;height:400px;bottom:-100px;left:20%;background:radial-gradient(circle,#fde8e8,transparent);--o:0.20;"></span>
+        <span class="mp-blob" style="width:300px;height:300px;top:55%;left:40%;background:radial-gradient(circle,#fca5a5,transparent);--o:0.10;"></span>
 
-        <!-- Tanda plus / palang medis -->
-        <span class="mp mp-cross" style="top:6%;left:45%;--s:1.1;--o:0.32;"></span>
-        <span class="mp mp-cross" style="top:22%;left:8%;--s:0.9;--o:0.30;"></span>
-        <span class="mp mp-cross" style="top:40%;left:95%;--s:1.0;--o:0.28;"></span>
-        <span class="mp mp-cross" style="top:60%;left:60%;--s:1.2;--o:0.30;"></span>
-        <span class="mp mp-cross" style="top:80%;left:25%;--s:0.95;--o:0.32;"></span>
-        <span class="mp mp-cross" style="top:95%;left:55%;--s:0.85;--o:0.27;"></span>
-        <span class="mp mp-cross" style="top:33%;left:38%;--s:0.8;--o:0.26;"></span>
+        
+        <span class="mp-ring" style="width:520px;height:520px;top:-80px;right:-100px;--bo:0.08;"></span>
+        <span class="mp-ring" style="width:360px;height:360px;top:-40px;right:-60px;--bo:0.06;"></span>
+        <span class="mp-ring" style="width:280px;height:280px;top:38%;left:-60px;--bo:0.07;"></span>
+        <span class="mp-ring" style="width:180px;height:180px;top:42%;left:-30px;--bo:0.05;"></span>
+        <span class="mp-ring" style="width:420px;height:420px;bottom:-120px;right:5%;--bo:0.07;"></span>
+        <span class="mp-ring" style="width:240px;height:240px;bottom:-60px;right:12%;--bo:0.05;"></span>
+        <span class="mp-ring" style="width:160px;height:160px;top:22%;left:32%;--bo:0.06;"></span>
+        <span class="mp-ring" style="width:90px;height:90px;top:65%;right:22%;--bo:0.09;"></span>
 
-        <!-- Pil kecil bulat -->
-        <span class="mp mp-pill" style="top:12%;left:75%;--s:1.1;--o:0.33;"></span>
-        <span class="mp mp-pill" style="top:30%;left:28%;--s:1.3;--o:0.30;"></span>
-        <span class="mp mp-pill" style="top:48%;left:18%;--s:1.0;--o:0.28;"></span>
-        <span class="mp mp-pill" style="top:65%;left:85%;--s:0.9;--o:0.31;"></span>
-        <span class="mp mp-pill" style="top:82%;left:62%;--s:1.2;--o:0.29;"></span>
-        <span class="mp mp-pill" style="top:96%;left:38%;--s:1.05;--o:0.27;"></span>
-        <span class="mp mp-pill" style="top:20%;left:42%;--s:0.8;--o:0.26;"></span>
+        
+        <span class="mp-rect" style="width:80px;height:80px;top:18%;left:8%;--r:20deg;--o:0.04;"></span>
+        <span class="mp-rect" style="width:50px;height:50px;top:60%;right:10%;--r:-15deg;--o:0.05;"></span>
+        <span class="mp-rect" style="width:120px;height:40px;top:80%;left:55%;--r:30deg;--o:0.04;"></span>
+        <span class="mp-rect" style="width:60px;height:60px;top:8%;left:60%;--r:45deg;--o:0.04;"></span>
 
-        <!-- Ikon FA medis -->
-        <i class="mp mp-icon fa-solid fa-pills"         style="top:10%;left:60%;--s:1.3;--o:0.28;"></i>
-        <i class="mp mp-icon fa-solid fa-capsules"      style="top:25%;left:82%;--s:1.1;--o:0.27;"></i>
-        <i class="mp mp-icon fa-solid fa-syringe"       style="top:42%;left:6%;--r:45deg;--s:1.2;--o:0.27;"></i>
-        <i class="mp mp-icon fa-solid fa-stethoscope"   style="top:58%;left:72%;--s:1.05;--o:0.26;"></i>
-        <i class="mp mp-icon fa-solid fa-heart-pulse"   style="top:75%;left:15%;--s:1.2;--o:0.28;"></i>
-        <i class="mp mp-icon fa-solid fa-flask"         style="top:88%;left:90%;--s:1.1;--o:0.27;"></i>
-        <i class="mp mp-icon fa-solid fa-dna"           style="top:5%;left:35%;--s:1.3;--o:0.26;"></i>
-        <i class="mp mp-icon fa-solid fa-microscope"    style="top:38%;left:55%;--s:1.0;--o:0.25;"></i>
-        <i class="mp mp-icon fa-solid fa-tablets"       style="top:68%;left:48%;--s:1.1;--o:0.27;"></i>
-        <i class="mp mp-icon fa-solid fa-virus"         style="top:85%;left:8%;--s:0.95;--o:0.25;"></i>
+        
+        <span class="mp-line" style="width:600px;top:28%;left:-50px;--r:-18deg;"></span>
+        <span class="mp-line" style="width:400px;top:62%;right:0;--r:-22deg;"></span>
+        <span class="mp-line" style="width:300px;top:45%;left:30%;--r:12deg;"></span>
+
+        
+        <span class="mp-dotgrid" style="width:180px;height:180px;top:5%;right:5%;--o:0.45;"></span>
+        <span class="mp-dotgrid" style="width:140px;height:140px;bottom:8%;left:4%;--o:0.40;"></span>
+
     </div>
 
     <nav class="navbar">

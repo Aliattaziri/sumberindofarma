@@ -661,37 +661,31 @@
     .btn-order-wa { padding: 0.8rem; font-size: 0.92rem; border-radius: 10px; }
     .btn-clear-cart { margin-top: 0.35rem; font-size: 0.75rem; }
     .banner-promo-top {
-        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+    .banner-promo-track {
+        border-radius: 14px;
     }
     .banner-promo-item {
-        aspect-ratio: 19 / 6;
-        min-height: 0;
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
+        aspect-ratio: 4 / 3;
+        min-height: 200px;
+        border-radius: 0;
     }
     .banner-promo-copy {
         min-height: 0;
-        padding: 0;
-        justify-content: flex-end;
-        align-items: center;
-        text-align: center;
-        background: linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(0,0,0,0.26) 82%, rgba(0,0,0,0.48) 100%);
+        background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.26) 78%, rgba(0,0,0,0.54) 100%);
     }
     .banner-promo-label {
         font-size: 0.72rem;
         padding: 0.28rem 0.75rem;
     }
-    .banner-promo-item h2 {
-        font-size: 1.1rem;
-    }
-    .banner-promo-item p {
-        font-size: 0.85rem;
-        max-width: 100%;
-        margin: 0.55rem auto 0;
-    }
     .banner-promo-btn {
-        margin: 0.95rem auto 0;
+        font-size: 0.78rem;
+        padding: 0.55rem 1.1rem;
+    }
+    .banner-promo-btn-wrap {
+        padding: 0 1rem 0.85rem;
     }
 }
 
@@ -700,7 +694,7 @@
     overflow: hidden;
     width: 100%;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
 }
 
@@ -709,41 +703,44 @@
     width: 100%;
     transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
     will-change: transform;
-}
-
-.banner-promo-top, .banner-promo-item {
-    margin-top: 0;
-    margin-bottom: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 
 .banner-promo-item {
     flex: 0 0 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 28px;
+    border-radius: 0;
     display: block;
     color: #fff;
     text-decoration: none;
     background: #111;
-    box-shadow: 0 18px 54px rgba(0, 0, 0, 0.16);
+    box-shadow: none;
     aspect-ratio: 19 / 6;
-    min-height: 0;
+    min-height: 180px;
     height: auto;
+    cursor: default;
+    margin: 0;
+    padding: 0;
 }
 
 .banner-promo-bg {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: brightness(0.74);
+    filter: brightness(0.88);
     transition: transform 0.45s ease;
     object-fit: cover;
 }
 
 .banner-promo-item:hover .banner-promo-bg {
-    transform: scale(1.04);
+    transform: scale(1.02);
 }
 
 .banner-volume-toggle {
@@ -778,7 +775,7 @@
     min-height: 0;
     padding: 0;
     pointer-events: none;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.24) 78%, rgba(0,0,0,0.52) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.28) 72%, rgba(0,0,0,0.58) 100%);
 }
 
 .banner-promo-label {
@@ -812,12 +809,32 @@
 .banner-promo-btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.1rem;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
     border-radius: 999px;
-    background: rgba(255,255,255,0.95);
+    background: #fff;
     color: #B91C1C;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 0.88rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    pointer-events: auto;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+    transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.banner-promo-btn:hover {
+    background: #fef2f2;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.28);
+}
+
+.banner-promo-btn-wrap {
+    padding: 0 clamp(1rem, 4%, 2.5rem) clamp(1rem, 3%, 1.75rem);
+    pointer-events: none;
 }
 
 .banner-slider-dots {
@@ -947,7 +964,8 @@
     <div class="banner-promo-top">
         <div class="banner-promo-track" id="bannerPromoTrack">
             <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <a href="<?php echo e($banner->url_tujuan ?: 'javascript:void(0)'); ?>" class="banner-promo-item" target="_blank" rel="noopener noreferrer">
+                
+                <div class="banner-promo-item">
                     <?php if($banner->is_video): ?>
                         <video class="banner-promo-bg" autoplay muted loop playsinline>
                             <source src="<?php echo e($banner->image_url); ?>">
@@ -956,8 +974,21 @@
                     <?php else: ?>
                         <div class="banner-promo-bg" style="background-image: url('<?php echo e($banner->image_url); ?>');"></div>
                     <?php endif; ?>
-                    <div class="banner-promo-copy"></div>
-                </a>
+                    <div class="banner-promo-copy">
+                        <?php if($banner->url_tujuan && $banner->label_tombol): ?>
+                        <div class="banner-promo-btn-wrap">
+                            <a href="<?php echo e($banner->url_tujuan); ?>"
+                               class="banner-promo-btn"
+                               target="<?php echo e(str_starts_with($banner->url_tujuan, '/') || str_starts_with($banner->url_tujuan, '#') ? '_self' : '_blank'); ?>"
+                               rel="noopener noreferrer">
+                                <?php echo e($banner->label_tombol); ?>
+
+                                <i class="fa-solid fa-arrow-right" style="font-size:0.75rem;"></i>
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
         <?php if($banners->count() > 1): ?>

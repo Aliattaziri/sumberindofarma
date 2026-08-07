@@ -1,8 +1,8 @@
-﻿@extends('layouts.frontend')
+﻿
 
-@section('title', 'Tentang Kami - PT. Sumberindo Farma Tama')
+<?php $__env->startSection('title', 'Tentang Kami - PT. Sumberindo Farma Tama'); ?>
 
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
     main.page-offset { padding-top: 0 !important; }
 
@@ -127,13 +127,13 @@
         .hero-stat { min-width: 80px; }
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <section style="padding: 0 0 5rem; background: linear-gradient(180deg, #fffaf9 0%, #fff 100%);">
 <div class="container">
 
-    {{-- HERO --}}
+    
     <div class="about-hero">
         <span class="about-hero-badge"><i class="fa-solid fa-building-shield"></i> Pedagang Besar Farmasi (PBF)</span>
         <h1>PT. Sumberindo Farma Tama</h1>
@@ -157,12 +157,12 @@
             </div>
         </div>
         <div class="hero-btn-row">
-            <a href="{{ route('products.apotek') }}" class="btn-hero-primary"><i class="fa-solid fa-cart-shopping"></i> Lihat Produk</a>
-            <a href="{{ route('contact') }}" class="btn-hero-outline"><i class="fa-solid fa-phone"></i> Hubungi Kami</a>
+            <a href="<?php echo e(route('products.apotek')); ?>" class="btn-hero-primary"><i class="fa-solid fa-cart-shopping"></i> Lihat Produk</a>
+            <a href="<?php echo e(route('contact')); ?>" class="btn-hero-outline"><i class="fa-solid fa-phone"></i> Hubungi Kami</a>
         </div>
     </div>
 
-    {{-- PROFIL --}}
+    
     <div style="margin-bottom:1.5rem;">
         <span class="about-section-label"><i class="fa-solid fa-circle-info"></i> Profil Perusahaan</span>
         <h2 class="about-section-title">Siapa Kami</h2>
@@ -202,7 +202,7 @@
         </div>
     </div>
 
-    {{-- VISI MISI --}}
+    
     <div style="margin-bottom:1.5rem;margin-top:2rem;">
         <span class="about-section-label"><i class="fa-solid fa-bullseye"></i> Arah Perusahaan</span>
         <h2 class="about-section-title">Visi &amp; Misi</h2>
@@ -224,7 +224,7 @@
         </div>
     </div>
 
-    {{-- NILAI PERUSAHAAN --}}
+    
     <div style="margin-bottom:1.5rem;margin-top:2rem;">
         <span class="about-section-label"><i class="fa-solid fa-star"></i> Nilai Kami</span>
         <h2 class="about-section-title">Nilai-Nilai Perusahaan</h2>
@@ -252,7 +252,7 @@
         </div>
     </div>
 
-    {{-- STRUKTUR ORGANISASI --}}
+    
     <div class="abt-struktur-wrap">
         <span class="about-section-label"><i class="fa-solid fa-sitemap"></i> Sumber Daya Manusia</span>
         <h2 class="about-section-title">Struktur Organisasi</h2>
@@ -260,7 +260,7 @@
             PT. Sumberindo Farma Tama dikelola oleh tim profesional berpengalaman di bidang farmasi dan distribusi, mulai dari Apoteker Penanggung Jawab, Asisten Apoteker, hingga tim operasional lapangan.
         </p>
         <div class="abt-struktur-img">
-            <img src="{{ asset('STRUKTUR PT SFT.jpeg') }}" alt="Struktur Organisasi PT. Sumberindo Farma Tama" loading="lazy">
+            <img src="<?php echo e(asset('STRUKTUR PT SFT.jpeg')); ?>" alt="Struktur Organisasi PT. Sumberindo Farma Tama" loading="lazy">
         </div>
         <div class="abt-struktur-note">
             <i class="fa-solid fa-circle-info"></i>
@@ -268,39 +268,39 @@
         </div>
     </div>
 
-    {{-- GALERI FASILITAS --}}
+    
     <div style="margin-bottom:1.5rem;margin-top:2rem;">
         <span class="about-section-label"><i class="fa-solid fa-image"></i> Dokumentasi</span>
         <h2 class="about-section-title">Fasilitas &amp; Operasional</h2>
     </div>
     <div class="abt-gallery-grid">
         <div class="abt-gallery-item">
-            <img src="{{ asset('foto kantor utama SFT.jpg') }}" alt="Kantor Utama PT SFT" loading="lazy">
+            <img src="<?php echo e(asset('foto kantor utama SFT.jpg')); ?>" alt="Kantor Utama PT SFT" loading="lazy">
             <div class="abt-gallery-caption"><i class="fa-solid fa-building"></i> Kantor Utama</div>
         </div>
         <div class="abt-gallery-item">
-            <img src="{{ asset('foto kantor utama SFT (2).jpg') }}" alt="Kantor Utama SFT Tampak Samping" loading="lazy">
+            <img src="<?php echo e(asset('foto kantor utama SFT (2).jpg')); ?>" alt="Kantor Utama SFT Tampak Samping" loading="lazy">
             <div class="abt-gallery-caption"><i class="fa-solid fa-building"></i> Kantor Utama — Tampak Samping</div>
         </div>
         <div class="abt-gallery-item">
-            <img src="{{ asset('foto gudang distribusi SFT.jpeg') }}" alt="Gudang Distribusi SFT" loading="lazy">
+            <img src="<?php echo e(asset('foto gudang distribusi SFT.jpeg')); ?>" alt="Gudang Distribusi SFT" loading="lazy">
             <div class="abt-gallery-caption"><i class="fa-solid fa-warehouse"></i> Gudang Distribusi</div>
         </div>
         <div class="abt-gallery-item">
-            <img src="{{ asset('foto gudang distribusi SFT (2).jpeg') }}" alt="Area Penyimpanan Gudang SFT" loading="lazy">
+            <img src="<?php echo e(asset('foto gudang distribusi SFT (2).jpeg')); ?>" alt="Area Penyimpanan Gudang SFT" loading="lazy">
             <div class="abt-gallery-caption"><i class="fa-solid fa-warehouse"></i> Gudang — Area Penyimpanan</div>
         </div>
         <div class="abt-gallery-item">
-            <img src="{{ asset('foto gudang distribusi SFT (3).jpeg') }}" alt="Area Loading Gudang SFT" loading="lazy">
+            <img src="<?php echo e(asset('foto gudang distribusi SFT (3).jpeg')); ?>" alt="Area Loading Gudang SFT" loading="lazy">
             <div class="abt-gallery-caption"><i class="fa-solid fa-truck-loading"></i> Gudang — Area Loading</div>
         </div>
         <div class="abt-gallery-item">
-            <img src="{{ asset('AKTIVITAS KARYAWAN SFT.jpg') }}" alt="Aktivitas Karyawan SFT" loading="lazy">
+            <img src="<?php echo e(asset('AKTIVITAS KARYAWAN SFT.jpg')); ?>" alt="Aktivitas Karyawan SFT" loading="lazy">
             <div class="abt-gallery-caption"><i class="fa-solid fa-users"></i> Aktivitas Karyawan</div>
         </div>
     </div>
 
-    {{-- MITRA --}}
+    
     <div style="margin-bottom:1.5rem;margin-top:2rem;">
         <span class="about-section-label"><i class="fa-solid fa-map-location-dot"></i> Jaringan</span>
         <h2 class="about-section-title">Mitra Apotek &amp; Distribusi</h2>
@@ -353,4 +353,6 @@
 
 </div>
 </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.frontend', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/about.blade.php ENDPATH**/ ?>

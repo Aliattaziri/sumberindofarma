@@ -128,6 +128,9 @@
     text-decoration: none; transition: all 0.25s;
     margin-bottom: 1.5rem;
     box-shadow: 0 4px 14px rgba(249,115,22,0.28);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .btn-app-access:hover {
     background: linear-gradient(135deg, #f97316, #ea580c);
@@ -137,12 +140,21 @@
     box-shadow: 0 6px 18px rgba(234,88,12,0.34);
 }
 
+.btn-app-access .btn-app-text {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
 .topopro-text {
     font-weight: 900;
     font-size: 1.02em;
     letter-spacing: 0.01em;
     -webkit-text-stroke: 0;
     text-shadow: none;
+    white-space: nowrap;
 }
 
 /* Form kode */
@@ -278,6 +290,16 @@
 }
 .pbf-info-note a { color: #dc2626; text-decoration: none; }
 .pbf-info-note a:hover { text-decoration: underline; }
+
+@media (max-width: 400px) {
+    .btn-app-access {
+        font-size: 0.8rem;
+        padding: 0.75rem 0.75rem;
+    }
+    .topopro-text {
+        font-size: 0.95em;
+    }
+}
 </style>
 @endsection
 
@@ -380,8 +402,8 @@
                target="_blank"
                rel="noopener noreferrer"
                class="btn-app-access">
-                <i class="fa-brands fa-google-play"></i>
-                Akses via Aplikasi B2B <span class="topopro-text">TokoPro</span>
+                <i class="fa-brands fa-google-play" style="flex-shrink:0; font-size:1.2rem;"></i>
+                <span class="btn-app-text">Akses via Aplikasi B2B <span class="topopro-text">TokoPro</span></span>
             </a>
 
             {{-- Divider --}}

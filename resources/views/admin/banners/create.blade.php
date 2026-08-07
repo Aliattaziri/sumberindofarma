@@ -74,9 +74,15 @@
 
         <div class="form-row">
             <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">URL Tujuan (opsional)</label>
-                <input type="text" name="url_tujuan" class="form-control" placeholder="/products atau https://..." value="{{ old('url_tujuan') }}" @disabled(isset($bannerTableReady) && !$bannerTableReady)>
-                <p class="form-hint">Link ketika banner diklik</p>
+                <label class="form-label">URL Tujuan <span style="font-weight:400;color:#9ca3af;">(opsional)</span></label>
+                <input type="text" name="url_tujuan" id="urlTujuanInput" class="form-control" placeholder="/products atau https://..." value="{{ old('url_tujuan') }}" @disabled(isset($bannerTableReady) && !$bannerTableReady) oninput="syncButtonField()">
+                <p class="form-hint">Link ketika tombol banner diklik</p>
+            </div>
+            <div class="form-group" style="margin-bottom:0;" id="labelTombolGroup">
+                <label class="form-label">Teks Tombol <span style="font-weight:400;color:#9ca3af;">(opsional)</span></label>
+                <input type="text" name="label_tombol" id="labelTombolInput" class="form-control" placeholder="Cth: Lihat Produk" value="{{ old('label_tombol') }}" @disabled(isset($bannerTableReady) && !$bannerTableReady) maxlength="80">
+                <p class="form-hint" id="labelHint" style="color:#f59e0b;display:none;"><i class="fa-solid fa-triangle-exclamation"></i> Isi URL dulu agar tombol muncul</p>
+                <p class="form-hint" id="labelHintOk" style="display:none;">Tombol akan tampil di atas banner</p>
             </div>
         </div>
 
@@ -115,7 +121,6 @@ function previewMedia(input) {
     if (input.files && input.files[0]) {
         const file = input.files[0];
         const reader = new FileReader();
-
         reader.onload = e => {
             placeholder.style.display = 'none';
             if (file.type.startsWith('image/')) {
@@ -128,10 +133,28 @@ function previewMedia(input) {
                 imgPreview.style.display = 'none';
             }
         };
-
         reader.readAsDataURL(file);
     }
 }
+
+function syncButtonField() {
+    const url   = document.getElementById('urlTujuanInput');
+    const label = document.getElementById('labelTombolInput');
+    const hint  = document.getElementById('labelHint');
+    const hintOk= document.getElementById('labelHintOk');
+    if (!url || !label) return;
+    const hasUrl = url.value.trim().length > 0;
+    label.disabled = !hasUrl;
+    if (hint)   hint.style.display   = hasUrl ? 'none' : (label.value.trim() ? 'block' : 'none');
+    if (hintOk) hintOk.style.display = (hasUrl && label.value.trim()) ? 'block' : 'none';
+    if (!hasUrl) label.value = '';
+}
+
+// init on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const url = document.getElementById('urlTujuanInput');
+    if (url) syncButtonField();
+});
 </script>
 @endsection
 

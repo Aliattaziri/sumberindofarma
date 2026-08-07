@@ -40,6 +40,7 @@ class AdminBannerController extends Controller
         $data = $request->validate([
             "gambar"       => ["required", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:102400"],
             "url_tujuan"   => ["nullable", "string", "max:255"],
+            "label_tombol" => ["nullable", "string", "max:80"],
             "urutan"       => ["nullable", "integer", "min:0"],
             "aktif"        => ["nullable"],
         ]);
@@ -48,7 +49,10 @@ class AdminBannerController extends Controller
         $data["judul"]        = "Banner Slideshow";
         $data["subjudul"]     = null;
         $data["aktif"]        = $request->boolean("aktif", true);
-        $data["label_tombol"] = "Lihat Sekarang";
+        $data["url_tujuan"]   = $data["url_tujuan"] ?? null;
+        $data["label_tombol"] = ($data["url_tujuan"] && !empty(trim($data["label_tombol"] ?? "")))
+                                    ? trim($data["label_tombol"])
+                                    : null;
         $data["urutan"]       = $data["urutan"] ?? 0;
 
         Banner::create($data);
@@ -76,6 +80,7 @@ class AdminBannerController extends Controller
         $data = $request->validate([
             "gambar"       => ["nullable", "file", "mimes:jpeg,jpg,png,webp,mp4,webm,mov", "max:102400"],
             "url_tujuan"   => ["nullable", "string", "max:255"],
+            "label_tombol" => ["nullable", "string", "max:80"],
             "urutan"       => ["nullable", "integer", "min:0"],
             "aktif"        => ["nullable"],
         ]);
@@ -90,7 +95,12 @@ class AdminBannerController extends Controller
         $data["aktif"]        = $request->boolean("aktif", false);
         $data["judul"]        = $banner->judul ?: "Banner Slideshow";
         $data["subjudul"]     = $banner->subjudul;
-        $data["label_tombol"] = $banner->label_tombol ?: "Lihat Sekarang";
+        $urlTujuan            = $data["url_tujuan"] ?? null;
+        $labelInput           = $data["label_tombol"] ?? null;
+        $data["url_tujuan"]   = $urlTujuan;
+        $data["label_tombol"] = ($urlTujuan && !empty(trim($labelInput ?? "")))
+                                    ? trim($labelInput)
+                                    : null;
         $data["urutan"]       = $data["urutan"] ?? 0;
 
         $banner->update($data);
