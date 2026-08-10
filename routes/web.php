@@ -60,6 +60,7 @@ Route::get('/products-pbf', [ProductController::class, 'pbf'])->name('products.p
 Route::post('/products-pbf/verify', [ProductController::class, 'pbfVerify'])->name('products.pbf.verify');
 Route::post('/products-pbf/logout', [ProductController::class, 'pbfLogout'])->name('products.pbf.logout');
 Route::get('/products-apotek', [ProductController::class, 'apotek'])->name('products.apotek');
+Route::get('/products-apotek-select', [ProductController::class, 'apotekSelect'])->name('products.apotek.select');
 Route::post('/orders/history', [PurchaseHistoryController::class, 'store'])->name('orders.history.store');
 
 // Category routes (Layer 2 & 3)

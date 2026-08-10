@@ -296,8 +296,11 @@ class ProductController extends Controller
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
 
-        // Outlet ditentukan dari email login — bukan dari query param
-        $outletName = $user?->outlet_name;
+        // Outlet: prioritaskan query param (untuk link langsung seperti dari home),
+        // lalu dari akun login, lalu default Alfa Sintang
+        $outletParam = $request->get('outlet', '');
+        // Query param dari URL selalu mengoverride outlet dari akun login
+        $outletName  = $outletParam ?: ($user?->outlet_name ?: null);
 
         $outletMeta = [
             'Alfa Sintang' => [
@@ -427,6 +430,29 @@ class ProductController extends Controller
             'sort', 'total', 'kategoriOptions', 'perusahaanList',
             'selectedOutlet', 'selectedOutletMeta', 'outletMeta', 'displayPerusahaan'
         ));
+    }
+
+    /**
+     * Halaman pemilihan outlet Apotek Alfa Group
+     */
+    public function apotekSelect()
+    {
+        $outlets = [
+            ['slug' => 'alfa-sintang',       'name' => 'Alfa Sintang',       'address' => 'Jl. MT. Haryono, Kec. Sintang, Kab. Sintang'],
+            ['slug' => 'alfa-air-upas',      'name' => 'Alfa Air Upas',      'address' => 'Kec. Air Upas, Kab. Ketapang'],
+            ['slug' => 'alfa-kendawangan',   'name' => 'Alfa Kendawangan',   'address' => 'Jl. Pangeran Adi, Kendawangan, Kab. Ketapang'],
+            ['slug' => 'alfa-balai-berkuak', 'name' => 'Alfa Balai Berkuak', 'address' => 'Desa Balai Pinang, Kec. Simpang Hulu, Kab. Ketapang'],
+            ['slug' => 'alfa-nanga-tayap',   'name' => 'Alfa Nanga Tayap',   'address' => 'Kec. Nanga Tayap, Kab. Ketapang'],
+            ['slug' => 'alfa-tumbang-titi',  'name' => 'Alfa Tumbang Titi',  'address' => 'Kec. Tumbang Titi, Kab. Ketapang'],
+            ['slug' => 'alfa-sosok',         'name' => 'Alfa Sosok',         'address' => 'Sosok, Kec. Tayan Hulu, Kab. Sanggau'],
+            ['slug' => 'alfa-bodok',         'name' => 'Alfa Bodok',         'address' => 'Palem Jaya, Kec. Parindu, Kab. Sanggau'],
+            ['slug' => 'alfa-kembayan',      'name' => 'Alfa Kembayan',      'address' => 'Kec. Kembayan, Kab. Sanggau'],
+            ['slug' => 'alfa-ambawang',      'name' => 'Alfa Ambawang',      'address' => 'Jl. Trans Kalimantan, Kec. Sui Ambawang, Kab. Kubu Raya'],
+            ['slug' => 'alfa-jungkat',       'name' => 'Alfa Jungkat',       'address' => 'Jl. Raya Jungkat, Kec. Jongkat, Kab. Mempawah'],
+            ['slug' => 'alfa-mempawah',      'name' => 'Alfa Mempawah',      'address' => 'Jl. Sujarwo, Kec. Mempawah Hilir, Kab. Mempawah'],
+        ];
+
+        return view('apotek_select', compact('outlets'));
     }
 
 }

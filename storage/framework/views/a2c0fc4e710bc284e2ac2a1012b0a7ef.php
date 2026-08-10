@@ -1002,7 +1002,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
       </a>
-      <a href="<?php echo e(route('products.apotek')); ?>" class="promo-card promo-goapotik">
+      <a href="<?php echo e(route('products.apotek', ['outlet' => 'Apotek Medistra Farma'])); ?>" class="promo-card promo-goapotik">
         <div class="promo-card-content">
           <img src="<?php echo e(asset('logo apotek medistra farma.png')); ?>" alt="Apotek Medistra Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
@@ -1011,7 +1011,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
       </a>
-      <a href="<?php echo e(route('products.apotek')); ?>" class="promo-card promo-pbf">
+      <a href="<?php echo e(route('products.apotek.select')); ?>" class="promo-card promo-pbf">
         <div class="promo-card-content">
           <img src="<?php echo e(asset('apotek alfa group logo.png')); ?>" alt="Apotek Alfa Group" class="promo-pbf-logo">
           <div class="promo-card-text">
