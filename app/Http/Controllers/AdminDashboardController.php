@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Medicine;
 use App\Models\Banner;
 use App\Models\PurchaseHistory;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -111,7 +112,7 @@ class AdminDashboardController extends Controller
 
         // Per kategori produk
         $categoryColumn = Schema::hasColumn('medicines', 'kategori_produk') ? 'kategori_produk' : 'kategori';
-        $kategoriList = Schema::hasColumn('medicines', 'kategori_produk') ? Companies::LIST : $query->whereNotNull('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
+        $kategoriList = Schema::hasColumn('medicines', 'kategori_produk') ? ProductCategory::getList() : $query->whereNotNull('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
 
         $perKategori = [];
         foreach ($kategoriList as $kat) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +12,10 @@ use App\Helpers\ImageHelper;
 
 class AdminPrescriptionProductController extends Controller
 {
-    private array $companies = Companies::LIST;
+    private function getCategories(): array
+    {
+        return ProductCategory::getList();
+    }
 
     // List produk resep
     public function index(Request $request)
@@ -51,8 +55,8 @@ class AdminPrescriptionProductController extends Controller
         }
 
         $medicines       = $query->paginate(10)->withQueryString();
-        $categories      = Companies::LIST;
-        $kategoriOptions = Companies::LIST;
+        $categories      = ProductCategory::getList();
+        $kategoriOptions = $categories;
 
         return view('admin.prescriptions.products.index', compact('medicines', 'search', 'kategori', 'brand', 'categories', 'kategori_produk', 'kategoriOptions'));
     }
@@ -60,7 +64,7 @@ class AdminPrescriptionProductController extends Controller
     // Form tambah produk resep
     public function create()
     {
-        return view('admin.prescriptions.products.create', ['categories' => $this->companies]);
+        return view('admin.prescriptions.products.create', ['categories' => $this->getCategories()]);
     }
 
     // Simpan produk resep baru
@@ -115,7 +119,7 @@ class AdminPrescriptionProductController extends Controller
 
         return view('admin.prescriptions.products.edit', [
             'medicine'   => $product,
-            'categories' => $this->companies,
+            'categories' => $this->getCategories(),
         ]);
     }
 

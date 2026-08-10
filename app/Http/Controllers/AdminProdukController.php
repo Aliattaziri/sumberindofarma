@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminProdukController extends Controller
 {
-    private array $kategoriProduk = Companies::LIST;
+    private function getKategoriProduk(): array
+    {
+        return ProductCategory::getList();
+    }
     private array $outletOptions = [
         'Alfa Sintang',
         'Alfa Air Upas',
@@ -66,10 +70,20 @@ class AdminProdukController extends Controller
 
         $medicines       = $query->paginate(15)->withQueryString();
         $total           = (clone $query)->count();
-        $kategoriOptions = Companies::LIST;
+        $kategoriOptions = $this->getKategoriProduk();
         $kategoriCounts  = [];
         foreach ($kategoriOptions as $kat) {
             $kategoriCounts[$kat] = (clone $baseQuery)->where('kategori_produk', $kat)->count();
+        }
+        // Tambahkan kategori yang ada di DB tapi belum di list (misal dari import)
+        $extraKats = (clone $baseQuery)
+            ->whereNotNull('kategori_produk')
+            ->whereNotIn('kategori_produk', $kategoriOptions)
+            ->distinct()
+            ->pluck('kategori_produk');
+        foreach ($extraKats as $ek) {
+            $kategoriOptions[] = $ek;
+            $kategoriCounts[$ek] = (clone $baseQuery)->where('kategori_produk', $ek)->count();
         }
         $totalAll = array_sum($kategoriCounts);
 
@@ -85,7 +99,7 @@ class AdminProdukController extends Controller
         }
 
         return view('admin.produk.create', [
-            'kategoriOptions' => $this->kategoriProduk,
+            'kategoriOptions' => $this->getKategoriProduk(),
             'outletOptions'  => $this->outletOptions,
         ]);
     }
@@ -98,7 +112,7 @@ class AdminProdukController extends Controller
 
         $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
-            'kategori_produk' => ['required', 'in:' . implode(',', Companies::LIST)],
+            'kategori_produk' => ['required', 'string', 'max:100'],
             'kategori'        => ['required', 'string', 'max:255'],
             'sku'             => ['nullable', 'string', 'max:255'],
             'brand'           => ['nullable', 'string', 'max:255'],
@@ -117,6 +131,9 @@ class AdminProdukController extends Controller
         }
 
         $validated = $request->validate($rules);
+
+        // Normalisasi kategori_produk dan pastikan ada di DB
+        $validated['kategori_produk'] = \App\Models\ProductCategory::ensureExists($validated['kategori_produk']);
 
         if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
             $validated['gambar'] = ImageHelper::storeProductImage($request->file('gambar'));
@@ -148,7 +165,7 @@ class AdminProdukController extends Controller
 
         return view('admin.produk.edit', [
             'medicine'        => $produk,
-            'kategoriOptions' => $this->kategoriProduk,
+            'kategoriOptions' => $this->getKategoriProduk(),
             'outletOptions'   => $this->outletOptions,
         ]);
     }
@@ -161,7 +178,7 @@ class AdminProdukController extends Controller
 
         $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
-            'kategori_produk' => ['required', 'in:' . implode(',', Companies::LIST)],
+            'kategori_produk' => ['required', 'string', 'max:100'],
             'kategori'        => ['required', 'string', 'max:255'],
             'sku'             => ['nullable', 'string', 'max:255'],
             'brand'           => ['nullable', 'string', 'max:255'],
@@ -183,6 +200,9 @@ class AdminProdukController extends Controller
         $validated = $request->validate($rules);
 
         unset($validated['delete_gambar']);
+
+        // Normalisasi kategori_produk dan pastikan ada di DB
+        $validated['kategori_produk'] = \App\Models\ProductCategory::ensureExists($validated['kategori_produk']);
 
         $this->authorizeOutletProduct($produk);
 

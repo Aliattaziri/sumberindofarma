@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,7 +11,10 @@ use App\Helpers\ImageHelper;
 
 class AdminPrescriptionController extends Controller
 {
-    private array $companies = Companies::LIST;
+    private function getCompanies(): array
+    {
+        return ProductCategory::getList();
+    }
 
     // LIST
     public function index(Request $request)
@@ -33,7 +37,7 @@ class AdminPrescriptionController extends Controller
         }
 
         $medicines  = $query->latest()->paginate(10)->withQueryString();
-        $categories = $this->companies;
+        $categories = $this->getCompanies();
         $total      = $query->count();
 
         return view('admin.grosir.index', compact(
@@ -49,7 +53,7 @@ class AdminPrescriptionController extends Controller
     public function create()
     {
         return view('admin.grosir.create', [
-            'categories' => $this->companies
+            'categories' => $this->getCompanies()
         ]);
     }
 
@@ -91,7 +95,7 @@ class AdminPrescriptionController extends Controller
 
         return view('admin.grosir.edit', [
             'medicine'   => $prescription,
-            'categories' => $this->companies,
+            'categories' => $this->getCompanies(),
         ]);
     }
 
@@ -206,7 +210,7 @@ class AdminPrescriptionController extends Controller
     public function showImportForm()
     {
         return view('admin.grosir.import', [
-            'categories' => $this->companies
+            'categories' => $this->getCompanies()
         ]);
     }
 

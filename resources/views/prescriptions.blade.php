@@ -328,8 +328,6 @@
                             @endif
                         </div>
                         <div class="medicine-body">
-                            
-                            <span class="medicine-company">{{ $medicine->kategori }}</span>
                             <h3 class="medicine-name">{{ $medicine->nama_obat }}</h3>
                             
                             <div class="medicine-price">{{ $medicine->getFormattedPrice() }}</div>

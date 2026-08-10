@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,8 +11,6 @@ use App\Helpers\ImageHelper;
 
 class AdminMedicineController extends Controller
 {
-    
-    private array $companies = Companies::LIST;
     // List obat
     public function index(Request $request)
     {
@@ -50,8 +49,8 @@ class AdminMedicineController extends Controller
         }
 
         $medicines       = $query->paginate(10)->withQueryString();
-        $categories      = Companies::LIST;
-        $kategoriOptions = Companies::LIST;
+        $categories      = ProductCategory::getList();
+        $kategoriOptions = $categories;
 
         return view('admin.medicines.index', compact('medicines', 'search', 'kategori', 'brand', 'tipe', 'categories', 'kategori_produk', 'kategoriOptions'));
     }
@@ -59,7 +58,7 @@ class AdminMedicineController extends Controller
     // Form tambah obat
     public function create()
     {
-        return view('admin.medicines.create', ['categories' => $this->companies]);
+        return view('admin.medicines.create', ['categories' => ProductCategory::getList()]);
     }
 
     // Simpan obat baru
@@ -107,7 +106,7 @@ class AdminMedicineController extends Controller
     {
         return view('admin.medicines.edit', [
             'medicine'   => $medicine,
-            'categories' => $this->companies,
+            'categories' => ProductCategory::getList(),
         ]);
     }
 

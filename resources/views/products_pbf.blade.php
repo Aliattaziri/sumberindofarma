@@ -498,14 +498,7 @@
                 <select name="kategori_produk" class="filter-select">
                     <option value="">Semua Kategori</option>
                     @foreach($kategoriOptions as $k)
-                        @php
-                            $icon = match($k) {
-                                'OBAT' => '💊',
-                                'SKINCARE & KOSMETIK' => '✨',
-                                'ALAT KESEHATAN' => '🩺',
-                                default => ''
-                            };
-                        @endphp
+                        @php $icon = \App\Models\ProductCategory::iconFor($k); @endphp
                         <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $icon }} {{ $k }}</option>
                     @endforeach
                 </select>
@@ -560,9 +553,6 @@
                             @endif
                         </div>
                         <div class="medicine-body">
-                            @if($medicine->kategori)
-                                <div class="medicine-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.45rem;font-weight:600;">Toko: {{ $medicine->kategori }}</div>
-                            @endif
                             <h3 class="medicine-name">{{ $medicine->nama_obat }}</h3>
                             
                             <div class="medicine-price">{{ $medicine->getFormattedPrice() }}</div>
@@ -575,8 +565,6 @@
                                 <span class="stock-badge stock-available"><i class="fa-solid fa-circle-check"></i> {{ $medicine->stok }} tersedia</span>
                             @elseif($medicine->stok > 0)
                                 <span class="stock-badge stock-low"><i class="fa-solid fa-triangle-exclamation"></i> {{ $medicine->stok }} tersisa</span>
-                            @else
-                                <span class="stock-badge stock-out"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
                             @endif
                             <a href="{{ route('medicines.show', $medicine->id) }}" class="medicine-btn">
                                 Lihat Detail <i class="fa-solid fa-arrow-right"></i>

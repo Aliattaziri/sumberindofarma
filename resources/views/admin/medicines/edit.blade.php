@@ -284,15 +284,15 @@
 
                 <div class="form-group">
                     <label class="form-label">Pabrik <span class="req">*</span></label>
-                    <select name="kategori"
-                            class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}" required>
-                        <option value="">— Pilih Pabrik —</option>
+                    <input type="text" name="kategori" list="pabrikList"
+                           class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}"
+                           placeholder="Ketik atau pilih pabrik, contoh: KIMIA FARMA"
+                           value="{{ old('kategori', $medicine->kategori) }}" required autocomplete="off">
+                    <datalist id="pabrikList">
                         @foreach($categories as $category)
-                            <option value="{{ $category }}" {{ old('kategori', $medicine->kategori) == $category ? 'selected' : '' }}>
-                                {{ $category }}
-                            </option>
+                            <option value="{{ $category }}">
                         @endforeach
-                    </select>
+                    </datalist>
                     @error('kategori')
                         <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                     @enderror

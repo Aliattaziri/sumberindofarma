@@ -35,17 +35,19 @@
     .btn-cancel:hover { background:#f9fafb; color:#374151; }
     .two-col-layout { display:grid; grid-template-columns:1fr 340px; gap:1.25rem; align-items:start; }
     /* Kategori selector cards */
-    .kat-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; }
+    .kat-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; flex-wrap:wrap; }
     .kat-card { border:2px solid #e5e7eb; border-radius:0.6rem; padding:0.75rem 0.5rem; text-align:center; cursor:pointer; transition:all 0.2s; background:white; }
     .kat-card:hover { border-color:#B91C1C; }
     .kat-card.selected { border-color:#B91C1C; background:#fef2f2; }
+    .kat-card.kat-card-custom:hover { border-color:#059669; }
+    .kat-card.kat-card-custom.selected { border-color:#059669; background:#f0fdf4; }
+    .kat-card.kat-card-custom.selected .kat-label { color:#065f46; }
     .kat-card input[type=radio] { display:none; }
     .kat-card .kat-icon { font-size:1.5rem; display:block; margin-bottom:0.3rem; }
     .kat-card .kat-label { font-size:0.72rem; font-weight:700; color:#374151; line-height:1.3; }
     .kat-card.selected .kat-label { color:#991B1B; }
     @media (max-width:900px) { .two-col-layout { grid-template-columns:1fr; } }
-    @media (max-width:600px) { .form-grid { grid-template-columns:1fr; } .form-body { padding:1rem; } .form-footer { padding:1rem; } .kat-selector { grid-template-columns:1fr 1fr; } }
-</style>
+    @media (max-width:600px) { .form-grid { grid-template-columns:1fr; } .form-body { padding:1rem; } .form-footer { padding:1rem; } .kat-selector { grid-template-columns:1fr 1fr; } }</style>
 @endsection
 
 @section('content')
@@ -185,10 +187,12 @@
                 {{-- Kategori Produk --}}
                 <div class="form-group">
                     <label class="form-label">Kategori Produk <span class="req">*</span></label>
+
+                    {{-- Pilihan kartu (kategori yang sudah ada) --}}
                     <div class="kat-selector" id="katSelector">
                         @foreach($kategoriOptions as $kat)
                             @php
-                                $icon = match($kat) { 'OBAT' => '💊', 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '📦' };
+                                $icon = \App\Models\ProductCategory::iconFor($kat);
                                 $isSelected = old('kategori_produk', 'OBAT') === $kat;
                             @endphp
                             <label class="kat-card {{ $isSelected ? 'selected' : '' }}" onclick="selectKat(this)">
@@ -197,7 +201,34 @@
                                 <span class="kat-label">{{ $kat }}</span>
                             </label>
                         @endforeach
+
+                        {{-- Kartu "Tambah Baru" --}}
+                        <label class="kat-card kat-card-custom {{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) && old('kategori_produk') ? 'selected' : '' }}"
+                               onclick="toggleCustomKat(this)" id="katCardCustom">
+                            <input type="radio" name="kategori_produk" value="__custom__" id="radioCustom"
+                                   {{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) && old('kategori_produk') ? 'checked' : '' }}>
+                            <span class="kat-icon">➕</span>
+                            <span class="kat-label">Tambah Baru</span>
+                        </label>
                     </div>
+
+                    {{-- Input teks untuk kategori baru --}}
+                    <div id="customKatWrap" style="margin-top:0.6rem;display:{{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) && old('kategori_produk') ? 'block' : 'none' }};">
+                        <input type="text" id="customKatInput"
+                               class="form-input"
+                               placeholder="Ketik nama kategori baru, contoh: NUTRISI"
+                               value="{{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) ? old('kategori_produk','') : '' }}"
+                               oninput="syncCustomKat(this.value)">
+                        <div style="font-size:0.75rem;color:#6b7280;margin-top:0.3rem;">
+                            <i class="fa-solid fa-circle-info" style="color:#B91C1C;"></i>
+                            Kategori baru akan otomatis tersimpan dan tersedia untuk produk lain.
+                        </div>
+                    </div>
+
+                    {{-- Hidden input untuk nilai final --}}
+                    <input type="hidden" name="kategori_produk" id="kategoriProdukFinal"
+                           value="{{ old('kategori_produk', 'OBAT') }}">
+
                     @error('kategori_produk')
                         <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                     @enderror
@@ -250,11 +281,53 @@
 </form>
 
 <script>
+// ── Kategori selector ──────────────────────────────────────────
+const finalInput = document.getElementById('kategoriProdukFinal');
+
 function selectKat(el) {
+    // Deselect semua kartu
     document.querySelectorAll('.kat-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
     el.querySelector('input[type=radio]').checked = true;
+
+    const val = el.querySelector('input[type=radio]').value;
+    if (val !== '__custom__') {
+        finalInput.value = val;
+        document.getElementById('customKatWrap').style.display = 'none';
+        document.getElementById('customKatInput').value = '';
+    }
 }
+
+function toggleCustomKat(el) {
+    document.querySelectorAll('.kat-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('radioCustom').checked = true;
+    document.getElementById('customKatWrap').style.display = 'block';
+    document.getElementById('customKatInput').focus();
+    // Update final value ke apa pun yang sudah diketik
+    const typed = document.getElementById('customKatInput').value.trim().toUpperCase();
+    finalInput.value = typed || '';
+}
+
+function syncCustomKat(val) {
+    finalInput.value = val.trim().toUpperCase();
+}
+
+// Intercept form submit: validasi kategori_produk tidak kosong
+document.querySelector('form').addEventListener('submit', function(e) {
+    const val = finalInput.value.trim();
+    if (!val) {
+        e.preventDefault();
+        alert('Pilih atau ketik kategori produk terlebih dahulu.');
+        return;
+    }
+    // Nonaktifkan semua radio agar tidak duplikat dengan hidden input
+    document.querySelectorAll('input[name="kategori_produk"]').forEach(r => {
+        if (r !== finalInput) r.disabled = true;
+    });
+});
+
+// ── Gambar preview ──────────────────────────────────────────────
 const input = document.getElementById('gambar');
 const dropZone = document.getElementById('dropZone');
 const previewWrap = document.getElementById('imgPreviewWrap');

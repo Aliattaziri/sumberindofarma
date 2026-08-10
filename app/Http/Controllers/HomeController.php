@@ -72,6 +72,16 @@ class HomeController extends Controller
             return redirect()->route('products.pbf')
                 ->with('error', 'Akses produk PBF hanya melalui halaman Produk PBF.');
         }
+
+        // Tentukan URL kembali: dari referer atau default sesuai tipe produk
+        $referer = $request->headers->get('referer', '');
+        $appUrl  = config('app.url');
+        if ($referer && str_starts_with($referer, $appUrl) && !str_contains($referer, '/medicines/') && !str_contains($referer, '/products/')) {
+            $backUrl = $referer;
+        } else {
+            $backUrl = $isPbf ? route('products.pbf') : route('products.apotek');
+        }
+
         // Related products dari kategori yang sama
         if ($isPbf) {
             $relatedMedicines = Medicine::where('kategori', $medicine->kategori)
@@ -91,8 +101,9 @@ class HomeController extends Controller
         }
 
         return view('medicines.detail', [
-            'medicine' => $medicine,
+            'medicine'         => $medicine,
             'relatedMedicines' => $relatedMedicines,
+            'backUrl'          => $backUrl,
         ]);
     }
 

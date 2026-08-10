@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminMedicineImportController extends Controller
 {
-    private array $companies = Companies::LIST;
-
     public function showImportForm()
     {
         return view('admin.medicines.import', [
-            'categories' => $this->companies
+            'categories' => ProductCategory::getList()
         ]);
     }
 
@@ -348,7 +347,9 @@ class AdminMedicineImportController extends Controller
                     }
                 }
 
-                $kategoriProduk = !empty($data['KATEGORI']) ? $data['KATEGORI'] : null;
+                $kategoriProduk = !empty($data['KATEGORI'])
+                    ? ProductCategory::ensureExists($data['KATEGORI'])
+                    : null;
 
                 $parts = array_filter(array_map('trim', [
                     $data['DESKRIPSI'] ?? '',

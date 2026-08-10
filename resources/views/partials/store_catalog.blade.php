@@ -143,7 +143,7 @@
                             <img src="{{ asset('page1.jpeg') }}" alt="{{ $medicine->nama_obat }}">
                         @endif
                         <div class="product-body">
-                            <span class="product-tag">{{ $medicine->kategori_produk ?: $medicine->kategori }}</span>
+                            <span class="product-tag">{{ $medicine->kategori_produk ?: 'OBAT' }}</span>
                             <h3 class="product-name">{{ $medicine->nama_obat }}</h3>
                             <div class="product-price">{{ $medicine->getFormattedPrice() }}</div>
                             @if($medicine->stok > 10)

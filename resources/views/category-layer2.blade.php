@@ -677,9 +677,6 @@
                                 @endif
                             </div>
                             <div class="product-body">
-                                @if($med->kategori)
-                                    <div class="product-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.35rem;font-weight:600;">Toko: {{ $med->kategori }}</div>
-                                @endif
                                 <h3 class="product-name">{{ $med->nama_obat }}</h3>
                                 
                                 <div class="product-price">{{ $med->getFormattedPrice() }}</div>

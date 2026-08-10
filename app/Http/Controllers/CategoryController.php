@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,8 +14,8 @@ class CategoryController extends Controller
     public function layer2(Request $request)
     {
         $mainCategory = $request->get('main', 'obat');
-        $subCategory = $request->get('sub', '');
-        $search = $request->get('search', '');
+        $subCategory  = $request->get('sub', '');
+        $search       = $request->get('search', '');
 
         // Validasi kategori
         $validCategories = $this->getValidCategories();
@@ -52,39 +53,43 @@ class CategoryController extends Controller
     }
 
     /**
-     * Mapping kategori dan sub-kategori dengan field di database
+     * Mapping kategori utama (URL slug) ke keyword pencarian di DB.
+     * Kategori kustom dari DB yang tidak masuk mapping akan ikut
+     * ditampilkan melalui filterCustomCategories().
      */
-    private function getValidCategories()
+    private function getValidCategories(): array
     {
         return [
             'alkes' => [
-                'ortopedi' => 'Alkes Ortopedi',
-                'gigi' => 'Alkes Gigi',
-                'electrical' => 'Alkes Electrical',
-                'non-electrical' => 'Alkes Non Electrical',
+                'ortopedi'      => 'Alkes Ortopedi',
+                'gigi'          => 'Alkes Gigi',
+                'electrical'    => 'Alkes Electrical',
+                'non-electrical'=> 'Alkes Non Electrical',
             ],
             'kecantikan' => [
-                'skincare' => 'Skincare',
-                'kosmetik' => 'Kosmetik',
-                'material' => 'Material Klinik',
+                'skincare'  => 'Skincare',
+                'kosmetik'  => 'Kosmetik',
+                'material'  => 'Material Klinik',
             ],
             'apotik' => [
-                'oral' => 'Obat Oral',
-                'injeksi' => 'Obat Injeksi',
-                'luar' => 'Obat Luar',
-                'otc' => 'Obat OTC',
-                'susu' => 'Susu',
+                'oral'     => 'Obat Oral',
+                'injeksi'  => 'Obat Injeksi',
+                'luar'     => 'Obat Luar',
+                'otc'      => 'Obat OTC',
+                'susu'     => 'Susu',
                 'suplemen' => 'Suplemen',
-                'herbal' => 'Herbal',
+                'herbal'   => 'Herbal',
             ],
             'pbf' => [],
         ];
     }
 
     /**
-     * Filter query berdasarkan kategori utama dan sub-kategori
+     * Filter query berdasarkan kategori utama dan sub-kategori.
+     * Mencakup semua alias (alkes / alat kesehatan, dll.) dan
+     * semua kategori kustom yang tersimpan di tabel product_categories.
      */
-    private function filterByCategory($query, $mainCategory, $subCategory)
+    private function filterByCategory($query, string $mainCategory, string $subCategory)
     {
         $categories = $this->getValidCategories();
 
@@ -96,32 +101,64 @@ class CategoryController extends Controller
 
         if ($subCategory && isset($categoryMap[$subCategory])) {
             $categoryName = $categoryMap[$subCategory];
-            // Filter berdasarkan kategori atau kategori produk
             $query->where(function ($q) use ($categoryName, $mainCategory) {
                 $q->where('kategori', 'like', "%{$categoryName}%")
                   ->orWhere('kategori_produk', 'like', "%{$categoryName}%");
             });
         } else {
-            // Jika tidak ada sub-kategori, filter berdasarkan kategori utama
-            $mainCategoryName = ucfirst($mainCategory);
-            $query->where(function ($q) use ($mainCategoryName, $mainCategory) {
+            // Filter berdasarkan kategori utama + semua alias yang relevan
+            $query->where(function ($q) use ($mainCategory) {
                 if ($mainCategory === 'kecantikan') {
                     $q->where('kategori_produk', 'like', '%SKINCARE%')
-                      ->orWhere('kategori_produk', 'like', '%KOSMETIK%');
+                      ->orWhere('kategori_produk', 'like', '%KOSMETIK%')
+                      ->orWhere('kategori_produk', 'like', '%KECANTIKAN%');
+
+                    // Tambahkan kategori kustom yang sesuai dari DB
+                    $this->addCustomCategoryFilters($q, ['SKINCARE', 'KOSMETIK', 'KECANTIKAN', 'BEAUTY']);
+
                 } elseif ($mainCategory === 'alkes') {
-                    $q->where('kategori_produk', 'like', '%ALAT KESEHATAN%');
+                    $q->where('kategori_produk', 'like', '%ALAT KESEHATAN%')
+                      ->orWhere('kategori_produk', 'like', '%ALKES%')
+                      ->orWhere('kategori_produk', 'like', '%MEDICAL%');
+
+                    // Tambahkan kategori kustom yang sesuai dari DB
+                    $this->addCustomCategoryFilters($q, ['ALAT KESEHATAN', 'ALKES', 'MEDICAL']);
+
                 } elseif ($mainCategory === 'apotik') {
                     $q->where('kategori_produk', 'like', '%OBAT%')
                       ->orWhere('kategori_produk', 'like', '%APOTIK%')
-                      ->orWhere('kategori', 'like', '%Apotik%')
-                      ->orWhere('is_resep', true)
-                      ->orWhere('is_resep', false);
-                } else {
-                    $q->where('kategori', 'like', "%{$mainCategoryName}%");
+                      ->orWhere('kategori_produk', 'like', '%APOTEK%')
+                      ->orWhere('kategori_produk', 'like', '%FARMASI%')
+                      ->orWhere('kategori', 'like', '%Apotik%');
+
+                    // Tambahkan kategori kustom yang sesuai dari DB
+                    $this->addCustomCategoryFilters($q, ['OBAT', 'APOTEK', 'APOTIK', 'FARMASI']);
                 }
             });
         }
 
         return $query;
+    }
+
+    /**
+     * Tambahkan OR filter untuk setiap kategori kustom di DB
+     * yang mengandung salah satu keyword yang diberikan.
+     */
+    private function addCustomCategoryFilters($query, array $keywords): void
+    {
+        try {
+            $customCategories = ProductCategory::orderBy('sort_order')->pluck('name');
+            foreach ($customCategories as $cat) {
+                $upper = strtoupper($cat);
+                foreach ($keywords as $kw) {
+                    if (str_contains($upper, $kw)) {
+                        $query->orWhere('kategori_produk', $cat);
+                        break;
+                    }
+                }
+            }
+        } catch (\Throwable) {
+            // Tabel belum ada, skip
+        }
     }
 }

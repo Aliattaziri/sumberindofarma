@@ -322,7 +322,7 @@
 <div class="products-main">
     <div class="container">
 
-        <form method="GET" action="{{ route('products.apotek') }}" class="filter-bar">
+        <form method="GET" action="{{ route('products.index') }}" class="filter-bar">
             <div class="filter-group" style="flex: 2; min-width: 200px;">
                 <label class="filter-label"><i class="fa-solid fa-magnifying-glass"></i> Cari Produk</label>
                 <input type="text" name="search" class="filter-input"
@@ -334,17 +334,8 @@
                 <select name="kategori_produk" class="filter-select">
                     <option value="">Semua Kategori</option>
                     @foreach($kategoriOptions as $k)
-                        @php $icon = match($k) { 'OBAT' => '??', 'SKINCARE & KOSMETIK' => '?', 'ALAT KESEHATAN' => '??', default => '??' }; @endphp
+                        @php $icon = \App\Models\ProductCategory::iconFor($k); @endphp
                         <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $icon }} {{ $k }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fa-solid fa-building"></i> Perusahaan</label>
-                <select name="perusahaan" class="filter-select">
-                    <option value="">Semua Perusahaan</option>
-                    @foreach($perusahaanList as $p)
-                        <option value="{{ $p }}" @selected($perusahaan === $p)>{{ $p }}</option>
                     @endforeach
                 </select>
             </div>
@@ -361,8 +352,8 @@
                 <button type="submit" class="btn-filter">
                     <i class="fa-solid fa-magnifying-glass"></i> Cari
                 </button>
-                @if($search || ($kategori_produk ?? '') || $perusahaan || $sort !== 'terbaru')
-                    <a href="{{ route('products.apotek') }}" class="btn-reset"><i class="fa-solid fa-xmark"></i> Reset</a>
+                @if($search || ($kategori_produk ?? '') || $sort !== 'terbaru')
+                    <a href="{{ route('products.index') }}" class="btn-reset"><i class="fa-solid fa-xmark"></i> Reset</a>
                 @endif
             </div>
         </form>
@@ -373,7 +364,6 @@
                 dari <strong>{{ $medicines->total() }}</strong> produk
                 @if($search) - "<strong>{{ $search }}</strong>" @endif
                 @if($kategori_produk ?? '') - <strong>{{ $kategori_produk }}</strong> @endif
-                @if($perusahaan) - <strong>{{ $perusahaan }}</strong> @endif
             </p>
         </div>
 
@@ -389,9 +379,6 @@
                             @endif
                         </div>
                         <div class="medicine-body">
-                            @if($medicine->kategori)
-                                <div class="medicine-origin" style="font-size:0.75rem;color:#6b7280;margin-bottom:0.45rem;font-weight:600;">Toko: {{ $medicine->kategori }}</div>
-                            @endif
                             <h3 class="medicine-name">{{ $medicine->nama_obat }}</h3>
                             
                             <div class="medicine-price">{{ $medicine->getFormattedPrice() }}</div>
@@ -459,7 +446,7 @@
                     @endif
                 </p>
                 @if($search || ($kategori_produk ?? '') || $perusahaan)
-                    <a href="{{ route('products.apotek') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;"><i class="fa-solid fa-xmark"></i> Hapus Filter</a>
+                    <a href="{{ route('products.index') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;"><i class="fa-solid fa-xmark"></i> Hapus Filter</a>
                 @endif
             </div>
         @endif

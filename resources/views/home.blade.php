@@ -866,95 +866,6 @@
     transform: scale(1.15);
 }
 
-    .outlet-modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.55);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.25s ease, visibility 0.25s ease;
-        z-index: 2100;
-    }
-    .outlet-modal-overlay.open {
-        opacity: 1;
-        visibility: visible;
-    }
-    .outlet-modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.95);
-        width: min(96vw, 520px);
-        max-height: 90vh;
-        overflow: hidden;
-        background: #fff;
-        border-radius: 24px;
-        box-shadow: 0 30px 90px rgba(0,0,0,0.22);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-        z-index: 2101;
-    }
-    .outlet-modal.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    .outlet-modal-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1.4rem 1.5rem;
-        border-bottom: 1px solid #f3f4f6;
-    }
-    .outlet-modal-head h3 {
-        margin: 0;
-        font-size: 1.2rem;
-        color: #111827;
-    }
-    .outlet-modal-head p {
-        margin: 0;
-        color: #6b7280;
-        font-size: 0.95rem;
-    }
-    .outlet-modal-close {
-        width: 38px;
-        height: 38px;
-        border: none;
-        border-radius: 50%;
-        background: #f3f4f6;
-        color: #374151;
-        cursor: pointer;
-        display: grid;
-        place-items: center;
-    }
-    .outlet-modal-list {
-        max-height: calc(90vh - 108px);
-        overflow-y: auto;
-        padding: 1rem 1.25rem 1.25rem;
-        display: grid;
-        gap: 0.65rem;
-    }
-    .outlet-choice {
-        display: block;
-        padding: 1rem 1.2rem;
-        border-radius: 18px;
-        background: #ffffff;
-        border: 1px solid rgba(15, 23, 42, 0.12);
-        color: #111827;
-        text-decoration: none;
-        font-weight: 700;
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-    .outlet-choice:hover {
-        background: #f8fafc;
-        border-color: #cbd5e1;
-        transform: translateY(-2px);
-        box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
-    }
-
 </style>
 
 @section('content')
@@ -1092,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
       </a>
-      <a href="{{ route('products.apotek', ['perusahaan' => 'Apotek Medistra Farma']) }}" class="promo-card promo-goapotik">
+      <a href="{{ route('products.apotek') }}" class="promo-card promo-goapotik">
         <div class="promo-card-content">
           <img src="{{ asset('logo apotek medistra farma.png') }}" alt="Apotek Medistra Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
@@ -1101,7 +1012,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </div>
       </a>
-      <a href="javascript:void(0)" onclick="openAlfaOutletModal()" class="promo-card promo-pbf">
+      <a href="{{ route('products.apotek') }}" class="promo-card promo-pbf">
         <div class="promo-card-content">
           <img src="{{ asset('apotek alfa group logo.png') }}" alt="Apotek Alfa Group" class="promo-pbf-logo">
           <div class="promo-card-text">
@@ -1631,7 +1542,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Area penyimpanan produk dengan tata kelola rapi.</p>
                 </div>
                 <div class="pbf-photo-template pbf-photo-template-featured mobile-order-1">
-                    <img src="{{ asset('STRUKTUR PT SFT.jpeg') }}" alt="Struktur PT Sumberindo Farma Tama">
+                    <img src="{{ asset('STRUKTUR PT SFT.png') }}" alt="Struktur PT Sumberindo Farma Tama">
                     <h4>Tim Profesional</h4>
                 </div>
                 <div class="pbf-photo-template">
@@ -1680,46 +1591,9 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<div class="outlet-modal-overlay" id="outletModalOverlay" onclick="closeAlfaOutletModal()"></div>
-<div class="outlet-modal" id="outletModal">
-  <div class="outlet-modal-head">
-    <div>
-      <h3>Pilih Apotek Alfa</h3>
-      <p>Pilih gerai yang ingin Anda kunjungi.</p>
-    </div>
-    <button type="button" class="outlet-modal-close" onclick="closeAlfaOutletModal()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-  <div class="outlet-modal-list">
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sintang']) }}" class="outlet-choice">1. Apotek Alfa Sintang</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Air Upas']) }}" class="outlet-choice">2. Apotek Alfa Air Upas</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kendawangan']) }}" class="outlet-choice">3. Apotek Alfa Kendawangan</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Balai Berkuak']) }}" class="outlet-choice">4. Apotek Alfa Balai Berkuak</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Nanga Tayap']) }}" class="outlet-choice">5. Apotek Alfa Nanga Tayap</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Tumbang Titi']) }}" class="outlet-choice">6. Apotek Alfa Tumbang Titi</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Sosok']) }}" class="outlet-choice">7. Apotek Alfa Sosok</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Bodok']) }}" class="outlet-choice">8. Apotek Alfa Bodok</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Kembayan']) }}" class="outlet-choice">9. Apotek Alfa Kembayan</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Ambawang']) }}" class="outlet-choice">10. Apotek Alfa Ambawang</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Jungkat']) }}" class="outlet-choice">11. Apotek Alfa Jungkat</a>
-    <a href="{{ route('products.apotek', ['perusahaan' => 'Alfa Mempawah']) }}" class="outlet-choice">12. Apotek Alfa Mempawah</a>
-  </div>
-</div>
-
 @endsection
 
 @section('scripts')
-<script>
-function openAlfaOutletModal() {
-  document.getElementById('outletModalOverlay').classList.add('open');
-  document.getElementById('outletModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeAlfaOutletModal() {
-  document.getElementById('outletModalOverlay').classList.remove('open');
-  document.getElementById('outletModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-</script>
 @endsection
 
 

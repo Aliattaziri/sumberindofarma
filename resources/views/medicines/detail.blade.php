@@ -346,12 +346,11 @@
         <div class="breadcrumb-custom">
             <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
             <span>/</span>
-            <a href="{{ route('products.apotek') }}">Produk</a>
+            <a href="{{ $backUrl }}">Produk</a>
             <span>/</span>
             <span class="current">{{ Str::limit($medicine->nama_obat, 30) }}</span>
         </div>
         <h1>{{ $medicine->nama_obat }}</h1>
-        <p><i class="fa-solid fa-building fa-sm"></i> {{ $medicine->kategori }}</p>
     </div>
 </div>
 
@@ -378,7 +377,6 @@
 
             <!-- Info Column -->
             <div class="detail-info">
-                <span class="detail-category">{{ $medicine->kategori }}</span>
                 <h1>{{ $medicine->nama_obat }}</h1>
 
                 <div class="price-section">
@@ -455,7 +453,7 @@
                     </button>
                 </div>
 
-                <a href="{{ route('products.apotek') }}" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem;border:1.5px solid #e5e7eb;border-radius:10px;color:#6b7280;text-decoration:none;font-weight:600;font-size:0.875rem;transition:all 0.2s;">
+                <a href="{{ $backUrl }}" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem;border:1.5px solid #e5e7eb;border-radius:10px;color:#6b7280;text-decoration:none;font-weight:600;font-size:0.875rem;transition:all 0.2s;">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog
                 </a>
             </div>
@@ -464,7 +462,7 @@
 
     @if($relatedMedicines->count() > 0)
     <div class="related-section">
-        <h2><i class="fa-solid fa-pills"></i> Produk Serupa - {{ $medicine->kategori }}</h2>
+        <h2><i class="fa-solid fa-pills"></i> Produk Serupa</h2>
         <div class="related-grid">
             @foreach($relatedMedicines as $related)
                 <a href="{{ route('medicines.show', $related->id) }}" class="related-card">
@@ -493,7 +491,6 @@
     const hargaSatuan = {{ $medicine->harga }};
     const stokMax     = {{ $medicine->stok }};
     const namaObat    = @json($medicine->nama_obat);
-    const kategori    = @json($medicine->kategori);
 
     function formatRupiah(angka) {
         return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
@@ -531,7 +528,6 @@
 
         const pesan = 'Halo Sumberindo Farma Tama, saya ingin memesan:\n\n' +
             'Produk     : ' + namaObat + '\n' +
-            'Perusahaan : ' + kategori + '\n' +
             'Harga      : ' + hargaSatuanFmt + ' / pcs\n' +
             'Jumlah     : ' + qty + ' pcs\n' +
             'Total      : ' + total + '\n\n' +

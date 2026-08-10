@@ -1,3 +1,0 @@
-
-<?php echo $__env->make('partials.cart', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-<?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views\partials\cart_products.blade.php ENDPATH**/ ?>

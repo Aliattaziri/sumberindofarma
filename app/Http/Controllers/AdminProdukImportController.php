@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -334,7 +335,6 @@ class AdminProdukImportController extends Controller
 
         $imported      = 0;
         $skipped       = 0;
-        $validKategori = Companies::LIST;
         $outlet = Auth::user()?->outlet_name;
 
         DB::beginTransaction();
@@ -359,7 +359,7 @@ class AdminProdukImportController extends Controller
                 }
 
                 $katRaw    = strtoupper(trim((string) ($data['KATEGORI'] ?? '')));
-                $katProduk = in_array($katRaw, $validKategori) ? $katRaw : 'OBAT';
+                $katProduk = ProductCategory::ensureExists($katRaw ?: 'OBAT');
 
                 $hargaRaw = $data['HARGA'] ?? '0';
                 $sku      = trim((string) ($data['SKU'] ?? ''));

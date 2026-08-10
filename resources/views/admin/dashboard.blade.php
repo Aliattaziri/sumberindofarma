@@ -32,8 +32,13 @@
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
     @foreach($perKategori as $kat => $jumlah)
         @php
-            $icon  = match($kat) { 'OBAT' => '💊', 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '📦' };
-            $color = match($kat) { 'OBAT' => '#B91C1C', 'SKINCARE & KOSMETIK' => '#c2185b', 'ALAT KESEHATAN' => '#991B1B', default => '#6b7280' };
+            $icon  = \App\Models\ProductCategory::iconFor($kat);
+            $color = match(true) {
+                str_contains(strtoupper($kat), 'SKINCARE') || str_contains(strtoupper($kat), 'KOSMETIK') || str_contains(strtoupper($kat), 'KECANTIKAN') => '#c2185b',
+                str_contains(strtoupper($kat), 'ALAT') || str_contains(strtoupper($kat), 'ALKES') => '#991B1B',
+                str_contains(strtoupper($kat), 'OBAT') => '#B91C1C',
+                default => '#6b7280',
+            };
         @endphp
         <div class="stat-card" style="border-top-color:{{ $color }};">
             <div class="stat-label">{{ $icon }} {{ $kat }}</div>
@@ -77,7 +82,7 @@
                     <tr>
                         <td><strong>{{ $p->nama_obat }}</strong></td>
                         <td>
-                            @php $icon = match($p->kategori_produk) { 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '💊' }; @endphp
+                            @php $icon = \App\Models\ProductCategory::iconFor($p->kategori_produk ?? 'OBAT'); @endphp
                             <span style="font-size:0.82rem;">{{ $icon }} {{ $p->kategori_produk }}</span>
                         </td>
                         <td style="font-size:0.82rem;color:#6b7280;">{{ $p->kategori }}</td>

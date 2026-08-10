@@ -167,12 +167,7 @@
     @foreach($kategoriOptions as $kat)
         @php
             $count = $kategoriCounts[$kat] ?? 0;
-            $icon  = match($kat) {
-                'OBAT'                => '💊',
-                'SKINCARE & KOSMETIK' => '✨',
-                'ALAT KESEHATAN'      => '🩺',
-                default               => '📦',
-            };
+            $icon  = \App\Models\ProductCategory::iconFor($kat);
         @endphp
         <a href="{{ route('admin.produk.index', array_merge(request()->except('kategori_produk'), ['kategori_produk' => $kat])) }}"
            class="kat-tab {{ $kategori_produk === $kat ? 'active' : '' }}">
@@ -202,7 +197,9 @@
                     <select name="kategori_produk">
                         <option value="">Semua Kategori</option>
                         @foreach($kategoriOptions as $kat)
-                            <option value="{{ $kat }}" {{ $kategori_produk === $kat ? 'selected' : '' }}>{{ $kat }}</option>
+                            <option value="{{ $kat }}" {{ $kategori_produk === $kat ? 'selected' : '' }}>
+                                {{ \App\Models\ProductCategory::iconFor($kat) }} {{ $kat }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -277,7 +274,7 @@
                             <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}" class="med-img">
                         @else
                             <div class="med-img-placeholder">
-                                {{ match($medicine->kategori_produk) { 'SKINCARE & KOSMETIK' => '✨', 'ALAT KESEHATAN' => '🩺', default => '💊' } }}
+                                {{ \App\Models\ProductCategory::iconFor($medicine->kategori_produk ?? 'OBAT') }}
                             </div>
                         @endif
                     </td>
@@ -293,11 +290,7 @@
                     </td>
                     <td>
                         @php
-                            $prodCategoryIcon = match($medicine->kategori_produk) {
-                                'SKINCARE & KOSMETIK' => '✨',
-                                'ALAT KESEHATAN'      => '🩺',
-                                default               => '💊',
-                            };
+                            $prodCategoryIcon = \App\Models\ProductCategory::iconFor($medicine->kategori_produk ?? 'OBAT');
                         @endphp
                         <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.82rem;color:#6b7280;">
                             <span>{{ $prodCategoryIcon }}</span>

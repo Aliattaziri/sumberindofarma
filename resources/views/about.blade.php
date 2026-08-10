@@ -260,7 +260,7 @@
             PT. Sumberindo Farma Tama dikelola oleh tim profesional berpengalaman di bidang farmasi dan distribusi, mulai dari Apoteker Penanggung Jawab, Asisten Apoteker, hingga tim operasional lapangan.
         </p>
         <div class="abt-struktur-img">
-            <img src="{{ asset('STRUKTUR PT SFT.jpeg') }}" alt="Struktur Organisasi PT. Sumberindo Farma Tama" loading="lazy">
+            <img src="{{ asset('STRUKTUR PT SFT.png') }}" alt="Struktur Organisasi PT. Sumberindo Farma Tama" loading="lazy">
         </div>
         <div class="abt-struktur-note">
             <i class="fa-solid fa-circle-info"></i>

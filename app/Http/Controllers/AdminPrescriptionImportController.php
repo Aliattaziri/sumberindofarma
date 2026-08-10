@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicineGrosir;
+use App\Models\ProductCategory;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminPrescriptionImportController extends Controller
 {
-    private array $companies = Companies::LIST;
+    private function getCompanies(): array
+    {
+        return ProductCategory::getList();
+    }
 
     public function showImportForm()
     {
         return view('admin.prescriptions.import', [
-            'categories' => $this->companies
+            'categories' => $this->getCompanies()
         ]);
     }
 

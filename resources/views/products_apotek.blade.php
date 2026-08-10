@@ -243,7 +243,7 @@
 <section class="apotek-main">
     <div class="container">
         <div class="apotek-panel">
-            <form method="GET" action="{{ route('products.apotek') }}" class="filter-row">
+            <form method="GET" action="{{ route('products.apotek') }}" class="filter-row" style="grid-template-columns: 2fr 1fr 1fr auto;">
                 <div class="filter-group">
                     <label><i class="fa-solid fa-magnifying-glass"></i> Cari produk</label>
                     <input type="text" name="search" value="{{ $search }}" placeholder="Nama produk atau deskripsi">
@@ -254,15 +254,6 @@
                         <option value="">Semua Kategori</option>
                         @foreach($kategoriOptions as $k)
                             <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $k }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label><i class="fa-solid fa-building"></i> Perusahaan</label>
-                    <select name="perusahaan">
-                        <option value="">Semua Perusahaan</option>
-                        @foreach($perusahaanList as $p)
-                            <option value="{{ $p }}" @selected($perusahaan === $p)>{{ $p }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -295,10 +286,7 @@
                             <img src="{{ asset('page1.jpeg') }}" alt="{{ $medicine->nama_obat }}">
                         @endif
                         <div class="product-body">
-                            <span class="product-tag">{{ $medicine->kategori_produk ?: $medicine->kategori }}</span>
-                            @if($medicine->kategori)
-                                <div class="product-origin" style="font-size:0.78rem;color:#475569;margin-bottom:0.45rem;">Toko: {{ $medicine->kategori }}</div>
-                            @endif
+                            <span class="product-tag">{{ $medicine->kategori_produk ?: 'OBAT' }}</span>
                             <h3 class="product-name">{{ $medicine->nama_obat }}</h3>
                             <div class="product-price">{{ $medicine->getFormattedPrice() }}</div>
                             @if($medicine->stok > 10)

@@ -353,7 +353,9 @@
                     <select name="kategori_produk">
                         <option value="">Semua Kategori</option>
                         @foreach($kategoriOptions as $kat)
-                            <option value="{{ $kat }}" {{ ($kategori_produk ?? '') === $kat ? 'selected' : '' }}>{{ $kat }}</option>
+                            <option value="{{ $kat }}" {{ ($kategori_produk ?? '') === $kat ? 'selected' : '' }}>
+                                {{ \App\Models\ProductCategory::iconFor($kat) }} {{ $kat }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -442,11 +444,7 @@
                     </td>
                     <td>
                         @php
-                            $prodCategoryIcon = match($medicine->kategori_produk) {
-                                'SKINCARE & KOSMETIK' => '✨',
-                                'ALAT KESEHATAN'      => '🩺',
-                                default               => '💊',
-                            };
+                            $prodCategoryIcon = \App\Models\ProductCategory::iconFor($medicine->kategori_produk ?? 'OBAT');
                         @endphp
                         <span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.82rem;color:#6b7280;">
                             <span>{{ $prodCategoryIcon }}</span>
