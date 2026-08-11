@@ -163,37 +163,20 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">SKU</label>
-                        <input type="text" name="sku" class="form-input <?php echo e($errors->has('sku') ? 'is-invalid' : ''); ?>"
-                               value="<?php echo e(old('sku', $medicine->sku)); ?>">
-                        <?php $__errorArgs = ['sku'];
+                <div class="form-group">
+                    <label class="form-label">SKU</label>
+                    <input type="text" name="sku" class="form-input <?php echo e($errors->has('sku') ? 'is-invalid' : ''); ?>"
+                           value="<?php echo e(old('sku', $medicine->sku)); ?>">
+                    <?php $__errorArgs = ['sku'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
-                        <?php unset($message);
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Brand</label>
-                        <input type="text" name="brand" class="form-input <?php echo e($errors->has('brand') ? 'is-invalid' : ''); ?>"
-                               value="<?php echo e(old('brand', $medicine->brand)); ?>">
-                        <?php $__errorArgs = ['brand'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
                 </div>
 
                 <div class="form-group">

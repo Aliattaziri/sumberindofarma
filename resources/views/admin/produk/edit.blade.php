@@ -130,23 +130,13 @@
                     @enderror
                 </div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">SKU</label>
-                        <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
-                               value="{{ old('sku', $medicine->sku) }}">
-                        @error('sku')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Brand</label>
-                        <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                               value="{{ old('brand', $medicine->brand) }}">
-                        @error('brand')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label class="form-label">SKU</label>
+                    <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
+                           value="{{ old('sku', $medicine->sku) }}">
+                    @error('sku')
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
