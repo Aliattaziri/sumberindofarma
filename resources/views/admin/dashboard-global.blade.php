@@ -515,8 +515,7 @@
 
 @section('content')
 <div class="global-shell" id="globalDashboard"
-     data-global-stats-url="{{ route('admin.dashboard.global-stats') }}"
-     data-initial-omzet="{{ (float) $totalOmzetGlobal }}">
+     data-global-stats-url="{{ route('admin.dashboard.global-stats') }}">
     <section class="global-hero">
         <span class="global-badge"><i class="fa-solid fa-earth-asia"></i> AKSES GLOBAL</span>
         <h2>Ringkasan PT. Sumberindo Farma Tama</h2>
@@ -536,95 +535,8 @@
             <div class="label">Total Produk (Semua Outlet)</div>
             <div class="value" id="global-total-produk">{{ number_format($totalProdukGlobal) }}</div>
         </article>
-        <article class="global-kpi">
-            <div class="label">Total Omzet Global</div>
-            <div class="value" id="global-total-omzet">Rp {{ number_format($totalOmzetGlobal, 0, ',', '.') }}</div>
-        </article>
     </section>
 
-    <section class="global-layout">
-        <article class="global-panel">
-            <h3>Omzet per Outlet / Halaman Produk</h3>
-            <p class="global-sub">Sumber data: purchase history seluruh outlet</p>
-            <div class="global-list" id="global-list-outlet">
-                @forelse($historyByOutlet as $row)
-                    @php
-                        $percent = $totalOmzetGlobal > 0 ? (($row['omzet'] / $totalOmzetGlobal) * 100) : 0;
-                    @endphp
-                    <div class="global-item">
-                        <div class="global-item-head">
-                            <div class="global-item-name">{{ $row['outlet'] }}</div>
-                            <div class="global-item-tx">{{ number_format($row['transaksi']) }} transaksi</div>
-                        </div>
-                        <div class="global-progress"><span data-width="{{ min(100, round($percent, 2)) }}"></span></div>
-                        <div class="global-omzet">Rp {{ number_format($row['omzet'], 0, ',', '.') }} • {{ number_format($percent, 1, ',', '.') }}%</div>
-                    </div>
-                @empty
-                    <div class="global-empty">Belum ada riwayat pembelian.</div>
-                @endforelse
-            </div>
-        </article>
-
-        <article class="global-panel">
-            <h3>Omzet per Kanal Produk</h3>
-            <p class="global-sub">Perbandingan kanal Apotek vs Umum</p>
-            <div class="global-list" id="global-list-channel">
-                @forelse($historyByChannel as $row)
-                    @php
-                        $percent = $totalOmzetGlobal > 0 ? (($row['omzet'] / $totalOmzetGlobal) * 100) : 0;
-                    @endphp
-                    <div class="global-item">
-                        <div class="global-item-head">
-                            <div class="global-item-name">{{ $row['channel'] }}</div>
-                            <div class="global-item-tx">{{ number_format($row['transaksi']) }} transaksi</div>
-                        </div>
-                        <div class="global-progress"><span data-width="{{ min(100, round($percent, 2)) }}"></span></div>
-                        <div class="global-omzet">Rp {{ number_format($row['omzet'], 0, ',', '.') }} • {{ number_format($percent, 1, ',', '.') }}%</div>
-                    </div>
-                @empty
-                    <div class="global-empty">Belum ada riwayat pembelian.</div>
-                @endforelse
-            </div>
-        </article>
-    </section>
-
-    <section class="global-table-card">
-        <div class="global-table-head">
-            <h3>Riwayat Pembelian Terbaru (Global)</h3>
-            <a href="{{ route('admin.purchase-history.index') }}" class="global-table-link">Lihat semua</a>
-        </div>
-        <div class="table-container">
-            <table class="global-table">
-                <thead>
-                <tr>
-                    <th>Waktu</th>
-                    <th>Outlet</th>
-                    <th>Pembeli</th>
-                    <th>Kanal</th>
-                    <th>Omzet</th>
-                </tr>
-                </thead>
-                <tbody id="global-recent-tbody">
-                @forelse($recentGlobalOrders as $order)
-                    <tr>
-                        <td>{{ $order->created_at->format('d M Y H:i') }}</td>
-                        <td>{{ $order->source_outlet ?: '-' }}</td>
-                        <td>{{ $order->buyer_name ?: '-' }}</td>
-                        <td>{{ $order->buyer_type === 'apotik' ? 'Apotek' : ($order->buyer_type === 'toko_obat' ? 'Toko Obat' : ($order->buyer_type === 'pbf' ? 'PBF' : 'Umum')) }}</td>
-                        <td>Rp {{ number_format($order->effective_total, 0, ',', '.') }}</td>
-                    </tr>
-                @empty
-                    <tr><td colspan="5" style="text-align:center; color:#64748b;">Belum ada data riwayat pembelian.</td></tr>
-                @endforelse
-                </tbody>
-            </table>
-        </div>
-
-        <div class="global-realtime">
-            <span class="global-dot" id="global-dot"></span>
-            <span id="global-foot-status">Auto-refresh setiap 15 detik</span>
-        </div>
-    </section>
 </div>
 @endsection
 
@@ -641,16 +553,11 @@
     const statsUrl = root.getAttribute('data-global-stats-url');
 
     const elTotalProduk = document.getElementById('global-total-produk');
-    const elTotalOmzet = document.getElementById('global-total-omzet');
     const elTotalTransaksi = document.getElementById('global-total-transaksi');
     const elStatus = document.getElementById('global-status');
     const elUpdated = document.getElementById('global-updated');
     const elFootStatus = document.getElementById('global-foot-status');
     const elDot = document.getElementById('global-dot');
-    const elOutletList = document.getElementById('global-list-outlet');
-    const elChannelList = document.getElementById('global-list-channel');
-    const elRecentBody = document.getElementById('global-recent-tbody');
-
     function fmtNumber(value) {
         return new Intl.NumberFormat('id-ID').format(Number(value || 0));
     }
@@ -696,54 +603,6 @@
         requestAnimationFrame(frame);
     }
 
-    function renderRankList(items, totalOmzet, nameKey) {
-        if (!Array.isArray(items) || items.length === 0) {
-            return '<div class="global-empty">Belum ada riwayat pembelian.</div>';
-        }
-
-        return items.map((row) => {
-            const omzet = Number(row.omzet || 0);
-            const transaksi = Number(row.transaksi || 0);
-            const percent = totalOmzet > 0 ? (omzet / totalOmzet) * 100 : 0;
-            const width = Math.min(100, Math.max(0, percent));
-            const name = row[nameKey] || '-';
-
-            return '' +
-                '<div class="global-item">' +
-                    '<div class="global-item-head">' +
-                        '<div class="global-item-name">' + name + '</div>' +
-                        '<div class="global-item-tx">' + fmtNumber(transaksi) + ' transaksi</div>' +
-                    '</div>' +
-                    '<div class="global-progress"><span style="width:' + width.toFixed(2) + '%"></span></div>' +
-                    '<div class="global-omzet">' + fmtRupiah(omzet) + ' • ' + percent.toFixed(1).replace('.', ',') + '%</div>' +
-                '</div>';
-        }).join('');
-    }
-
-    function renderRecentRows(rows) {
-        if (!Array.isArray(rows) || rows.length === 0) {
-            return '<tr><td colspan="5" style="text-align:center; color:#64748b;">Belum ada data riwayat pembelian.</td></tr>';
-        }
-
-        return rows.map((row) => {
-            return '' +
-                '<tr>' +
-                    '<td>' + (row.waktu || '-') + '</td>' +
-                    '<td>' + (row.outlet || '-') + '</td>' +
-                    '<td>' + (row.pembeli || '-') + '</td>' +
-                    '<td>' + (row.kanal || '-') + '</td>' +
-                    '<td>' + fmtRupiah(row.omzet || 0) + '</td>' +
-                '</tr>';
-        }).join('');
-    }
-
-    function applyInitialProgressWidth() {
-        root.querySelectorAll('.global-progress > span[data-width]').forEach((bar) => {
-            const width = Number(bar.getAttribute('data-width') || 0);
-            bar.style.width = Math.min(100, Math.max(0, width)).toFixed(2) + '%';
-        });
-    }
-
     async function refreshGlobalStats() {
         try {
             root.classList.add('syncing');
@@ -759,14 +618,9 @@
             }
 
             const data = await response.json();
-            const totalOmzet = Number(data.totalOmzetGlobal || 0);
 
             animateNumber(elTotalProduk, data.totalProdukGlobal || 0, (v) => fmtNumber(Math.round(v)), 520);
             animateNumber(elTotalTransaksi, data.totalTransaksiGlobal || 0, (v) => fmtNumber(Math.round(v)), 520);
-            animateNumber(elTotalOmzet, totalOmzet, (v) => fmtRupiah(Math.round(v)), 650);
-            elOutletList.innerHTML = renderRankList(data.historyByOutlet || [], totalOmzet, 'outlet');
-            elChannelList.innerHTML = renderRankList(data.historyByChannel || [], totalOmzet, 'channel');
-            elRecentBody.innerHTML = renderRecentRows(data.recentGlobalOrders || []);
 
             const timeLabel = data.generatedAt || new Date().toLocaleTimeString('id-ID');
             elUpdated.textContent = 'Update: ' + timeLabel;
@@ -785,8 +639,6 @@
     refreshGlobalStats();
     elTotalProduk.setAttribute('data-raw-value', '{{ (int) $totalProdukGlobal }}');
     elTotalTransaksi.setAttribute('data-raw-value', '{{ (int) $totalTransaksiGlobal }}');
-    elTotalOmzet.setAttribute('data-raw-value', '{{ (int) $totalOmzetGlobal }}');
-    applyInitialProgressWidth();
     setInterval(refreshGlobalStats, 15000);
 })();
 </script>

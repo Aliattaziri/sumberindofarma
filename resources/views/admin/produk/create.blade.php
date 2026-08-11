@@ -125,25 +125,6 @@
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label">Harga (Rp) <span class="req">*</span></label>
-                        <input type="number" name="harga" class="form-input {{ $errors->has('harga') ? 'is-invalid' : '' }}"
-                               placeholder="5000" step="1" min="0" value="{{ old('harga') }}" required>
-                        @error('harga')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Stok <span class="req">*</span></label>
-                        <input type="number" name="stok" class="form-input {{ $errors->has('stok') ? 'is-invalid' : '' }}"
-                               placeholder="100" min="0" value="{{ old('stok') }}" required>
-                        @error('stok')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
                         <label class="form-label">SKU</label>
                         <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
                                placeholder="Contoh: SKU-001" value="{{ old('sku') }}">
@@ -156,17 +137,6 @@
                         <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
                                placeholder="Contoh: WARDAH" value="{{ old('brand') }}">
                         @error('brand')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Terjual</label>
-                        <input type="number" name="terjual" class="form-input {{ $errors->has('terjual') ? 'is-invalid' : '' }}"
-                               placeholder="0" min="0" value="{{ old('terjual', 0) }}">
-                        @error('terjual')
                             <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                         @enderror
                     </div>

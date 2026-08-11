@@ -11,9 +11,15 @@ use App\Helpers\ImageHelper;
 
 class AdminPrescriptionController extends Controller
 {
-    private function getCompanies(): array
+    private function getCompanies()
     {
-        return ProductCategory::getList();
+        return Medicine::where('is_resep', true)
+            ->select('brand')
+            ->whereNotNull('brand')
+            ->where('brand', '!=', '')
+            ->distinct()
+            ->orderBy('brand')
+            ->pluck('brand');
     }
 
     // LIST
@@ -33,7 +39,7 @@ class AdminPrescriptionController extends Controller
         }
 
         if ($kategori) {
-            $query->where('kategori', $kategori);
+            $query->where('brand', $kategori);
         }
 
         $medicines  = $query->latest()->paginate(10)->withQueryString();

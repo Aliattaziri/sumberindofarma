@@ -137,40 +137,6 @@
     background: linear-gradient(135deg, #991B1B, #7F1D1D);
 }
 
-.cart-btn-header {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, #B91C1C, #991B1B);
-    color: #fff;
-    padding: 0.65rem 1.25rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    box-shadow: 0 8px 18px rgba(30, 136, 229, 0.16);
-}
-
-.cart-btn-header:hover {
-    background: linear-gradient(135deg, #991B1B, #7F1D1D);
-    transform: translateY(-2px);
-}
-
-.cart-badge-header {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: #ef4444;
-    border-radius: 50%;
-    font-size: 0.7rem;
-    font-weight: 800;
-}
 
 /* ===== MAIN LAYOUT ===== */
 .category-main-wrap {
@@ -384,12 +350,8 @@
     gap: 0.7rem;
 }
 
-.btn-detail,
-.btn-add-cart {
-    width: 100%;
-}
-
 .btn-detail {
+        width: 100%;
     display: block;
     padding: 0.75rem 0.85rem;
     background: linear-gradient(135deg, #B91C1C, #991B1B);
@@ -407,24 +369,6 @@
 .btn-detail:hover {
     background: linear-gradient(135deg, #991B1B, #7F1D1D);
     transform: translateY(-2px);
-}
-
-.btn-add-cart {
-    display: block;
-    padding: 0.75rem;
-    background: #fff;
-    color: #B91C1C;
-    border: 1.5px solid #B91C1C;
-    border-radius: 9px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.82rem;
-    text-align: center;
-    transition: all 0.2s;
-}
-
-.btn-add-cart:hover {
-    background: #fef2f2;
 }
 
 /* ===== PAGINATION ===== */
@@ -541,10 +485,6 @@
         width: 100%;
     }
 
-    .cart-btn-header {
-        width: 100%;
-        justify-content: center;
-    }
 }
 
 @media (max-width: 480px) {
@@ -594,10 +534,6 @@
                 <input type="text" name="search" placeholder="Cari produk..." value="{{ request('search') }}">
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-            <button class="cart-btn-header" onclick="if(typeof openCart==='function'){openCart();}">
-                <i class="fa-solid fa-cart-shopping"></i> Keranjang
-                <span class="cart-badge-header" id="cartBadgeHeader">0</span>
-            </button>
         </div>
     </div>
 </div>
@@ -678,25 +614,17 @@
                             </div>
                             <div class="product-body">
                                 <h3 class="product-name">{{ $med->nama_obat }}</h3>
-                                
-                                <div class="product-price">{{ $med->getFormattedPrice() }}</div>
+
+                                <div style="font-size:0.72rem;color:#6b7280;font-weight:600;line-height:1.4;margin-bottom:0.45rem;">
+                                    {{ $med->pabrik_label }}
+                                </div>
                                 @if($med->sediaan_label)
                                     <div style="font-size:0.75rem;color:#6b7280;margin-bottom:0.35rem;display:flex;align-items:center;gap:0.35rem;">
                                       <i class="fa-solid fa-cube"></i> <span>{{ $med->sediaan_label }}</span>
                                     </div>
                                 @endif
-                                @if($med->stok > 10)
-                                    <span class="product-stock stock-ok"><i class="fa-solid fa-check-circle"></i> Tersedia</span>
-                                @elseif($med->stok > 0)
-                                    <span class="product-stock stock-low"><i class="fa-solid fa-exclamation"></i> Sisa {{ $med->stok }}</span>
-                                @else
-                                    <span class="product-stock stock-out"><i class="fa-solid fa-times-circle"></i> Habis</span>
-                                @endif
                                 <div class="product-actions">
                                     <a href="{{ route('medicines.show', $med->id) }}" class="btn-detail">Lihat Detail</a>
-                                    <button class="btn-add-cart" onclick="addToCart({{ $med->id }}, '{{ addslashes($med->nama_obat) }}', {{ $med->harga }}, '', '{{ addslashes($med->brand ?: $med->kategori) }}')">
-                                        <i class="fa-solid fa-cart-plus"></i> Keranjang
-                                    </button>
                                 </div>
                             </div>
                         </div>

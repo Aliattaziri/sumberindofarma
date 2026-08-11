@@ -53,7 +53,7 @@
         <li>Struktur file tidak harus persis sama; selama header yang dikenali ada, data tetap bisa dimasukkan</li>
     </ol>
         <p style="color:#dc2626;margin:0.75rem 0 0;font-size:0.875rem;font-weight:600;">
-            ? Format: <strong>SKU | PABRIK | BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | HARGA | STOK | TERJUAL | KOMPOSISI | INDIKASI | KATEGORI</strong>
+            ? Format: <strong>SKU | MERK / BRAND | NAMA PRODUK | SEDIAAN | DESKRIPSI | KOMPOSISI | INDIKASI | KATEGORI</strong>
         </p>
             <p style="color:#14532d;margin:0.75rem 0 0;font-size:0.875rem;">
                 Produk yang diimport oleh akun apotek akan otomatis disimpan sebagai <strong>APOTEK</strong> pada outlet Anda.
@@ -67,14 +67,10 @@
                 <thead>
                     <tr>
                         <th>SKU</th>
-                        <th>PABRIK</th>
-                        <th>BRAND</th>
+                        <th>MERK / BRAND</th>
                         <th>NAMA PRODUK</th>
                         <th>SEDIAAN</th>
                         <th>DESKRIPSI</th>
-                        <th>HARGA</th>
-                        <th>STOK</th>
-                        <th>TERJUAL</th>
                         <th>KOMPOSISI</th>
                         <th>INDIKASI</th>
                         <th>KATEGORI</th>
@@ -84,13 +80,9 @@
                     <tr>
                         <td>SKU-001</td>
                         <td>KIMIA FARMA</td>
-                        <td>KIMIA FARMA</td>
                         <td>Paracetamol 500mg</td>
                         <td>fls</td>
                         <td>Pereda demam dan nyeri ringan</td>
-                        <td>5000</td>
-                        <td>100</td>
-                        <td>20</td>
                         <td>Paracetamol 500 mg</td>
                         <td>Demam & nyeri</td>
                         <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">OBAT</span></td>
@@ -98,13 +90,9 @@
                     <tr>
                         <td>SKU-002</td>
                         <td>WARDAH</td>
-                        <td>WARDAH</td>
                         <td>Pelembab Wajah SPF30</td>
                         <td>box</td>
                         <td>Moisturizer ringan untuk kulit sensitif</td>
-                        <td>85000</td>
-                        <td>50</td>
-                        <td>12</td>
                         <td>Aqua, Glycerin, SPF30</td>
                         <td>Melembabkan & melindungi kulit</td>
                         <td><span style="background:#fce4ec;color:#c2185b;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">SKINCARE & KOSMETIK</span></td>
@@ -112,13 +100,9 @@
                     <tr>
                         <td>SKU-003</td>
                         <td>OMRON</td>
-                        <td>OMRON</td>
                         <td>Tensimeter Digital</td>
                         <td>-</td>
                         <td>Alat pemeriksa tekanan darah portabel</td>
-                        <td>350000</td>
-                        <td>20</td>
-                        <td>5</td>
                         <td>-</td>
                         <td>Mengukur tekanan darah</td>
                         <td><span style="background:#fef2f2;color:#991B1B;padding:0.15rem 0.5rem;border-radius:4px;font-weight:700;">ALAT KESEHATAN</span></td>

@@ -53,13 +53,13 @@ class AdminProdukImportController extends Controller
         }
 
         $filename = 'template_produk_' . now()->format('Ymd_His') . '.xls';
-        $columns = ['SKU', 'PABRIK', 'BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'HARGA', 'STOK', 'TERJUAL', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
-        $widths  = [12, 18, 18, 30, 10, 35, 12, 8, 10, 25, 30, 22];
+        $columns = ['SKU', 'MERK / BRAND', 'NAMA PRODUK', 'SEDIAAN', 'DESKRIPSI', 'KOMPOSISI', 'INDIKASI', 'KATEGORI'];
+        $widths  = [12, 22, 30, 10, 35, 25, 30, 22];
 
         $rows = [
-            ['SKU-001', 'KIMIA FARMA', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        '5000',   '100', '20', 'Paracetamol 500 mg',  'Demam & nyeri',                'OBAT'],
-            ['SKU-002', 'WARDAH',      'WARDAH',        'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    '85000',  '50',  '12', 'Aqua, Glycerin, SPF', 'Melembabkan & melindungi kulit', 'SKINCARE & KOSMETIK'],
-            ['SKU-003', 'OMRON',       'OMRON',         'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '350000', '20',  '5', '-',                   'Mengukur tekanan darah',        'ALAT KESEHATAN'],
+            ['SKU-001', 'KIMIA FARMA',  'Paracetamol 500mg',    'fls', 'Obat pereda demam dan nyeri ringan.',                        'Paracetamol 500 mg',  'Demam & nyeri',                'OBAT'],
+            ['SKU-002', 'WARDAH',       'Pelembab Wajah SPF30', 'box', 'Pelembab wajah untuk kelembapan dan perlindungan SPF30.',    'Aqua, Glycerin, SPF30', 'Melembabkan & melindungi kulit', 'SKINCARE & KOSMETIK'],
+            ['SKU-003', 'OMRON',        'Tensimeter Digital',   '',    'Tensimeter digital portabel, akurat untuk pemakaian rumah.', '-',                   'Mengukur tekanan darah',        'ALAT KESEHATAN'],
         ];
 
         return \App\Helpers\XlsxWriter::downloadSpreadsheetXml($filename, $columns, $rows, $widths);
@@ -424,8 +424,8 @@ class AdminProdukImportController extends Controller
         $aliases = [
             'SKU' => ['SKU', 'KODEPRODUK', 'KODE', 'PRODUCTCODE'],
             'NAMA_PRODUK' => ['NAMAPRODUK', 'NAMA', 'NAMABARANG', 'PRODUK', 'PRODUCTNAME'],
-            'PABRIK' => ['PABRIK', 'MERK', 'MEREK', 'BRAND', 'PRODUCER', 'MANUFACTURER'],
-            'BRAND' => ['BRAND', 'MERK', 'MEREK', 'PABRIK', 'PRODUCER', 'MANUFACTURER'],
+            'PABRIK' => ['PABRIK', 'MERK', 'MEREK', 'BRAND', 'PRODUCER', 'MANUFACTURER', 'MERKBRAND'],
+            'BRAND' => ['BRAND', 'MERK', 'MEREK', 'PABRIK', 'PRODUCER', 'MANUFACTURER', 'MERKBRAND'],
             'HARGA' => ['HARGA', 'RETAIL', 'PRICE'],
             'STOK' => ['STOK', 'STOCK', 'STOCKQTY', 'QTY', 'JUMLAH'],
             'TERJUAL' => ['TERJUAL', 'SALES', 'TERJUALSALES', 'TOTALTERJUAL'],

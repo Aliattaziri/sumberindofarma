@@ -107,7 +107,7 @@
     <label class="form-lbl">Jenis Pembeli <span style="color:#ef4444;">*</span></label>
     <select id="f_jenis" class="form-inp" onchange="toggleBuyerType()">
       <option value="umum">Umum</option>
-      <option value="apotik">Apotik</option>
+      <option value="apotik">Apotek</option>
       <option value="toko_obat">Toko Obat</option>
       <option value="pbf">PBF</option>
     </select>
@@ -124,22 +124,28 @@
       </div>
     </div>
     <div id="buyerFieldsApotik" style="display:none;">
-      <label class="form-lbl">Nama Apotik <span style="color:#ef4444;">*</span></label>
-      <input id="f_nama_apotik" type="text" class="form-inp" placeholder="Nama apotik">
+      <label class="form-lbl">Nama Apotek / RS / Klinik <span style="color:#ef4444;">*</span></label>
+      <input id="f_nama_apotik" type="text" class="form-inp" placeholder="Nama apotek / RS / klinik">
       <label class="form-lbl">Nama Pemilik / Penanggung Jawab <span style="color:#ef4444;">*</span></label>
       <input id="f_penanggung_jawab" type="text" class="form-inp" placeholder="Nama pemilik / penanggung jawab">
       <label class="form-lbl">No. HP / WA <span style="color:#ef4444;">*</span></label>
       <input id="f_hp_apotik" type="tel" class="form-inp" placeholder="08xxxxxxxxxx">
-      <label class="form-lbl">Alamat Apotik <span style="color:#ef4444;">*</span></label>
-      <textarea id="f_alamat_apotik" rows="3" class="form-inp" style="resize:vertical;" placeholder="Alamat lengkap apotik"></textarea>
+      <label class="form-lbl">Alamat <span style="color:#ef4444;">*</span></label>
+      <textarea id="f_alamat_apotik" rows="3" class="form-inp" style="resize:vertical;" placeholder="Alamat lengkap apotek / RS / klinik"></textarea>
       <div class="form-row">
         <div><label class="form-lbl">Kecamatan</label><input id="f_kec_apotik" type="text" class="form-inp" placeholder="Kecamatan"></div>
         <div><label class="form-lbl">Kota / Kab</label><input id="f_kota_apotik" type="text" class="form-inp" placeholder="Kota / Kabupaten"></div>
       </div>
-      <label class="form-lbl">Nomor SIA <span style="color:#ef4444;">*</span></label>
-      <input id="f_sia" type="text" class="form-inp" placeholder="Nomor SIA">
-      <label class="form-lbl">Nomor SIPA <span style="color:#ef4444;">*</span></label>
-      <input id="f_sipa" type="text" class="form-inp" placeholder="Nomor SIPA">
+      <label class="form-lbl">NIB <span style="color:#ef4444;">*</span></label>
+      <input id="f_sia" type="text" class="form-inp" placeholder="Nomor Induk Berusaha">
+      <label class="form-lbl">Sertifikat Standar <span style="color:#ef4444;">*</span></label>
+      <input id="f_sertifikat_standar_apotik" type="text" class="form-inp" placeholder="Nomor Sertifikat Standar">
+      <label class="form-lbl">SIPA + KTP APJ <span style="color:#ef4444;">*</span></label>
+      <input id="f_sipa" type="text" class="form-inp" placeholder="Nomor SIPA + KTP APJ">
+      <label class="form-lbl">NPWP Sarana <span style="color:#ef4444;">*</span></label>
+      <input id="f_npwp_sarana_apotik" type="text" class="form-inp" placeholder="Nomor NPWP Sarana">
+      <label class="form-lbl">KTP Pemilik <span style="color:#ef4444;">*</span></label>
+      <input id="f_ktp_pemilik_apotik" type="text" class="form-inp" placeholder="Nomor KTP Pemilik">
     </div>
     <div id="buyerFieldsTokoObat" style="display:none;">
       <label class="form-lbl">Nama Toko Obat <span style="color:#ef4444;">*</span></label>
@@ -416,6 +422,8 @@ function openOrder() {
   document.getElementById('orderOverlay').style.display = 'block';
   document.getElementById('orderModal').style.display = 'block';
   document.body.style.overflow = 'hidden';
+  // Pastikan field jenis pembeli yang aktif tampil dengan benar
+  if (typeof toggleBuyerType === 'function') toggleBuyerType();
 }
 
 function closeOrder() {
@@ -433,7 +441,7 @@ function toggleBuyerType() {
 }
 
 function getBuyerTypeLabel(type) {
-  if (type === 'apotik') return 'Apotik';
+  if (type === 'apotik') return 'Apotek';
   if (type === 'toko_obat') return 'Toko Obat';
   if (type === 'pbf') return 'PBF';
   return 'Umum';
@@ -661,8 +669,16 @@ async function submitOrder() {
     payload.kota     = document.getElementById('f_kota_apotik').value.trim();
     payload.sia      = document.getElementById('f_sia').value.trim();
     payload.sipa     = document.getElementById('f_sipa').value.trim();
-    if (!payload.buyer_name || !document.getElementById('f_nama_apotik').value.trim() || !payload.phone || !payload.address || !payload.sia || !payload.sipa) {
-      err.textContent = 'Semua field apotik wajib diisi.'; err.style.display = 'block'; return;
+    // Field tambahan persyaratan dokumen
+    const sertStandar = document.getElementById('f_sertifikat_standar_apotik')?.value.trim() || '';
+    const npwpSarana  = document.getElementById('f_npwp_sarana_apotik')?.value.trim() || '';
+    const ktpPemilik  = document.getElementById('f_ktp_pemilik_apotik')?.value.trim() || '';
+    payload.no_izin_pbf = npwpSarana;
+    payload.apj         = ktpPemilik;
+    // Gabungkan sertifikat standar ke sipa
+    if (sertStandar) payload.sipa = payload.sipa + ' | Sertifikat Standar: ' + sertStandar;
+    if (!payload.buyer_name || !document.getElementById('f_nama_apotik').value.trim() || !payload.phone || !payload.address || !payload.sia || !payload.sipa || !sertStandar || !npwpSarana || !ktpPemilik) {
+      err.textContent = 'Semua field apotek wajib diisi.'; err.style.display = 'block'; return;
     }
   } else if (jenis === 'toko_obat') {
     payload.store_name = document.getElementById('f_nama_toko_obat').value.trim();

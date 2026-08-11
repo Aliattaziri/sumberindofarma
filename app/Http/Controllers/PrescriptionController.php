@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
-use App\Models\ProductCategory;
-use App\Constants\Companies;
 use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
@@ -27,7 +25,7 @@ class PrescriptionController extends Controller
         }
 
         if ($perusahaan) {
-            $query->where('kategori', $perusahaan);
+            $query->where('brand', $perusahaan);
         }
 
         match ($sort) {
@@ -38,7 +36,13 @@ class PrescriptionController extends Controller
         };
 
         $medicines   = $query->paginate(12)->withQueryString();
-        $perusahaans = ProductCategory::getList();
+        $perusahaans = Medicine::where('is_grosir', true)->nonPbf()
+                        ->select('brand')
+                        ->whereNotNull('brand')
+                        ->where('brand', '!=', '')
+                        ->distinct()
+                        ->orderBy('brand')
+                        ->pluck('brand');
         $total       = Medicine::where('is_grosir', true)->nonPbf()->count();
 
         return view('prescriptions', compact('medicines', 'search', 'perusahaan', 'sort', 'perusahaans', 'total'));

@@ -99,7 +99,17 @@ class Medicine extends Model
 
     public function getFormattedPrice(): string
     {
+        if (!$this->harga || $this->harga == 0) {
+            return 'Hubungi kami';
+        }
         return 'Rp ' . number_format($this->harga, 0, ',', '.');
+    }
+
+    public function getPabrikLabelAttribute(): string
+    {
+        $label = trim((string) ($this->brand ?: $this->kategori ?: ''));
+
+        return $label !== '' ? $label : '-';
     }
 
     /**

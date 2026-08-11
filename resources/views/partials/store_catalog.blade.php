@@ -106,9 +106,9 @@
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label><i class="fa-solid fa-building"></i> Perusahaan</label>
+                    <label><i class="fa-solid fa-building"></i> Merk/Brand</label>
                     <select name="perusahaan">
-                        <option value="">Semua Perusahaan</option>
+                        <option value="">Semua Merk/Brand</option>
                         @foreach($perusahaanList ?? [] as $p)
                             <option value="{{ $p }}" @selected(($perusahaan ?? '') === $p)>{{ $p }}</option>
                         @endforeach
@@ -140,23 +140,17 @@
                         @if($medicine->gambar)
                             <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}">
                         @else
-                            <img src="{{ asset('page1.jpeg') }}" alt="{{ $medicine->nama_obat }}">
+                            <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:184px;background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#b91c1c;">
+                                <i class="fa-solid fa-pills" style="font-size:2.5rem;"></i>
+                            </div>
                         @endif
                         <div class="product-body">
                             <span class="product-tag">{{ $medicine->kategori_produk ?: 'OBAT' }}</span>
                             <h3 class="product-name">{{ $medicine->nama_obat }}</h3>
-                            <div class="product-price">{{ $medicine->getFormattedPrice() }}</div>
-                            @if($medicine->stok > 10)
-                                <span class="stock-badge stock-ok"><i class="fa-solid fa-circle-check"></i> Stok tersedia</span>
-                            @elseif($medicine->stok > 0)
-                                <span class="stock-badge stock-low"><i class="fa-solid fa-triangle-exclamation"></i> Stok terbatas</span>
-                            @else
-                                <span class="stock-badge stock-out"><i class="fa-solid fa-circle-xmark"></i> Stok habis</span>
-                            @endif
+                            <div style="font-size:0.72rem;color:#6b7280;font-weight:600;line-height:1.4;margin-bottom:0.45rem;">
+                                {{ $medicine->pabrik_label }}
+                            </div>
                             <a href="{{ route('medicines.show', $medicine->id) }}" class="product-btn"><i class="fa-solid fa-eye"></i> Lihat Detail</a>
-                            @if($medicine->stok > 0)
-                                <button type="button" class="btn-cart" onclick="addToCart({{ $medicine->id }}, '{{ addslashes($medicine->nama_obat) }}', {{ $medicine->harga }}, '{{ $medicine->gambar ? url('storage/'.$medicine->gambar) : '' }}', '{{ addslashes($medicine->brand ?: $medicine->kategori) }}', this)"><i class="fa-solid fa-cart-plus"></i> Tambah</button>
-                            @endif
                         </div>
                     </div>
                 @endforeach
@@ -187,5 +181,4 @@ window.cartSettings = Object.assign({}, window.cartSettings || {}, {
     wa: '{{ $storeWa }}'
 });
 </script>
-@include('partials.cart_store')
 @endsection

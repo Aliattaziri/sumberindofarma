@@ -43,7 +43,7 @@ class AdminPrescriptionProductController extends Controller
         }
 
         if ($kategori && !$outlet) {
-            $query->where('kategori', $kategori);
+            $query->where('brand', $kategori);
         }
 
         if ($kategori_produk) {
@@ -55,8 +55,14 @@ class AdminPrescriptionProductController extends Controller
         }
 
         $medicines       = $query->paginate(10)->withQueryString();
-        $categories      = ProductCategory::getList();
-        $kategoriOptions = $categories;
+        $categories      = Medicine::where('is_resep', true)
+                            ->select('brand')
+                            ->whereNotNull('brand')
+                            ->where('brand', '!=', '')
+                            ->distinct()
+                            ->orderBy('brand')
+                            ->pluck('brand');
+        $kategoriOptions = ProductCategory::getList();
 
         return view('admin.prescriptions.products.index', compact('medicines', 'search', 'kategori', 'brand', 'categories', 'kategori_produk', 'kategoriOptions'));
     }

@@ -380,25 +380,8 @@
                 <h1>{{ $medicine->nama_obat }}</h1>
 
                 <div class="price-section">
-                    <div class="price-label">Harga Satuan</div>
-                    <div class="price">{{ $medicine->getFormattedPrice() }}</div>
-                </div>
-
-                <div class="stock-info">
-                    <div class="stock-item">
-                        <div class="stock-item-label">Stok Tersedia</div>
-                        <div class="stock-item-value">{{ $medicine->stok }}</div>
-                    </div>
-                    <div class="stock-item">
-                        <div class="stock-item-label">Status</div>
-                        <div class="stock-item-value" style="font-size:1rem;">
-                            @if($medicine->isAvailable())
-                                <span style="color:#B91C1C;"><i class="fa-solid fa-circle-check"></i> Tersedia</span>
-                            @else
-                                <span style="color:#ef4444;"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
-                            @endif
-                        </div>
-                    </div>
+                    <div class="price-label">Pabrik</div>
+                    <div class="price" style="font-size:1rem;color:#374151;font-weight:700;">{{ $medicine->pabrik_label }}</div>
                 </div>
 
                 @if(!empty($medicine->sediaan))
@@ -422,17 +405,16 @@
                         <label style="display:block;font-size:0.82rem;font-weight:600;color:#374151;margin-bottom:0.35rem;">Jumlah Pembelian</label>
                         <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
                             <button type="button" onclick="changeQty(-1)" style="width:34px;height:34px;border:1px solid #d1d5db;border-radius:8px;background:white;font-size:1rem;cursor:pointer;font-weight:700;color:#374151;flex-shrink:0;">-</button>
-                            <input type="number" id="qtyInput" value="1" min="1" max="{{ $medicine->stok }}"
+                            <input type="number" id="qtyInput" value="1" min="1"
                                 style="width:64px;text-align:center;padding:0.35rem;border:1px solid #d1d5db;border-radius:8px;font-size:0.95rem;font-weight:700;"
                                 oninput="updateTotal()">
                             <button type="button" onclick="changeQty(1)" style="width:34px;height:34px;border:1px solid #d1d5db;border-radius:8px;background:white;font-size:1rem;cursor:pointer;font-weight:700;color:#374151;flex-shrink:0;">+</button>
-                            <span style="font-size:0.78rem;color:#9ca3af;">Stok: {{ $medicine->stok }}</span>
                         </div>
                     </div>
 
                     <div style="margin-bottom:0.85rem;padding:0.65rem 1rem;background:#fef2f2;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
-                        <span style="font-size:0.82rem;color:#991B1B;font-weight:600;">Total Harga</span>
-                        <span id="totalHarga" style="font-size:1rem;font-weight:800;color:#991B1B;">{{ $medicine->getFormattedPrice() }}</span>
+                        <span style="font-size:0.82rem;color:#991B1B;font-weight:600;">Pabrik</span>
+                        <span id="totalHarga" style="font-size:1rem;font-weight:800;color:#991B1B;">{{ $medicine->pabrik_label }}</span>
                     </div>
 
                     <div style="margin-bottom:1rem;">
@@ -475,7 +457,7 @@
                     </div>
                     <div class="related-body">
                         <div class="related-name">{{ $related->nama_obat }}</div>
-                        <div class="related-price">{{ $related->getFormattedPrice() }}</div>
+                        <div style="font-size:0.72rem;color:#6b7280;font-weight:600;line-height:1.4;">{{ $related->pabrik_label }}</div>
                     </div>
                 </a>
             @endforeach
@@ -488,9 +470,10 @@
 
 @section('scripts')
 <script>
-    const hargaSatuan = {{ $medicine->harga }};
-    const stokMax     = {{ $medicine->stok }};
+    const hargaSatuan = 0;
+    const stokMax     = {{ $medicine->stok > 0 ? $medicine->stok : 9999 }};
     const namaObat    = @json($medicine->nama_obat);
+    const pabrikLabel = @json($medicine->pabrik_label);
 
     function formatRupiah(angka) {
         return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
@@ -508,7 +491,7 @@
     function updateTotal() {
         const qty = Math.max(1, Math.min(parseInt(document.getElementById('qtyInput').value) || 1, stokMax));
         document.getElementById('qtyInput').value = qty;
-        document.getElementById('totalHarga').textContent = formatRupiah(hargaSatuan * qty);
+        document.getElementById('totalHarga').textContent = pabrikLabel;
     }
 
     function pesanWA() {
@@ -523,11 +506,12 @@
         }
         errEl.style.display = 'none';
 
-        const total          = formatRupiah(hargaSatuan * qty);
-        const hargaSatuanFmt = formatRupiah(hargaSatuan);
+        const total          = hargaSatuan > 0 ? formatRupiah(hargaSatuan * qty) : 'Mohon dikonfirmasi';
+        const hargaSatuanFmt = hargaSatuan > 0 ? formatRupiah(hargaSatuan) : 'Mohon dikonfirmasi';
 
+        const stokInfo = {{ $medicine->stok }} <= 0 ? ' (stok perlu dikonfirmasi)' : '';
         const pesan = 'Halo Sumberindo Farma Tama, saya ingin memesan:\n\n' +
-            'Produk     : ' + namaObat + '\n' +
+            'Produk     : ' + namaObat + stokInfo + '\n' +
             'Harga      : ' + hargaSatuanFmt + ' / pcs\n' +
             'Jumlah     : ' + qty + ' pcs\n' +
             'Total      : ' + total + '\n\n' +

@@ -186,7 +186,7 @@ class ProductController extends Controller
         }
 
         if ($perusahaan) {
-            $query->where('kategori', $perusahaan);
+            $query->where('brand', $perusahaan);
         }
 
         match ($sort) {
@@ -224,12 +224,12 @@ class ProductController extends Controller
                                                                             ->whereRaw('LOWER(kategori) LIKE ?', ['%pbf%']);
                                                                     });
                                                         })
-                            ->select('kategori')
-                            ->whereNotNull('kategori')
-                            ->where('kategori', '!=', '')
+                            ->select('brand')
+                            ->whereNotNull('brand')
+                            ->where('brand', '!=', '')
                             ->distinct()
-                            ->orderBy('kategori')
-                            ->pluck('kategori');
+                            ->orderBy('brand')
+                            ->pluck('brand');
 
         // Jika ada view khusus untuk perusahaan PBF, gunakan itu
         if ($perusahaan) {
@@ -291,6 +291,7 @@ class ProductController extends Controller
     {
         $search          = $request->get('search', '');
         $kategori_produk = $request->get('kategori_produk', '');
+        $perusahaan      = $request->get('perusahaan', '');
         $sort            = $request->get('sort', 'terbaru');
 
         /** @var \App\Models\User|null $user */
@@ -413,20 +414,37 @@ class ProductController extends Controller
         })->nonPbf()->count();
 
         $kategoriOptions = ProductCategory::getList();
-        $perusahaanList  = collect(); // tidak dipakai lagi
+        $perusahaanList = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
+            $q->where('kategori', $selectedOutlet)
+              ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
+              ->orWhere(function ($global) use ($outletNames) {
+                  $global->where('kelompok', 'APOTEK')
+                         ->where(function ($notOutlet) use ($outletNames) {
+                             $notOutlet->whereNull('kategori')->orWhere('kategori', '');
+                             foreach ($outletNames as $outlet) {
+                                 $notOutlet->where('kategori', '!=', $outlet);
+                             }
+                         });
+              });
+        })->nonPbf()
+            ->whereNotNull('brand')
+            ->where('brand', '!=', '')
+            ->distinct()
+            ->orderBy('brand')
+            ->pluck('brand');
 
         // Jika ada view khusus untuk outlet ini, gunakan view tersebut
         $apotekView = 'products_apotek_' . Str::slug($selectedOutlet);
         if (view()->exists($apotekView)) {
             return view($apotekView, compact(
-                'medicines', 'search', 'kategori_produk',
+                'medicines', 'search', 'kategori_produk', 'perusahaan',
                 'sort', 'total', 'kategoriOptions', 'perusahaanList',
                 'selectedOutlet', 'selectedOutletMeta', 'outletMeta', 'displayPerusahaan'
             ));
         }
 
         return view('products_apotek', compact(
-            'medicines', 'search', 'kategori_produk',
+            'medicines', 'search', 'kategori_produk', 'perusahaan',
             'sort', 'total', 'kategoriOptions', 'perusahaanList',
             'selectedOutlet', 'selectedOutletMeta', 'outletMeta', 'displayPerusahaan'
         ));

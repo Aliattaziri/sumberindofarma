@@ -243,10 +243,10 @@
 <section class="apotek-main">
     <div class="container">
         <div class="apotek-panel">
-            <form method="GET" action="{{ route('products.apotek') }}" class="filter-row" style="grid-template-columns: 2fr 1fr 1fr auto;">
+            <form method="GET" action="{{ route('products.apotek') }}" class="filter-row" style="grid-template-columns: 2fr 1fr 1fr 1fr auto;">
                 <div class="filter-group">
                     <label><i class="fa-solid fa-magnifying-glass"></i> Cari produk</label>
-                    <input type="text" name="search" value="{{ $search }}" placeholder="Nama produk atau deskripsi">
+                    <input type="text" name="search" value="{{ $search }}" placeholder="Nama produk, merk, atau deskripsi">
                 </div>
                 <div class="filter-group">
                     <label><i class="fa-solid fa-tag"></i> Kategori</label>
@@ -254,6 +254,15 @@
                         <option value="">Semua Kategori</option>
                         @foreach($kategoriOptions as $k)
                             <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $k }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fa-solid fa-building"></i> Merk/Brand</label>
+                    <select name="perusahaan">
+                        <option value="">Semua Merk/Brand</option>
+                        @foreach($perusahaanList ?? [] as $p)
+                            <option value="{{ $p }}" @selected(($perusahaan ?? '') === $p)>{{ $p }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -283,25 +292,17 @@
                         @if($medicine->gambar)
                             <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}">
                         @else
-                            <img src="{{ asset('page1.jpeg') }}" alt="{{ $medicine->nama_obat }}">
+                            <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:184px;background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#b91c1c;">
+                                <i class="fa-solid fa-pills" style="font-size:2.5rem;"></i>
+                            </div>
                         @endif
                         <div class="product-body">
                             <span class="product-tag">{{ $medicine->kategori_produk ?: 'OBAT' }}</span>
                             <h3 class="product-name">{{ $medicine->nama_obat }}</h3>
-                            <div class="product-price">{{ $medicine->getFormattedPrice() }}</div>
-                            @if($medicine->stok > 10)
-                                <span class="stock-badge stock-ok"><i class="fa-solid fa-circle-check"></i> Stok tersedia</span>
-                            @elseif($medicine->stok > 0)
-                                <span class="stock-badge stock-low"><i class="fa-solid fa-triangle-exclamation"></i> Stok terbatas</span>
-                            @else
-                                <span class="stock-badge stock-out"><i class="fa-solid fa-circle-xmark"></i> Stok habis</span>
-                            @endif
+                            <div style="font-size:0.72rem;color:#6b7280;font-weight:600;line-height:1.4;margin-bottom:0.45rem;">
+                                {{ $medicine->pabrik_label }}
+                            </div>
                             <a href="{{ route('medicines.show', $medicine->id) }}" class="product-btn"><i class="fa-solid fa-eye"></i> Lihat Detail</a>
-                            @if($medicine->stok > 0)
-                                <button type="button" class="btn-cart" onclick="addToCart({{ $medicine->id }}, '{{ addslashes($medicine->nama_obat) }}', {{ $medicine->harga }}, '{{ $medicine->gambar ? url('storage/'.$medicine->gambar) : '' }}', '{{ addslashes($medicine->brand ?: $medicine->kategori) }}', this)">
-                                    <i class="fa-solid fa-cart-plus"></i> Tambah ke Keranjang
-                                </button>
-                            @endif
                         </div>
                     </div>
                 @endforeach
@@ -317,20 +318,3 @@
 </section>
 @endsection
 
-@section('scripts')
-<script>
-    @php
-        $cartScope = 'apotek_' . preg_replace('/[^a-z0-9]+/', '_', strtolower($selectedOutlet ?? 'default'));
-    @endphp
-    window.cartSettings = Object.assign({}, window.cartSettings || {}, {
-        storageKey: @json(auth()->check()
-            ? 'sumberindofarmatama_cart_user_' . auth()->user()->id . '_' . $cartScope
-            : 'sumberindofarmatama_cart_' . $cartScope),
-        receiptStoreName: '{{ addslashes($selectedOutlet ?? 'Sumberindo Farma Tama') }}',
-        receiptStoreAddress: '{{ addslashes($selectedOutletMeta['address'] ?? 'Kalimantan Barat') }}',
-        receiptStorePhone: '{{ $selectedOutletMeta['phone'] ?? '' }}',
-        wa: '{{ $selectedOutletMeta['wa'] ?? '6285248965590' }}'
-    });
-</script>
-@include('partials.cart_store')
-@endsection

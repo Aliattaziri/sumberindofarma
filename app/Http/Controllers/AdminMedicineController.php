@@ -31,7 +31,7 @@ class AdminMedicineController extends Controller
         }
 
         if ($kategori) {
-            $query->where('kategori', $kategori);
+            $query->where('brand', $kategori);
         }
 
         if ($kategori_produk) {
@@ -49,8 +49,14 @@ class AdminMedicineController extends Controller
         }
 
         $medicines       = $query->paginate(10)->withQueryString();
-        $categories      = ProductCategory::getList();
-        $kategoriOptions = $categories;
+        $categories      = Medicine::where('is_grosir', false)
+                            ->select('brand')
+                            ->whereNotNull('brand')
+                            ->where('brand', '!=', '')
+                            ->distinct()
+                            ->orderBy('brand')
+                            ->pluck('brand');
+        $kategoriOptions = ProductCategory::getList();
 
         return view('admin.medicines.index', compact('medicines', 'search', 'kategori', 'brand', 'tipe', 'categories', 'kategori_produk', 'kategoriOptions'));
     }

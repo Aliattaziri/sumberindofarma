@@ -131,6 +131,9 @@ class AdminProdukController extends Controller
         }
 
         $validated = $request->validate($rules);
+        $validated['harga']   = $validated['harga']   ?? 0;
+        $validated['stok']    = $validated['stok']    ?? 0;
+        $validated['terjual'] = $validated['terjual'] ?? 0;
 
         // Normalisasi kategori_produk dan pastikan ada di DB
         $validated['kategori_produk'] = \App\Models\ProductCategory::ensureExists($validated['kategori_produk']);

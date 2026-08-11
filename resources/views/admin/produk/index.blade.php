@@ -62,29 +62,6 @@
     .stock-low   { background:#fee2e2; color:#B91C1C; }
     .stock-empty { background:#fee2e2; color:#991b1b; }
     .price-text  { font-weight:600; color:#B91C1C; }
-    .inline-input {
-        width: 100%;
-        max-width: 110px;
-        padding: 0.35rem 0.55rem;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.45rem;
-        background: white;
-        color: #1f2937;
-        font-size: 0.85rem;
-        transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .inline-input.inline-price {
-        max-width: 240px;
-        min-width: 160px;
-    }
-    .inline-input.inline-stock {
-        max-width: 120px;
-    }
-    .inline-input:focus {
-        outline: none;
-        border-color: #B91C1C;
-        box-shadow: 0 0 0 3px rgba(185, 28, 38, 0.12);
-    }
 
     .action-wrap { display:flex; gap:0.4rem; }
     .btn-edit, .btn-del { display:inline-flex; align-items:center; gap:0.3rem; padding:0.35rem 0.75rem; border-radius:0.4rem; font-size:0.78rem; font-weight:600; text-decoration:none; border:none; cursor:pointer; transition:all 0.2s; }
@@ -257,8 +234,6 @@
                         <th>Outlet / Apotek</th>
                     @endif
                     <th>Pabrik / Merek</th>
-                    <th style="width:220px;">Harga</th>
-                    <th style="width:110px;">Stok</th>
                     <th>Ditambahkan</th>
                     <th style="width:130px;">Aksi</th>
                 </tr>
@@ -304,34 +279,6 @@
                     @endif
                     <td>
                         <span style="font-size:0.82rem;color:#6b7280;">{{ $medicine->brand ?: '-' }}</span>
-                    </td>
-                    <td>
-                        <div style="display:flex;flex-direction:column;gap:0.25rem;">
-                            <input type="number"
-                                   class="inline-input inline-price"
-                                   min="0"
-                                   step="100"
-                                   value="{{ $medicine->harga }}"
-                                   placeholder="Rp"
-                                   title="Ubah harga produk langsung"
-                                   data-update-url="{{ route('admin.produk.update-price', $medicine->id) }}"
-                                   aria-label="Harga {{ $medicine->nama_obat }}">
-                            <span style="font-size:0.75rem;color:#6b7280;">Tekan Enter untuk simpan</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div style="display:flex;flex-direction:column;gap:0.25rem;">
-                            <input type="number"
-                                   class="inline-input inline-stock"
-                                   min="0"
-                                   step="1"
-                                   value="{{ $medicine->stok }}"
-                                   placeholder="Stok"
-                                   title="Ubah stok produk langsung"
-                                   data-update-url="{{ route('admin.produk.update-stock', $medicine->id) }}"
-                                   aria-label="Stok {{ $medicine->nama_obat }}">
-                            <span style="font-size:0.75rem;color:#6b7280;">Diperbarui otomatis saat keluar</span>
-                        </div>
                     </td>
                     <td style="font-size:0.82rem;color:#9ca3af;">{{ $medicine->created_at->format('d M Y') }}</td>
                     <td>
@@ -526,50 +473,6 @@ if (bulkDeleteForm) {
         localStorage.removeItem(selectionStorageKey);
     });
 }
-
-function attachInlineUpdate(selector, fieldName) {
-    document.querySelectorAll(selector).forEach(function (input) {
-        input.addEventListener('change', function () {
-            const url = input.dataset.updateUrl;
-            const token = document.head.querySelector('meta[name="csrf-token"]')?.content;
-            if (!url || !token) return;
-
-            input.disabled = true;
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token,
-                },
-                body: JSON.stringify({ [fieldName]: input.value }),
-            }).then(function(response) {
-                if (!response.ok) {
-                    return response.json().then(function(body) {
-                        throw new Error(body?.message || 'Gagal menyimpan');
-                    });
-                }
-                return response.json();
-            }).then(function(data) {
-                input.title = data.message || 'Tersimpan';
-            }).catch(function(error) {
-                alert(error.message || 'Gagal menyimpan perubahan');
-            }).finally(function() {
-                input.disabled = false;
-                setTimeout(function() { input.title = ''; }, 1500);
-            });
-        });
-        input.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                input.blur();
-            }
-        });
-    });
-}
-
-attachInlineUpdate('.inline-price', 'harga');
-attachInlineUpdate('.inline-stock', 'stok');
 
 syncSelectionsFromStorage();
 

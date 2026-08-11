@@ -361,10 +361,10 @@
                 </div>
             </div>
             <div class="search-field" style="max-width:220px;">
-                <label>Perusahaan</label>
+                <label>Merk/Brand</label>
                 <div class="search-input-wrap">
                     <select name="kategori">
-                        <option value="">Semua Perusahaan</option>
+                        <option value="">Semua Merk/Brand</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat }}" {{ $kategori === $cat ? 'selected' : '' }}>{{ $cat }}</option>
                         @endforeach

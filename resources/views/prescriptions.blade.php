@@ -131,89 +131,6 @@
         transform: translateY(-2px); color: white;
         box-shadow: 0 4px 12px rgba(220,38,38,0.18);
     }
-    .btn-cart {
-        display: block; width: 100%; padding: 0.55rem;
-        background: white; color: #B91C1C;
-        border: 2px solid #B91C1C; border-radius: 10px; cursor: pointer;
-        font-weight: 700; font-size: 0.82rem; text-align: center;
-        text-decoration: none; transition: all 0.3s; margin-top: 0.5rem;
-    }
-    .btn-cart:hover { background: #fef2f2; transform: translateY(-1px); }
-    .btn-cart.added { background: #fee2e2; color: #065f46; border-color: #34d399; }
-
-    /* ===== CART DRAWER ===== */
-    .cart-overlay {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-        z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
-    .cart-overlay.open { opacity: 1; pointer-events: all; }
-    .cart-drawer {
-        position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw;
-        height: 100vh; background: white; z-index: 2001;
-        display: flex; flex-direction: column;
-        box-shadow: -8px 0 40px rgba(0,0,0,0.15);
-        transition: right 0.35s cubic-bezier(.4,0,.2,1);
-    }
-    .cart-drawer.open { right: 0; }
-    .cart-header {
-        background: linear-gradient(135deg, #7F1D1D, #B91C1C);
-        padding: 1.25rem 1.5rem; color: white;
-        display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
-    }
-    .cart-header h2 { font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem; }
-    .cart-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-    .cart-close:hover { background: rgba(255,255,255,0.35); }
-    .cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.25rem; }
-    .cart-empty { text-align: center; padding: 3rem 1rem; color: #9ca3af; }
-    .cart-empty i { font-size: 3rem; display: block; margin-bottom: 0.75rem; }
-    .cart-item {
-        display: flex; gap: 0.75rem; align-items: flex-start;
-        padding: 0.85rem 0; border-bottom: 1px solid #f3f4f6;
-    }
-    .cart-item-img {
-        width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
-        background: linear-gradient(135deg, #fef2f2, #fee2e2);
-        display: flex; align-items: center; justify-content: center; overflow: hidden;
-    }
-    .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
-    .cart-item-info { flex: 1; min-width: 0; }
-    .cart-item-name { font-size: 0.85rem; font-weight: 700; color: #1f2937; margin-bottom: 0.2rem; line-height: 1.3; }
-    .cart-item-price { font-size: 0.82rem; color: #B91C1C; font-weight: 700; }
-    .cart-item-qty { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; }
-    .qty-btn { width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid #e5e7eb; background: white; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-weight: 700; color: #374151; }
-    .qty-btn:hover { border-color: #B91C1C; color: #B91C1C; }
-    .qty-num { font-size: 0.85rem; font-weight: 700; min-width: 20px; text-align: center; }
-    .cart-item-remove { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 0.9rem; padding: 0.2rem; transition: color 0.2s; flex-shrink: 0; }
-    .cart-item-remove:hover { color: #ef4444; }
-    .cart-footer { padding: 1.25rem 1.5rem; border-top: 2px solid #f3f4f6; flex-shrink: 0; background: #fafbff; }
-    .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-    .cart-total span { font-size: 0.9rem; color: #6b7280; }
-    .cart-total strong { font-size: 1.2rem; color: #B91C1C; font-weight: 800; }
-    .btn-wa {
-        display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-        width: 100%; padding: 0.85rem; background: #ef4444; color: white;
-        border: none; border-radius: 12px; cursor: pointer; font-weight: 700;
-        font-size: 1rem; text-decoration: none; transition: all 0.3s;
-    }
-    .btn-wa:hover { background: #991B1B; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.4); color: white; }
-    .btn-wa:disabled { background: #d1d5db; cursor: not-allowed; transform: none; box-shadow: none; }
-    .btn-clear { display: block; width: 100%; padding: 0.5rem; background: none; border: none; color: #9ca3af; font-size: 0.8rem; cursor: pointer; margin-top: 0.5rem; transition: color 0.2s; }
-    .btn-clear:hover { color: #ef4444; }
-
-    /* Cart badge di navbar */
-    .cart-nav-btn {
-        position: relative; background: none; border: none; cursor: pointer;
-        color: white; padding: 0.5rem 0.6rem; border-radius: 0.375rem;
-        font-size: 1rem; display: flex; align-items: center; transition: background 0.2s;
-    }
-    .cart-nav-btn:hover { background: rgba(255,255,255,0.2); }
-    .cart-badge {
-        position: absolute; top: 2px; right: 2px;
-        background: #ef4444; color: white; font-size: 0.6rem; font-weight: 800;
-        width: 16px; height: 16px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        display: none;
-    }
 
     .empty-state { text-align: center; padding: 5rem 2rem; background: white; border-radius: 16px; border: 1px solid #e5e7eb; }
     .empty-state h3 { font-size: 1.4rem; font-weight: 700; color: #1f2937; margin: 1rem 0 0.5rem; }
@@ -237,8 +154,6 @@
         .filter-bar > div:last-child { width: 100%; display: flex; gap: 0.5rem; }
         .btn-filter, .btn-reset { flex: 1; text-align: center; }
         .medicines-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-        .cart-drawer { width: 100%; max-width: 100%; right: -100%; }
-        .cart-drawer.open { right: 0; }
     }
 
     @media (max-width: 480px) {
@@ -247,7 +162,6 @@
         .medicine-body { padding: 0.65rem; }
         .medicine-name { font-size: 0.82rem; }
         .medicine-price { font-size: 0.9rem; }
-        .medicine-btn, .btn-cart { font-size: 0.78rem; padding: 0.5rem; }
     }
 </style>
 @endsection
@@ -280,9 +194,9 @@
                        value="{{ $search }}">
             </div>
             <div class="filter-group">
-                <label class="filter-label"><i class="fa-solid fa-building"></i> Perusahaan</label>
+                <label class="filter-label"><i class="fa-solid fa-building"></i> Merk/Brand</label>
                 <select name="perusahaan" class="filter-select">
-                    <option value="">Semua Perusahaan</option>
+                    <option value="">Semua Merk/Brand</option>
                     @foreach($perusahaans as $p)
                         <option value="{{ $p }}" @selected($perusahaan === $p)>{{ $p }}</option>
                     @endforeach
@@ -330,27 +244,17 @@
                         <div class="medicine-body">
                             <h3 class="medicine-name">{{ $medicine->nama_obat }}</h3>
                             
-                            <div class="medicine-price">{{ $medicine->getFormattedPrice() }}</div>
+                            <div style="font-size:0.72rem;color:#6b7280;font-weight:600;line-height:1.4;margin-bottom:0.5rem;">
+                                {{ $medicine->pabrik_label }}
+                            </div>
                             @if($medicine->sediaan_label)
                                 <div class="medicine-meta" style="display:flex;align-items:center;gap:0.35rem;margin-bottom:0.6rem;">
                                     <i class="fa-solid fa-cube"></i> <span>Sediaan: {{ $medicine->sediaan_label }}</span>
                                 </div>
                             @endif
-                            @if($medicine->stok > 10)
-                                <span class="stock-badge stock-available"><i class="fa-solid fa-circle-check"></i> {{ $medicine->stok }} tersedia</span>
-                            @elseif($medicine->stok > 0)
-                                <span class="stock-badge stock-low"><i class="fa-solid fa-triangle-exclamation"></i> {{ $medicine->stok }} tersisa</span>
-                            @else
-                                <span class="stock-badge stock-out"><i class="fa-solid fa-circle-xmark"></i> Habis</span>
-                            @endif
                             <a href="{{ route('medicines.show', $medicine->id) }}" class="medicine-btn">
                                 Lihat Detail <i class="fa-solid fa-arrow-right"></i>
                             </a>
-                            @if($medicine->stok > 0)
-                            <button class="btn-cart" onclick="addToCart({{ $medicine->id }}, '{{ addslashes($medicine->nama_obat) }}', {{ $medicine->harga }}, '{{ $medicine->gambar ? url('storage/'.$medicine->gambar) : '' }}', '{{ addslashes($medicine->brand ?: $medicine->kategori) }}', this)">
-                                <i class="fa-solid fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                            @endif
                         </div>
                     </div>
                 @endforeach
@@ -405,16 +309,6 @@
 
 @endsection
 
-@section('scripts')
-<script>
-window.cartSettings = Object.assign({}, window.cartSettings || {}, {
-    storageKey: @json(auth()->check() ? 'sumberindofarmatama_cart_user_' . auth()->user()->id . '_grosir' : 'sumberindofarmatama_cart_grosir'),
-    receiptStoreName: 'Sumberindo Farma Tama - Grosir',
-    receiptFilePrefix: 'struk-grosir-sumberindo'
-});
-</script>
-@include('partials.cart_grosir')
-@endsection
 
 
 

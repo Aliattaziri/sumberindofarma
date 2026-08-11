@@ -22,10 +22,6 @@
         <div class="stat-label">Total Banner</div>
         <div class="stat-value" style="color:#ef4444;">{{ $totalBanners }}</div>
     </div>
-    <div class="stat-card" style="border-top-color:#8b5cf6;">
-        <div class="stat-label">Total Omzet</div>
-        <div class="stat-value" style="color:#8b5cf6;">{{ 'Rp ' . number_format($totalOmzet, 0, ',', '.') }}</div>
-    </div>
 </div>
 
 {{-- Per Kategori --}}
@@ -101,40 +97,6 @@
                     </tr>
                 @empty
                     <tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Belum ada produk.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
-
-{{-- Riwayat Pembelian Terbaru --}}
-<div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <div class="card-title" style="margin:0;">🧾 Riwayat Pembelian</div>
-        <a href="{{ route('admin.purchase-history.index') }}" style="font-size:0.8rem;color:#B91C1C;text-decoration:none;">Lihat semua →</a>
-    </div>
-    <div class="table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Waktu</th>
-                    <th>Pembeli</th>
-                    <th>Jenis</th>
-                    <th>Total</th>
-                    <th>Nomor</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($recentOrders as $order)
-                    <tr>
-                        <td style="font-size:0.82rem;color:#6b7280;">{{ $order->created_at->format('d M Y H:i') }}</td>
-                        <td><strong>{{ $order->buyer_name }}</strong></td>
-                        <td>{{ $order->buyer_type === 'apotik' ? 'Apotik' : ($order->buyer_type === 'toko_obat' ? 'Toko Obat' : ($order->buyer_type === 'pbf' ? 'PBF' : 'Umum')) }}</td>
-                        <td>{{ 'Rp ' . number_format($order->total, 0, ',', '.') }}</td>
-                        <td style="font-size:0.82rem;color:#6b7280;">{{ $order->sia ?? $order->sipa ?? '-' }}</td>
-                    </tr>
-                @empty
-                    <tr><td colspan="5" style="text-align:center;color:#6b7280;padding:2rem;">Belum ada pembelian.</td></tr>
                 @endforelse
             </tbody>
         </table>
