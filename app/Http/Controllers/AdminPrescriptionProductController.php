@@ -224,10 +224,12 @@ class AdminPrescriptionProductController extends Controller
         $this->authorizeOutletProduct($product);
 
         $validated = $request->validate([
-            'stok' => ['required', 'integer', 'min:0'],
+            'stok' => ['nullable', 'integer', 'min:0'],
         ]);
 
-        $product->update(['stok' => $validated['stok']]);
+        if ($request->has('stok')) {
+            $product->update(['stok' => $validated['stok']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([
@@ -247,10 +249,12 @@ class AdminPrescriptionProductController extends Controller
         $this->authorizeOutletProduct($product);
 
         $validated = $request->validate([
-            'harga' => ['required', 'numeric', 'min:0'],
+            'harga' => ['nullable', 'numeric', 'min:0'],
         ]);
 
-        $product->update(['harga' => $validated['harga']]);
+        if ($request->has('harga')) {
+            $product->update(['harga' => $validated['harga']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([

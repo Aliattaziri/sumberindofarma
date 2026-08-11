@@ -1,9 +1,7 @@
-@extends('layouts.admin')
+<?php $__env->startSection('title', 'Edit Produk - Admin Sumberindo Farma Tama'); ?>
+<?php $__env->startSection('page-title', '✏️ Edit: ' . $medicine->nama_obat); ?>
 
-@section('title', 'Edit Produk - Admin Sumberindo Farma Tama')
-@section('page-title', '✏️ Edit: ' . $medicine->nama_obat)
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
     .form-card { background:white; border-radius:0.75rem; box-shadow:0 1px 4px rgba(0,0,0,0.06); border:1px solid #f0f0f0; overflow:hidden; }
     .form-card-header { padding:1rem 1.5rem; border-bottom:1px solid #f3f4f6; display:flex; align-items:center; gap:0.6rem; }
@@ -50,26 +48,26 @@
     @media (max-width:900px) { .two-col-layout { grid-template-columns:1fr; } }
     @media (max-width:600px) { .form-grid { grid-template-columns:1fr; } .form-body { padding:1rem; } .form-footer { padding:1rem; } .kat-selector { grid-template-columns:1fr 1fr; } }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:#9ca3af;margin-bottom:1.25rem;">
-    <a href="{{ route('admin.produk.index') }}" style="color:#B91C1C;text-decoration:none;font-weight:600;">🛒 Produk Kami</a>
+    <a href="<?php echo e(route('admin.produk.index')); ?>" style="color:#B91C1C;text-decoration:none;font-weight:600;">🛒 Produk Kami</a>
     <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
     <span style="color:#374151;font-weight:600;">Edit Produk</span>
 </div>
 
-<form action="{{ route('admin.produk.update', $medicine->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-    <input type="hidden" name="search" value="{{ request('search') }}">
-    <input type="hidden" name="kategori_produk" value="{{ request('kategori_produk') }}">
-    <input type="hidden" name="pabrik" value="{{ request('pabrik') }}">
-    <input type="hidden" name="page" value="{{ request('page') }}">
+<form action="<?php echo e(route('admin.produk.update', $medicine->id)); ?>" method="POST" enctype="multipart/form-data">
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('PUT'); ?>
+    <input type="hidden" name="search" value="<?php echo e(request('search')); ?>">
+    <input type="hidden" name="kategori_produk" value="<?php echo e(request('kategori_produk')); ?>">
+    <input type="hidden" name="pabrik" value="<?php echo e(request('pabrik')); ?>">
+    <input type="hidden" name="page" value="<?php echo e(request('page')); ?>">
     <div class="two-col-layout">
 
-        {{-- Kiri: Info --}}
+        
         <div class="form-card">
             <div class="form-card-header">
                 <div class="header-icon"><i class="fa-solid fa-circle-info"></i></div>
@@ -77,127 +75,176 @@
             </div>
             <div class="form-body">
 
-                @if(auth()->check() && auth()->user()->isSuperAdmin())
+                <?php if(auth()->check() && auth()->user()->isSuperAdmin()): ?>
                     <div class="form-group">
                         <label class="form-label">Outlet / Apotek <span class="req">*</span></label>
-                        <select name="kategori" class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}" required>
+                        <select name="kategori" class="form-input <?php echo e($errors->has('kategori') ? 'is-invalid' : ''); ?>" required>
                             <option value="">— Pilih Outlet —</option>
-                            @foreach($outletOptions as $outlet)
-                                <option value="{{ $outlet }}" {{ old('kategori', $medicine->kategori) == $outlet ? 'selected' : '' }}>{{ $outlet }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $outletOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $outlet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($outlet); ?>" <?php echo e(old('kategori', $medicine->kategori) == $outlet ? 'selected' : ''); ?>><?php echo e($outlet); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                        @error('kategori')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
+                        <?php $__errorArgs = ['kategori'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="form-group">
                         <label class="form-label">Merk / Brand <span class="req">*</span></label>
-                        <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                               value="{{ old('brand', $medicine->brand) }}" required>
-                        @error('brand')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
+                        <input type="text" name="brand" class="form-input <?php echo e($errors->has('brand') ? 'is-invalid' : ''); ?>"
+                               value="<?php echo e(old('brand', $medicine->brand)); ?>" required>
+                        <?php $__errorArgs = ['brand'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
-                @endif
+                <?php endif; ?>
 
                 <div class="form-group">
                     <label class="form-label">Nama Produk <span class="req">*</span></label>
-                    <input type="text" name="nama_obat" class="form-input {{ $errors->has('nama_obat') ? 'is-invalid' : '' }}"
-                           value="{{ old('nama_obat', $medicine->nama_obat) }}" required>
-                    @error('nama_obat')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
+                    <input type="text" name="nama_obat" class="form-input <?php echo e($errors->has('nama_obat') ? 'is-invalid' : ''); ?>"
+                           value="<?php echo e(old('nama_obat', $medicine->nama_obat)); ?>" required>
+                    <?php $__errorArgs = ['nama_obat'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Sediaan</label>
                     <input type="text" name="sediaan"
-                           class="form-input {{ $errors->has('sediaan') ? 'is-invalid' : '' }}"
+                           class="form-input <?php echo e($errors->has('sediaan') ? 'is-invalid' : ''); ?>"
                            placeholder="Contoh: fls, box, tube, pcs atau ketik bebas"
-                           value="{{ old('sediaan', $medicine->sediaan) }}">
-                    @error('sediaan')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
+                           value="<?php echo e(old('sediaan', $medicine->sediaan)); ?>">
+                    <?php $__errorArgs = ['sediaan'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Deskripsi Produk</label>
-                    <textarea name="deskripsi" class="form-input {{ $errors->has('deskripsi') ? 'is-invalid' : '' }}" rows="3"
-                              placeholder="Contoh: Obat pereda demam dan nyeri ringan.">{{ old('deskripsi', $medicine->deskripsi) }}</textarea>
-                    @error('deskripsi')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
+                    <textarea name="deskripsi" class="form-input <?php echo e($errors->has('deskripsi') ? 'is-invalid' : ''); ?>" rows="3"
+                              placeholder="Contoh: Obat pereda demam dan nyeri ringan."><?php echo e(old('deskripsi', $medicine->deskripsi)); ?></textarea>
+                    <?php $__errorArgs = ['deskripsi'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">SKU</label>
-                        <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
-                               value="{{ old('sku', $medicine->sku) }}">
-                        @error('sku')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
+                        <input type="text" name="sku" class="form-input <?php echo e($errors->has('sku') ? 'is-invalid' : ''); ?>"
+                               value="<?php echo e(old('sku', $medicine->sku)); ?>">
+                        <?php $__errorArgs = ['sku'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Brand</label>
-                        <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                               value="{{ old('brand', $medicine->brand) }}">
-                        @error('brand')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
+                        <input type="text" name="brand" class="form-input <?php echo e($errors->has('brand') ? 'is-invalid' : ''); ?>"
+                               value="<?php echo e(old('brand', $medicine->brand)); ?>">
+                        <?php $__errorArgs = ['brand'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Komposisi / Bahan</label>
                     <textarea name="komposisi" class="form-input" rows="3"
-                              placeholder="Contoh: Paracetamol 500 mg, Aqua, Glycerin...">{{ old('komposisi', $medicine->komposisi) }}</textarea>
+                              placeholder="Contoh: Paracetamol 500 mg, Aqua, Glycerin..."><?php echo e(old('komposisi', $medicine->komposisi)); ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Indikasi / Kegunaan</label>
                     <textarea name="indikasi" class="form-input" rows="3"
-                              placeholder="Contoh: Meredakan demam dan nyeri ringan hingga sedang...">{{ old('indikasi', $medicine->indikasi) }}</textarea>
+                              placeholder="Contoh: Meredakan demam dan nyeri ringan hingga sedang..."><?php echo e(old('indikasi', $medicine->indikasi)); ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Kategori Produk <span class="req">*</span></label>
-                    @php
+                    <?php
                         $currentKat = old('kategori_produk', $medicine->kategori_produk);
                         $isCustom   = $currentKat && !in_array($currentKat, $kategoriOptions);
-                    @endphp
+                    ?>
 
-                    {{-- Pilihan kartu (kategori yang sudah ada) --}}
+                    
                     <div class="kat-selector" id="katSelector">
-                        @foreach($kategoriOptions as $kat)
-                            @php
+                        <?php $__currentLoopData = $kategoriOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
                                 $icon       = \App\Models\ProductCategory::iconFor($kat);
                                 $isSelected = $currentKat === $kat;
-                            @endphp
-                            <label class="kat-card {{ $isSelected ? 'selected' : '' }}" onclick="selectKat(this)">
-                                <input type="radio" name="kategori_produk" value="{{ $kat }}" {{ $isSelected ? 'checked' : '' }}>
-                                <span class="kat-icon">{{ $icon }}</span>
-                                <span class="kat-label">{{ $kat }}</span>
+                            ?>
+                            <label class="kat-card <?php echo e($isSelected ? 'selected' : ''); ?>" onclick="selectKat(this)">
+                                <input type="radio" name="kategori_produk" value="<?php echo e($kat); ?>" <?php echo e($isSelected ? 'checked' : ''); ?>>
+                                <span class="kat-icon"><?php echo e($icon); ?></span>
+                                <span class="kat-label"><?php echo e($kat); ?></span>
                             </label>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                        {{-- Kartu "Tambah Baru" --}}
-                        <label class="kat-card kat-card-custom {{ $isCustom ? 'selected' : '' }}"
+                        
+                        <label class="kat-card kat-card-custom <?php echo e($isCustom ? 'selected' : ''); ?>"
                                onclick="toggleCustomKat(this)" id="katCardCustom">
                             <input type="radio" name="kategori_produk" value="__custom__" id="radioCustom"
-                                   {{ $isCustom ? 'checked' : '' }}>
+                                   <?php echo e($isCustom ? 'checked' : ''); ?>>
                             <span class="kat-icon">➕</span>
                             <span class="kat-label">Tambah Baru</span>
                         </label>
                     </div>
 
-                    {{-- Input teks untuk kategori baru --}}
-                    <div id="customKatWrap" style="margin-top:0.6rem;display:{{ $isCustom ? 'block' : 'none' }};">
+                    
+                    <div id="customKatWrap" style="margin-top:0.6rem;display:<?php echo e($isCustom ? 'block' : 'none'); ?>;">
                         <input type="text" id="customKatInput"
                                class="form-input"
                                placeholder="Ketik nama kategori baru, contoh: NUTRISI"
-                               value="{{ $isCustom ? $currentKat : '' }}"
+                               value="<?php echo e($isCustom ? $currentKat : ''); ?>"
                                oninput="syncCustomKat(this.value)">
                         <div style="font-size:0.75rem;color:#6b7280;margin-top:0.3rem;">
                             <i class="fa-solid fa-circle-info" style="color:#B91C1C;"></i>
@@ -205,13 +252,20 @@
                         </div>
                     </div>
 
-                    {{-- Hidden input untuk nilai final --}}
+                    
                     <input type="hidden" name="kategori_produk" id="kategoriProdukFinal"
-                           value="{{ $currentKat }}">
+                           value="<?php echo e($currentKat); ?>">
 
-                    @error('kategori_produk')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
+                    <?php $__errorArgs = ['kategori_produk'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 </div>
 
             </div>
@@ -219,23 +273,23 @@
                 <button type="submit" class="btn-save">
                     <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
                 </button>
-                <a href="{{ route('admin.produk.index', array_filter(['search' => request('search'), 'kategori_produk' => request('kategori_produk'), 'pabrik' => request('pabrik'), 'page' => request('page')])) }}" class="btn-cancel">
+                <a href="<?php echo e(route('admin.produk.index', array_filter(['search' => request('search'), 'kategori_produk' => request('kategori_produk'), 'pabrik' => request('pabrik'), 'page' => request('page')]))); ?>" class="btn-cancel">
                     <i class="fa-solid fa-xmark"></i> Batal
                 </a>
             </div>
         </div>
 
-        {{-- Kanan: Foto --}}
+        
         <div class="form-card">
             <div class="form-card-header">
                 <div class="header-icon"><i class="fa-solid fa-image"></i></div>
                 <h3>Foto Produk</h3>
             </div>
             <div class="form-body">
-                @if($medicine->gambar)
+                <?php if($medicine->gambar): ?>
                     <div class="current-image" id="currentImageWrap">
                         <div style="font-size:0.875rem;color:#6b7280;margin-bottom:0.5rem;">Foto saat ini:</div>
-                        <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}">
+                        <img src="<?php echo e(url('storage/' . $medicine->gambar)); ?>" alt="<?php echo e($medicine->nama_obat); ?>">
                     </div>
                     <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:1rem;">
                         <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding:0.45rem 0.85rem;background:#fee2e2;border:1px solid #fca5a5;border-radius:0.4rem;font-size:0.82rem;font-weight:600;color:#b91c1c;">
@@ -245,7 +299,7 @@
                             <i class="fa-solid fa-trash"></i> Hapus Foto
                         </label>
                     </div>
-                @endif
+                <?php endif; ?>
                 <div class="upload-zone" id="dropZone" onclick="document.getElementById('gambar').click()">
                     <div class="upload-icon">📸</div>
                     <p>Klik atau drag & drop gambar di sini</p>
@@ -255,9 +309,16 @@
                     <small>JPG, PNG, GIF — Maks. 10MB</small>
                 </div>
                 <input type="file" id="gambar" name="gambar" accept="image/*" style="display:none;">
-                @error('gambar')
-                    <div class="form-error" style="margin-top:0.5rem;"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                @enderror
+                <?php $__errorArgs = ['gambar'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <div class="form-error" style="margin-top:0.5rem;"><i class="fa-solid fa-circle-exclamation"></i> <?php echo e($message); ?></div>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                 <div class="img-preview-wrap" id="imgPreviewWrap">
                     <span class="img-preview-label">Preview</span>
                     <img id="previewImg" src="" alt="Preview">
@@ -333,8 +394,10 @@ dropZone.addEventListener('drop', e => {
     if (file) { const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; showPreview(file); }
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/admin/produk/edit.blade.php ENDPATH**/ ?>

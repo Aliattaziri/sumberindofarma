@@ -182,12 +182,11 @@ class AdminProdukController extends Controller
         $rules = [
             'nama_obat'       => ['required', 'string', 'max:255'],
             'kategori_produk' => ['required', 'string', 'max:100'],
-            'kategori'        => ['required', 'string', 'max:255'],
             'sku'             => ['nullable', 'string', 'max:255'],
-            'brand'           => ['nullable', 'string', 'max:255'],
+            'brand'           => ['required', 'string', 'max:255'],
             'terjual'         => ['nullable', 'integer', 'min:0'],
-            'harga'           => ['required', 'numeric', 'min:0'],
-            'stok'            => ['required', 'integer', 'min:0'],
+            'harga'           => ['nullable', 'numeric', 'min:0'],
+            'stok'            => ['nullable', 'integer', 'min:0'],
             'sediaan'         => ['nullable', 'string', 'max:255'],
             'deskripsi'       => ['nullable', 'string'],
             'komposisi'       => ['nullable', 'string'],
@@ -314,8 +313,10 @@ class AdminProdukController extends Controller
             return $redirect;
         }
 
-        $validated = $request->validate(['stok' => ['required', 'integer', 'min:0']]);
-        $produk->update(['stok' => $validated['stok']]);
+        $validated = $request->validate(['stok' => ['nullable', 'integer', 'min:0']]);
+        if ($request->has('stok')) {
+            $produk->update(['stok' => $validated['stok']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([
@@ -333,8 +334,10 @@ class AdminProdukController extends Controller
             return $redirect;
         }
 
-        $validated = $request->validate(['harga' => ['required', 'numeric', 'min:0']]);
-        $produk->update(['harga' => $validated['harga']]);
+        $validated = $request->validate(['harga' => ['nullable', 'numeric', 'min:0']]);
+        if ($request->has('harga')) {
+            $produk->update(['harga' => $validated['harga']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([

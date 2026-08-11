@@ -198,10 +198,12 @@ class AdminMedicineController extends Controller
     public function updateStock(Request $request, Medicine $medicine)
     {
         $validated = $request->validate([
-            'stok' => ['required', 'integer', 'min:0'],
+            'stok' => ['nullable', 'integer', 'min:0'],
         ]);
 
-        $medicine->update(['stok' => $validated['stok']]);
+        if ($request->has('stok')) {
+            $medicine->update(['stok' => $validated['stok']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([
@@ -216,10 +218,12 @@ class AdminMedicineController extends Controller
     public function updatePrice(Request $request, Medicine $medicine)
     {
         $validated = $request->validate([
-            'harga' => ['required', 'numeric', 'min:0'],
+            'harga' => ['nullable', 'numeric', 'min:0'],
         ]);
 
-        $medicine->update(['harga' => $validated['harga']]);
+        if ($request->has('harga')) {
+            $medicine->update(['harga' => $validated['harga']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([

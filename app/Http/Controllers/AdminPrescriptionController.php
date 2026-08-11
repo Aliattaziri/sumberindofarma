@@ -177,10 +177,12 @@ class AdminPrescriptionController extends Controller
         if (!$prescription->is_resep) abort(404);
 
         $validated = $request->validate([
-            'stok' => ['required', 'integer', 'min:0'],
+            'stok' => ['nullable', 'integer', 'min:0'],
         ]);
 
-        $prescription->update(['stok' => $validated['stok']]);
+        if ($request->has('stok')) {
+            $prescription->update(['stok' => $validated['stok']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([
@@ -197,10 +199,12 @@ class AdminPrescriptionController extends Controller
         if (!$prescription->is_resep) abort(404);
 
         $validated = $request->validate([
-            'harga' => ['required', 'numeric', 'min:0'],
+            'harga' => ['nullable', 'numeric', 'min:0'],
         ]);
 
-        $prescription->update(['harga' => $validated['harga']]);
+        if ($request->has('harga')) {
+            $prescription->update(['harga' => $validated['harga']]);
+        }
 
         if ($request->wantsJson() || $request->header('Accept') === 'application/json') {
             return response()->json([
