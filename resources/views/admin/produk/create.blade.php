@@ -83,16 +83,16 @@
                             <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                         @enderror
                     </div>
-                @else
-                    <div class="form-group">
-                        <label class="form-label">Pabrik / Merek <span class="req">*</span></label>
-                        <input type="text" name="kategori" class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}"
-                               placeholder="Contoh: KIMIA FARMA / WARDAH / OMRON" value="{{ old('kategori') }}" required>
-                        @error('kategori')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
                 @endif
+
+                <div class="form-group">
+                    <label class="form-label">Merk / Brand <span class="req">*</span></label>
+                    <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                           placeholder="Contoh: WARDAH / KIMIA FARMA / OMRON" value="{{ old('brand') }}" required>
+                    @error('brand')
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="form-group">
                     <label class="form-label">Nama Produk <span class="req">*</span></label>
@@ -123,23 +123,13 @@
                     @enderror
                 </div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">SKU</label>
-                        <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
-                               placeholder="Contoh: SKU-001" value="{{ old('sku') }}">
-                        @error('sku')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Brand</label>
-                        <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                               placeholder="Contoh: WARDAH" value="{{ old('brand') }}">
-                        @error('brand')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label class="form-label">SKU</label>
+                    <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
+                           placeholder="Contoh: SKU-001" value="{{ old('sku') }}">
+                    @error('sku')
+                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">

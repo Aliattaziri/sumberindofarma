@@ -144,17 +144,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Pabrik <span class="req">*</span></label>
-                    <input type="text" name="kategori" list="pabrikList"
-                           class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}"
-                           placeholder="Ketik atau pilih pabrik, contoh: KIMIA FARMA"
-                           value="{{ old('kategori') }}" required autocomplete="off">
-                    <datalist id="pabrikList">
+                    <label class="form-label">Merk / Brand <span class="req">*</span></label>
+                    <input type="text" name="brand" list="brandList"
+                           class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
+                           placeholder="Contoh: KIMIA FARMA / WARDAH / OMRON"
+                           value="{{ old('brand') }}" required autocomplete="off">
+                    <datalist id="brandList">
                         @foreach($categories as $category)
                             <option value="{{ $category }}">
                         @endforeach
                     </datalist>
-                    @error('kategori')
+                    @error('brand')
                         <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
                     @enderror
                 </div>
