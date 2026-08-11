@@ -40,7 +40,7 @@ class ProductController extends Controller
             default      => $query->latest(),
         };
 
-        $medicines       = $query->paginate(12)->withQueryString();
+        $medicines       = $query->paginate(15)->withQueryString();
         $total           = Medicine::nonPbf()->count();
         // Ambil dari DB kategori + tambahkan yang ada di produk tapi belum terdaftar
         $kategoriOptions = ProductCategory::getList();
@@ -196,7 +196,7 @@ class ProductController extends Controller
             default      => $query->latest(),
         };
 
-                $medicines       = $query->paginate(12)->withQueryString();
+                $medicines       = $query->paginate(15)->withQueryString();
                 $total           = Medicine::where(function ($q) {
                                                                 $q->where(function ($sub) {
                                                                         $sub->where('kelompok', 'PBF')
@@ -359,25 +359,47 @@ class ProductController extends Controller
             ],
         ];
 
-        $outletNames        = array_keys($outletMeta);
-        $selectedOutlet     = ($outletName && isset($outletMeta[$outletName])) ? $outletName : 'Alfa Sintang';
-        $selectedOutletMeta = $outletMeta[$selectedOutlet];
-        $displayPerusahaan  = str_starts_with($selectedOutlet, 'Alfa ') ? 'Apotek ' . $selectedOutlet : $selectedOutlet;
+        $outletNames = array_keys($outletMeta);
 
-        // Query: produk milik outlet ini ATAU produk APOTEK global (tidak outlet-spesifik)
-        $query = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
-            $q->where('kategori', $selectedOutlet)
-              ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
-              ->orWhere(function ($global) use ($outletNames) {
-                  $global->where('kelompok', 'APOTEK')
-                         ->where(function ($notOutlet) use ($outletNames) {
-                             $notOutlet->whereNull('kategori')->orWhere('kategori', '');
-                             foreach ($outletNames as $outlet) {
-                                 $notOutlet->where('kategori', '!=', $outlet);
-                             }
-                         });
-              });
-        })->nonPbf();
+        if ($outletName && isset($outletMeta[$outletName])) {
+            $selectedOutlet = $outletName;
+            $selectedOutletMeta = $outletMeta[$selectedOutlet];
+            $displayPerusahaan = str_starts_with($selectedOutlet, 'Alfa ') ? 'Apotek ' . $selectedOutlet : $selectedOutlet;
+
+            $query = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
+                $q->where('kategori', $selectedOutlet)
+                  ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
+                  ->orWhere(function ($global) use ($outletNames) {
+                      $global->where('kelompok', 'APOTEK')
+                             ->where(function ($notOutlet) use ($outletNames) {
+                                 $notOutlet->whereNull('kategori')->orWhere('kategori', '');
+                                 foreach ($outletNames as $outlet) {
+                                     $notOutlet->where('kategori', '!=', $outlet);
+                                 }
+                             });
+                  });
+            })->nonPbf();
+        } else {
+            $selectedOutlet = null;
+            $selectedOutletMeta = $outletMeta['Apotek Medistra Farma'];
+            $displayPerusahaan = 'Semua Produk Apotek';
+
+            // Default halaman publik apotek menampilkan semua produk APOTEK dari seluruh outlet,
+            // bukan hanya outlet default Alfa Sintang yang membuat daftar terasa sangat sedikit.
+            $query = Medicine::query()->where(function ($q) use ($outletNames) {
+                $q->where('kelompok', 'APOTEK')
+                  ->orWhere(function ($outletMatch) use ($outletNames) {
+                      $outletMatch->whereIn('kategori', $outletNames)
+                                  ->orWhere(function ($lowerQuery) use ($outletNames) {
+                                      $lowerQuery->where(function ($sub) use ($outletNames) {
+                                          foreach ($outletNames as $name) {
+                                              $sub->orWhereRaw('LOWER(kategori) = ?', [strtolower($name)]);
+                                          }
+                                      });
+                                  });
+                  });
+            })->nonPbf();
+        }
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -397,41 +419,78 @@ class ProductController extends Controller
             default      => $query->latest(),
         };
 
-        $medicines    = $query->paginate(12)->withQueryString();
-        $total        = (clone $query->getQuery())->count();
-        $total        = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
-            $q->where('kategori', $selectedOutlet)
-              ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
-              ->orWhere(function ($global) use ($outletNames) {
-                  $global->where('kelompok', 'APOTEK')
-                         ->where(function ($notOutlet) use ($outletNames) {
-                             $notOutlet->whereNull('kategori')->orWhere('kategori', '');
-                             foreach ($outletNames as $outlet) {
-                                 $notOutlet->where('kategori', '!=', $outlet);
-                             }
-                         });
-              });
-        })->nonPbf()->count();
+        $medicines = $query->paginate(15)->withQueryString();
+        $total = (clone $query)->count();
+
+        if ($selectedOutlet) {
+            $total = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
+                $q->where('kategori', $selectedOutlet)
+                  ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
+                  ->orWhere(function ($global) use ($outletNames) {
+                      $global->where('kelompok', 'APOTEK')
+                             ->where(function ($notOutlet) use ($outletNames) {
+                                 $notOutlet->whereNull('kategori')->orWhere('kategori', '');
+                                 foreach ($outletNames as $outlet) {
+                                     $notOutlet->where('kategori', '!=', $outlet);
+                                 }
+                             });
+                  });
+            })->nonPbf()->count();
+
+            $perusahaanList = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
+                $q->where('kategori', $selectedOutlet)
+                  ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
+                  ->orWhere(function ($global) use ($outletNames) {
+                      $global->where('kelompok', 'APOTEK')
+                             ->where(function ($notOutlet) use ($outletNames) {
+                                 $notOutlet->whereNull('kategori')->orWhere('kategori', '');
+                                 foreach ($outletNames as $outlet) {
+                                     $notOutlet->where('kategori', '!=', $outlet);
+                                 }
+                             });
+                  });
+            })->nonPbf()
+                ->whereNotNull('brand')
+                ->where('brand', '!=', '')
+                ->distinct()
+                ->orderBy('brand')
+                ->pluck('brand');
+        } else {
+            $total = Medicine::query()->where(function ($q) use ($outletNames) {
+                $q->where('kelompok', 'APOTEK')
+                  ->orWhere(function ($outletMatch) use ($outletNames) {
+                      $outletMatch->whereIn('kategori', $outletNames)
+                                  ->orWhere(function ($lowerQuery) use ($outletNames) {
+                                      $lowerQuery->where(function ($sub) use ($outletNames) {
+                                          foreach ($outletNames as $name) {
+                                              $sub->orWhereRaw('LOWER(kategori) = ?', [strtolower($name)]);
+                                          }
+                                      });
+                                  });
+                  });
+            })->nonPbf()->count();
+
+            $perusahaanList = Medicine::query()->where(function ($q) use ($outletNames) {
+                $q->where('kelompok', 'APOTEK')
+                  ->orWhere(function ($outletMatch) use ($outletNames) {
+                      $outletMatch->whereIn('kategori', $outletNames)
+                                  ->orWhere(function ($lowerQuery) use ($outletNames) {
+                                      $lowerQuery->where(function ($sub) use ($outletNames) {
+                                          foreach ($outletNames as $name) {
+                                              $sub->orWhereRaw('LOWER(kategori) = ?', [strtolower($name)]);
+                                          }
+                                      });
+                                  });
+                  });
+            })->nonPbf()
+                ->whereNotNull('brand')
+                ->where('brand', '!=', '')
+                ->distinct()
+                ->orderBy('brand')
+                ->pluck('brand');
+        }
 
         $kategoriOptions = ProductCategory::getList();
-        $perusahaanList = Medicine::query()->where(function ($q) use ($selectedOutlet, $outletNames) {
-            $q->where('kategori', $selectedOutlet)
-              ->orWhereRaw('LOWER(kategori) = ?', [strtolower($selectedOutlet)])
-              ->orWhere(function ($global) use ($outletNames) {
-                  $global->where('kelompok', 'APOTEK')
-                         ->where(function ($notOutlet) use ($outletNames) {
-                             $notOutlet->whereNull('kategori')->orWhere('kategori', '');
-                             foreach ($outletNames as $outlet) {
-                                 $notOutlet->where('kategori', '!=', $outlet);
-                             }
-                         });
-              });
-        })->nonPbf()
-            ->whereNotNull('brand')
-            ->where('brand', '!=', '')
-            ->distinct()
-            ->orderBy('brand')
-            ->pluck('brand');
 
         // Jika ada view khusus untuk outlet ini, gunakan view tersebut
         $apotekView = 'products_apotek_' . Str::slug($selectedOutlet);

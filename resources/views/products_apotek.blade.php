@@ -109,9 +109,20 @@
 
     .product-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-template-columns: repeat(5, 1fr);
         gap: 1rem;
     }
+    .pagination-wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+    .pagination-wrap .info { color: #6b7280; font-size: 0.875rem; }
+    .pagination-btns { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
+    .page-btn {
+        padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: white;
+        color: #374151; font-size: 0.875rem; text-decoration: none;
+        border: 1px solid #e5e7eb; min-width: 36px; text-align: center; transition: all 0.2s;
+    }
+    .page-btn:hover { background: #B91C1C; color: white; border-color: #B91C1C; }
+    .page-btn.active { background: #B91C1C; color: white; border-color: #B91C1C; font-weight: 700; }
+    .page-btn.disabled { background: #f3f4f6; color: #d1d5db; cursor: not-allowed; pointer-events: none; }
 
     .product-card {
         background: #fff;
@@ -220,13 +231,17 @@
         color: #6b7280;
     }
 
+    @media (max-width: 1200px) {
+        .product-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
     @media (max-width: 768px) {
         .filter-row { grid-template-columns: 1fr; }
-        .product-grid { grid-template-columns: repeat(2, 1fr); }
+        .product-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     @media (max-width: 480px) {
-        .product-grid { grid-template-columns: 1fr; }
+        .product-grid { grid-template-columns: repeat(2, 1fr); }
     }
 </style>
 @endsection
@@ -307,6 +322,36 @@
                     </div>
                 @endforeach
             </div>
+
+            <!-- Pagination Navigation -->
+            @if($medicines->hasPages())
+                <div class="pagination-wrap">
+                    <p class="info">Halaman {{ $medicines->currentPage() }} dari {{ $medicines->lastPage() }}</p>
+                    <div class="pagination-btns">
+                        @if($medicines->onFirstPage())
+                            <span class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
+                        @else
+                            <a href="{{ $medicines->previousPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-left"></i></a>
+                        @endif
+
+                        @foreach($medicines->getUrlRange(1, $medicines->lastPage()) as $page => $url)
+                            @if($page == $medicines->currentPage())
+                                <span class="page-btn active">{{ $page }}</span>
+                            @elseif($page == 1 || $page == $medicines->lastPage() || abs($page - $medicines->currentPage()) <= 2)
+                                <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
+                            @elseif(abs($page - $medicines->currentPage()) == 3)
+                                <span class="page-btn disabled">...</span>
+                            @endif
+                        @endforeach
+
+                        @if($medicines->hasMorePages())
+                            <a href="{{ $medicines->nextPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
+                        @else
+                            <span class="page-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
+                        @endif
+                    </div>
+                </div>
+            @endif
         @else
             <div class="empty-state">
                 <i class="fa-solid fa-box-open" style="font-size:2.2rem; margin-bottom:.8rem;"></i>

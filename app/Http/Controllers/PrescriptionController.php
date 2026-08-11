@@ -35,7 +35,7 @@ class PrescriptionController extends Controller
             default      => $query->latest(),
         };
 
-        $medicines   = $query->paginate(12)->withQueryString();
+        $medicines   = $query->paginate(15)->withQueryString();
         $perusahaans = Medicine::where('is_grosir', true)->nonPbf()
                         ->select('brand')
                         ->whereNotNull('brand')

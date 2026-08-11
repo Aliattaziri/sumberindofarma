@@ -57,7 +57,7 @@
     .btn-filter { background: <?php echo e($accentColor); ?>; color: white; }
     .btn-reset { background: <?php echo e($accentSoft); ?>; color: <?php echo e($accentColor); ?>; }
     .result-info { color: #64748b; font-size: .9rem; margin-bottom: .85rem; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
     .product-card { overflow: hidden; display: flex; flex-direction: column; }
     .product-card img { width: 100%; height: 160px; object-fit: cover; background: #f8fafc; }
     .product-body { padding: 1rem; display: flex; flex-direction: column; gap: .5rem; }
@@ -72,8 +72,20 @@
     .product-btn { background: <?php echo e($accentColor); ?>; color: white; }
     .btn-cart { background: white; border: 1px solid <?php echo e($accentColor); ?>; color: <?php echo e($accentColor); ?>; }
     .empty-state { padding: 2rem; text-align: center; color: #6b7280; }
-    @media (max-width: 768px) { .filter-row { grid-template-columns: 1fr; } .product-grid { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } .store-hero { padding: 1.4rem; } }
+    .pagination-wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+    .pagination-wrap .info { color: #6b7280; font-size: 0.875rem; }
+    .pagination-btns { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
+    .page-btn {
+        padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: white;
+        color: #374151; font-size: 0.875rem; text-decoration: none;
+        border: 1px solid #e5e7eb; min-width: 36px; text-align: center; transition: all 0.2s;
+    }
+    .page-btn:hover { background: #B91C1C; color: white; border-color: #B91C1C; }
+    .page-btn.active { background: #B91C1C; color: white; border-color: #B91C1C; font-weight: 700; }
+    .page-btn.disabled { background: #f3f4f6; color: #d1d5db; cursor: not-allowed; pointer-events: none; }
+    @media (max-width: 1200px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 768px) { .filter-row { grid-template-columns: 1fr; } .product-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 480px) { .product-grid { grid-template-columns: repeat(2, 1fr); } .store-hero { padding: 1.4rem; } }
 </style>
 <?php $__env->stopSection(); ?>
 
@@ -156,6 +168,36 @@
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
+
+            <!-- Pagination Navigation -->
+            <?php if($medicines->hasPages()): ?>
+                <div class="pagination-wrap">
+                    <p class="info">Halaman <?php echo e($medicines->currentPage()); ?> dari <?php echo e($medicines->lastPage()); ?></p>
+                    <div class="pagination-btns">
+                        <?php if($medicines->onFirstPage()): ?>
+                            <span class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
+                        <?php else: ?>
+                            <a href="<?php echo e($medicines->previousPageUrl()); ?>" class="page-btn"><i class="fa-solid fa-chevron-left"></i></a>
+                        <?php endif; ?>
+
+                        <?php $__currentLoopData = $medicines->getUrlRange(1, $medicines->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if($page == $medicines->currentPage()): ?>
+                                <span class="page-btn active"><?php echo e($page); ?></span>
+                            <?php elseif($page == 1 || $page == $medicines->lastPage() || abs($page - $medicines->currentPage()) <= 2): ?>
+                                <a href="<?php echo e($url); ?>" class="page-btn"><?php echo e($page); ?></a>
+                            <?php elseif(abs($page - $medicines->currentPage()) == 3): ?>
+                                <span class="page-btn disabled">...</span>
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                        <?php if($medicines->hasMorePages()): ?>
+                            <a href="<?php echo e($medicines->nextPageUrl()); ?>" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
+                        <?php else: ?>
+                            <span class="page-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         <?php else: ?>
             <div class="empty-state">
                 <i class="fa-solid fa-box-open" style="font-size:2rem; margin-bottom:.7rem;"></i>

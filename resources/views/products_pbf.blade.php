@@ -130,7 +130,7 @@
 
     .medicines-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(5, 1fr);
         gap: 1.5rem; margin-bottom: 2.5rem;
     }
     .medicine-card {
@@ -276,7 +276,15 @@
         .filter-group { width: 100%; min-width: unset; }
         .filter-bar > div:last-child { width: 100%; display: flex; gap: 0.5rem; }
         .btn-filter, .btn-reset { flex: 1; text-align: center; }
-        .medicines-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+        .medicines-grid { grid-template-columns: repeat(4, 1fr); gap: 0.85rem; }
+    }
+
+    @media (max-width: 1024px) {
+        .medicines-grid { grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+    }
+
+    @media (max-width: 768px) {
+        .medicines-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
     }
 
     @media (max-width: 480px) {
@@ -309,7 +317,7 @@
         .products-header .header-deco-icon-1 { right: 4%; bottom: 10px; font-size: 2.6rem; }
         .products-header .header-deco-icon-2 { right: 18%; top: 10px; font-size: 1.8rem; }
         .products-header .header-deco-icon-3 { right: 28%; bottom: 8px; font-size: 1.5rem; }
-        .medicines-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); gap: 0.85rem; }
+        .medicines-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
         .medicine-image { height: 120px; }
         .medicine-body { padding: 0.75rem; }
         .medicine-name { font-size: 0.88rem; }

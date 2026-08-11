@@ -13,7 +13,10 @@ class MedicineSediaanAndDetailTest extends TestCase
 
     public function test_admin_can_update_sediaan_for_produk(): void
     {
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'email' => 'alfa.sintang@sumberindopontianak.com',
+        ]);
         $medicine = Medicine::create([
             'nama_obat' => 'Paracetamol',
             'kategori_produk' => 'Bintang',
@@ -21,6 +24,7 @@ class MedicineSediaanAndDetailTest extends TestCase
             'harga' => 12000,
             'stok' => 10,
             'sediaan' => 'box',
+            'deskripsi' => 'Deskripsi produk',
         ]);
 
         $response = $this->actingAs($admin)->put(route('admin.produk.update', $medicine), [
@@ -63,5 +67,45 @@ class MedicineSediaanAndDetailTest extends TestCase
         $response->assertOk();
         $response->assertSee('Sediaan');
         $response->assertSee('Box');
+    }
+
+    public function test_public_apotek_page_shows_all_apotek_products_not_just_one_outlet(): void
+    {
+        Medicine::create([
+            'nama_obat' => 'Paracetamol Outlet A',
+            'kelompok' => 'APOTEK',
+            'kategori' => 'Alfa Sintang',
+            'kategori_produk' => 'OBAT',
+            'harga' => 15000,
+            'stok' => 5,
+            'deskripsi' => 'Produk apotek',
+        ]);
+
+        Medicine::create([
+            'nama_obat' => 'Vitamin Outlet B',
+            'kelompok' => 'APOTEK',
+            'kategori' => 'Apotek Medistra Farma',
+            'kategori_produk' => 'OBAT',
+            'harga' => 22000,
+            'stok' => 8,
+            'deskripsi' => 'Produk apotek lain',
+        ]);
+
+        Medicine::create([
+            'nama_obat' => 'Produk PBF Rahasia',
+            'kelompok' => 'PBF',
+            'kategori' => 'PBF',
+            'kategori_produk' => 'OBAT',
+            'harga' => 30000,
+            'stok' => 2,
+            'deskripsi' => 'Produk PBF harus disembunyikan',
+        ]);
+
+        $response = $this->get(route('products.apotek'));
+
+        $response->assertOk();
+        $response->assertSee('Paracetamol Outlet A');
+        $response->assertSee('Vitamin Outlet B');
+        $response->assertDontSee('Produk PBF Rahasia');
     }
 }

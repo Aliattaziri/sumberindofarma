@@ -114,7 +114,7 @@ class HomeController extends Controller
         $medicines = Medicine::where('kategori', $kategori)
                             ->where('is_resep', false)
                             ->nonPbf()
-                            ->paginate(12);
+                            ->paginate(15);
         $allCategories = Medicine::where('is_resep', false)
                                 ->nonPbf()
                                 ->distinct()

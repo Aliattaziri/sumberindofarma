@@ -42,7 +42,7 @@ class CategoryController extends Controller
             });
         }
 
-        $medicines = $query->latest()->paginate(12)->withQueryString();
+        $medicines = $query->latest()->paginate(15)->withQueryString();
 
         return view('category-layer2', compact(
             'mainCategory',

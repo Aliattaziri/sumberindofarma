@@ -393,46 +393,6 @@
                     <div style="margin-bottom:0.85rem;"><strong>Indikasi:</strong> <span style="color:#374151;"><?php echo nl2br(e($medicine->indikasi)); ?></span></div>
                 <?php endif; ?>
 
-                <!-- Form Pemesanan -->
-                <div style="background:#f9fafb;border-radius:12px;padding:1.25rem;margin:1.25rem 0;border:1px solid #e5e7eb;">
-                    <h3 style="font-size:0.95rem;font-weight:700;color:#1f2937;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;">
-                        <i class="fa-brands fa-whatsapp" style="color:#ef4444;font-size:1.1rem;"></i> Form Pemesanan
-                    </h3>
-
-                    <div style="margin-bottom:0.85rem;">
-                        <label style="display:block;font-size:0.82rem;font-weight:600;color:#374151;margin-bottom:0.35rem;">Jumlah Pembelian</label>
-                        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                            <button type="button" onclick="changeQty(-1)" style="width:34px;height:34px;border:1px solid #d1d5db;border-radius:8px;background:white;font-size:1rem;cursor:pointer;font-weight:700;color:#374151;flex-shrink:0;">-</button>
-                            <input type="number" id="qtyInput" value="1" min="1"
-                                style="width:64px;text-align:center;padding:0.35rem;border:1px solid #d1d5db;border-radius:8px;font-size:0.95rem;font-weight:700;"
-                                oninput="updateTotal()">
-                            <button type="button" onclick="changeQty(1)" style="width:34px;height:34px;border:1px solid #d1d5db;border-radius:8px;background:white;font-size:1rem;cursor:pointer;font-weight:700;color:#374151;flex-shrink:0;">+</button>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom:0.85rem;padding:0.65rem 1rem;background:#fef2f2;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
-                        <span style="font-size:0.82rem;color:#991B1B;font-weight:600;">Pabrik</span>
-                        <span id="totalHarga" style="font-size:1rem;font-weight:800;color:#991B1B;"><?php echo e($medicine->pabrik_label); ?></span>
-                    </div>
-
-                    <div style="margin-bottom:1rem;">
-                        <label style="display:block;font-size:0.82rem;font-weight:600;color:#374151;margin-bottom:0.35rem;">
-                            Alamat Pengiriman <span style="color:#ef4444;">*</span>
-                        </label>
-                        <textarea id="alamatInput" rows="3" placeholder="Jl. Merdeka No. 10, RT 02/RW 03, Kel. Menteng, Jakarta Pusat 10310"
-                            style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.875rem;resize:vertical;font-family:inherit;outline:none;transition:border-color 0.2s;box-sizing:border-box;"
-                            onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
-                        <p id="alamatError" style="color:#ef4444;font-size:0.78rem;margin-top:0.2rem;display:none;">
-                            <i class="fa-solid fa-circle-exclamation"></i> Alamat pengiriman wajib diisi.
-                        </p>
-                    </div>
-
-                    <button onclick="pesanWA()"
-                        style="width:100%;padding:0.85rem;background:#ef4444;color:white;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.3s;">
-                        <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i> Pesan via WhatsApp
-                    </button>
-                </div>
-
                 <a href="<?php echo e($backUrl); ?>" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem;border:1.5px solid #e5e7eb;border-radius:10px;color:#6b7280;text-decoration:none;font-weight:600;font-size:0.875rem;transition:all 0.2s;">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog
                 </a>
@@ -468,73 +428,17 @@
 
 <?php $__env->startSection('scripts'); ?>
 <script>
-    const hargaSatuan = 0;
-    const stokMax     = <?php echo e($medicine->stok > 0 ? $medicine->stok : 9999); ?>;
-    const namaObat    = <?php echo json_encode($medicine->nama_obat, 15, 512) ?>;
-    const pabrikLabel = <?php echo json_encode($medicine->pabrik_label, 15, 512) ?>;
-
-    function formatRupiah(angka) {
-        return 'Rp ' + Math.round(angka).toLocaleString('id-ID');
+    const backLink = document.querySelector('.detail-info a[href]');
+    if (backLink) {
+        backLink.addEventListener('mouseover', function() {
+            this.style.borderColor = '#B91C1C';
+            this.style.color = '#B91C1C';
+        });
+        backLink.addEventListener('mouseout', function() {
+            this.style.borderColor = '#e5e7eb';
+            this.style.color = '#6b7280';
+        });
     }
-
-    function changeQty(delta) {
-        const input = document.getElementById('qtyInput');
-        let val = parseInt(input.value) + delta;
-        if (val < 1) val = 1;
-        if (val > stokMax) val = stokMax;
-        input.value = val;
-        updateTotal();
-    }
-
-    function updateTotal() {
-        const qty = Math.max(1, Math.min(parseInt(document.getElementById('qtyInput').value) || 1, stokMax));
-        document.getElementById('qtyInput').value = qty;
-        document.getElementById('totalHarga').textContent = pabrikLabel;
-    }
-
-    function pesanWA() {
-        const qty    = parseInt(document.getElementById('qtyInput').value) || 1;
-        const alamat = document.getElementById('alamatInput').value.trim();
-        const errEl  = document.getElementById('alamatError');
-
-        if (!alamat) {
-            errEl.style.display = 'block';
-            document.getElementById('alamatInput').focus();
-            return;
-        }
-        errEl.style.display = 'none';
-
-        const total          = hargaSatuan > 0 ? formatRupiah(hargaSatuan * qty) : 'Mohon dikonfirmasi';
-        const hargaSatuanFmt = hargaSatuan > 0 ? formatRupiah(hargaSatuan) : 'Mohon dikonfirmasi';
-
-        const stokInfo = <?php echo e($medicine->stok); ?> <= 0 ? ' (stok perlu dikonfirmasi)' : '';
-        const pesan = 'Halo Sumberindo Farma Tama, saya ingin memesan:\n\n' +
-            'Produk     : ' + namaObat + stokInfo + '\n' +
-            'Harga      : ' + hargaSatuanFmt + ' / pcs\n' +
-            'Jumlah     : ' + qty + ' pcs\n' +
-            'Total      : ' + total + '\n\n' +
-            'Alamat Pengiriman:\n' + alamat + '\n\n' +
-            'Mohon konfirmasi ketersediaan stok dan info pengiriman. Terima kasih!';
-
-window.open('https://wa.me/6285248965590?text=' + encodeURIComponent(pesan), '_blank');
-    }
-
-    document.querySelector('.detail-info a[href]').addEventListener('mouseover', function() {
-        this.style.borderColor = '#B91C1C';
-        this.style.color = '#B91C1C';
-    });
-    document.querySelector('.detail-info a[href]').addEventListener('mouseout', function() {
-        this.style.borderColor = '#e5e7eb';
-        this.style.color = '#6b7280';
-    });
-    document.querySelector('button[onclick="pesanWA()"]').addEventListener('mouseover', function() {
-        this.style.background = '#991B1B';
-        this.style.transform = 'translateY(-2px)';
-    });
-    document.querySelector('button[onclick="pesanWA()"]').addEventListener('mouseout', function() {
-        this.style.background = '#ef4444';
-        this.style.transform = 'translateY(0)';
-    });
 </script>
 <?php $__env->stopSection(); ?>
 

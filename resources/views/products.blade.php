@@ -80,7 +80,7 @@
 
     .medicines-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(5, 1fr);
         gap: 1.5rem; margin-bottom: 2.5rem;
     }
     .medicine-card {
@@ -165,12 +165,16 @@
     .page-btn.active { background: #B91C1C; color: white; border-color: #B91C1C; font-weight: 700; }
     .page-btn.disabled { background: #f3f4f6; color: #d1d5db; cursor: not-allowed; pointer-events: none; }
 
+    @media (max-width: 1200px) {
+        .medicines-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
     @media (max-width: 768px) {
         .filter-bar { flex-direction: column; padding: 1rem; gap: 0.75rem; }
         .filter-group { width: 100%; min-width: unset; }
         .filter-bar > div:last-child { width: 100%; display: flex; gap: 0.5rem; }
         .btn-filter, .btn-reset { flex: 1; text-align: center; }
-        .medicines-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+        .medicines-grid { grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
     }
 
     @media (max-width: 480px) {
