@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         // Run MedicineSeeder manually only when you explicitly need sample data.
         // $this->call(MedicineSeeder::class);
 
-        // Seed news
-        $this->call(NewsSeeder::class);
+        // Seed demo news is intentionally disabled.
+        // Default sample articles were removed to keep the site free from pre-filled content.
+        // $this->call(NewsSeeder::class);
     }
 }
