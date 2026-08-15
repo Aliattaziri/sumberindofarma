@@ -110,9 +110,35 @@
     </div>
 
     
-    <div style="margin-top: 2rem; display: flex; justify-content: center;">
-        <?php echo e($news->links()); ?>
+    <div class="pagination-wrap">
+        <div class="pagination-info">
+            Menampilkan <?php echo e($news->firstItem()); ?>-<?php echo e($news->lastItem()); ?> dari <?php echo e($news->total()); ?> berita
+        </div>
+        <div class="pagination-pages">
+            <?php if($news->onFirstPage()): ?>
+                <span class="page-btn disabled">‹</span>
+            <?php else: ?>
+                <a href="<?php echo e($news->previousPageUrl()); ?>" class="page-btn">‹</a>
+            <?php endif; ?>
 
+            <?php $__currentLoopData = $news->getUrlRange(1, $news->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if(abs($page - $news->currentPage()) <= 2 || $page == 1 || $page == $news->lastPage()): ?>
+                    <?php if($page == $news->currentPage()): ?>
+                        <span class="page-btn active"><?php echo e($page); ?></span>
+                    <?php else: ?>
+                        <a href="<?php echo e($url); ?>" class="page-btn"><?php echo e($page); ?></a>
+                    <?php endif; ?>
+                <?php elseif(abs($page - $news->currentPage()) == 3): ?>
+                    <span class="page-btn disabled" style="border:none;background:none;">…</span>
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+            <?php if($news->hasMorePages()): ?>
+                <a href="<?php echo e($news->nextPageUrl()); ?>" class="page-btn">›</a>
+            <?php else: ?>
+                <span class="page-btn disabled">›</span>
+            <?php endif; ?>
+        </div>
     </div>
 <?php else: ?>
     <div style="background: white; padding: 3rem; border-radius: 0.75rem; text-align: center;">
@@ -121,12 +147,70 @@
     </div>
 <?php endif; ?>
 
-<style>
-    .table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-radius: 0.75rem; overflow: hidden; }
+.table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-radius: 0.75rem; overflow: hidden; }
     .table th { background: #f3f4f6; padding: 1rem; text-align: left; font-weight: 600; color: #374151; border-bottom: 1px solid #e5e7eb; }
     .table td { padding: 1rem; border-bottom: 1px solid #e5e7eb; }
     .table tbody tr:hover { background: #f9fafb; }
     .table-container { overflow-x: auto; }
+
+    .pagination-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1rem;
+    }
+
+    .pagination-info {
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .pagination-pages {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+    }
+
+    .page-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.2rem;
+        height: 2.2rem;
+        padding: 0 0.7rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        background: white;
+        color: #374151;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .page-btn:hover {
+        background: #B91C1C;
+        border-color: #B91C1C;
+        color: white;
+        text-decoration: none;
+    }
+
+    .page-btn.active {
+        background: #B91C1C;
+        border-color: #B91C1C;
+        color: white;
+    }
+
+    .page-btn.disabled {
+        background: #f9fafb;
+        color: #d1d5db;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
 </style>
 <?php $__env->stopSection(); ?>
 
