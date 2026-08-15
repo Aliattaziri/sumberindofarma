@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <meta name="theme-color" content="#991B1B">
     <meta name="msapplication-TileColor" content="#991B1B">
     <?php
@@ -966,10 +967,10 @@
     <div class="med-particles" aria-hidden="true">
 
         
-        <span class="mp-blob" style="width:700px;height:700px;top:-200px;left:-200px;background:radial-gradient(circle,#fca5a5,#fee2e2);--o:0.22;"></span>
-        <span class="mp-blob" style="width:500px;height:500px;top:30%;right:-180px;background:radial-gradient(circle,#fecaca,transparent);--o:0.18;"></span>
-        <span class="mp-blob" style="width:600px;height:400px;bottom:-100px;left:20%;background:radial-gradient(circle,#fde8e8,transparent);--o:0.20;"></span>
-        <span class="mp-blob" style="width:300px;height:300px;top:55%;left:40%;background:radial-gradient(circle,#fca5a5,transparent);--o:0.10;"></span>
+        <span class="mp-blob" style="width:700px;height:700px;top:-200px;left:-200px;background:radial-gradient(circle,#fca5a5,#fee2e2);--o:0.04;"></span>
+        <span class="mp-blob" style="width:500px;height:500px;top:30%;right:-180px;background:radial-gradient(circle,#fecaca,transparent);--o:0.03;"></span>
+        <span class="mp-blob" style="width:600px;height:400px;bottom:-100px;left:20%;background:radial-gradient(circle,#fde8e8,transparent);--o:0.04;"></span>
+        <span class="mp-blob" style="width:300px;height:300px;top:55%;left:40%;background:radial-gradient(circle,#fca5a5,transparent);--o:0.02;"></span>
 
         
         <span class="mp-ring" style="width:520px;height:520px;top:-80px;right:-100px;--bo:0.08;"></span>

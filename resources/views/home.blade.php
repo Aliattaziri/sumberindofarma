@@ -86,8 +86,8 @@
     min-height: 44px;
     width: min(100%, 220px);
     max-width: 220px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(153, 27, 27, 0.9);
     margin: 0 auto;
     z-index: 5;
 }
@@ -136,9 +136,10 @@
     width: 80px;
     height: 80px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #7F1D1D;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
 .promo-card-text {
@@ -332,10 +333,17 @@
 /* ABOUT STRIP */
 .about-strip { padding: 1rem 0 2.5rem; }
 .about-box {
-    background: #fff; border-radius: 20px; padding: 1.75rem 2rem;
-    border: 1.5px solid #e5e7eb;
-    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    background: #ffffff !important;
+    border-radius: 20px;
+    padding: 1.75rem 2rem;
+    border: 2px solid #991B1B !important;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    position: relative;
+    z-index: 2;
 }
 .about-logo { height: 72px; object-fit: contain; flex-shrink: 0; }
 .about-info { flex: 1; min-width: 200px; }
@@ -348,7 +356,16 @@
 }
 .btn-about:hover { background: #991B1B; color: #fff; }
 .about-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.65rem; flex-shrink: 0; }
-.about-stat-item { text-align: center; padding: 0.65rem 1rem; background: #f8faff; border-radius: 12px; border: 1px solid #e5e7eb; }
+.about-stat-item {
+    text-align: center;
+    padding: 0.75rem 1.2rem;
+    background: #ffffff !important;
+    border-radius: 12px;
+    border: 2px solid #991B1B !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
+    position: relative;
+    z-index: 2;
+}
 .about-stat-item .n { font-size: 1.3rem; font-weight: 800; color: #B91C1C; display: block; line-height: 1.2; }
 .about-stat-item .l { font-size: 0.68rem; color: #6b7280; }
 .about-stat-item:nth-child(even) .n { color: #ef4444; }
@@ -358,12 +375,14 @@
     padding: 0.2rem 0 3rem;
 }
 .pbf-profile-wrap {
-    background: linear-gradient(165deg, #fffaf9 0%, #fff1f1 58%, #ffe9e9 100%);
-    border: 1px solid #ffd9d9;
+    background: #ffffff !important;
+    border: 2px solid #991B1B !important;
     border-radius: 24px;
     padding: 1.8rem;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+    z-index: 2;
 }
 .pbf-profile-wrap::before {
     content: '';
@@ -436,8 +455,8 @@
     align-items: stretch;
 }
 .pbf-photo-template {
-    background: #fff;
-    border: 1px solid #f3c9c9;
+    background: #ffffff !important;
+    border: 2px solid #991B1B !important;
     border-radius: 16px;
     min-height: 0;
     padding: 0.72rem;
@@ -447,11 +466,13 @@
     align-items: flex-start;
     text-align: left;
     transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18) !important;
+    z-index: 2;
 }
 .pbf-gallery-grid > .pbf-photo-template:not(.pbf-photo-template-featured) {
     min-height: 228px;
-    background: linear-gradient(180deg, #ffffff 0%, #fff6f6 100%);
-    box-shadow: 0 8px 18px rgba(127, 29, 29, 0.07);
+    background: #ffffff;
+    box-shadow: 0 6px 16px rgba(185, 28, 28, 0.15);
 }
 .pbf-photo-template:hover {
     border-color: #ef4444;
@@ -478,10 +499,11 @@
     grid-row: span 2;
     min-height: 420px;
     padding: 0.95rem;
-    border: 1px solid #f3a4a4;
-    box-shadow: 0 18px 34px rgba(153, 27, 27, 0.14);
-    background: linear-gradient(180deg, #ffffff 0%, #fff5f5 100%);
+    border: 2px solid #991B1B !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25) !important;
+    background: #ffffff !important;
     justify-content: center;
+    z-index: 2;
 }
 .pbf-photo-template-featured h4 {
     width: 100%;
@@ -1065,7 +1087,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <style>
                     .news-scroll { width: 100%; }
                     .news-scroll::-webkit-scrollbar { display: none; }
-                    .news-card { flex: 0 0 calc((100% - 4rem) / 5); min-width: 180px; max-width: 260px; width: auto; }
+                    .news-card {
+                        flex: 0 0 calc((100% - 4rem) / 5);
+                        min-width: 180px;
+                        max-width: 260px;
+                        width: auto;
+                        background: #1a202c !important;
+                        border: 1.5px solid #4a5568 !important;
+                        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+                    }
+                    .news-card:hover { border-color: #f6ad55 !important; }
                     .news-card:hover .news-media img, .news-card:hover .news-media video { transform: scale(1.03); }
                     @media (max-width: 991px) {
                         .news-card { flex-basis: clamp(200px, 42vw, 260px); }
@@ -1075,8 +1106,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 </style>
                 @foreach($latestNews as $news)
-                    <a href="{{ route('news.index', ['news_id' => $news->id]) }}" class="news-card" style="text-decoration: none; color: inherit; display: block; min-width: 0; border-radius: 1.15rem; overflow: hidden; background: rgba(17,24,39,0.8); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.25); transition: transform 0.2s ease, border-color 0.2s ease; scroll-snap-align: start;">
-                        <div class="news-media" style="position: relative; width: 100%; aspect-ratio: {{ $news->ratio === '9:16' ? '9 / 16' : '3 / 4' }}; background: #111827; overflow: hidden;">
+                    <a href="{{ route('news.index', ['news_id' => $news->id]) }}" class="news-card" style="text-decoration: none; color: inherit; display: block; min-width: 0; border-radius: 1.15rem; overflow: hidden; background: #1a202c; border: 1.5px solid #4a5568; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition: transform 0.2s ease, border-color 0.2s ease; scroll-snap-align: start;">
+                        <div class="news-media" style="position: relative; width: 100%; --news-ratio: {{ $news->ratio === '9:16' ? '9 / 16' : '3 / 4' }}; aspect-ratio: var(--news-ratio); background: #111827; overflow: hidden;">
                             @if($news->file)
                                 @if(str_contains(strtolower($news->file), '.mp4') || str_contains(strtolower($news->file), '.webm') || str_contains(strtolower($news->file), '.mov'))
                                     <video src="{{ asset('storage/' . $news->file) }}" muted loop playsinline style="width: 100%; height: 100%; object-fit: contain; display: block; background: #dfeaf2; transition: transform 0.2s ease;"></video>
@@ -1102,7 +1133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
 
-                        <div style="padding: 0.8rem 0.7rem 0.75rem; background: rgba(17,24,39,0.92);">
+                        <div style="padding: 0.8rem 0.7rem 0.75rem; background: rgba(17,24,39,0.98);">
                             <div style="display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin-bottom: 0.4rem;">
                                 <div style="font-size: 0.7rem; color: #d1d5db;">{{ $news->created_at->translatedFormat('d M Y') }}</div>
                             </div>
@@ -1398,17 +1429,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* Card */
 .why-card {
-    background: #fff;
+    background: #ffffff !important;
     border-radius: 20px;
     padding: 2.25rem 2rem;
-    border: 1.5px solid rgba(148, 163, 184, 0.15);
-    box-shadow: 0 4px 24px rgba(15,23,42,.06), 0 1px 4px rgba(15,23,42,.04);
+    border: 2px solid #991B1B !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
     display: flex;
     flex-direction: column;
     gap: 0;
     transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
     position: relative;
     overflow: hidden;
+    z-index: 2;
 }
 /* Coloured top accent bar */
 .why-card::before {
