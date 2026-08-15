@@ -327,9 +327,6 @@
         </p>
     </div>
     <div class="page-header-actions">
-        <a href="{{ route('admin.medicines.import') }}" class="btn-icon btn-icon-outline">
-            <i class="fa-solid fa-file-import"></i> Import Excel
-        </a>
         <a href="{{ route('admin.medicines.create') }}" class="btn-icon btn-icon-primary">
             <i class="fa-solid fa-plus"></i> Tambah Obat
         </a>
@@ -572,9 +569,6 @@
             <h3>Belum ada obat</h3>
             <p>Mulai tambahkan obat atau import dari file Excel/CSV.</p>
             <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
-                <a href="{{ route('admin.medicines.import') }}" class="btn-icon btn-icon-outline">
-                    <i class="fa-solid fa-file-import"></i> Import Excel
-                </a>
                 <a href="{{ route('admin.medicines.create') }}" class="btn-icon btn-icon-primary">
                     <i class="fa-solid fa-plus"></i> Tambah Obat
                 </a>

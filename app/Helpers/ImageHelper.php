@@ -74,6 +74,35 @@ class ImageHelper
     }
 
     /**
+     * Simpan gambar banner dari base64 encoded image (data URL)
+     * Mengembalikan path DB seperti 'banners/namafile.png'
+     */
+    public static function storeBase64BannerImage(string $dataUrl): string
+    {
+        if (!preg_match('/^data:([\w\/\-\.]+);base64,(.*)$/', $dataUrl, $matches)) {
+            throw new \InvalidArgumentException('Invalid base64 image data');
+        }
+
+        $mime = $matches[1];
+        $data = base64_decode($matches[2]);
+        $ext = 'png';
+        if ($mime === 'image/jpeg' || $mime === 'image/jpg') $ext = 'jpg';
+        if ($mime === 'image/webp') $ext = 'webp';
+
+        $fileName = time() . '_' . uniqid() . '.' . $ext;
+        $targetDir = storage_path('banners');
+
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        $fullPath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+        file_put_contents($fullPath, $data);
+
+        return 'banners/' . $fileName;
+    }
+
+    /**
      * Hapus media banner dari storage/banners/
      * $path dari DB: "banners/namafile.jpg"
      */

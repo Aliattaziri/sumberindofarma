@@ -110,19 +110,13 @@ class AdminProdukController extends Controller
             return $redirect;
         }
 
+        // For Principle Logo management we only accept a name, link (stored in `brand`) and an optional image
         $rules = [
-            'nama_obat'       => ['required', 'string', 'max:255'],
-            'kategori_produk' => ['required', 'string', 'max:100'],
-            'kategori'        => ['required', 'string', 'max:255'],
-            'sku'             => ['nullable', 'string', 'max:255'],
-            'brand'           => ['nullable', 'string', 'max:255'],
-            'terjual'         => ['nullable', 'integer', 'min:0'],
-            'harga'           => ['required', 'numeric', 'min:0'],
-            'stok'            => ['required', 'integer', 'min:0'],
-            'sediaan'         => ['nullable', 'string', 'max:255'],
-            'deskripsi'       => ['nullable', 'string'],
-            'komposisi'       => ['nullable', 'string'],
-            'indikasi'        => ['nullable', 'string'],
+            'nama_obat' => ['required', 'string', 'max:255'],
+            'brand'     => ['nullable', 'string', 'max:1024'], // used to store partner link
+            // 'gambar' may be a file upload OR we accept a base64 string in 'cropped_image'
+            'gambar'    => ['nullable'],
+              'cropped_image' => ['nullable', 'regex:/^data:image\/(gif|jpeg|png|webp);base64,([A-Za-z0-9+\\/=]+)$/'],
         ];
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
@@ -131,28 +125,43 @@ class AdminProdukController extends Controller
         }
 
         $validated = $request->validate($rules);
-        $validated['harga']   = $validated['harga']   ?? 0;
-        $validated['stok']    = $validated['stok']    ?? 0;
-        $validated['terjual'] = $validated['terjual'] ?? 0;
 
-        // Normalisasi kategori_produk dan pastikan ada di DB
-        $validated['kategori_produk'] = \App\Models\ProductCategory::ensureExists($validated['kategori_produk']);
-
-        if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
-            $validated['gambar'] = ImageHelper::storeProductImage($request->file('gambar'));
+        // If frontend provided a cropped image (base64), prefer that over raw upload
+        if ($request->filled('cropped_image')) {
+            try {
+                $validated['gambar'] = ImageHelper::storeBase64BannerImage($request->input('cropped_image'));
+            } catch (\Exception $e) {
+                // ignore and continue without gambar
+            }
+        } elseif ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
+            // validate uploaded file explicitly to produce proper messages
+            $request->validate(['gambar' => ['file', 'image', 'max:10240']]);
+            $validated['gambar'] = ImageHelper::storeBannerImage($request->file('gambar'));
         }
 
         if ($outlet = $user?->outlet_name) {
             $validated['kategori'] = $outlet;
         }
 
-        if (!empty(trim($validated['deskripsi'] ?? ''))) {
-            $validated['deskripsi'] = trim($validated['deskripsi']);
-        } else {
-            $validated['deskripsi'] = trim(($validated['komposisi'] ?? '') . ' | ' . ($validated['indikasi'] ?? ''));
+        // Only store fields relevant to principle logos
+        $toCreate = array_intersect_key($validated, array_flip(['nama_obat', 'brand', 'gambar', 'kategori']));
+
+        // Ensure non-nullable columns in medicines table have safe defaults
+        if (!array_key_exists('harga', $toCreate)) {
+            $toCreate['harga'] = 0;
+        }
+        if (!array_key_exists('stok', $toCreate)) {
+            $toCreate['stok'] = 0;
+        }
+        if (!array_key_exists('terjual', $toCreate)) {
+            $toCreate['terjual'] = 0;
+        }
+        // Some older migrations require `deskripsi` to be non-null — provide empty default
+        if (!array_key_exists('deskripsi', $toCreate)) {
+            $toCreate['deskripsi'] = '';
         }
 
-        Medicine::create($validated);
+        Medicine::create($toCreate);
 
         return redirect()->route('admin.produk.index')
                          ->with('success', 'Produk berhasil ditambahkan!');
@@ -179,19 +188,13 @@ class AdminProdukController extends Controller
             return $redirect;
         }
 
+        // Only allow name, partner link (brand) and image operations for principle logos
         $rules = [
-            'nama_obat'       => ['required', 'string', 'max:255'],
-            'kategori_produk' => ['required', 'string', 'max:100'],
-            'sku'             => ['nullable', 'string', 'max:255'],
-            'brand'           => ['required', 'string', 'max:255'],
-            'terjual'         => ['nullable', 'integer', 'min:0'],
-            'harga'           => ['nullable', 'numeric', 'min:0'],
-            'stok'            => ['nullable', 'integer', 'min:0'],
-            'sediaan'         => ['nullable', 'string', 'max:255'],
-            'deskripsi'       => ['nullable', 'string'],
-            'komposisi'       => ['nullable', 'string'],
-            'indikasi'        => ['nullable', 'string'],
-            'delete_gambar'   => ['nullable'],
+            'nama_obat'     => ['required', 'string', 'max:255'],
+            'brand'         => ['nullable', 'string', 'max:1024'],
+            'gambar'        => ['nullable'],
+            'cropped_image' => ['nullable', 'regex:/^data:image\/(gif|jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$/'],
+            'delete_gambar' => ['nullable'],
         ];
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
@@ -203,26 +206,31 @@ class AdminProdukController extends Controller
 
         unset($validated['delete_gambar']);
 
-        // Normalisasi kategori_produk dan pastikan ada di DB
-        $validated['kategori_produk'] = \App\Models\ProductCategory::ensureExists($validated['kategori_produk']);
-
         $this->authorizeOutletProduct($produk);
 
-        if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
-            ImageHelper::deleteProductImage($produk->gambar);
-            $validated['gambar'] = ImageHelper::storeProductImage($request->file('gambar'));
+        if ($request->filled('cropped_image')) {
+            // New cropped image from client - prefer this
+            ImageHelper::deleteBannerImage($produk->gambar);
+            try {
+                $validated['gambar'] = ImageHelper::storeBase64BannerImage($request->input('cropped_image'));
+            } catch (\Exception $e) {
+                // ignore
+            }
+        } elseif ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
+            // validate uploaded file explicitly to produce proper messages
+            $request->validate(['gambar' => ['file', 'image', 'max:10240']]);
+            ImageHelper::deleteBannerImage($produk->gambar);
+            $validated['gambar'] = ImageHelper::storeBannerImage($request->file('gambar'));
         } elseif ($request->input('delete_gambar') == '1' && $produk->gambar) {
-            ImageHelper::deleteProductImage($produk->gambar);
+            ImageHelper::deleteBannerImage($produk->gambar);
             $validated['gambar'] = null;
         }
 
-        if (!empty(trim($validated['deskripsi'] ?? ''))) {
-            $validated['deskripsi'] = trim($validated['deskripsi']);
-        } else {
-            $validated['deskripsi'] = trim(($validated['komposisi'] ?? '') . ' | ' . ($validated['indikasi'] ?? ''));
-        }
+        // Only keep fields we expect for principle logos
+        $allowed = ['nama_obat', 'brand', 'gambar', 'kategori', 'kategori_produk'];
+        $toUpdate = array_intersect_key($validated, array_flip($allowed));
 
-        $produk->update($validated);
+        $produk->update($toUpdate);
 
         $queryParams = $this->buildIndexQueryParams($request);
 
@@ -237,7 +245,7 @@ class AdminProdukController extends Controller
         }
 
         $this->authorizeOutletProduct($produk);
-        ImageHelper::deleteProductImage($produk->gambar);
+        ImageHelper::deleteBannerImage($produk->gambar);
         $produk->delete();
 
         $queryParams = $this->buildIndexQueryParams($request);
@@ -275,7 +283,7 @@ class AdminProdukController extends Controller
         }
 
         foreach ($products as $produk) {
-            ImageHelper::deleteProductImage($produk->gambar);
+            ImageHelper::deleteBannerImage($produk->gambar);
             $produk->delete();
         }
 

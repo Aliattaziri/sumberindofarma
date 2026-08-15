@@ -1,311 +1,144 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Produk - Admin Sumberindo Farma Tama')
-@section('page-title', '➕ Tambah Produk')
-
-@section('styles')
-<style>
-    .form-card { background:white; border-radius:0.75rem; box-shadow:0 1px 4px rgba(0,0,0,0.06); border:1px solid #f0f0f0; overflow:hidden; }
-    .form-card-header { padding:1rem 1.5rem; border-bottom:1px solid #f3f4f6; display:flex; align-items:center; gap:0.6rem; }
-    .form-card-header h3 { font-size:0.95rem; font-weight:700; color:#1f2937; margin:0; }
-    .header-icon { width:32px; height:32px; background:#fef2f2; border-radius:0.4rem; display:flex; align-items:center; justify-content:center; color:#B91C1C; font-size:0.9rem; }
-    .form-body { padding:1.5rem; display:flex; flex-direction:column; gap:1rem; }
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .form-group { margin-bottom:0; }
-    .form-label { display:block; font-size:0.8rem; font-weight:700; color:#374151; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.04em; }
-    .form-label .req { color:#ef4444; margin-left:2px; }
-    .form-input { width:100%; padding:0.6rem 0.85rem; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; color:#1f2937; background:#fafafa; transition:all 0.2s; }
-    .form-input:focus { outline:none; border-color:#B91C1C; background:white; box-shadow:0 0 0 3px rgba(220,38,38,0.08); }
-    .form-input.is-invalid { border-color:#ef4444; }
-    .form-error { font-size:0.78rem; color:#ef4444; margin-top:0.3rem; display:flex; align-items:center; gap:0.3rem; }
-    .upload-zone { border:2px dashed #d1d5db; border-radius:0.6rem; padding:1.75rem 1rem; text-align:center; background:#fafafa; cursor:pointer; transition:all 0.2s; }
-    .upload-zone:hover, .upload-zone.drag-over { border-color:#B91C1C; background:#fef2f2; }
-    .upload-zone .upload-icon { font-size:2rem; margin-bottom:0.5rem; }
-    .upload-zone p { font-size:0.85rem; color:#6b7280; margin:0 0 0.75rem; }
-    .upload-zone small { font-size:0.75rem; color:#9ca3af; display:block; margin-top:0.5rem; }
-    .btn-choose { display:inline-flex; align-items:center; gap:0.35rem; padding:0.45rem 1rem; background:white; border:1px solid #d1d5db; border-radius:0.4rem; font-size:0.82rem; font-weight:600; color:#374151; cursor:pointer; transition:all 0.2s; }
-    .btn-choose:hover { background:#f3f4f6; border-color:#9ca3af; }
-    .img-preview-wrap { margin-top:0.75rem; display:none; border-radius:0.5rem; overflow:hidden; border:1px solid #e5e7eb; position:relative; }
-    .img-preview-wrap img { width:100%; max-height:220px; object-fit:contain; display:block; background:#f9fafb; }
-    .img-preview-label { position:absolute; top:0.5rem; left:0.5rem; background:rgba(0,0,0,0.55); color:white; font-size:0.7rem; font-weight:600; padding:0.2rem 0.5rem; border-radius:0.3rem; }
-    .form-footer { padding:1rem 1.5rem; border-top:1px solid #f3f4f6; display:flex; gap:0.6rem; align-items:center; }
-    .btn-save { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.5rem; background:#B91C1C; color:white; border:none; border-radius:0.5rem; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-    .btn-save:hover { background:#991B1B; transform:translateY(-1px); }
-    .btn-cancel { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.25rem; background:white; color:#6b7280; border:1px solid #e5e7eb; border-radius:0.5rem; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
-    .btn-cancel:hover { background:#f9fafb; color:#374151; }
-    .two-col-layout { display:grid; grid-template-columns:1fr 340px; gap:1.25rem; align-items:start; }
-    /* Kategori selector cards */
-    .kat-selector { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; flex-wrap:wrap; }
-    .kat-card { border:2px solid #e5e7eb; border-radius:0.6rem; padding:0.75rem 0.5rem; text-align:center; cursor:pointer; transition:all 0.2s; background:white; }
-    .kat-card:hover { border-color:#B91C1C; }
-    .kat-card.selected { border-color:#B91C1C; background:#fef2f2; }
-    .kat-card.kat-card-custom:hover { border-color:#059669; }
-    .kat-card.kat-card-custom.selected { border-color:#059669; background:#f0fdf4; }
-    .kat-card.kat-card-custom.selected .kat-label { color:#065f46; }
-    .kat-card input[type=radio] { display:none; }
-    .kat-card .kat-icon { font-size:1.5rem; display:block; margin-bottom:0.3rem; }
-    .kat-card .kat-label { font-size:0.72rem; font-weight:700; color:#374151; line-height:1.3; }
-    .kat-card.selected .kat-label { color:#991B1B; }
-    @media (max-width:900px) { .two-col-layout { grid-template-columns:1fr; } }
-    @media (max-width:600px) { .form-grid { grid-template-columns:1fr; } .form-body { padding:1rem; } .form-footer { padding:1rem; } .kat-selector { grid-template-columns:1fr 1fr; } }</style>
-@endsection
+@section('title', 'Tambah Principle Logo')
+@section('page-title', 'Tambah Principle Logo')
 
 @section('content')
 
-<div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:#9ca3af;margin-bottom:1.25rem;">
-    <a href="{{ route('admin.produk.index') }}" style="color:#B91C1C;text-decoration:none;font-weight:600;">🛒 Produk Kami</a>
-    <i class="fa-solid fa-chevron-right" style="font-size:0.65rem;"></i>
-    <span style="color:#374151;font-weight:600;">Tambah Produk</span>
+<div class="mb-6">
+  <a href="{{ route('admin.produk.index') }}" class="text-sm text-indigo-600 hover:underline">← Kembali ke daftar</a>
+  <h3 class="mt-3 text-2xl font-semibold text-gray-800">Tambah Logo Mitra</h3>
 </div>
 
 <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="two-col-layout">
-
-        {{-- Kiri: Info --}}
-        <div class="form-card">
-            <div class="form-card-header">
-                <div class="header-icon"><i class="fa-solid fa-circle-info"></i></div>
-                <h3>Informasi Produk</h3>
-            </div>
-            <div class="form-body">
-
-                @if(auth()->check() && auth()->user()->isSuperAdmin())
-                    <div class="form-group">
-                        <label class="form-label">Outlet / Apotek <span class="req">*</span></label>
-                        <select name="kategori" class="form-input {{ $errors->has('kategori') ? 'is-invalid' : '' }}" required>
-                            <option value="">— Pilih Outlet —</option>
-                            @foreach($outletOptions as $outlet)
-                                <option value="{{ $outlet }}" {{ old('kategori') == $outlet ? 'selected' : '' }}>{{ $outlet }}</option>
-                            @endforeach
-                        </select>
-                        @error('kategori')
-                            <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                        @enderror
-                    </div>
-                @endif
-
-                <div class="form-group">
-                    <label class="form-label">Merk / Brand <span class="req">*</span></label>
-                    <input type="text" name="brand" class="form-input {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                           placeholder="Contoh: WARDAH / KIMIA FARMA / OMRON" value="{{ old('brand') }}" required>
-                    @error('brand')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Nama Produk <span class="req">*</span></label>
-                    <input type="text" name="nama_obat" class="form-input {{ $errors->has('nama_obat') ? 'is-invalid' : '' }}"
-                           placeholder="Contoh: Paracetamol 500mg" value="{{ old('nama_obat') }}" required>
-                    @error('nama_obat')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Sediaan</label>
-                    <input type="text" name="sediaan"
-                           class="form-input {{ $errors->has('sediaan') ? 'is-invalid' : '' }}"
-                           placeholder="Contoh: fls, box, tube, pcs atau ketik bebas"
-                           value="{{ old('sediaan') }}">
-                    @error('sediaan')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Deskripsi Produk</label>
-                    <textarea name="deskripsi" class="form-input {{ $errors->has('deskripsi') ? 'is-invalid' : '' }}" rows="3"
-                              placeholder="Contoh: Obat pereda demam dan nyeri ringan.">{{ old('deskripsi') }}</textarea>
-                    @error('deskripsi')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">SKU</label>
-                    <input type="text" name="sku" class="form-input {{ $errors->has('sku') ? 'is-invalid' : '' }}"
-                           placeholder="Contoh: SKU-001" value="{{ old('sku') }}">
-                    @error('sku')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Komposisi / Bahan</label>
-                    <textarea name="komposisi" class="form-input" rows="3"
-                              placeholder="Contoh: Paracetamol 500 mg, Aqua, Glycerin...">{{ old('komposisi') }}</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Indikasi / Kegunaan</label>
-                    <textarea name="indikasi" class="form-input" rows="3"
-                              placeholder="Contoh: Meredakan demam dan nyeri ringan hingga sedang...">{{ old('indikasi') }}</textarea>
-                </div>
-
-                {{-- Kategori Produk --}}
-                <div class="form-group">
-                    <label class="form-label">Kategori Produk <span class="req">*</span></label>
-
-                    {{-- Pilihan kartu (kategori yang sudah ada) --}}
-                    <div class="kat-selector" id="katSelector">
-                        @foreach($kategoriOptions as $kat)
-                            @php
-                                $icon = \App\Models\ProductCategory::iconFor($kat);
-                                $isSelected = old('kategori_produk', 'OBAT') === $kat;
-                            @endphp
-                            <label class="kat-card {{ $isSelected ? 'selected' : '' }}" onclick="selectKat(this)">
-                                <input type="radio" name="kategori_produk" value="{{ $kat }}" {{ $isSelected ? 'checked' : '' }}>
-                                <span class="kat-icon">{{ $icon }}</span>
-                                <span class="kat-label">{{ $kat }}</span>
-                            </label>
-                        @endforeach
-
-                        {{-- Kartu "Tambah Baru" --}}
-                        <label class="kat-card kat-card-custom {{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) && old('kategori_produk') ? 'selected' : '' }}"
-                               onclick="toggleCustomKat(this)" id="katCardCustom">
-                            <input type="radio" name="kategori_produk" value="__custom__" id="radioCustom"
-                                   {{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) && old('kategori_produk') ? 'checked' : '' }}>
-                            <span class="kat-icon">➕</span>
-                            <span class="kat-label">Tambah Baru</span>
-                        </label>
-                    </div>
-
-                    {{-- Input teks untuk kategori baru --}}
-                    <div id="customKatWrap" style="margin-top:0.6rem;display:{{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) && old('kategori_produk') ? 'block' : 'none' }};">
-                        <input type="text" id="customKatInput"
-                               class="form-input"
-                               placeholder="Ketik nama kategori baru, contoh: NUTRISI"
-                               value="{{ !in_array(old('kategori_produk','OBAT'), $kategoriOptions) ? old('kategori_produk','') : '' }}"
-                               oninput="syncCustomKat(this.value)">
-                        <div style="font-size:0.75rem;color:#6b7280;margin-top:0.3rem;">
-                            <i class="fa-solid fa-circle-info" style="color:#B91C1C;"></i>
-                            Kategori baru akan otomatis tersimpan dan tersedia untuk produk lain.
-                        </div>
-                    </div>
-
-                    {{-- Hidden input untuk nilai final --}}
-                    <input type="hidden" name="kategori_produk" id="kategoriProdukFinal"
-                           value="{{ old('kategori_produk', 'OBAT') }}">
-
-                    @error('kategori_produk')
-                        <div class="form-error"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                    @enderror
-                </div>
-
-            </div>
-            <div class="form-footer">
-                <button type="submit" class="btn-save">
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan Produk
-                </button>
-                <a href="{{ route('admin.produk.index') }}" class="btn-cancel">
-                    <i class="fa-solid fa-xmark"></i> Batal
-                </a>
-            </div>
-        </div>
-
-        {{-- Kanan: Foto --}}
-        <div class="form-card">
-            <div class="form-card-header">
-                <div class="header-icon"><i class="fa-solid fa-image"></i></div>
-                <h3>Foto Produk</h3>
-            </div>
-            <div class="form-body">
-                <div class="upload-zone" id="dropZone" onclick="document.getElementById('gambar').click()">
-                    <div class="upload-icon">📸</div>
-                    <p>Klik atau drag & drop gambar di sini</p>
-                    <button type="button" class="btn-choose" onclick="event.stopPropagation();document.getElementById('gambar').click()">
-                        <i class="fa-solid fa-folder-open"></i> Pilih File
-                    </button>
-                    <small>JPG, PNG, GIF — Maks. 10MB</small>
-                </div>
-                <input type="file" id="gambar" name="gambar" accept="image/*" style="display:none;">
-                @error('gambar')
-                    <div class="form-error" style="margin-top:0.5rem;"><i class="fa-solid fa-circle-exclamation"></i> {{ $message }}</div>
-                @enderror
-                <div class="img-preview-wrap" id="imgPreviewWrap">
-                    <span class="img-preview-label">Preview</span>
-                    <img id="previewImg" src="" alt="Preview">
-                </div>
-                <div style="margin-top:1rem;padding:0.75rem;background:#f8faff;border-radius:0.5rem;border:1px solid #fef2f2;">
-                    <p style="font-size:0.78rem;color:#6b7280;margin:0;line-height:1.6;">
-                        <i class="fa-solid fa-circle-info" style="color:#B91C1C;margin-right:0.3rem;"></i>
-                        Foto opsional. Jika tidak diupload, akan ditampilkan ikon default.
-                    </p>
-                </div>
-            </div>
-        </div>
-
+  @csrf
+  <div class="card" style="max-width:880px;">
+    <div class="form-group">
+      <label class="form-label">Nama Mitra</label>
+      <input type="text" name="nama_obat" value="{{ old('nama_obat') }}" required class="form-control">
+      @error('nama_obat') <div class="form-errors">{{ $message }}</div> @enderror
     </div>
+
+    <div class="form-group">
+      <label class="form-label">Link Mitra (https://...)</label>
+      <input type="url" name="brand" value="{{ old('brand') }}" class="form-control">
+      @error('brand') <div class="form-errors">{{ $message }}</div> @enderror
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Foto Logo (opsional)</label>
+      <input type="file" id="fileInput" name="gambar" accept="image/*" class="form-control" style="padding:0.4rem;" />
+      <div style="font-size:0.85rem;color:#6b7280;margin-top:0.4rem;">Maks 2MB. Format: jpg, png, webp</div>
+      @error('gambar') <div class="form-errors">{{ $message }}</div> @enderror
+    </div>
+
+    <div style="display:flex;gap:0.5rem;">
+      <button class="btn btn-primary" type="submit">Simpan</button>
+      <a href="{{ route('admin.produk.index') }}" class="btn btn-secondary">Batal</a>
+    </div>
+  </div>
 </form>
 
+@section('scripts')
+<!-- Cropper.js CDN -->
+<link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-// ── Kategori selector ──────────────────────────────────────────
-const finalInput = document.getElementById('kategoriProdukFinal');
+  (function(){
+    let cropper;
+    const fileInput = document.getElementById('fileInput');
+    const modalImage = document.createElement('img');
+    modalImage.style.maxWidth = '100%';
 
-function selectKat(el) {
-    // Deselect semua kartu
-    document.querySelectorAll('.kat-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    el.querySelector('input[type=radio]').checked = true;
+    const previewBox = document.createElement('div');
+    previewBox.style.marginTop = '0.5rem';
 
-    const val = el.querySelector('input[type=radio]').value;
-    if (val !== '__custom__') {
-        finalInput.value = val;
-        document.getElementById('customKatWrap').style.display = 'none';
-        document.getElementById('customKatInput').value = '';
-    }
-}
+    const previewThumb = document.createElement('img');
+    previewThumb.style.maxWidth = '160px';
+    previewThumb.style.maxHeight = '90px';
+    previewThumb.style.objectFit = 'contain';
+    previewThumb.style.display = 'none';
+    previewBox.appendChild(previewThumb);
 
-function toggleCustomKat(el) {
-    document.querySelectorAll('.kat-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('radioCustom').checked = true;
-    document.getElementById('customKatWrap').style.display = 'block';
-    document.getElementById('customKatInput').focus();
-    // Update final value ke apa pun yang sudah diketik
-    const typed = document.getElementById('customKatInput').value.trim().toUpperCase();
-    finalInput.value = typed || '';
-}
+    fileInput.parentNode.appendChild(previewBox);
 
-function syncCustomKat(val) {
-    finalInput.value = val.trim().toUpperCase();
-}
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'cropped_image';
+    fileInput.form.appendChild(hiddenInput);
 
-// Intercept form submit: validasi kategori_produk tidak kosong
-document.querySelector('form').addEventListener('submit', function(e) {
-    const val = finalInput.value.trim();
-    if (!val) {
-        e.preventDefault();
-        alert('Pilih atau ketik kategori produk terlebih dahulu.');
-        return;
-    }
-    // Nonaktifkan semua radio agar tidak duplikat dengan hidden input
-    document.querySelectorAll('input[name="kategori_produk"]').forEach(r => {
-        if (r !== finalInput) r.disabled = true;
+    fileInput.addEventListener('change', function(e){
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        // open simple cropper UI in a new window-like overlay
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.inset = 0;
+        overlay.style.background = 'rgba(0,0,0,0.6)';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = 9999;
+
+        const box = document.createElement('div');
+        box.style.width = '80%';
+        box.style.maxWidth = '900px';
+        box.style.background = '#fff';
+        box.style.padding = '12px';
+        box.style.borderRadius = '8px';
+        box.style.boxShadow = '0 6px 24px rgba(0,0,0,0.2)';
+
+        modalImage.src = ev.target.result;
+        box.appendChild(modalImage);
+
+        const btnRow = document.createElement('div');
+        btnRow.style.marginTop = '8px';
+        btnRow.style.display = 'flex';
+        btnRow.style.gap = '8px';
+
+        const cropBtn = document.createElement('button');
+        cropBtn.type = 'button';
+        cropBtn.className = 'btn btn-primary';
+        cropBtn.textContent = 'Crop & Gunakan';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.type = 'button';
+        cancelBtn.className = 'btn btn-secondary';
+        cancelBtn.textContent = 'Batal';
+
+        btnRow.appendChild(cropBtn);
+        btnRow.appendChild(cancelBtn);
+        box.appendChild(btnRow);
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        cropper = new Cropper(modalImage, { viewMode: 1, aspectRatio: NaN });
+
+        cancelBtn.addEventListener('click', function(){
+          cropper.destroy();
+          document.body.removeChild(overlay);
+          fileInput.value = '';
+        });
+
+        cropBtn.addEventListener('click', function(){
+          const canvas = cropper.getCroppedCanvas({ maxWidth: 1200, maxHeight: 800, imageSmoothingQuality: 'high' });
+          const dataUrl = canvas.toDataURL('image/png');
+          hiddenInput.value = dataUrl;
+          previewThumb.src = dataUrl;
+          previewThumb.style.display = 'inline-block';
+          cropper.destroy();
+          document.body.removeChild(overlay);
+        });
+      };
+      reader.readAsDataURL(file);
     });
-});
-
-// ── Gambar preview ──────────────────────────────────────────────
-const input = document.getElementById('gambar');
-const dropZone = document.getElementById('dropZone');
-const previewWrap = document.getElementById('imgPreviewWrap');
-const previewImg = document.getElementById('previewImg');
-function showPreview(file) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => { previewImg.src = e.target.result; previewWrap.style.display = 'block'; };
-    reader.readAsDataURL(file);
-}
-input.addEventListener('change', e => showPreview(e.target.files[0]));
-['dragenter','dragover'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.add('drag-over'); }));
-['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.remove('drag-over'); }));
-dropZone.addEventListener('drop', e => {
-    const file = e.dataTransfer.files[0];
-    if (file) { const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; showPreview(file); }
-});
+  })();
 </script>
+@endsection
+
 @endsection
 
 

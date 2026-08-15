@@ -628,7 +628,7 @@
                 <li>
                     <a href="{{ route('admin.produk.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.produk')) active @endif">
                         <i class="fa-solid fa-pills"></i>
-                        <span>Produk Kami</span>
+                        <span>Principle Logo</span>
                     </a>
                 </li>
                 @endif
@@ -638,6 +638,7 @@
                         <span>Banner Slideshow</span>
                     </a>
                 </li>
+                
                 <li>
                     <a href="{{ route('home') }}">
                         <i class="fa-solid fa-arrow-left"></i>
@@ -722,7 +723,7 @@
             </a>
             <a href="{{ route('admin.produk.index') }}" class="bottom-nav-item @if(str_contains(Route::current()->getName() ?? '', 'admin.produk')) active @endif">
                 <i class="fa-solid fa-pills"></i>
-                <span>Produk</span>
+                <span>Principle Logo</span>
             </a>
             <a href="{{ route('home') }}" class="bottom-nav-item">
                 <i class="fa-solid fa-house"></i>

@@ -307,26 +307,7 @@
         <p class="about-section-sub">Kami melayani berbagai apotek dan fasilitas kesehatan di Kalimantan Barat dengan pengiriman langsung dari gudang distribusi kami.</p>
     </div>
     <div class="abt-branch-grid">
-        <div class="abt-branch-card">
-            <div class="abt-branch-head">
-                <div class="abt-branch-icon"><i class="fa-solid fa-store"></i></div>
-                <div>
-                    <h3>Apotek Alfa Group</h3>
-                    <p class="abt-branch-sub">Mitra apotek jaringan</p>
-                </div>
-            </div>
-            <p>Melayani beberapa cabang Apotek Alfa di wilayah Kalimantan Barat, termasuk Jungkat, Mempawah, Sintang, dan Kendawangan.</p>
-        </div>
-        <div class="abt-branch-card">
-            <div class="abt-branch-head">
-                <div class="abt-branch-icon"><i class="fa-solid fa-hospital"></i></div>
-                <div>
-                    <h3>Apotek Medistra Farma</h3>
-                    <p class="abt-branch-sub">Mitra apotek mandiri</p>
-                </div>
-            </div>
-            <p>Melayani Apotek Medistra Farma di Ketapang, Kalimantan Barat — menyediakan produk obat dan alat kesehatan lengkap.</p>
-        </div>
+        <!-- Apotek Alfa Group & Apotek Medistra Farma cards removed — only PBF remains -->
         <div class="abt-branch-card">
             <div class="abt-branch-head">
                 <div class="abt-branch-icon"><i class="fa-solid fa-truck"></i></div>

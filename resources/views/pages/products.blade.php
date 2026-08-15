@@ -6,7 +6,7 @@
 <!-- Page Header -->
 <div class="hero" style="padding: 40px 0;">
     <div class="container">
-        <h1 style="font-size: 36px;">Produk Kami</h1>
+        <h1 style="font-size: 36px;">Principle Logo</h1>
         <p>Koleksi lengkap obat dan suplemen berkualitas</p>
     </div>
 </div>

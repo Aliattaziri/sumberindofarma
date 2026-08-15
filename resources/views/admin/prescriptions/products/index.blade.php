@@ -224,9 +224,6 @@
         </p>
     </div>
     <div class="page-header-actions">
-        <a href="{{ route('admin.prescription-products.import') }}" class="btn-icon btn-icon-outline">
-            <i class="fa-solid fa-file-import"></i> Import Excel
-        </a>
         <a href="{{ route('admin.prescription-products.create') }}" class="btn-icon btn-icon-primary">
             <i class="fa-solid fa-plus"></i> Tambah Produk
         </a>
@@ -436,9 +433,6 @@
             <h3>Belum ada produk resep</h3>
             <p>Mulai tambahkan produk resep atau import dari file Excel/CSV.</p>
             <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
-                <a href="{{ route('admin.prescription-products.import') }}" class="btn-icon btn-icon-outline">
-                    <i class="fa-solid fa-file-import"></i> Import Excel
-                </a>
                 <a href="{{ route('admin.prescription-products.create') }}" class="btn-icon btn-icon-primary">
                     <i class="fa-solid fa-plus"></i> Tambah Produk
                 </a>

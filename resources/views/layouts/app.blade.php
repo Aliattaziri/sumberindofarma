@@ -318,7 +318,7 @@
                         <a class="nav-link @if(request()->routeIs('about')) active @endif" href="{{ route('about') }}">Tentang Kami</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(request()->routeIs('products.apotek') || request()->routeIs('products.apotek.slug')) active @endif" href="{{ route('products.apotek') }}">Produk</a>
+                        <a class="nav-link @if(request()->routeIs('products.pbf')) active @endif" href="{{ route('products.pbf') }}">Produk</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if(request()->routeIs('services')) active @endif" href="{{ route('services') }}">Layanan</a>
@@ -351,7 +351,7 @@
                     <h5>Navigasi</h5>
                     <a href="{{ route('home') }}" class="footer-link">Beranda</a>
                     <a href="{{ route('about') }}" class="footer-link">Tentang Kami</a>
-                    <a href="{{ route('products.apotek') }}" class="footer-link">Produk</a>
+                    <a href="{{ route('products.pbf') }}" class="footer-link">Produk</a>
                     <a href="{{ route('services') }}" class="footer-link">Layanan</a>
                 </div>
                     <div class="col-md-3 footer-section">

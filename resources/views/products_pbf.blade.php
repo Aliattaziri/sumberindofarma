@@ -341,6 +341,9 @@
                 </div>
                 <h1><i class="fa-solid fa-box"></i> Katalog Produk PBF</h1>
                 <p>{{ $total }} produk PBF tersedia untuk mitra apotek dan distributor.</p>
+                <p style="margin-top:0.6rem;">
+                    <a href="{{ route('partners') }}" class="btn-hero-outline" style="text-decoration:none;display:inline-block;padding:0.5rem 0.9rem;border-radius:8px;border:1.5px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#fff;font-weight:700;">Lihat Mitra Kami Ini</a>
+                </p>
                 <p class="brand-address">Komp. Pergudangan Ocean 88 C2-3, Jl. Adisucipto, Arang Limbung, Kec. Sungai Raya, Kab. Kubu Raya, Kalimantan Barat</p>
             </div>
         </div>
@@ -377,137 +380,31 @@
             </form>
         </div>
 
-        <form method="GET" action="{{ route('products.pbf') }}" class="filter-bar">
-            <div class="filter-group" style="flex: 2; min-width: 200px;">
-                <label class="filter-label"><i class="fa-solid fa-magnifying-glass"></i> Cari Produk</label>
-                <input type="text" name="search" class="filter-input"
-                       placeholder="Nama produk atau deskripsi..."
-                       value="{{ $search }}">
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fa-solid fa-tag"></i> Kategori</label>
-                <select name="kategori_produk" class="filter-select">
-                    <option value="">Semua Kategori</option>
-                    @foreach($kategoriOptions as $k)
-                        @php $icon = \App\Models\ProductCategory::iconFor($k); @endphp
-                        <option value="{{ $k }}" @selected(($kategori_produk ?? '') === $k)>{{ $icon }} {{ $k }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fa-solid fa-building"></i> Merk/Brand</label>
-                <select name="perusahaan" class="filter-select">
-                    <option value="">Semua Merk/Brand</option>
-                    @foreach($perusahaanList as $p)
-                        <option value="{{ $p }}" @selected($perusahaan === $p)>{{ $p }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="filter-group">
-                <label class="filter-label"><i class="fa-solid fa-arrow-up-wide-short"></i> Urutkan</label>
-                <select name="sort" class="filter-select">
-                    <option value="terbaru"    @selected($sort === 'terbaru')>Terbaru</option>
-                    <option value="harga_asc"  @selected($sort === 'harga_asc')>Harga Terendah</option>
-                    <option value="harga_desc" @selected($sort === 'harga_desc')>Harga Tertinggi</option>
-                    <option value="nama"       @selected($sort === 'nama')>Nama A-Z</option>
-                </select>
-            </div>
-            <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
-                <button type="submit" class="btn-filter">
-                    <i class="fa-solid fa-magnifying-glass"></i> Cari
-                </button>
-                @if($search || ($kategori_produk ?? '') || $perusahaan || $sort !== 'terbaru')
-                    <a href="{{ route('products.pbf') }}" class="btn-reset"><i class="fa-solid fa-xmark"></i> Reset</a>
-                @endif
-            </div>
-        </form>
+        {{-- Menampilkan logo principal saja (folder public/principals) --}}
+        @php
+            $principalsDir = public_path('principals');
+            $principalFiles = [];
+            if (is_dir($principalsDir)) {
+                foreach (scandir($principalsDir) as $it) {
+                    if (in_array($it, ['.', '..'])) continue;
+                    $principalFiles[] = $it;
+                }
+            }
+        @endphp
 
-        <div class="result-info">
-            <p>
-                Menampilkan <strong>{{ $medicines->firstItem() ?? 0 }}-{{ $medicines->lastItem() ?? 0 }}</strong>
-                dari <strong>{{ $medicines->total() }}</strong> produk
-                @if($search) - "<strong>{{ $search }}</strong>" @endif
-                @if($kategori_produk ?? '') - <strong>{{ $kategori_produk }}</strong> @endif
-                @if($perusahaan) - <strong>{{ $perusahaan }}</strong> @endif
-            </p>
-        </div>
-
-        @if($medicines->count() > 0)
-            <div class="medicines-grid">
-                @foreach($medicines as $medicine)
-                    <div class="medicine-card">
-                        <div class="medicine-image">
-                            @if($medicine->gambar)
-                                <img src="{{ url('storage/' . $medicine->gambar) }}" alt="{{ $medicine->nama_obat }}">
-                            @else
-                                <i class="fa-solid fa-pills" style="color:#fecaca;font-size:3rem;"></i>
-                            @endif
-                        </div>
-                        <div class="medicine-body">
-                            <h3 class="medicine-name">{{ $medicine->nama_obat }}</h3>
-                            
-                            <div style="font-size:0.72rem;color:#6b7280;font-weight:600;line-height:1.4;margin-bottom:0.5rem;">
-                                {{ $medicine->pabrik_label }}
-                            </div>
-                            @if($medicine->sediaan_label)
-                                <div class="medicine-meta" style="display:flex;align-items:center;gap:0.35rem;margin-bottom:0.6rem;">
-                                    <i class="fa-solid fa-cube"></i> <span>Sediaan: {{ $medicine->sediaan_label }}</span>
-                                </div>
-                            @endif
-                            @if($medicine->stok > 10)
-                                <span class="stock-badge stock-available"><i class="fa-solid fa-circle-check"></i> {{ $medicine->stok }} tersedia</span>
-                            @elseif($medicine->stok > 0)
-                                <span class="stock-badge stock-low"><i class="fa-solid fa-triangle-exclamation"></i> {{ $medicine->stok }} tersisa</span>
-                            @endif
-                            <a href="{{ route('medicines.show', $medicine->id) }}" class="medicine-btn">
-                                Lihat Detail <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
+        @if(count($principalFiles) > 0)
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;align-items:center;">
+                @foreach($principalFiles as $pf)
+                    <div style="background:white;border-radius:12px;padding:0.8rem;border:1px solid #e6e6e6;display:flex;align-items:center;justify-content:center;min-height:120px;">
+                        <img src="{{ asset('principals/' . $pf) }}" alt="{{ $pf }}" style="max-width:100%;max-height:90px;object-fit:contain;">
                     </div>
                 @endforeach
             </div>
-
-            <div class="pagination-wrap">
-                <p class="info">Halaman {{ $medicines->currentPage() }} dari {{ $medicines->lastPage() }}</p>
-                <div class="pagination-btns">
-                    @if($medicines->onFirstPage())
-                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
-                    @else
-                        <a href="{{ $medicines->previousPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-left"></i></a>
-                    @endif
-
-                    @foreach($medicines->getUrlRange(1, $medicines->lastPage()) as $page => $url)
-                        @if($page == $medicines->currentPage())
-                            <span class="page-btn active">{{ $page }}</span>
-                        @elseif($page == 1 || $page == $medicines->lastPage() || abs($page - $medicines->currentPage()) <= 2)
-                            <a href="{{ $url }}" class="page-btn">{{ $page }}</a>
-                        @elseif(abs($page - $medicines->currentPage()) == 3)
-                            <span class="page-btn disabled">...</span>
-                        @endif
-                    @endforeach
-
-                    @if($medicines->hasMorePages())
-                        <a href="{{ $medicines->nextPageUrl() }}" class="page-btn"><i class="fa-solid fa-chevron-right"></i></a>
-                    @else
-                        <span class="page-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
-                    @endif
-                </div>
-            </div>
-
         @else
             <div class="empty-state">
-                <i class="fa-solid fa-box-open" style="font-size:3.5rem;color:#d1d5db;"></i>
-                <h3>Produk tidak ditemukan</h3>
-                <p>
-                    @if($search || ($kategori_produk ?? ''))
-                        Coba ubah kata kunci atau filter pencarian.
-                    @else
-                        Belum ada produk tersedia.
-                    @endif
-                </p>
-                @if($search || ($kategori_produk ?? '') || $perusahaan)
-                    <a href="{{ route('products.pbf') }}" class="btn-reset" style="display:inline-block;margin-top:1rem;"><i class="fa-solid fa-xmark"></i> Hapus Filter</a>
-                @endif
+                <i class="fa-solid fa-building" style="font-size:3.5rem;color:#d1d5db;"></i>
+                <h3>Tidak ada logo principal</h3>
+                <p>Silakan unggah logo melalui admin → Principal Logos.</p>
             </div>
         @endif
 

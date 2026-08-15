@@ -993,34 +993,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="promo-section">
   <div class="container">
     <div class="promo-grid">
-      <a href="{{ route('products.pbf.gate') }}" class="promo-card promo-contact">
+            <a href="{{ route('partners') }}" class="promo-card promo-contact">
         <div class="promo-card-content">
           <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
           <div class="promo-card-text">
-            <h4>PBF</h4>
+                        <h4>Mitra Kami</h4>
                         <span class="pbf-subtitle">PT.SUMBERINDO FARMA TAMA</span>
-            <p>Jelajahi Katalog Produk PBF Terlengkap Kami</p>
+                        <p>Jelajahi mitra, distributor, dan principal yang bekerja sama bersama kami.</p>
           </div>
         </div>
       </a>
-      <a href="{{ route('products.apotek', ['outlet' => 'Apotek Medistra Farma']) }}" class="promo-card promo-goapotik">
-        <div class="promo-card-content">
-          <img src="{{ asset('logo apotek medistra farma.png') }}" alt="Apotek Medistra Farma" class="promo-goapotik-logo">
-          <div class="promo-card-text">
-            <h4>Apotek Medistra Farma</h4>
-            <p>Kunjungi toko kami di Apotek Medistra Farma</p>
-          </div>
-        </div>
-      </a>
-      <a href="{{ route('products.apotek.select') }}" class="promo-card promo-pbf">
-        <div class="promo-card-content">
-          <img src="{{ asset('apotek alfa group logo.png') }}" alt="Apotek Alfa Group" class="promo-pbf-logo">
-          <div class="promo-card-text">
-            <h4>Apotek Alfa Group</h4>
-            <p>Kunjungi toko kami diberbagai tempat.</p>
-          </div>
-        </div>
-      </a>
+            <!-- Apotek cards removed per request; only PBF remains -->
     </div>
   </div>
 </div>

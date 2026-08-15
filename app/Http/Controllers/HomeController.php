@@ -209,6 +209,15 @@ class HomeController extends Controller
 
         return view('farmakologi', compact('diseases'));
     }
+
+    /**
+     * Halaman Mitra Kami - menampilkan logo mitra/principal
+     */
+    public function partners()
+    {
+        // Menampilkan logo dari folder public/principals jika tersedia
+        return view('mitra.index');
+    }
 }
 
 // Tambahan sementara - akan diganti dengan method yang benar

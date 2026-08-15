@@ -1016,6 +1016,7 @@
                 <li><a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="{{ route('about') }}"><i class="fa-solid fa-circle-info"></i> Tentang Kami</a></li>
                 <li><a href="{{ route('contact') }}"><i class="fa-solid fa-headset"></i> Hubungi Kami</a></li>
+                <li><a href="{{ route('partners') }}"><i class="fa-solid fa-handshake"></i> Mitra Kami</a></li>
 
                 @auth
                     @if(auth()->user()->isAdmin())
@@ -1180,6 +1181,27 @@
                     <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>
+
+            <!-- TikTok -->
+            <div class="float-item">
+                <span class="float-tooltip">TikTok</span>
+                <span class="float-label-mobile">TikTok</span>
+                <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="float-btn"
+                   style="background:#000;color:white;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                    <img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:20px;height:20px;object-fit:cover;border-radius:50%;">
+                </a>
+            </div>
+
+            <!-- Shopee -->
+            <div class="float-item">
+                <span class="float-tooltip">Shopee</span>
+                <span class="float-label-mobile">Shopee</span>
+                     <a href="about:blank" target="_blank" class="float-btn"
+                   style="background:#ff5722;color:white;box-shadow:0 4px 16px rgba(255,87,34,0.25);">
+                    <img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:20px;height:20px;object-fit:cover;border-radius:50%;">
+                </a>
+            </div>
+
             <!-- WhatsApp -->
             <div class="float-item">
                 <span class="float-tooltip">Chat WhatsApp</span>

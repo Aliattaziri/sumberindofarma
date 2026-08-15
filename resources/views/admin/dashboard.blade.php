@@ -160,9 +160,7 @@
         <a href="{{ route('admin.produk.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-plus"></i> Tambah Produk
         </a>
-        <a href="{{ route('admin.produk.import') }}" class="btn btn-secondary">
-            <i class="fa-solid fa-file-import"></i> Import Excel
-        </a>
+        
         <a href="{{ route('admin.produk.index') }}" class="btn btn-secondary">
             <i class="fa-solid fa-list"></i> Semua Produk
         </a>
