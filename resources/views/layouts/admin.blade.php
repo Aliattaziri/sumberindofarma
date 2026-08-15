@@ -638,6 +638,12 @@
                         <span>Banner Slideshow</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.news.index') }}" class="@if(str_contains(Route::current()->getName() ?? '', 'admin.news')) active @endif">
+                        <i class="fa-solid fa-newspaper"></i>
+                        <span>Berita</span>
+                    </a>
+                </li>
                 
                 <li>
                     <a href="{{ route('home') }}">
@@ -724,6 +730,10 @@
             <a href="{{ route('admin.produk.index') }}" class="bottom-nav-item @if(str_contains(Route::current()->getName() ?? '', 'admin.produk')) active @endif">
                 <i class="fa-solid fa-pills"></i>
                 <span>Principle Logo</span>
+            </a>
+            <a href="{{ route('admin.news.index') }}" class="bottom-nav-item @if(str_contains(Route::current()->getName() ?? '', 'admin.news')) active @endif">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>Berita</span>
             </a>
             <a href="{{ route('home') }}" class="bottom-nav-item">
                 <i class="fa-solid fa-house"></i>

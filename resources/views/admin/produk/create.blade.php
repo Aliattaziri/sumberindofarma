@@ -20,12 +20,6 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">Link Mitra (https://...)</label>
-      <input type="url" name="brand" value="{{ old('brand') }}" class="form-control">
-      @error('brand') <div class="form-errors">{{ $message }}</div> @enderror
-    </div>
-
-    <div class="form-group">
       <label class="form-label">Foto Logo (opsional)</label>
       <input type="file" id="fileInput" name="gambar" accept="image/*" class="form-control" style="padding:0.4rem;" />
       <div style="font-size:0.85rem;color:#6b7280;margin-top:0.4rem;">Maks 2MB. Format: jpg, png, webp</div>

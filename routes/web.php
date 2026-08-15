@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminPrescriptionController;
 use App\Http\Controllers\AdminPrescriptionProductController;
 use App\Http\Controllers\AdminProdukController;
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminNewsController;
 use App\Http\Controllers\PurchaseHistoryController;
 
 // Favicon fallbacks for hosting setups that move public assets
@@ -34,13 +35,22 @@ Route::get('/favicon.ico', function () {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/berita', [HomeController::class, 'newsIndex'])->name('news.index');
+Route::get('/berita/{news}', [HomeController::class, 'newsShow'])->name('news.show');
+
+// News interactions API
+Route::post('/api/news/{news}/like', [HomeController::class, 'likeNews'])->name('api.news.like');
+Route::post('/api/news/{news}/comment', [HomeController::class, 'commentNews'])->name('api.news.comment');
+Route::delete('/api/news/comments/{comment}', [HomeController::class, 'deleteComment'])->name('api.news.comment.delete');
+Route::post('/api/news/{news}/share', [HomeController::class, 'shareNews'])->name('api.news.share');
+
 // Halaman Mitra Kami
 Route::get('/mitra-kami', [HomeController::class, 'partners'])->name('partners');
 
-// Serve uploaded images langsung dari storage/ (banners, promos & medicines)
+// Serve uploaded images langsung dari storage/ (banners, promos, medicines, principellogos, news)
 // Dipakai saat symlink tidak tersedia di hosting
 Route::get('/storage/{folder}/{filename}', function (string $folder, string $filename) {
-    $allowed = ['banners', 'medicines', 'promos'];
+    $allowed = ['banners', 'medicines', 'promos', 'principellogos', 'news'];
     if (!in_array($folder, $allowed)) abort(404);
 
     $path = storage_path($folder . '/' . $filename);
@@ -48,7 +58,7 @@ Route::get('/storage/{folder}/{filename}', function (string $folder, string $fil
 
     $mime = mime_content_type($path) ?: 'application/octet-stream';
     return response()->file($path, ['Content-Type' => $mime]);
-})->where(['folder' => 'banners|medicines|promos', 'filename' => '.+'])->name('storage.image');
+})->where(['folder' => 'banners|medicines|promos|principellogos|news', 'filename' => '.+'])->name('storage.image');
 
 // Products routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -116,5 +126,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('principals', [\App\Http\Controllers\AdminPrincipalController::class, 'index'])->name('principals.index');
     Route::post('principals', [\App\Http\Controllers\AdminPrincipalController::class, 'store'])->name('principals.store');
     Route::delete('principals/{filename}', [\App\Http\Controllers\AdminPrincipalController::class, 'destroy'])->where('filename', '.+')->name('principals.destroy');
+
+    // News management
+    Route::resource('news', AdminNewsController::class);
 
 });

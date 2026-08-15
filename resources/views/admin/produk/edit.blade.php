@@ -21,12 +21,6 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">Link Mitra (https://...)</label>
-      <input type="url" name="brand" value="{{ old('brand', $medicine->brand) }}" class="form-control">
-      @error('brand') <div class="form-errors">{{ $message }}</div> @enderror
-    </div>
-
-    <div class="form-group">
       <label class="form-label">Foto Logo saat ini</label>
       @if($medicine->gambar)
         <div style="margin-bottom:0.6rem;"><img src="{{ url('storage/' . $medicine->gambar) }}" style="max-width:200px;max-height:120px;object-fit:contain;border:1px solid #eef2f7;" alt="logo"></div>

@@ -16,15 +16,26 @@ class News extends Model
         'deskripsi',
         'konten',
         'tipe',
+        'tags',
+        'ratio',
         'file',
+        'gallery',
         'thumbnail',
         'views',
+        'like_count',
+        'comment_count',
+        'share_count',
         'is_published',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
         'views' => 'integer',
+        'like_count' => 'integer',
+        'comment_count' => 'integer',
+        'share_count' => 'integer',
+        'gallery' => 'array',
+        'tags' => 'array',
     ];
 
     // Scope untuk berita published
@@ -55,5 +66,29 @@ class News extends Model
     public function incrementViews()
     {
         $this->increment('views');
+    }
+
+    // Increment likes
+    public function incrementLikes()
+    {
+        $this->increment('like_count');
+    }
+
+    // Increment comments
+    public function incrementComments()
+    {
+        $this->increment('comment_count');
+    }
+
+    // Increment shares
+    public function incrementShares()
+    {
+        $this->increment('share_count');
+    }
+
+    // Relationship to comments
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->latest();
     }
 }

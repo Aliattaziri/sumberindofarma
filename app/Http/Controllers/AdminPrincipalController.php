@@ -9,7 +9,7 @@ class AdminPrincipalController extends Controller
 {
     public function index()
     {
-        $dir = public_path('principals');
+        $dir = storage_path('principellogos');
         $files = [];
         if (is_dir($dir)) {
             $items = scandir($dir);
@@ -30,7 +30,7 @@ class AdminPrincipalController extends Controller
 
         $file = $request->file('image');
         $name = time() . '-' . preg_replace('/[^A-Za-z0-9._-]/', '-', $file->getClientOriginalName());
-        $dir = public_path('principals');
+        $dir = storage_path('principellogos');
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
@@ -41,7 +41,7 @@ class AdminPrincipalController extends Controller
 
     public function destroy($filename)
     {
-        $path = public_path('principals/' . $filename);
+        $path = storage_path('principellogos/' . $filename);
         if (file_exists($path)) {
             @unlink($path);
             return back()->with('success', 'Logo dihapus.');

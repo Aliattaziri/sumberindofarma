@@ -28,57 +28,68 @@
 
 /* PROMO CARDS */
 .promo-section { 
-    padding: 2.5rem 0; 
+    padding: calc(var(--navbar-height, 65px) + 0.02rem) 0 0;
     background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
     width: 100%;
     margin: 0;
     position: relative;
+    z-index: 2;
+    overflow: hidden;
+    height: clamp(120px, 16vh, 170px);
+    display: flex;
+    align-items: center;
+    isolation: isolate;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .promo-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 50%);
     pointer-events: none;
+    z-index: 0;
 }
 
 .promo-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 2rem;
-    max-width: 1400px;
+    max-width: 420px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     justify-items: center;
+    align-items: center;
+    min-height: 100%;
+    width: 100%;
     position: relative;
-    z-index: 1;
+    z-index: 4;
 }
 
 .promo-card {
-    border-radius: 24px; 
-    padding: 2rem; 
+    border-radius: 15px; 
+    padding: 0.45rem 0.75rem; 
     color: #fff;
     text-decoration: none; 
     display: flex; 
-    flex-direction: column;
-    align-items: flex-start; 
-    justify-content: space-between;
-    gap: 1.5rem;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center;
+    gap: 0.45rem;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
     position: relative; 
     overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    min-height: 200px;
-    width: 100%;
-    max-width: 100%;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    min-height: 44px;
+    width: min(100%, 220px);
+    max-width: 220px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
+    margin: 0 auto;
+    z-index: 5;
 }
 
 .promo-card::before {
@@ -110,8 +121,8 @@
 
 .promo-card-content {
     display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 0.5rem;
     width: 100%;
     position: relative;
     z-index: 2;
@@ -151,7 +162,7 @@
 }
 
 .promo-goapotik-logo {
-    height: 80px;
+    height: 28px;
     object-fit: contain;
     flex-shrink: 0;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
@@ -187,16 +198,17 @@
 }
 
 .promo-card h4 {
-    font-size: 1.5rem;
+    font-size: 0.9rem;
     font-weight: 900;
     margin: 0;
     line-height: 1.1;
     color: #fff;
     letter-spacing: -0.5px;
+    white-space: nowrap;
 }
 
 .promo-card p {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.92);
     margin: 0;
     font-weight: 500;
@@ -589,17 +601,17 @@
     .hero-img-wrap { display: none; }
     .promo-section { padding: 2.2rem 0; }
     .promo-grid { gap: 1.75rem; }
-    .promo-card { min-height: 190px; padding: 1.8rem; }
+    .promo-card { min-height: 160px; padding: 1.5rem; }
 }
 @media (max-width: 768px) {
     .hero { padding: 2rem 0 1.75rem; }
     .promo-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .promo-card { padding: 1.75rem 1.5rem; min-height: 180px; }
+    .promo-card { padding: 0.65rem 0.8rem; min-height: 65px; }
     .promo-card-icon-wrap { width: 70px; height: 70px; border-radius: 16px; }
     .promo-card > i { font-size: 3rem; }
-    .promo-goapotik-logo, .promo-pbf-logo { height: 70px; }
-    .promo-card h4 { font-size: 1.2rem; }
-    .promo-card p { font-size: 0.9rem; }
+    .promo-goapotik-logo, .promo-pbf-logo { height: 35px; }
+    .promo-card h4 { font-size: 0.85rem; }
+    .promo-card p { font-size: 0.85rem; }
     .cat-grid { grid-template-columns: repeat(3,1fr); }
     .prod-grid { grid-template-columns: repeat(2,1fr); }
     .cta-box { flex-direction: column; text-align: center; padding: 1.5rem; }
@@ -622,13 +634,41 @@
     .pbf-photo-template-featured img { height: 260px; }
     .pbf-photo-empty { height: 220px; }
 }
+@media (min-width: 769px) {
+    .promo-section {
+        overflow: visible;
+    }
+    .promo-grid {
+        margin-top: -18px;
+        margin-bottom: 0;
+        transform: translateY(-10px);
+    }
+    .promo-card {
+        position: relative;
+        top: -18px;
+        transform: none;
+    }
+}
+
 @media (max-width: 480px) {
-    .promo-grid { grid-template-columns: 1fr; gap: 0.75rem; padding: 0 0.5rem; }
-    .promo-card { padding: 1.5rem 1.25rem; min-height: 160px; }
+    .promo-grid { grid-template-columns: 1fr; gap: 0.75rem; padding: 0 0.5rem; max-width: 100%; }
+    .promo-card {
+        width: min(82vw, 240px);
+        max-width: 240px;
+        min-height: 48px;
+        padding: 0.55rem 0.8rem;
+        margin: 0 auto;
+        transform: none;
+    }
+    .promo-card-content {
+        width: auto;
+        justify-content: center;
+        gap: 0.45rem;
+    }
     .promo-card-icon-wrap { width: 60px; height: 60px; border-radius: 14px; }
     .promo-card > i { font-size: 2.5rem; }
-    .promo-goapotik-logo, .promo-pbf-logo { height: 60px; }
-    .promo-card h4 { font-size: 1rem; }
+    .promo-goapotik-logo, .promo-pbf-logo { height: 28px; }
+    .promo-card h4 { font-size: 0.86rem; white-space: normal; line-height: 1.2; text-align: center; }
     .promo-card p { font-size: 0.85rem; }
     .pbf-subtitle { font-size: 0.7rem; }
     .cat-grid { grid-template-columns: repeat(3,1fr); }
@@ -694,8 +734,9 @@
     overflow: hidden;
     width: 100%;
     max-width: 100%;
-    margin: 0;
+    margin: var(--navbar-height, 65px) 0 0;
     padding: 0;
+    z-index: 1;
 }
 
 .banner-promo-track {
@@ -996,17 +1037,89 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="{{ route('partners') }}" class="promo-card promo-contact">
         <div class="promo-card-content">
           <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
-          <div class="promo-card-text">
-                        <h4>Mitra Kami</h4>
-                        <span class="pbf-subtitle">PT.SUMBERINDO FARMA TAMA</span>
-                        <p>Jelajahi mitra, distributor, dan principal yang bekerja sama bersama kami.</p>
-          </div>
+          <h4>Lihat Mitra Kami</h4>
         </div>
       </a>
             <!-- Apotek cards removed per request; only PBF remains -->
     </div>
   </div>
 </div>
+
+<!-- NEWS SECTION -->
+<section style="padding: 2.5rem 0 3rem; background: linear-gradient(180deg, #0b0b0d 0%, #111827 100%); border-top: 1px solid rgba(255,255,255,0.08);">
+    <div class="container" style="max-width: 1500px; margin: 0 auto; padding: 0 1rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <div>
+                <p style="margin: 0 0 0.35rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: #fbbf24; text-transform: uppercase;">Latest</p>
+                <h2 style="font-size: clamp(1.6rem, 2vw, 2.2rem); font-weight: 800; color: #ffffff; margin: 0;">Berita & Update</h2>
+            </div>
+            <a href="{{ route('news.index') }}" style="text-decoration: none; color: #f9fafb; font-weight: 700; font-size: 0.9rem; padding: 0.7rem 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; background: rgba(255,255,255,0.03);">Lihat Semua</a>
+        </div>
+
+        @php
+            $latestNews = App\Models\News::published()->latest()->take(6)->get();
+        @endphp
+
+        @if($latestNews->count() > 0)
+            <div style="display: flex; gap: 1rem; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding-bottom: 0.75rem; scroll-snap-type: x proximity; -ms-overflow-style: none; scrollbar-width: none;" class="news-scroll">
+                <style>
+                    .news-scroll { width: 100%; }
+                    .news-scroll::-webkit-scrollbar { display: none; }
+                    .news-card { flex: 0 0 calc((100% - 4rem) / 5); min-width: 180px; max-width: 260px; width: auto; }
+                    .news-card:hover .news-media img, .news-card:hover .news-media video { transform: scale(1.03); }
+                    @media (max-width: 991px) {
+                        .news-card { flex-basis: clamp(200px, 42vw, 260px); }
+                    }
+                    @media (max-width: 576px) {
+                        .news-card { flex-basis: clamp(150px, 72vw, 210px); }
+                    }
+                </style>
+                @foreach($latestNews as $news)
+                    <a href="{{ route('news.index', ['news_id' => $news->id]) }}" class="news-card" style="text-decoration: none; color: inherit; display: block; min-width: 0; border-radius: 1.15rem; overflow: hidden; background: rgba(17,24,39,0.8); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.25); transition: transform 0.2s ease, border-color 0.2s ease; scroll-snap-align: start;">
+                        <div class="news-media" style="position: relative; width: 100%; aspect-ratio: {{ $news->ratio === '9:16' ? '9 / 16' : '3 / 4' }}; background: #111827; overflow: hidden;">
+                            @if($news->file)
+                                @if(str_contains(strtolower($news->file), '.mp4') || str_contains(strtolower($news->file), '.webm') || str_contains(strtolower($news->file), '.mov'))
+                                    <video src="{{ asset('storage/' . $news->file) }}" muted loop playsinline style="width: 100%; height: 100%; object-fit: contain; display: block; background: #dfeaf2; transition: transform 0.2s ease;"></video>
+                                @else
+                                    <img src="{{ asset('storage/' . $news->file) }}" alt="{{ $news->judul }}" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #dfeaf2; padding: 0.25rem; transition: transform 0.2s ease;">
+                                @endif
+                            @else
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; background: linear-gradient(135deg, #fca5a5, #b91c1c); color: white;">
+                                    @switch($news->tipe)
+                                        @case('video') 🎥 @break
+                                        @case('galeri') 📸 @break
+                                        @default 📄
+                                    @endswitch
+                                </div>
+                            @endif
+
+                            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42));"></div>
+
+                            <div style="position: absolute; inset: auto 0 0 0; padding: 0.9rem 0.8rem 0.7rem; z-index: 1;">
+                                <div style="font-size: 0.72rem; font-weight: 700; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.6); line-height: 1.35;">
+                                    {{ $news->judul }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="padding: 0.8rem 0.7rem 0.75rem; background: rgba(17,24,39,0.92);">
+                            <div style="display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; margin-bottom: 0.4rem;">
+                                <div style="font-size: 0.7rem; color: #d1d5db;">{{ $news->created_at->translatedFormat('d M Y') }}</div>
+                            </div>
+                            <div style="font-size: 0.78rem; color: #f3f4f6; line-height: 1.4; min-height: 2.7em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                {{ $news->deskripsi }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @else
+            <div style="background: rgba(255,255,255,0.04); color: #fff; border: 1px solid rgba(255,255,255,0.08); border-radius: 1rem; padding: 3rem; text-align: center;">
+                Belum ada berita yang dipublikasikan.
+            </div>
+        @endif
+    </div>
+</section>
 
 {{-- PROMO PRODUK --}}
 @if(isset($promoProducts) && $promoProducts->count())
@@ -1574,10 +1687,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-@endsection
-
-@section('scripts')
-@endsection
 
 
 

@@ -1,69 +1,52 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen Produk Promo - Admin Sumberindo Farma Tama')
-@section('page-title', '🏷️ Manajemen Produk Promo')
+@section('title', 'Manajemen Berita - Admin Sumberindo Farma Tama')
+@section('page-title', '📰 Manajemen Berita')
 
 @section('content')
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
     <div>
-        <p style="color: #6b7280;">Total: <strong>{{ $news->total() }} produk promo</strong>
+        <p style="color: #6b7280;">Total: <strong>{{ $news->total() }} berita</strong>
             @if($search || $tipe || $status)
                 <span style="color: #B91C1C;"> — hasil pencarian</span>
             @endif
         </p>
     </div>
     <a href="{{ route('admin.news.create') }}" class="btn btn-primary">
-        ➕ Tambah Produk Promo
+        ➕ Tambah Berita Baru
     </a>
 </div>
 
 {{-- Search & Filter --}}
-<form method="GET" action="{{ route('admin.news.index') }}"
-      style="background: white; padding: 1rem 1.25rem; border-radius: 0.75rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-
+<form method="GET" action="{{ route('admin.news.index') }}" style="background: white; padding: 1rem 1.25rem; border-radius: 0.75rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
     <div style="flex: 1; min-width: 200px;">
-        <label style="font-size: 0.8rem; color: #6b7280; display: block; margin-bottom: 0.3rem;">Cari Produk Promo</label>
+        <label style="font-size: 0.8rem; color: #6b7280; display: block; margin-bottom: 0.3rem;">Cari Berita</label>
         <div style="position: relative;">
             <span style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af;">🔍</span>
-            <input type="text" name="search" value="{{ $search }}"
-                   placeholder="Judul atau deskripsi produk promo..."
-                   style="width: 100%; padding: 0.5rem 0.75rem 0.5rem 2.25rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.9rem; outline: none;"
-                   onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#d1d5db'">
+            <input type="text" name="search" value="{{ $search }}" placeholder="Judul atau deskripsi berita..." style="width: 100%; padding: 0.5rem 0.75rem 0.5rem 2.25rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.9rem; outline: none;" onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#d1d5db'">
         </div>
     </div>
-
     <div style="min-width: 140px;">
-        <label style="font-size: 0.8rem; color: #6b7280; display: block; margin-bottom: 0.3rem;">Tipe</label>
-        <select name="tipe"
-                style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.9rem; background: white; outline: none;"
-                onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#d1d5db'">
-            <option value="">Semua Tipe</option>
-            <option value="diskon"        {{ $tipe === 'diskon'        ? 'selected' : '' }}>🏷️ Diskon</option>
-            <option value="flash_sale"    {{ $tipe === 'flash_sale'    ? 'selected' : '' }}>⚡ Flash Sale</option>
-            <option value="bundling"      {{ $tipe === 'bundling'      ? 'selected' : '' }}>📦 Bundling</option>
-            <option value="promo_spesial" {{ $tipe === 'promo_spesial' ? 'selected' : '' }}>🎁 Promo Spesial</option>
+        <label style="font-size: 0.8rem; color: #6b7280; display: block; margin-bottom: 0.3rem;">Jenis</label>
+        <select name="tipe" style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.9rem; background: white; outline: none;" onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#d1d5db'">
+            <option value="">Semua Jenis</option>
+            <option value="artikel" {{ $tipe === 'artikel' ? 'selected' : '' }}>📄 Artikel</option>
+            <option value="video" {{ $tipe === 'video' ? 'selected' : '' }}>🎥 Video</option>
+            <option value="galeri" {{ $tipe === 'galeri' ? 'selected' : '' }}>📸 Galeri</option>
         </select>
     </div>
-
     <div style="min-width: 140px;">
         <label style="font-size: 0.8rem; color: #6b7280; display: block; margin-bottom: 0.3rem;">Status</label>
-        <select name="status"
-                style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.9rem; background: white; outline: none;"
-                onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#d1d5db'">
+        <select name="status" style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.9rem; background: white; outline: none;" onfocus="this.style.borderColor='#ef4444'" onblur="this.style.borderColor='#d1d5db'">
             <option value="">Semua Status</option>
             <option value="published" {{ $status === 'published' ? 'selected' : '' }}>✓ Dipublikasi</option>
-            <option value="draft"     {{ $status === 'draft'     ? 'selected' : '' }}>✕ Draft</option>
+            <option value="draft" {{ $status === 'draft' ? 'selected' : '' }}>✕ Draft</option>
         </select>
     </div>
-
     <div style="display: flex; gap: 0.5rem;">
-        <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">
-            Cari
-        </button>
+        <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Cari</button>
         @if($search || $tipe || $status)
-            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary" style="padding: 0.5rem 1rem;">
-                ✕ Reset
-            </a>
+            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary" style="padding: 0.5rem 1rem;">✕ Reset</a>
         @endif
     </div>
 </form>
@@ -73,11 +56,10 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Thumbnail</th>
-                    <th>Judul Berita</th>
-                    <th>Jenis</th>
+                    <th>Gambar</th>
+                    <th>Deskripsi</th>
                     <th>Status</th>
-                    <th>Views</th>
+                    <th>Dilihat</th>
                     <th>Dibuat</th>
                     <th>Aksi</th>
                 </tr>
@@ -85,67 +67,41 @@
             <tbody>
                 @foreach($news as $item)
                     <tr>
-                        <td style="width: 50px;">
-                            @if($item->thumbnail)
-                                <img src="{{ url('storage/' . $item->thumbnail) }}" 
-                                     alt="{{ $item->judul }}" 
-                                     style="width: 40px; height: 40px; object-fit: cover; border-radius: 0.25rem;">
+                        <td style="width: 60px;">
+                            @php
+                                $previewMedia = $item->thumbnail ?: ($item->file ?: (is_array($item->gallery) && !empty($item->gallery) ? $item->gallery[0] : null));
+                            @endphp
+                            @if($previewMedia)
+                                <img src="{{ asset('storage/' . $previewMedia) }}" alt="Preview berita" style="width: 44px; height: 44px; object-fit: cover; border-radius: 0.35rem; border: 1px solid #e5e7eb; background: #f9fafb;">
                             @else
-                                <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 0.25rem; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 0.35rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; border: 1px solid #e5e7eb;">
                                     @switch($item->tipe)
-                                        @case('flash_sale')
-                                            ⚡
-                                            @break
-                                        @case('bundling')
-                                            📦
-                                            @break
-                                        @case('promo_spesial')
-                                            🎁
-                                            @break
-                                        @default
-                                            🏷️
+                                        @case('video') 🎥 @break
+                                        @case('galeri') 📸 @break
+                                        @default 📄
                                     @endswitch
                                 </div>
                             @endif
                         </td>
                         <td>
-                            <strong>{{ \Str::limit($item->judul, 30) }}</strong>
-                        </td>
-                        <td>
-                            @if($item->tipe === 'diskon')
-                                <span style="background: #fee2e2; color: #B91C1C; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">🏷️ Diskon</span>
-                            @elseif($item->tipe === 'flash_sale')
-                                <span style="background: #FCE7F3; color: #9F1239; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">⚡ Flash Sale</span>
-                            @elseif($item->tipe === 'bundling')
-                                <span style="background: #E0E7FF; color: #3730A3; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">📦 Bundling</span>
-                            @else
-                                <span style="background: #fff5f5; color: #166534; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">🎁 Promo Spesial</span>
-                            @endif
+                            <div style="font-size: 0.92rem; color: #374151; line-height: 1.5;">{{ Str::limit($item->deskripsi, 120) }}</div>
                         </td>
                         <td>
                             @if($item->is_published)
-                                <span style="background: #fee2e2; color: #065f46; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">✓ Dipublikasi</span>
+                                <span style="background: #d1fae5; color: #065f46; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; white-space: nowrap;">✓ Dipublikasi</span>
                             @else
-                                <span style="background: #fee2e2; color: #7F1D1D; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">✕ Draft</span>
+                                <span style="background: #e5e7eb; color: #374151; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; white-space: nowrap;">✕ Draft</span>
                             @endif
                         </td>
-                        <td>
-                            <strong>{{ $item->views }}</strong>
-                        </td>
-                        <td>{{ $item->created_at->format('d M Y') }}</td>
-                        <td style="width: 200px;">
-                            <div style="display: flex; gap: 0.5rem;">
-                                <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-secondary btn-sm">
-                                    ✏️ Edit
-                                </a>
-                                <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        🗑️ Hapus
-                                    </button>
-                                </form>
-                            </div>
+                        <td style="text-align: center;">{{ $item->views }}</td>
+                        <td style="font-size: 0.875rem; color: #6b7280;">{{ $item->created_at->format('d M Y') }}</td>
+                        <td style="white-space: nowrap;">
+                            <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm" style="padding: 0.375rem 0.75rem; margin-right: 0.5rem; background: #3b82f6; color: white; text-decoration: none; border-radius: 0.375rem; font-size: 0.875rem;">✏️ Edit</a>
+                            <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm" style="padding: 0.375rem 0.75rem; background: #ef4444; color: white; border: none; border-radius: 0.375rem; font-size: 0.875rem; cursor: pointer;" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">🗑️ Hapus</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -153,52 +109,22 @@
         </table>
     </div>
 
-    <!-- Pagination -->
-    <div style="margin-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-        <div style="color: #6b7280; font-size: 0.875rem;">
-            Menampilkan {{ $news->firstItem() }}–{{ $news->lastItem() }} dari {{ $news->total() }} produk promo
-        </div>
-        <div style="display: flex; gap: 0.35rem; align-items: center;">
-            @if($news->onFirstPage())
-                <span style="padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: #f3f4f6; color: #d1d5db; font-size: 0.875rem; cursor: not-allowed;">‹</span>
-            @else
-                <a href="{{ $news->previousPageUrl() }}" style="padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: white; color: #374151; font-size: 0.875rem; text-decoration: none; border: 1px solid #e5e7eb;" onmouseover="this.style.background='#B91C1C';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='#374151'">‹</a>
-            @endif
-
-            @foreach($news->getUrlRange(1, $news->lastPage()) as $page => $url)
-                @if($page == $news->currentPage())
-                    <span style="padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: #B91C1C; color: white; font-size: 0.875rem; font-weight: 600; min-width: 36px; text-align: center;">{{ $page }}</span>
-                @else
-                    <a href="{{ $url }}" style="padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: white; color: #374151; font-size: 0.875rem; text-decoration: none; border: 1px solid #e5e7eb; min-width: 36px; text-align: center;" onmouseover="this.style.background='#B91C1C';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='#374151'">{{ $page }}</a>
-                @endif
-            @endforeach
-
-            @if($news->hasMorePages())
-                <a href="{{ $news->nextPageUrl() }}" style="padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: white; color: #374151; font-size: 0.875rem; text-decoration: none; border: 1px solid #e5e7eb;" onmouseover="this.style.background='#B91C1C';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='#374151'">›</a>
-            @else
-                <span style="padding: 0.4rem 0.75rem; border-radius: 0.4rem; background: #f3f4f6; color: #d1d5db; font-size: 0.875rem; cursor: not-allowed;">›</span>
-            @endif
-        </div>
+    {{-- Pagination --}}
+    <div style="margin-top: 2rem; display: flex; justify-content: center;">
+        {{ $news->links() }}
     </div>
 @else
-    <div style="background: white; padding: 3rem; border-radius: 0.75rem; text-align: center; color: #6b7280;">
-        @if($search || $tipe || $status)
-            <div style="font-size: 2rem; margin-bottom: 1rem;">🔍</div>
-            <p>Tidak ada produk promo yang cocok dengan filter yang dipilih.</p>
-            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary" style="margin-top: 1rem;">
-                ✕ Hapus Filter
-            </a>
-        @else
-            <div style="font-size: 2rem; margin-bottom: 1rem;">📭</div>
-            <p>Belum ada produk promo.</p>
-            <a href="{{ route('admin.news.create') }}" class="btn btn-primary" style="margin-top: 1rem;">
-                ➕ Tambah Produk Promo Pertama
-            </a>
-        @endif
+    <div style="background: white; padding: 3rem; border-radius: 0.75rem; text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">📰</div>
+        <p style="color: #6b7280; margin: 0;">Belum ada berita. <a href="{{ route('admin.news.create') }}" style="color: #ef4444; font-weight: 600; text-decoration: none;">Buat berita baru</a></p>
     </div>
 @endif
+
+<style>
+    .table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-radius: 0.75rem; overflow: hidden; }
+    .table th { background: #f3f4f6; padding: 1rem; text-align: left; font-weight: 600; color: #374151; border-bottom: 1px solid #e5e7eb; }
+    .table td { padding: 1rem; border-bottom: 1px solid #e5e7eb; }
+    .table tbody tr:hover { background: #f9fafb; }
+    .table-container { overflow-x: auto; }
+</style>
 @endsection
-
-
-
-

@@ -31,7 +31,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;">
         @forelse($files as $f)
             <div style="border:1px solid #e5e7eb;padding:0.6rem;border-radius:8px;text-align:center;">
-                <img src="{{ asset('principals/' . $f) }}" alt="{{ $f }}" style="max-width:100%;height:100px;object-fit:contain;margin-bottom:0.5rem;">
+                <img src="{{ asset('storage/principellogos/' . $f) }}" alt="{{ $f }}" style="max-width:100%;height:100px;object-fit:contain;margin-bottom:0.5rem;">
                 <div style="display:flex;justify-content:center;gap:0.5rem;">
                     <form action="{{ route('admin.principals.destroy', $f) }}" method="POST" onsubmit="return confirm('Hapus logo ini?');">
                         @csrf

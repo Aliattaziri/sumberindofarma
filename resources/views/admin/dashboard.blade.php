@@ -4,192 +4,489 @@
 @section('page-title', '📊 Dashboard')
 
 @section('content')
-
-<div class="stats-grid" style="margin-top:1rem;">
-    <div class="stat-card">
-        <div class="stat-label">Total Produk</div>
-        <div class="stat-value" id="stat-total">{{ $totalProduk }}</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-label">Total Stok</div>
-        <div class="stat-value" style="color:#B91C1C;" id="stat-stok">{{ number_format($totalStok) }}</div>
-    </div>
-    <div class="stat-card" style="border-top-color:#ef4444;">
-        <div class="stat-label">Stok Rendah (&lt;5)</div>
-        <div class="stat-value" style="color:#ef4444;" id="stat-lowstok">{{ $lowStok }}</div>
-    </div>
-    <div class="stat-card" style="border-top-color:#ef4444;">
-        <div class="stat-label">Total Banner</div>
-        <div class="stat-value" style="color:#ef4444;">{{ $totalBanners }}</div>
-    </div>
-</div>
-
-{{-- Per Kategori --}}
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
-    @foreach($perKategori as $kat => $jumlah)
-        @php
-            $icon  = \App\Models\ProductCategory::iconFor($kat);
-            $color = match(true) {
-                str_contains(strtoupper($kat), 'SKINCARE') || str_contains(strtoupper($kat), 'KOSMETIK') || str_contains(strtoupper($kat), 'KECANTIKAN') => '#c2185b',
-                str_contains(strtoupper($kat), 'ALAT') || str_contains(strtoupper($kat), 'ALKES') => '#991B1B',
-                str_contains(strtoupper($kat), 'OBAT') => '#B91C1C',
-                default => '#6b7280',
-            };
-        @endphp
-        <div class="stat-card" style="border-top-color:{{ $color }};">
-            <div class="stat-label">{{ $icon }} {{ $kat }}</div>
-            <div class="stat-value" style="color:{{ $color }};">{{ $jumlah }}</div>
-            <div style="font-size:0.75rem;color:#9ca3af;margin-top:0.25rem;">produk</div>
-        </div>
-    @endforeach
-</div>
-
-{{-- Realtime indicator --}}
-<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;font-size:0.8rem;color:#6b7280;">
-    <span id="realtime-dot" style="width:8px;height:8px;border-radius:50%;background:#ef4444;display:inline-block;animation:pulse 2s infinite;"></span>
-    <span id="realtime-status">Memuat data realtime...</span>
-    <span id="realtime-time" style="margin-left:auto;"></span>
-</div>
 <style>
-@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.3); } }
+    .dashboard-shell {
+        --dash-red: #b91c1c;
+        --dash-ink: #0f172a;
+        --dash-muted: #64748b;
+        --dash-border: #e2e8f0;
+        --dash-panel: #ffffff;
+        margin-top: 1rem;
+    }
+
+    .dashboard-hero {
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 35%),
+                    linear-gradient(135deg, #7f1d1d 0%, #991b1b 36%, #b91c1c 100%);
+        border-radius: 18px;
+        padding: 1.35rem 1.4rem;
+        color: #fff;
+        box-shadow: 0 16px 34px rgba(153, 27, 27, 0.22);
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-hero h2 {
+        margin: 0.8rem 0 0.4rem;
+        font-size: clamp(1.5rem, 2vw, 2.1rem);
+        line-height: 1.2;
+        font-weight: 800;
+    }
+
+    .dashboard-hero p {
+        margin: 0;
+        color: rgba(255,255,255,0.9);
+        max-width: 720px;
+    }
+
+    .dash-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.18);
+        border: 1px solid rgba(255,255,255,0.28);
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .dash-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+
+    .dash-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        background: rgba(255,255,255,0.12);
+        padding: 0.45rem 0.8rem;
+        border-radius: 10px;
+        font-size: 0.82rem;
+    }
+
+    .dashboard-kpis {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dash-kpi {
+        background: var(--dash-panel);
+        border: 1px solid var(--dash-border);
+        border-top: 5px solid var(--dash-red);
+        border-radius: 16px;
+        padding: 1rem 1rem 0.9rem;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .dash-kpi .label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        font-size: 0.76rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--dash-muted);
+        font-weight: 700;
+    }
+
+    .dash-kpi .value {
+        margin-top: 0.7rem;
+        font-weight: 800;
+        font-size: clamp(1.4rem, 2vw, 2rem);
+        color: var(--dash-ink);
+        line-height: 1.2;
+    }
+
+    .dash-kpi .sub {
+        margin-top: 0.25rem;
+        font-size: 0.78rem;
+        color: var(--dash-muted);
+    }
+
+    .dash-row {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dash-panel {
+        background: var(--dash-panel);
+        border: 1px solid var(--dash-border);
+        border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+        overflow: hidden;
+    }
+
+    .dash-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem 1rem 0.85rem;
+        border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-panel-title {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--dash-ink);
+    }
+
+    .dash-panel-link {
+        color: var(--dash-red);
+        font-size: 0.8rem;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .dash-panel-body {
+        padding: 1rem;
+    }
+
+    .dash-statusbar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 0.9rem;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #fff5f5, #fef2f2);
+        border: 1px solid #fecaca;
+        margin-bottom: 1rem;
+        color: var(--dash-ink);
+        font-size: 0.82rem;
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ef4444;
+        box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.12);
+        animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    .dash-list {
+        display: grid;
+        gap: 0.7rem;
+    }
+
+    .dash-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.72rem 0.8rem;
+        background: linear-gradient(180deg, #ffffff, #fff7f7);
+        border: 1px solid #fee2e2;
+        border-radius: 12px;
+    }
+
+    .dash-list-item strong {
+        display: block;
+        font-size: 0.84rem;
+        color: var(--dash-ink);
+    }
+
+    .dash-list-item span {
+        font-size: 0.74rem;
+        color: var(--dash-muted);
+    }
+
+    .dash-pill-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.28rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .dash-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+    }
+
+    .dash-table th,
+    .dash-table td {
+        padding: 0.72rem 0.8rem;
+        border-bottom: 1px solid #f1f5f9;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .dash-table th {
+        font-size: 0.72rem;
+        color: var(--dash-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: #fff7f7;
+    }
+
+    .dash-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .dash-table .name {
+        font-weight: 800;
+        color: var(--dash-ink);
+    }
+
+    .dash-table .muted {
+        color: var(--dash-muted);
+        font-size: 0.76rem;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+
+    .quick-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        min-height: 46px;
+        padding: 0.7rem 0.9rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.83rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .quick-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 18px rgba(153, 27, 27, 0.12);
+    }
+
+    .quick-action.primary {
+        background: linear-gradient(135deg, #b91c1c, #991b1b);
+        color: #fff;
+    }
+
+    .quick-action.secondary {
+        background: #fff;
+        color: #7f1d1d;
+        border: 1px solid #fecaca;
+    }
+
+    @media (max-width: 992px) {
+        .dashboard-kpis {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dash-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .dashboard-kpis {
+            grid-template-columns: 1fr;
+        }
+
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 
-{{-- Produk Terbaru --}}
-<div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <div class="card-title" style="margin:0;">🆕 Produk Terbaru</div>
-        <a href="{{ route('admin.produk.index') }}" style="font-size:0.8rem;color:#B91C1C;text-decoration:none;">Lihat semua →</a>
-    </div>
-    <div class="table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nama Produk</th>
-                    <th>Kategori</th>
-                    <th>Pabrik/Merek</th>
-                    <th>Harga</th>
-                    <th>Stok</th>
-                    <th>Ditambahkan</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="produk-tbody">
-                @forelse($latestProduk as $p)
-                    <tr>
-                        <td><strong>{{ $p->nama_obat }}</strong></td>
-                        <td>
-                            @php $icon = \App\Models\ProductCategory::iconFor($p->kategori_produk ?? 'OBAT'); @endphp
-                            <span style="font-size:0.82rem;">{{ $icon }} {{ $p->kategori_produk }}</span>
-                        </td>
-                        <td style="font-size:0.82rem;color:#6b7280;">{{ $p->kategori }}</td>
-                        <td>{{ $p->getFormattedPrice() }}</td>
-                        <td>
-                            @if($p->stok > 10)
-                                <span style="color:#ef4444;font-weight:700;">{{ $p->stok }}</span>
-                            @elseif($p->stok > 0)
-                                <span style="color:#ef4444;font-weight:700;">{{ $p->stok }}</span>
-                            @else
-                                <span style="color:#ef4444;font-weight:700;">Habis</span>
-                            @endif
-                        </td>
-                        <td style="font-size:0.82rem;color:#9ca3af;">{{ $p->created_at->format('d M Y H:i') }}</td>
-                        <td><a href="{{ route('admin.produk.edit', $p->id) }}" class="btn btn-secondary btn-sm">Edit</a></td>
-                    </tr>
-                @empty
-                    <tr><td colspan="7" style="text-align:center;color:#6b7280;padding:2rem;">Belum ada produk.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
+<div class="dashboard-shell">
+    <div class="dashboard-hero">
+        <span class="dash-badge"><i class="fa-solid fa-wave-square"></i> Realtime</span>
+        <h2>Panel operasional website</h2>
+        <p>Monitor banner, berita, komentar, dan aktivitas konten utama yang relevan dengan fitur yang tersedia di sistem.</p>
 
-{{-- Data Live Banner --}}
-<div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <div class="card-title" style="margin:0;">🖼️ Data Live Banner</div>
-        <a href="{{ route('admin.banners.index') }}" style="font-size:0.8rem;color:#B91C1C;text-decoration:none;">Kelola banner →</a>
-    </div>
-    @if($totalBanners === 0)
-        <p style="text-align:center;color:#6b7280;padding:1.5rem 0;">Belum ada banner. <a href="{{ route('admin.banners.create') }}" style="color:#B91C1C;">Tambah sekarang →</a></p>
-    @else
-        <div style="margin-bottom:0.75rem;font-size:0.82rem;color:#6b7280;">
-            <span style="color:#ef4444;font-weight:600;">{{ $activeBanners }}</span> aktif &nbsp;/&nbsp;
-            <span style="color:#6b7280;">{{ $totalBanners - $activeBanners }}</span> nonaktif
+        <div class="dash-meta">
+            <span class="dash-pill"><i class="fa-solid fa-bullhorn"></i> {{ $totalBanners }} banner</span>
+            <span class="dash-pill"><i class="fa-solid fa-newspaper"></i> {{ $totalNews }} berita</span>
+            <span class="dash-pill"><i class="fa-solid fa-comments"></i> {{ $totalComments }} komentar</span>
         </div>
-        <div class="table-container">
-            <table class="table">
+    </div>
+
+    <div class="dashboard-kpis">
+        <div class="dash-kpi">
+            <div class="label"><span>Banner</span><i class="fa-solid fa-image"></i></div>
+            <div class="value" id="stat-banners">{{ $totalBanners }}</div>
+            <div class="sub">Total slide aktif dan nonaktif</div>
+        </div>
+        <div class="dash-kpi">
+            <div class="label"><span>Banner Aktif</span><i class="fa-solid fa-check-circle"></i></div>
+            <div class="value" id="stat-active-banners" style="color:#991b1b;">{{ $activeBanners }}</div>
+            <div class="sub">Sedang tayang di homepage</div>
+        </div>
+        <div class="dash-kpi">
+            <div class="label"><span>Berita</span><i class="fa-solid fa-newspaper"></i></div>
+            <div class="value" id="stat-news">{{ $totalNews }}</div>
+            <div class="sub">Semua konten berita</div>
+        </div>
+        <div class="dash-kpi">
+            <div class="label"><span>Published</span><i class="fa-solid fa-eye"></i></div>
+            <div class="value" id="stat-published" style="color:#b91c1c;">{{ $publishedNews }}</div>
+            <div class="sub">Berita yang sudah tampil</div>
+        </div>
+    </div>
+
+    <div class="dash-statusbar">
+        <span class="status-dot"></span>
+        <span id="realtime-status">Realtime aktif</span>
+        <span style="margin-left:auto;color:#64748b;font-weight:700;" id="realtime-time">Update: {{ now()->format('H:i:s') }}</span>
+    </div>
+
+    <div class="dash-row">
+        <div class="dash-panel">
+            <div class="dash-panel-head">
+                <h3 class="dash-panel-title">Banner live</h3>
+                <a href="{{ route('admin.banners.index') }}" class="dash-panel-link">Kelola</a>
+            </div>
+            <div class="dash-panel-body">
+                <div class="dash-list">
+                    @forelse($latestBanners as $banner)
+                        <div class="dash-list-item">
+                            <div>
+                                <strong>{{ $banner->judul }}</strong>
+                                <span>{{ $banner->subjudul ?? 'Banner utama' }}</span>
+                            </div>
+                            <span class="dash-pill-tag">{{ $banner->aktif ? 'Aktif' : 'Nonaktif' }}</span>
+                        </div>
+                    @empty
+                        <div class="dash-list-item">
+                            <div>
+                                <strong>Belum ada banner</strong>
+                                <span>Mulai buat banner dari admin.</span>
+                            </div>
+                            <span class="dash-pill-tag">Kosong</span>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+
+        <div class="dash-panel">
+            <div class="dash-panel-head">
+                <h3 class="dash-panel-title">Berita terbaru</h3>
+                <a href="{{ route('admin.news.index') }}" class="dash-panel-link">Kelola</a>
+            </div>
+            <div class="dash-panel-body">
+                <div class="dash-list">
+                    @forelse($latestNews as $news)
+                        <div class="dash-list-item">
+                            <div>
+                                <strong>{{ $news->judul }}</strong>
+                                <span>{{ $news->tipe ?? 'Berita' }} • {{ $news->is_published ? 'Published' : 'Draft' }}</span>
+                            </div>
+                            <span class="dash-pill-tag">{{ $news->is_published ? 'Tampil' : 'Draft' }}</span>
+                        </div>
+                    @empty
+                        <div class="dash-list-item">
+                            <div>
+                                <strong>Belum ada berita</strong>
+                                <span>Mulai buat konten untuk homepage.</span>
+                            </div>
+                            <span class="dash-pill-tag">Kosong</span>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-panel">
+        <div class="dash-panel-head">
+            <h3 class="dash-panel-title">Komentar terbaru</h3>
+            <a href="{{ route('admin.news.index') }}" class="dash-panel-link">Lihat semua</a>
+        </div>
+        <div class="dash-panel-body" style="padding:0;">
+            <table class="dash-table">
                 <thead>
                     <tr>
-                        <th>Urutan</th>
-                        <th>Judul</th>
-                        <th>Subjudul</th>
-                        <th>URL Tujuan</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
+                        <th>Nama</th>
+                        <th>Berita</th>
+                        <th>Komentar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($latestBanners as $banner)
+                    @php $recentComments = \App\Models\Comment::with('news')->latest()->limit(5)->get(); @endphp
+                    @forelse($recentComments as $comment)
                         <tr>
-                            <td style="text-align:center;font-weight:700;color:#6b7280;">{{ $banner->urutan }}</td>
-                            <td><strong>{{ $banner->judul }}</strong></td>
-                            <td style="font-size:0.82rem;color:#6b7280;">{{ $banner->subjudul ?? '-' }}</td>
-                            <td style="font-size:0.82rem;color:#6b7280;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                                {{ $banner->url_tujuan ?? '-' }}
-                            </td>
-                            <td>
-                                @if($banner->aktif)
-                                    <span style="background:#fee2e2;color:#065f46;padding:2px 10px;border-radius:999px;font-size:0.75rem;font-weight:600;">Aktif</span>
-                                @else
-                                    <span style="background:#f3f4f6;color:#6b7280;padding:2px 10px;border-radius:999px;font-size:0.75rem;font-weight:600;">Nonaktif</span>
-                                @endif
-                            </td>
-                            <td><a href="{{ route('admin.banners.edit', $banner->id) }}" class="btn btn-secondary btn-sm">Edit</a></td>
+                            <td class="name">{{ $comment->nama }}</td>
+                            <td class="muted">{{ $comment->news?->judul ?? 'Berita tidak tersedia' }}</td>
+                            <td class="muted">{{ Str::limit($comment->komentar, 60) }}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3" class="muted" style="padding:1rem; text-align:center;">Belum ada komentar masuk.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-    @endif
-</div>
+    </div>
 
-{{-- Quick Actions --}}
-<div class="card">
-    <div class="card-title">⚡ Aksi Cepat</div>
-    <div class="quick-actions-grid" style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-        <a href="{{ route('admin.produk.create') }}" class="btn btn-primary">
-            <i class="fa-solid fa-plus"></i> Tambah Produk
-        </a>
-        
-        <a href="{{ route('admin.produk.index') }}" class="btn btn-secondary">
-            <i class="fa-solid fa-list"></i> Semua Produk
-        </a>
+    <div class="quick-actions">
+        <a href="{{ route('admin.news.create') }}" class="quick-action primary"><i class="fa-solid fa-plus"></i> Tambah Berita</a>
+        <a href="{{ route('admin.news.index') }}" class="quick-action secondary"><i class="fa-solid fa-newspaper"></i> Semua Berita</a>
+        <a href="{{ route('admin.banners.index') }}" class="quick-action secondary"><i class="fa-solid fa-images"></i> Banner</a>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
 <script>
-async function fetchStats() {
-    try {
-        const res  = await fetch('{{ route("admin.dashboard.stats") }}');
-        const data = await res.json();
-        document.getElementById('stat-total').textContent   = data.total;
-        document.getElementById('stat-lowstok').textContent = data.lowStok;
-        document.getElementById('realtime-status').textContent = 'Realtime aktif';
-        document.getElementById('realtime-dot').style.background = '#ef4444';
-        const now = new Date();
-        document.getElementById('realtime-time').textContent = 'Update: ' + now.toLocaleTimeString('id-ID');
-    } catch (e) {
-        document.getElementById('realtime-status').textContent = 'Gagal memuat data';
-        document.getElementById('realtime-dot').style.background = '#ef4444';
+    async function fetchStats() {
+        try {
+            const res = await fetch('{{ route("admin.dashboard.stats") }}');
+            const data = await res.json();
+
+            const bannerEl = document.getElementById('stat-banners');
+            const activeBannerEl = document.getElementById('stat-active-banners');
+            const newsEl = document.getElementById('stat-news');
+            const publishedEl = document.getElementById('stat-published');
+
+            if (bannerEl) bannerEl.textContent = data.totalBanners ?? 0;
+            if (activeBannerEl) activeBannerEl.textContent = data.activeBanners ?? 0;
+            if (newsEl) newsEl.textContent = data.totalNews ?? 0;
+            if (publishedEl) publishedEl.textContent = data.publishedNews ?? 0;
+
+            if (document.getElementById('realtime-status')) {
+                document.getElementById('realtime-status').textContent = 'Realtime aktif';
+            }
+            if (document.getElementById('realtime-time')) {
+                document.getElementById('realtime-time').textContent = 'Update: ' + (data.generatedAt ?? new Date().toLocaleTimeString('id-ID'));
+            }
+        } catch (error) {
+            if (document.getElementById('realtime-status')) {
+                document.getElementById('realtime-status').textContent = 'Gagal refresh data';
+            }
+        }
     }
-}
-fetchStats();
-setInterval(fetchStats, 15000);
+
+    fetchStats();
+    setInterval(fetchStats, 15000);
 </script>
 @endsection
-
 
 

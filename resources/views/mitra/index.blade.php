@@ -4,14 +4,29 @@
 
 @section('styles')
 <style>
-    .mitra-hero { padding: calc(1rem + var(--navbar-height, 65px)) 0 2rem; }
+    /* Reduce top padding so the hero card sits closer to the fixed navbar */
+    .mitra-hero { padding: calc(0.2rem + var(--navbar-height, 65px)) 0 1rem; margin-top: -18px; }
+    @media (max-width: 768px) {
+        .mitra-hero { padding: calc(0.4rem + var(--navbar-height, 65px)) 0 0.9rem; margin-top: -10px; }
+    }
     .mitra-list-wrap { background: #fff; border-radius: 14px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
-    .mitra-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:1.5rem; align-items:center; justify-items:center; }
-    .mitra-card { background:transparent;border-radius:8px;padding:0.6rem;display:flex;align-items:center;justify-content:center;min-height:100px; transition:transform 0.18s ease, box-shadow 0.18s ease; }
+    .mitra-grid { display:grid; grid-template-columns: repeat(5, minmax(110px, 1fr)); gap:1rem; align-items:center; justify-items:center; }
+    .mitra-card { background:transparent;border-radius:8px;padding:0.5rem;display:flex;align-items:center;justify-content:center;min-height:90px; transition:transform 0.18s ease, box-shadow 0.18s ease; }
+    .mitra-card a { display:flex;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;cursor:pointer; }
     .mitra-card img { max-width:100%; max-height:68px; object-fit:contain; display:block; }
     .mitra-card:hover { transform: translateY(-6px); }
+    .mitra-card a:hover img { filter: brightness(0.9); }
     @media (min-width:1200px) {
-        .mitra-grid { gap:2rem; }
+        .mitra-grid { gap:1.2rem; }
+    }
+    @media (max-width:1024px) {
+        .mitra-grid { grid-template-columns: repeat(4, minmax(100px, 1fr)); gap:0.9rem; }
+    }
+    @media (max-width:768px) {
+        .mitra-grid { grid-template-columns: repeat(3, minmax(90px, 1fr)); gap:0.8rem; }
+    }
+    @media (max-width:480px) {
+        .mitra-grid { grid-template-columns: repeat(2, minmax(80px, 1fr)); gap:0.7rem; }
     }
 </style>
 @endsection
@@ -24,7 +39,7 @@
                 <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo" style="height:84px;border-radius:12px;background:white;padding:0.5rem;" />
                 <div>
                     <h1 style="margin:0;font-size:2rem;font-weight:800;">Mitra Kami</h1>
-                    <p style="margin:0.4rem 0 0;color:rgba(255,255,255,0.9);">Daftar mitra, distributor, dan principal yang bekerja sama bersama Sumberindo Farma Tama.</p>
+                    <p style="margin:0.4rem 0 0;color:rgba(255,255,255,0.9);">Daftar mitra yang mempercayakan distribusi produknya kepada PT Sumberindo Farma Tama. Sebagai perusahaan distribusi (PBF) yang dipercaya para principal dan mitra, kami menghadirkan produk berkualitas dan layanan andal untuk menjangkau apotek serta distributor di seluruh wilayah.</p>
                 </div>
             </div>
         </div>
@@ -36,23 +51,51 @@
         use App\Models\Medicine;
         use Illuminate\Support\Str;
 
-        // Files from public/principals
-        $principalsDir = public_path('principals');
+        // Files from storage/principellogos (PRIMARY SOURCE)
+        $principalsDir = storage_path('principellogos');
         $principalFiles = [];
+        $seenPaths = []; // Track paths to avoid duplicates
+        
         if (is_dir($principalsDir)) {
             foreach (scandir($principalsDir) as $it) {
                 if (in_array($it, ['.', '..'])) continue;
-                $principalFiles[] = ['type' => 'public', 'path' => 'principals/' . $it, 'label' => pathinfo($it, PATHINFO_FILENAME)];
+                $path = 'storage/principellogos/' . $it;
+                $seenPaths[$it] = true; // Mark as seen
+                
+                // Try to find link from database for this file
+                $dbEntry = Medicine::whereNotNull('gambar')
+                            ->where('harga', 0)
+                            ->where('stok', 0)
+                            ->where('terjual', 0)
+                            ->where('gambar', 'like', '%' . $it)
+                            ->first();
+                
+                $principalFiles[] = [
+                    'type' => 'public', 
+                    'path' => $path, 
+                    'label' => pathinfo($it, PATHINFO_FILENAME),
+                    'link' => $dbEntry?->brand ?? null, // Include link if found in DB
+                ];
             }
         }
 
-        // Also include Medicine entries that are used as principal logos
+        // Get additional principal logos from database (with brand links)
+        // Only include if: 1) image is from principellogos folder, 2) filename not already in file list
         $dbLogos = Medicine::whereNotNull('gambar')
                     ->where('harga', 0)
                     ->where('stok', 0)
                     ->where('terjual', 0)
+                    ->where('gambar', 'like', 'principellogos/%')
                     ->get();
         foreach ($dbLogos as $m) {
+            // Extract filename from path (e.g., "principellogos/1234_file.png" -> "1234_file.png")
+            $filename = basename($m->gambar);
+            
+            // Skip if this file was already added from the folder scan
+            if (isset($seenPaths[$filename])) {
+                continue;
+            }
+            
             $principalFiles[] = [
                 'type' => 'db',
                 'path' => $m->gambar,
@@ -67,19 +110,27 @@
             <div class="mitra-grid">
             @foreach($principalFiles as $pf)
                 <div class="mitra-card">
+                    @php
+                        $link = isset($pf['link']) && $pf['link'] ? $pf['link'] : null;
+                    @endphp
                     @if($pf['type'] === 'public')
-                        <img src="{{ asset($pf['path']) }}" alt="{{ $pf['label'] }}">
+                        @if($link)
+                            <a href="{{ $link }}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;">
+                                <img src="{{ asset($pf['path']) }}" alt="{{ $pf['label'] }}">
+                            </a>
+                        @else
+                            <img src="{{ asset($pf['path']) }}" alt="{{ $pf['label'] }}">
+                        @endif
                     @else
                         @php
-                            // DB-stored image path may be like 'banners/xxx.png' or 'principals/xxx.png'
+                            // DB-stored image path may be like 'banners/xxx.png' or 'principellogos/xxx.png'
                             $parts = explode('/', $pf['path'], 2);
                             $folder = $parts[0] ?? null;
                             $filename = $parts[1] ?? $parts[0] ?? '';
                             $url = $folder ? url('/storage/' . $folder . '/' . $filename) : asset($pf['path']);
-                            $link = isset($pf['link']) && $pf['link'] ? $pf['link'] : null;
                         @endphp
                         @if($link)
-                            <a href="{{ $link }}" target="_blank" rel="noopener noreferrer">
+                            <a href="{{ $link }}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;">
                                 <img src="{{ $url }}" alt="{{ $pf['label'] }}">
                             </a>
                         @else

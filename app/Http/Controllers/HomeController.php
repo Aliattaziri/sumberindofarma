@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Medicine;
 use App\Models\Banner;
+use App\Models\News;
+use App\Models\Comment;
 use App\Models\PromoProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -217,6 +219,112 @@ class HomeController extends Controller
     {
         // Menampilkan logo dari folder public/principals jika tersedia
         return view('mitra.index');
+    }
+
+    /**
+     * Halaman daftar berita publik
+     */
+    public function newsIndex()
+    {
+        $news = News::published()->latest()->paginate(9);
+
+        return view('news.index', compact('news'));
+    }
+
+    /**
+     * Detail berita publik
+     */
+    public function newsShow(News $news)
+    {
+        abort_unless($news->is_published, 404);
+
+        $news->incrementViews();
+
+        return view('news.show', compact('news'));
+    }
+
+    /**
+     * Like berita
+     */
+    public function likeNews(News $news)
+    {
+        abort_unless($news->is_published, 404);
+
+        $news->incrementLikes();
+
+        return response()->json([
+            'success' => true,
+            'like_count' => $news->like_count,
+        ]);
+    }
+
+    /**
+     * Comment berita
+     */
+    public function commentNews(Request $request, News $news)
+    {
+        abort_unless($news->is_published, 404);
+
+        $validated = $request->validate([
+            'nama' => 'required|string|max:100',
+            'komentar' => 'required|string|max:500',
+        ]);
+
+        Comment::create([
+            'news_id' => $news->id,
+            'user_id' => auth()->id(),
+            'nama' => $validated['nama'],
+            'komentar' => $validated['komentar'],
+        ]);
+
+        $news->incrementComments();
+
+        return response()->json([
+            'success' => true,
+            'comment_count' => $news->comment_count,
+        ]);
+    }
+
+    public function deleteComment(Request $request, Comment $comment)
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $canDelete = $user->isAdmin() || (auth()->check() && $comment->user_id !== null && $comment->user_id === $user->id);
+
+        if (! $canDelete) {
+            return response()->json(['success' => false, 'message' => 'Forbidden'], 403);
+        }
+
+        $news = $comment->news;
+        $comment->delete();
+
+        if ($news) {
+            $news->decrement('comment_count');
+        }
+
+        return response()->json([
+            'success' => true,
+            'comment_count' => $news?->refresh()->comment_count ?? 0,
+        ]);
+    }
+
+    /**
+     * Share berita
+     */
+    public function shareNews(News $news)
+    {
+        abort_unless($news->is_published, 404);
+
+        $news->incrementShares();
+
+        return response()->json([
+            'success' => true,
+            'share_count' => $news->share_count,
+        ]);
     }
 }
 

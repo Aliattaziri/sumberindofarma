@@ -116,7 +116,7 @@ class AdminProdukController extends Controller
             'brand'     => ['nullable', 'string', 'max:1024'], // used to store partner link
             // 'gambar' may be a file upload OR we accept a base64 string in 'cropped_image'
             'gambar'    => ['nullable'],
-              'cropped_image' => ['nullable', 'regex:/^data:image\/(gif|jpeg|png|webp);base64,([A-Za-z0-9+\\/=]+)$/'],
+            'cropped_image' => ['nullable', 'regex:#^data:image/(gif|jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$#'],
         ];
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
@@ -129,14 +129,14 @@ class AdminProdukController extends Controller
         // If frontend provided a cropped image (base64), prefer that over raw upload
         if ($request->filled('cropped_image')) {
             try {
-                $validated['gambar'] = ImageHelper::storeBase64BannerImage($request->input('cropped_image'));
+                $validated['gambar'] = ImageHelper::storeBase64PrincipleImage($request->input('cropped_image'));
             } catch (\Exception $e) {
                 // ignore and continue without gambar
             }
         } elseif ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
             // validate uploaded file explicitly to produce proper messages
             $request->validate(['gambar' => ['file', 'image', 'max:10240']]);
-            $validated['gambar'] = ImageHelper::storeBannerImage($request->file('gambar'));
+            $validated['gambar'] = ImageHelper::storePrincipleImage($request->file('gambar'));
         }
 
         if ($outlet = $user?->outlet_name) {
@@ -193,7 +193,7 @@ class AdminProdukController extends Controller
             'nama_obat'     => ['required', 'string', 'max:255'],
             'brand'         => ['nullable', 'string', 'max:1024'],
             'gambar'        => ['nullable'],
-            'cropped_image' => ['nullable', 'regex:/^data:image\/(gif|jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$/'],
+            'cropped_image' => ['nullable', 'regex:#^data:image/(gif|jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$#'],
             'delete_gambar' => ['nullable'],
         ];
         /** @var \App\Models\User|null $user */
@@ -210,19 +210,35 @@ class AdminProdukController extends Controller
 
         if ($request->filled('cropped_image')) {
             // New cropped image from client - prefer this
-            ImageHelper::deleteBannerImage($produk->gambar);
+            if ($produk->gambar) {
+                if (str_starts_with($produk->gambar, 'principellogos/')) {
+                    ImageHelper::deletePrincipleImage($produk->gambar);
+                } else {
+                    ImageHelper::deleteBannerImage($produk->gambar);
+                }
+            }
             try {
-                $validated['gambar'] = ImageHelper::storeBase64BannerImage($request->input('cropped_image'));
+                $validated['gambar'] = ImageHelper::storeBase64PrincipleImage($request->input('cropped_image'));
             } catch (\Exception $e) {
                 // ignore
             }
         } elseif ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
             // validate uploaded file explicitly to produce proper messages
             $request->validate(['gambar' => ['file', 'image', 'max:10240']]);
-            ImageHelper::deleteBannerImage($produk->gambar);
-            $validated['gambar'] = ImageHelper::storeBannerImage($request->file('gambar'));
+            if ($produk->gambar) {
+                if (str_starts_with($produk->gambar, 'principellogos/')) {
+                    ImageHelper::deletePrincipleImage($produk->gambar);
+                } else {
+                    ImageHelper::deleteBannerImage($produk->gambar);
+                }
+            }
+            $validated['gambar'] = ImageHelper::storePrincipleImage($request->file('gambar'));
         } elseif ($request->input('delete_gambar') == '1' && $produk->gambar) {
-            ImageHelper::deleteBannerImage($produk->gambar);
+            if (str_starts_with($produk->gambar, 'principellogos/')) {
+                ImageHelper::deletePrincipleImage($produk->gambar);
+            } else {
+                ImageHelper::deleteBannerImage($produk->gambar);
+            }
             $validated['gambar'] = null;
         }
 
@@ -245,7 +261,13 @@ class AdminProdukController extends Controller
         }
 
         $this->authorizeOutletProduct($produk);
-        ImageHelper::deleteBannerImage($produk->gambar);
+        if ($produk->gambar) {
+            if (str_starts_with($produk->gambar, 'principellogos/')) {
+                ImageHelper::deletePrincipleImage($produk->gambar);
+            } else {
+                ImageHelper::deleteBannerImage($produk->gambar);
+            }
+        }
         $produk->delete();
 
         $queryParams = $this->buildIndexQueryParams($request);

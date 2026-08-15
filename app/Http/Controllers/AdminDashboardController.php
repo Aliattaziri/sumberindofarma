@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Medicine;
 use App\Models\Banner;
-use App\Models\ProductCategory;
+use App\Models\News;
+use App\Models\Comment;
 use App\Constants\Companies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -32,70 +33,36 @@ class AdminDashboardController extends Controller
             return view('admin.dashboard-global', $this->buildGlobalDashboardData());
         }
 
-        $query = Medicine::query();
-
-        if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
-            $query->where('kategori', $user->outlet_name);
-        }
-
-        $totalProduk    = $query->count();
-        $totalStok      = $query->sum('stok');
-        $lowStok        = (clone $query)->where('stok', '<', 5)->count();
-        $latestProduk   = (clone $query)->latest()->limit(10)->get();
-
-        // Per kategori produk
-        $categoryColumn = Schema::hasColumn('medicines', 'kategori_produk') ? 'kategori_produk' : 'kategori';
-        $kategoriList = Schema::hasColumn('medicines', 'kategori_produk') ? ProductCategory::getList() : $query->whereNotNull('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
-
-        $perKategori = [];
-        foreach ($kategoriList as $kat) {
-            $kategoriQuery = Medicine::where($categoryColumn, $kat);
-            if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
-                $kategoriQuery->where('kategori', $user->outlet_name);
-            }
-            $perKategori[$kat] = $kategoriQuery->count();
-        }
-
         $latestBanners = Schema::hasTable('banners') ? Banner::orderBy('urutan')->orderBy('id')->limit(5)->get() : collect();
         $totalBanners  = Schema::hasTable('banners') ? Banner::count() : 0;
         $activeBanners = Schema::hasTable('banners') ? Banner::where('aktif', true)->count() : 0;
 
+        $latestNews = News::latest()->limit(5)->get();
+        $totalNews = News::count();
+        $publishedNews = News::where('is_published', true)->count();
+        $totalComments = Comment::count();
+
         return view('admin.dashboard', compact(
-            'totalProduk', 'totalStok', 'lowStok', 'latestProduk',
-            'perKategori', 'latestBanners', 'totalBanners', 'activeBanners'
+            'latestBanners', 'totalBanners', 'activeBanners',
+            'latestNews', 'totalNews', 'publishedNews', 'totalComments'
         ));
     }
 
     public function stats()
     {
-        $user = Auth::user();
-        $query = Medicine::query();
-
-        if ($user && ! $user->isSuperAdmin() && $user->isOutletAdmin()) {
-            $query->where('kategori', $user->outlet_name);
-        }
-
-        $selectColumns = ['id', 'nama_obat', 'kategori', 'harga', 'stok', 'created_at'];
-        if (Schema::hasColumn('medicines', 'kategori_produk')) {
-            $selectColumns[] = 'kategori_produk';
-        }
-
-        $latestProduk = (clone $query)->latest()->limit(10)
-            ->get($selectColumns)
-            ->map(fn($m) => [
-                'id'              => $m->id,
-                'nama_obat'       => $m->nama_obat,
-                'kategori'        => $m->kategori,
-                'kategori_produk' => $m->kategori_produk ?? $m->kategori,
-                'harga'           => $m->harga,
-                'stok'            => $m->stok,
-                'created_at'      => $m->created_at->format('d M Y H:i'),
-            ]);
+        $totalNews = News::count();
+        $publishedNews = News::where('is_published', true)->count();
+        $totalBanners = Schema::hasTable('banners') ? Banner::count() : 0;
+        $activeBanners = Schema::hasTable('banners') ? Banner::where('aktif', true)->count() : 0;
+        $totalComments = Comment::count();
 
         return response()->json([
-            'total'         => (clone $query)->count(),
-            'lowStok'       => (clone $query)->where('stok', '<', 5)->count(),
-            'latestProduk'  => $latestProduk,
+            'totalNews' => $totalNews,
+            'publishedNews' => $publishedNews,
+            'totalBanners' => $totalBanners,
+            'activeBanners' => $activeBanners,
+            'totalComments' => $totalComments,
+            'generatedAt' => now()->format('H:i:s'),
         ]);
     }
 

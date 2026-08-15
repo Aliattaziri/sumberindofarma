@@ -380,9 +380,9 @@
             </form>
         </div>
 
-        {{-- Menampilkan logo principal saja (folder public/principals) --}}
+        {{-- Menampilkan logo principal saja (folder storage/principellogos) --}}
         @php
-            $principalsDir = public_path('principals');
+            $principalsDir = storage_path('principellogos');
             $principalFiles = [];
             if (is_dir($principalsDir)) {
                 foreach (scandir($principalsDir) as $it) {
@@ -396,7 +396,7 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;align-items:center;">
                 @foreach($principalFiles as $pf)
                     <div style="background:white;border-radius:12px;padding:0.8rem;border:1px solid #e6e6e6;display:flex;align-items:center;justify-content:center;min-height:120px;">
-                        <img src="{{ asset('principals/' . $pf) }}" alt="{{ $pf }}" style="max-width:100%;max-height:90px;object-fit:contain;">
+                        <img src="{{ asset('storage/principellogos/' . $pf) }}" alt="{{ $pf }}" style="max-width:100%;max-height:90px;object-fit:contain;">
                     </div>
                 @endforeach
             </div>
