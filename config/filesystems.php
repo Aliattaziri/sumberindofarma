@@ -87,6 +87,8 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('storage/banners')   => storage_path('banners'),
         public_path('storage/medicines') => storage_path('medicines'),
+        public_path('storage/principellogos') => storage_path('principellogos'),
+        public_path('storage/news')      => storage_path('news'),
     ],
 
 ];
