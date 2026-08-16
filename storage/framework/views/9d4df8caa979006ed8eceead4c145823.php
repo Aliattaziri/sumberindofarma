@@ -590,21 +590,51 @@
 
         .footer-socials {
             display: flex;
-            gap: 0.75rem;
+            flex-wrap: nowrap;
+            gap: 0.5rem;
             margin-top: 1rem;
+            justify-content: flex-start;
+            align-items: center;
+            width: fit-content;
         }
 
         .social-circle {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
+            border-radius: 8px;
             background: rgba(255,255,255,0.12);
             color: white;
             text-decoration: none;
-            transition: background 0.25s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            flex-shrink: 0;
+            box-shadow: none;
+            padding: 0;
+            overflow: hidden;
+        }
+        .social-circle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            filter: brightness(1.05);
+        }
+        .social-circle img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            display: block;
+        }
+        .footer-content .footer-socials a {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 0;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .social-circle:hover {
@@ -786,19 +816,80 @@
             color: #d1d5db;
             text-decoration: none;
             transition: color 0.25s ease;
-            display: inline-flex;
-            align-items: center;
+            display: flex;
+            align-items: flex-start;
             gap: 0.5rem;
             line-height: 1.5;
+            font-size: 0.95rem;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .footer-content a:hover {
             color: white;
         }
 
+        .footer-content ul a,
+        .footer-content > div:not(.footer-socials) a {
+            width: 100%;
+        }
+
         .footer-content span {
             color: #d1d5db;
             line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content a {
+                font-size: 0.84rem;
+            }
+            .social-circle {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-content a {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                gap: 0.4rem;
+            }
+            .footer-content h3 {
+                font-size: 0.95rem;
+            }
+            .footer-icon {
+                width: 1rem;
+            }
+            .footer-socials {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 0.4rem;
+                margin-top: 0.75rem;
+                justify-content: flex-start;
+                align-items: center;
+                width: fit-content;
+            }
+            .social-circle {
+                width: 28px !important;
+                height: 28px !important;
+                min-width: 28px;
+                min-height: 28px;
+                border-radius: 8px !important;
+                padding: 0;
+            }
+            .footer-content .footer-socials a {
+                width: 28px !important;
+                height: 28px !important;
+                min-width: 28px;
+                min-height: 28px;
+                border-radius: 8px !important;
+                padding: 0;
+            }
+            .social-circle img {
+                width: 13px;
+                height: 13px;
+            }
         }
 
         .footer-socials {
@@ -1169,7 +1260,7 @@
                             <a href="tel:+6285248965590"><i class="fa-solid fa-phone footer-icon"></i>+62 852-4896-5590</a>
                         </li>
                         <li>
-                            <a href="mailto:info@sumberindofarmatama.com"><i class="fa-solid fa-envelope footer-icon"></i>info@sumberindofarmatama.com</a>
+                            <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com"><i class="fa-solid fa-envelope footer-icon"></i>pt.sumberindofarmatama@sumberindopontianak.com</a>
                         </li>
                     </ul>
                 </div>

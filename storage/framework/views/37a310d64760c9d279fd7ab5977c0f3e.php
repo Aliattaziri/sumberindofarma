@@ -1,8 +1,6 @@
-@extends('layouts.frontend')
+<?php $__env->startSection('title', 'Hubungi Kami - Sumberindo Farma Tama'); ?>
 
-@section('title', 'Hubungi Kami - Sumberindo Farma Tama')
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 <style>
     .contact-header {
         background: linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #B91C1C 100%);
@@ -211,14 +209,14 @@
         .info-text h4 { font-size: 0.8rem; }
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="contact-header">
     <div class="container">
         <div class="breadcrumb-custom">
-            <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="<?php echo e(route('home')); ?>"><i class="fa-solid fa-house"></i> Home</a>
             <span>/</span>
             <span class="current">Hubungi Kami</span>
         </div>
@@ -234,17 +232,17 @@
     <div class="container">
         <div class="contact-grid">
 
-            {{-- KOLOM KIRI: Dokumen + Info Kontak --}}
+            
             <div>
 
-                {{-- Card Persyaratan Dokumen --}}
+                
                 <div class="doc-card">
                     <div class="doc-card-title">
                         <i class="fa-solid fa-file-shield" style="color:#B91C1C;"></i>
                         Persyaratan Dokumen Pemesanan
                     </div>
 
-                    {{-- Apotek / RS / Klinik --}}
+                    
                     <div class="doc-type doc-type-blue">
                         <div class="doc-type-header">
                             <div class="doc-type-icon"><i class="fa-solid fa-hospital"></i></div>
@@ -259,7 +257,7 @@
                         </ul>
                     </div>
 
-                    {{-- Toko Obat --}}
+                    
                     <div class="doc-type doc-type-orange">
                         <div class="doc-type-header">
                             <div class="doc-type-icon"><i class="fa-solid fa-store"></i></div>
@@ -273,7 +271,7 @@
                         </ul>
                     </div>
 
-                    {{-- PBF --}}
+                    
                     <div class="doc-type doc-type-green">
                         <div class="doc-type-header">
                             <div class="doc-type-icon"><i class="fa-solid fa-warehouse"></i></div>
@@ -290,7 +288,7 @@
                     </div>
                 </div>
 
-                {{-- Card Info Kontak --}}
+                
                 <div class="info-card">
                     <div class="info-item">
                         <div class="info-icon icon-blue"><i class="fa-solid fa-location-dot"></i></div>
@@ -334,14 +332,14 @@
                     <div class="social-row">
                         <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://wa.me/6285248965590" target="_blank" class="social-btn" style="background:#25D366;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="social-btn" style="background:#000000;display:flex;align-items:center;justify-content:center;" title="TikTok"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:14px;height:14px;object-fit:contain;"></div></a>
-                        <a href="#" class="social-btn" style="background:#EE3131;display:flex;align-items:center;justify-content:center;" title="Shopee"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:14px;height:14px;object-fit:contain;"></div></a>
+                        <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="social-btn" style="background:#000000;display:flex;align-items:center;justify-content:center;" title="TikTok"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="<?php echo e(asset('logo tiktok.avif')); ?>" alt="TikTok" style="width:14px;height:14px;object-fit:contain;"></div></a>
+                        <a href="#" class="social-btn" style="background:#EE3131;display:flex;align-items:center;justify-content:center;" title="Shopee"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="<?php echo e(asset('logoshopee.jpeg')); ?>" alt="Shopee" style="width:14px;height:14px;object-fit:contain;"></div></a>
                     </div>
                 </div>
 
             </div>
 
-            {{-- FORM --}}
+            
             <div>
                 <div class="form-card">
                     <h3><i class="fa-solid fa-paper-plane" style="color:#B91C1C;margin-right:0.5rem;"></i> Kirim Pesan via WhatsApp</h3>
@@ -383,7 +381,7 @@
                     </button>
                 </div>
 
-                {{-- MAP --}}
+                
                 <div class="map-section">
                     <h3><i class="fa-solid fa-map-location-dot" style="color:#B91C1C;"></i> Lokasi Kami</h3>
                     <p style="margin-bottom:0.75rem; font-size:0.95rem; color:#4b5563;">Gunakan rute langsung ke lokasi kami dengan Google Maps.</p>
@@ -405,9 +403,9 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
 function kirimWA() {
     const nama   = document.getElementById('nama').value.trim();
@@ -435,9 +433,11 @@ ${pesan}`;
     window.open('https://wa.me/6285248965590?text=' + encodeURIComponent(teks), '_blank');
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
 
 
+
+<?php echo $__env->make('layouts.frontend', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/contact.blade.php ENDPATH**/ ?>

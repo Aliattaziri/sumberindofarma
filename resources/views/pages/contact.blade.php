@@ -3,6 +3,15 @@
 @section('title', 'Kontak - Sumberindo Farma Tama')
 
 @section('content')
+<style>
+    @media (max-width: 768px) {
+        .contact-info-email { font-size: 0.75rem; word-wrap: break-word; }
+    }
+    @media (max-width: 480px) {
+        .contact-info-email { font-size: 0.65rem; word-break: break-all; }
+    }
+</style>
+
 <!-- Page Header -->
 <div class="hero" style="padding: 40px 0;">
     <div class="container">
@@ -49,7 +58,7 @@
                         <i class="fas fa-envelope" style="color: var(--primary-color); margin-right: 10px;"></i>Email
                     </h4>
                     <p class="text-muted">
-                        <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com" style="color: var(--primary-color); text-decoration: none;">pt.sumberindofarmatama@sumberindopontianak.com</a>
+                        <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com" style="color: var(--primary-color); text-decoration: none;" class="contact-info-email">pt.sumberindofarmatama@sumberindopontianak.com</a>
                     </p>
                 </div>
 
