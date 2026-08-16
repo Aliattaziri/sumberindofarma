@@ -98,7 +98,7 @@
 .btn-wa-request {
     display: flex; align-items: center; justify-content: center; gap: 0.6rem;
     width: 100%; padding: 0.8rem 1rem;
-    background: linear-gradient(135deg, #ef4444, #991B1B);
+    background: linear-gradient(135deg, #25D366, #1f8f4a);
     color: #fff; border: none; border-radius: 12px;
     font-weight: 700; font-size: 0.9rem; cursor: pointer;
     text-decoration: none; transition: all 0.25s;
@@ -106,7 +106,7 @@
     box-shadow: 0 4px 14px rgba(37,211,102,0.35);
 }
 .btn-wa-request:hover {
-    background: linear-gradient(135deg, #991B1B, #B91C1C);
+    background: linear-gradient(135deg, #1f8f4a, #188a3a);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37,211,102,0.45);
     color: #fff;

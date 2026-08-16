@@ -124,13 +124,13 @@
 
     .btn-send {
         width: 100%; padding: 0.85rem;
-        background: linear-gradient(135deg, #ef4444, #991B1B);
+        background: linear-gradient(135deg, #25D366, #1f8f4a);
         color: white; border: none; border-radius: 10px;
         font-size: 1rem; font-weight: 700; cursor: pointer;
         display: flex; align-items: center; justify-content: center; gap: 0.6rem;
         transition: all 0.3s;
     }
-    .btn-send:hover { background: linear-gradient(135deg, #991B1B, #B91C1C); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.35); }
+    .btn-send:hover { background: linear-gradient(135deg, #1f8f4a, #188a3a); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.35); }
 
     /* Dokumen Card */
     .doc-card {
@@ -323,7 +323,9 @@
                     <h4 style="font-size:0.9rem;font-weight:700;color:#374151;margin-bottom:0.75rem;"><i class="fa-solid fa-share-nodes" style="color:#B91C1C;margin-right:0.4rem;"></i> Ikuti Kami</h4>
                     <div class="social-row">
                         <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/6285248965590" target="_blank" class="social-btn" style="background:#ef4444;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://wa.me/6285248965590" target="_blank" class="social-btn" style="background:#25D366;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="social-btn" style="background:#000000;display:flex;align-items:center;justify-content:center;" title="TikTok"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:14px;height:14px;object-fit:contain;"></div></a>
+                        <a href="#" class="social-btn" style="background:#EE3131;display:flex;align-items:center;justify-content:center;" title="Shopee"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:14px;height:14px;object-fit:contain;"></div></a>
                     </div>
                 </div>
 

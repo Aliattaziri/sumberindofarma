@@ -611,9 +611,42 @@
             background: rgba(255,255,255,0.25);
         }
 
+        /* Social Media Color */
+        .social-circle.social-instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 50%, #dc2743 100%);
+        }
+        .social-circle.social-instagram:hover {
+            background: linear-gradient(135deg, #e6683c 0%, #dc2743 50%, #cc2366 100%);
+            transform: scale(1.1);
+        }
+        
+        .social-circle.social-whatsapp {
+            background: #25D366;
+        }
+        .social-circle.social-whatsapp:hover {
+            background: #1f8f4a;
+            transform: scale(1.1);
+        }
+        
+        .social-circle.social-tiktok {
+            background: #000000;
+        }
+        .social-circle.social-tiktok:hover {
+            background: #333333;
+            transform: scale(1.1);
+        }
+        
+        .social-circle.social-shopee {
+            background: #EE3131;
+        }
+        .social-circle.social-shopee:hover {
+            background: #C41C1C;
+            transform: scale(1.1);
+        }
+
         .footer-icon {
             margin-right: 0.6rem;
-            color: #ef4444;
+            color: #25D366;
             min-width: 1rem;
         }
 
@@ -791,9 +824,42 @@
             background: rgba(255,255,255,0.24);
         }
 
+        /* Social Media Color */
+        .social-circle.social-instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 50%, #dc2743 100%);
+        }
+        .social-circle.social-instagram:hover {
+            background: linear-gradient(135deg, #e6683c 0%, #dc2743 50%, #cc2366 100%);
+            transform: scale(1.1);
+        }
+        
+        .social-circle.social-whatsapp {
+            background: #25D366;
+        }
+        .social-circle.social-whatsapp:hover {
+            background: #1f8f4a;
+            transform: scale(1.1);
+        }
+        
+        .social-circle.social-tiktok {
+            background: #000000;
+        }
+        .social-circle.social-tiktok:hover {
+            background: #333333;
+            transform: scale(1.1);
+        }
+        
+        .social-circle.social-shopee {
+            background: #EE3131;
+        }
+        .social-circle.social-shopee:hover {
+            background: #C41C1C;
+            transform: scale(1.1);
+        }
+
         .footer-icon {
             width: 1.2rem;
-            color: #ef4444;
+            color: #25D366;
             flex-shrink: 0;
         }
 
@@ -1081,8 +1147,10 @@
                     <h3><i class="fa-solid fa-pills"></i> Sumberindo Farma Tama</h3>
                     <p>Perusahaan distribusi farmasi (PBF) yang menyediakan produk resmi untuk apotek dan fasilitas kesehatan.</p>
                     <div class="footer-socials">
-                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-circle" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/6285248965590" class="social-circle" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-circle social-instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/6285248965590" class="social-circle social-whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="social-circle social-tiktok" aria-label="TikTok"><div style="width:22px;height:22px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:18px;height:18px;object-fit:contain;"></div></a>
+                        <a href="#" class="social-circle social-shopee" aria-label="Shopee"><div style="width:22px;height:22px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:18px;height:18px;object-fit:contain;"></div></a>
                     </div>
                 </div>
                 <div>
@@ -1188,8 +1256,8 @@
                 <span class="float-tooltip">TikTok</span>
                 <span class="float-label-mobile">TikTok</span>
                 <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="float-btn"
-                   style="background:#000;color:white;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
-                    <img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:20px;height:20px;object-fit:cover;border-radius:50%;">
+                   style="background:#000;color:white;box-shadow:0 4px 16px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
+                    <div style="width:24px;height:24px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:20px;height:20px;object-fit:cover;border-radius:4px;"></div>
                 </a>
             </div>
 
@@ -1197,9 +1265,9 @@
             <div class="float-item">
                 <span class="float-tooltip">Shopee</span>
                 <span class="float-label-mobile">Shopee</span>
-                     <a href="about:blank" target="_blank" class="float-btn"
-                   style="background:#ff5722;color:white;box-shadow:0 4px 16px rgba(255,87,34,0.25);">
-                    <img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:20px;height:20px;object-fit:cover;border-radius:50%;">
+                <a href="#" class="float-btn"
+                   style="background:#EE3131;color:white;box-shadow:0 4px 16px rgba(238,49,49,0.25);display:flex;align-items:center;justify-content:center;">
+                    <div style="width:24px;height:24px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:20px;height:20px;object-fit:cover;border-radius:4px;"></div>
                 </a>
             </div>
 
@@ -1209,7 +1277,7 @@
                 <span class="float-label-mobile">WhatsApp</span>
                 <a href="https://wa.me/6285248965590?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20bertanya%20tentang%20produk%20obat."
                    target="_blank" class="float-btn float-btn-wa"
-                   style="background:#ef4444;color:white;font-size:1.9rem;box-shadow:0 6px 24px rgba(37,211,102,0.55);">
+                   style="background:#25D366;color:white;font-size:1.9rem;box-shadow:0 6px 24px rgba(37,211,102,0.55);">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
             </div>

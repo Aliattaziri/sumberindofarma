@@ -345,6 +345,8 @@
 
                         <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a>
                         <a href="https://wa.me/6285248965590" target="_blank" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="footer-link"><div style="width:16px;height:16px;background:white;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;margin-right:5px;"><img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:14px;height:14px;object-fit:contain;"></div> TikTok</a>
+                        <a href="#" class="footer-link"><div style="width:16px;height:16px;background:white;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;margin-right:5px;"><img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:14px;height:14px;object-fit:contain;"></div> Shopee</a>
                     </div>
                 </div>
                 <div class="col-md-3 footer-section">
