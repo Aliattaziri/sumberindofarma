@@ -49,7 +49,7 @@
                         <i class="fas fa-envelope" style="color: var(--primary-color); margin-right: 10px;"></i>Email
                     </h4>
                     <p class="text-muted">
-                        <a href="mailto:info@sumberindofarmatama.com" style="color: var(--primary-color); text-decoration: none;">info@sumberindofarmatama.com</a>
+                        <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com" style="color: var(--primary-color); text-decoration: none;">pt.sumberindofarmatama@sumberindopontianak.com</a>
                     </p>
                 </div>
 

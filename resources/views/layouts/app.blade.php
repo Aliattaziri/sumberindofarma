@@ -362,7 +362,7 @@
                         <i class="fas fa-phone"></i> +62 852-4896-5590
                     </p>
                     <p class="footer-link">
-                        <i class="fas fa-envelope"></i> info@sumberindofarmatama.com
+                        <i class="fas fa-envelope"></i> pt.sumberindofarmatama@sumberindopontianak.com
                     </p>
                     <p class="footer-link">
                         <i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia

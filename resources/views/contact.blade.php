@@ -314,7 +314,7 @@
                         <div class="info-icon icon-purple"><i class="fa-solid fa-envelope"></i></div>
                         <div class="info-text">
                             <h4>Email</h4>
-                            <a href="mailto:info@sumberindofarmatama.com">info@sumberindofarmatama.com</a>
+                            <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com">pt.sumberindofarmatama@sumberindopontianak.com</a>
                         </div>
                     </div>
                 </div>

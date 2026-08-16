@@ -1167,7 +1167,7 @@
                             <a href="tel:+6285248965590"><i class="fa-solid fa-phone footer-icon"></i>+62 852-4896-5590</a>
                         </li>
                         <li>
-                            <a href="mailto:info@sumberindofarmatama.com"><i class="fa-solid fa-envelope footer-icon"></i>info@sumberindofarmatama.com</a>
+                            <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com"><i class="fa-solid fa-envelope footer-icon"></i>pt.sumberindofarmatama@sumberindopontianak.com</a>
                         </li>
                     </ul>
                 </div>
