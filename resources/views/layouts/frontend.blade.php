@@ -1237,12 +1237,6 @@
                 <div>
                     <h3><i class="fa-solid fa-pills"></i> Sumberindo Farma Tama</h3>
                     <p>Perusahaan distribusi farmasi (PBF) yang menyediakan produk resmi untuk apotek dan fasilitas kesehatan.</p>
-                    <div class="footer-socials">
-                        <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-circle social-instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/6285248965590" class="social-circle social-whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="social-circle social-tiktok" aria-label="TikTok"><div style="width:22px;height:22px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logo tiktok.avif') }}" alt="TikTok" style="width:18px;height:18px;object-fit:contain;"></div></a>
-                        <a href="#" class="social-circle social-shopee" aria-label="Shopee"><div style="width:22px;height:22px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;"><img src="{{ asset('logoshopee.jpeg') }}" alt="Shopee" style="width:18px;height:18px;object-fit:contain;"></div></a>
-                    </div>
                 </div>
                 <div>
                     <h3>Informasi</h3>

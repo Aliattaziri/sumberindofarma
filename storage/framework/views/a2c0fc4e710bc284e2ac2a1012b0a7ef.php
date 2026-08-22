@@ -1078,7 +1078,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
 
         <?php
-            $latestNews = App\Models\News::published()->latest()->take(6)->get();
+            $latestNews = App\Models\News::published()->latest()->get();
         ?>
 
         <?php if($latestNews->count() > 0): ?>

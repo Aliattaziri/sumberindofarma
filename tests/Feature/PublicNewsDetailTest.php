@@ -81,4 +81,28 @@ class PublicNewsDetailTest extends TestCase
         $response->assertOk();
         $response->assertSee(route('news.index', ['news_id' => $news->id]));
     }
+
+    public function test_home_displays_all_published_news_without_a_limit(): void
+    {
+        foreach (range(1, 7) as $newsIndex) {
+            News::create([
+                'judul' => "Berita Homepage {$newsIndex}",
+                'deskripsi' => "Deskripsi berita homepage {$newsIndex}.",
+                'konten' => "Konten berita homepage {$newsIndex}.",
+                'tipe' => 'artikel',
+                'ratio' => '9:16',
+                'file' => null,
+                'thumbnail' => null,
+                'views' => 0,
+                'is_published' => true,
+            ]);
+        }
+
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        foreach (range(1, 7) as $newsIndex) {
+            $response->assertSee("Berita Homepage {$newsIndex}");
+        }
+    }
 }
