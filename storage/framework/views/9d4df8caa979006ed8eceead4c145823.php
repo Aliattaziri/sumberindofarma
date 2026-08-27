@@ -1305,16 +1305,17 @@
         @media (max-width: 768px) {
             .float-links {
                 display:flex; flex-direction:column; align-items:flex-end; gap:0.75rem;
-                overflow:hidden; max-height:0; transition:max-height 0.45s ease, opacity 0.35s;
-                opacity:0; pointer-events:none;
+                overflow:visible; max-height:none; opacity:1; pointer-events:auto;
             }
             .float-links.open {
-                max-height:600px; opacity:1; pointer-events:auto;
+                max-height:none; opacity:1; pointer-events:auto;
             }
             .float-wrap { gap:0.6rem; align-items:flex-end; }
-            .float-btn { width:50px !important; height:50px !important; font-size:1.4rem !important; }
-            .float-btn-wa { width:50px !important; height:50px !important; font-size:1.6rem !important; margin-top:0; }
-            .float-toggle { display:flex; }
+            .float-btn { width:42px !important; height:42px !important; font-size:1.2rem !important; }
+            .float-btn-wa { width:46px !important; height:46px !important; font-size:1.45rem !important; margin-top:0; }
+            .float-btn img { width:17px !important; height:17px !important; }
+            .float-btn > div { width:21px !important; height:21px !important; }
+            .float-toggle { display:none; }
             .float-item { gap:0.5rem; flex-direction:row; align-items:center; }
             .float-label-mobile {
                 background:#1f2937; color:white; font-size:0.72rem; font-weight:600;

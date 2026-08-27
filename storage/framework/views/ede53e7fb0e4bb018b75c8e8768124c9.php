@@ -1,0 +1,164 @@
+<?php $__env->startSection('title', 'Edit Principle Logo'); ?>
+<?php $__env->startSection('page-title', 'Edit Principle Logo'); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<div class="mb-6">
+  <a href="<?php echo e(route('admin.produk.index')); ?>" class="text-sm text-indigo-600 hover:underline">← Kembali ke daftar</a>
+  <h3 class="mt-3 text-2xl font-semibold text-gray-800">Edit Logo Mitra</h3>
+</div>
+
+<form action="<?php echo e(route('admin.produk.update', $medicine->id)); ?>" method="POST" enctype="multipart/form-data">
+  <?php echo csrf_field(); ?>
+  <?php echo method_field('PUT'); ?>
+  <div class="card" style="max-width:880px;">
+    <div class="form-group">
+      <label class="form-label">Nama Mitra</label>
+      <input type="text" name="nama_obat" value="<?php echo e(old('nama_obat', $medicine->nama_obat)); ?>" required class="form-control">
+      <?php $__errorArgs = ['nama_obat'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <div class="form-errors"><?php echo e($message); ?></div> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Foto Logo saat ini</label>
+      <?php if($medicine->gambar): ?>
+        <div style="margin-bottom:0.6rem;"><img src="<?php echo e(url('storage/' . $medicine->gambar)); ?>" style="max-width:200px;max-height:120px;object-fit:contain;border:1px solid #eef2f7;" alt="logo"></div>
+        <label style="display:inline-flex;align-items:center;gap:0.4rem;">
+          <input type="checkbox" name="delete_gambar" value="1"> Hapus foto saat ini
+        </label>
+      <?php else: ?>
+        <div style="color:#6b7280;">Belum ada foto.</div>
+      <?php endif; ?>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Unggah Foto Baru (opsional)</label>
+      <input type="file" id="fileInput" name="gambar" accept="image/*" class="form-control" style="padding:0.4rem;" />
+      <?php $__errorArgs = ['gambar'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <div class="form-errors"><?php echo e($message); ?></div> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+    </div>
+
+    <div style="display:flex;gap:0.5rem;">
+      <button class="btn btn-primary" type="submit">Simpan</button>
+      <a href="<?php echo e(route('admin.produk.index')); ?>" class="btn btn-secondary">Batal</a>
+    </div>
+  </div>
+</form>
+
+<?php $__env->startSection('scripts'); ?>
+<link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+  (function(){
+    let cropper;
+    const fileInput = document.getElementById('fileInput');
+    const modalImage = document.createElement('img');
+    modalImage.style.maxWidth = '100%';
+
+    const previewBox = document.createElement('div');
+    previewBox.style.marginTop = '0.5rem';
+
+    const previewThumb = document.createElement('img');
+    previewThumb.style.maxWidth = '160px';
+    previewThumb.style.maxHeight = '90px';
+    previewThumb.style.objectFit = 'contain';
+    previewThumb.style.display = 'none';
+    previewBox.appendChild(previewThumb);
+
+    fileInput.parentNode.appendChild(previewBox);
+
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'cropped_image';
+    fileInput.form.appendChild(hiddenInput);
+
+    fileInput.addEventListener('change', function(e){
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.inset = 0;
+        overlay.style.background = 'rgba(0,0,0,0.6)';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.zIndex = 9999;
+
+        const box = document.createElement('div');
+        box.style.width = '80%';
+        box.style.maxWidth = '900px';
+        box.style.background = '#fff';
+        box.style.padding = '12px';
+        box.style.borderRadius = '8px';
+        box.style.boxShadow = '0 6px 24px rgba(0,0,0,0.2)';
+
+        modalImage.src = ev.target.result;
+        box.appendChild(modalImage);
+
+        const btnRow = document.createElement('div');
+        btnRow.style.marginTop = '8px';
+        btnRow.style.display = 'flex';
+        btnRow.style.gap = '8px';
+
+        const cropBtn = document.createElement('button');
+        cropBtn.type = 'button';
+        cropBtn.className = 'btn btn-primary';
+        cropBtn.textContent = 'Crop & Gunakan';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.type = 'button';
+        cancelBtn.className = 'btn btn-secondary';
+        cancelBtn.textContent = 'Batal';
+
+        btnRow.appendChild(cropBtn);
+        btnRow.appendChild(cancelBtn);
+        box.appendChild(btnRow);
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        cropper = new Cropper(modalImage, { viewMode: 1, aspectRatio: NaN });
+
+        cancelBtn.addEventListener('click', function(){
+          cropper.destroy();
+          document.body.removeChild(overlay);
+          fileInput.value = '';
+        });
+
+        cropBtn.addEventListener('click', function(){
+          const canvas = cropper.getCroppedCanvas({ maxWidth: 1200, maxHeight: 800, imageSmoothingQuality: 'high' });
+          const dataUrl = canvas.toDataURL('image/png');
+          hiddenInput.value = dataUrl;
+          previewThumb.src = dataUrl;
+          previewThumb.style.display = 'inline-block';
+          cropper.destroy();
+          document.body.removeChild(overlay);
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  })();
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+
+
+
+
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views\admin\produk\edit.blade.php ENDPATH**/ ?>

@@ -1152,6 +1152,174 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
+{{-- SLIDER DI BAWAH CARD BERITA --}}
+@if($banners->count())
+<style>
+    .news-follow-slider {
+        position: relative;
+        width: min(100% - 2rem, 1500px);
+        margin: 0 auto 2.5rem;
+        overflow: hidden;
+        border-radius: 1rem;
+        background: #111827;
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.18);
+    }
+    .news-follow-slider-track {
+        display: flex;
+        transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
+    }
+    .news-follow-slide {
+        position: relative;
+        flex: 0 0 100%;
+        aspect-ratio: 19 / 6;
+        min-height: 180px;
+        overflow: hidden;
+    }
+    .news-follow-slide img,
+    .news-follow-slide video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+    .news-follow-slide::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.42));
+    }
+    .news-follow-slide-action {
+        position: absolute;
+        z-index: 1;
+        right: 1.5rem;
+        bottom: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.6rem 1rem;
+        border-radius: 999px;
+        background: #fff;
+        color: #991B1B;
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-decoration: none;
+    }
+    .news-follow-arrow {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        width: 38px;
+        height: 38px;
+        border: 0;
+        border-radius: 50%;
+        color: #fff;
+        background: rgba(17, 24, 39, 0.72);
+        cursor: pointer;
+        transform: translateY(-50%);
+    }
+    .news-follow-arrow:hover { background: #991B1B; }
+    .news-follow-prev { left: 0.75rem; }
+    .news-follow-next { right: 0.75rem; }
+    .news-follow-dots {
+        position: absolute;
+        z-index: 2;
+        left: 50%;
+        bottom: 0.8rem;
+        display: flex;
+        gap: 0.4rem;
+        transform: translateX(-50%);
+    }
+    .news-follow-dot {
+        width: 8px;
+        height: 8px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.55);
+        cursor: pointer;
+    }
+    .news-follow-dot.active { background: #fff; transform: scale(1.2); }
+    @media (max-width: 576px) {
+        .news-follow-slider { width: calc(100% - 2rem); margin-bottom: 1.75rem; }
+        .news-follow-slide { aspect-ratio: 4 / 3; min-height: 190px; }
+        .news-follow-slide-action { right: 3.5rem; bottom: 0.8rem; padding: 0.5rem 0.75rem; font-size: 0.72rem; }
+        .news-follow-arrow { width: 32px; height: 32px; font-size: 0.75rem; }
+    }
+</style>
+<section class="news-follow-slider" aria-label="Promo pilihan">
+    <div class="news-follow-slider-track" id="newsFollowSliderTrack">
+        @foreach($banners as $banner)
+            <div class="news-follow-slide">
+                @if($banner->is_video)
+                    <video src="{{ $banner->image_url }}" autoplay muted loop playsinline></video>
+                @else
+                    <img src="{{ $banner->image_url }}" alt="{{ $banner->judul }}">
+                @endif
+                @if($banner->url_tujuan && $banner->label_tombol)
+                    <a href="{{ $banner->url_tujuan }}"
+                       target="{{ str_starts_with($banner->url_tujuan, '/') || str_starts_with($banner->url_tujuan, '#') ? '_self' : '_blank' }}"
+                       rel="noopener noreferrer" class="news-follow-slide-action">
+                        {{ $banner->label_tombol }} <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                @endif
+            </div>
+        @endforeach
+    </div>
+    @if($banners->count() > 1)
+        <button type="button" class="news-follow-arrow news-follow-prev" id="newsFollowPrev" aria-label="Slide sebelumnya">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button type="button" class="news-follow-arrow news-follow-next" id="newsFollowNext" aria-label="Slide berikutnya">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div class="news-follow-dots" id="newsFollowDots">
+            @foreach($banners as $banner)
+                <button type="button" class="news-follow-dot {{ $loop->first ? 'active' : '' }}" data-slide-index="{{ $loop->index }}" aria-label="Promo {{ $loop->iteration }}"></button>
+            @endforeach
+        </div>
+    @endif
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const track = document.getElementById('newsFollowSliderTrack');
+    const slides = track ? track.querySelectorAll('.news-follow-slide') : [];
+    const dots = document.querySelectorAll('.news-follow-dot');
+    if (!track || slides.length < 2) return;
+
+    let currentSlide = 0;
+    let timer;
+    const goToSlide = function (index) {
+        currentSlide = (index + slides.length) % slides.length;
+        track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+        dots.forEach(function (dot, dotIndex) {
+            dot.classList.toggle('active', dotIndex === currentSlide);
+        });
+    };
+    const startAutoPlay = function () {
+        clearInterval(timer);
+        timer = setInterval(function () { goToSlide(currentSlide + 1); }, 5000);
+    };
+
+    document.getElementById('newsFollowPrev').addEventListener('click', function () {
+        goToSlide(currentSlide - 1);
+        startAutoPlay();
+    });
+    document.getElementById('newsFollowNext').addEventListener('click', function () {
+        goToSlide(currentSlide + 1);
+        startAutoPlay();
+    });
+    dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+            goToSlide(Number(dot.dataset.slideIndex));
+            startAutoPlay();
+        });
+    });
+    startAutoPlay();
+});
+</script>
+@endif
+
 {{-- PROMO PRODUK --}}
 @if(isset($promoProducts) && $promoProducts->count())
 <style>
