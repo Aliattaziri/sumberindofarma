@@ -218,13 +218,13 @@
 
 {{-- ===== CART JAVASCRIPT ===== --}}
 <script>
-const WA = (window.cartSettings && window.cartSettings.wa) ? String(window.cartSettings.wa).replace(/\D/g, '') : '6285248965590';
+const WA = (window.cartSettings && window.cartSettings.wa) ? String(window.cartSettings.wa).replace(/\D/g, '') : '6282345866845';
 const CART_DEFAULT_SETTINGS = {
   storageKey: 'sumberindofarmatama_cart',
   receiptStoreName: 'SUMBERINDO FARMA TAMA',
   receiptStoreAddress: 'Komp. Pergudangan Ocean 88 C2-3\nJl. Adisucipto\nArang Limbung\nKec. Sungai Raya\nKab. Kubu Raya\nKalimantan Barat',
-  receiptStorePhone: '+62 852-4896-5590',
-  wa: '6285248965590',
+  receiptStorePhone: '+62 823-4586-6845',
+  wa: '6282345866845',
   receiptFilePrefix: 'struk-sumberindofarmatama'
 };
 const CART_CONFIG = Object.assign({}, CART_DEFAULT_SETTINGS, window.cartSettings || {});

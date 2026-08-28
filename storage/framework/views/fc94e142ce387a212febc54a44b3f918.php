@@ -8,7 +8,7 @@
     $routeSlug = $routeSlug ?? Str::slug($storeName);
     $storeAddress = $storeAddress ?? 'Kalimantan Barat';
     $storePhone = $storePhone ?? '';
-    $storeWa = $storeWa ?? '6285248965590';
+    $storeWa = $storeWa ?? '6282345866845';
 ?>
 
 

@@ -7,7 +7,7 @@
     $routeName = 'products.pbf';
     $routeSlug = 'pt-surya-sharone-abadi';
     $storeAddress = 'Komp. Pergudangan Ocean 88 C2-3, Jl. Adisucipto, Arang Limbung, Kec. Sungai Raya, Kab. Kubu Raya, Kalimantan Barat';
-    $storeWa = '6285248965590';
+    $storeWa = '6282345866845';
 ?>
 
 <?php echo $__env->make('partials.store_catalog', get_defined_vars(), array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>

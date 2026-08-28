@@ -390,7 +390,7 @@
             </div>
 
             {{-- Tombol WA --}}
-            <a href='https://wa.me/6285248965590?text={{ urlencode("Halo Sumberindo Farma Tama, saya ingin meminta kode akses untuk halaman Produk PBF.\n\nData saya:\n- Nama Perusahaan/Apotek: \n- Nomor SIA/SIPA: \n- Nama PIC: \n\nMohon informasi kode aksesnya. Terima kasih.") }}'
+            <a href='https://wa.me/6282345866845?text={{ urlencode("Halo Sumberindo Farma Tama, saya ingin meminta kode akses untuk halaman Produk PBF.\n\nData saya:\n- Nama Perusahaan/Apotek: \n- Nomor SIA/SIPA: \n- Nama PIC: \n\nMohon informasi kode aksesnya. Terima kasih.") }}'
                target="_blank"
                class="btn-wa-request">
                 <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i>
@@ -398,7 +398,11 @@
             </a>
 
             <p class="alt-access-label">Akses lainnya melalui aplikasi:</p>
-            <a href="https://play.google.com/store/apps/details?id=com.canggihsoftware.b2btokopro"
+                <a href="https://play.google.com/store/apps/details?id=com.canggihsoftware.b2btokopro"
+                    data-android="intent://products-pbf#Intent;scheme=tokopro;package=com.canggihsoftware.b2btokopro;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.canggihsoftware.b2btokopro;end"
+                    data-ios="tokopro://products-pbf"
+                    data-fallback="https://play.google.com/store/apps/details?id=com.canggihsoftware.b2btokopro"
+                    onclick="if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) { event.preventDefault(); var appUrl = /Android/i.test(navigator.userAgent) ? this.dataset.android : this.dataset.ios; var fallback = setTimeout(function () { window.location.href = this.dataset.fallback; }.bind(this), 1500); document.addEventListener('visibilitychange', function () { if (document.hidden) clearTimeout(fallback); }, { once: true }); window.location.href = appUrl; }"
                target="_blank"
                rel="noopener noreferrer"
                class="btn-app-access">
@@ -435,7 +439,7 @@
 
             <p class="pbf-info-note">
                 Kode akses bersifat rahasia dan hanya untuk mitra resmi.<br>
-                Butuh bantuan? <a href="https://wa.me/6285248965590" target="_blank">Chat Admin</a>
+                Butuh bantuan? <a href="https://wa.me/6282345866845" target="_blank">Chat Admin</a>
                 atau kunjungi <a href="{{ route('contact') }}">halaman kontak</a>.
             </p>
 

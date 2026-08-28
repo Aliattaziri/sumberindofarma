@@ -306,7 +306,7 @@
                         <div class="info-icon icon-green"><i class="fa-brands fa-whatsapp"></i></div>
                         <div class="info-text">
                             <h4>WhatsApp</h4>
-                            <a href="https://wa.me/6285248965590" target="_blank">+62 852-4896-5590</a>
+                            <a href="https://wa.me/6282345866845" target="_blank">+62 823-4586-6845</a>
                             <p style="margin-top:0.2rem;font-size:0.8rem;">Klik untuk chat langsung</p>
                         </div>
                     </div>
@@ -314,7 +314,7 @@
                         <div class="info-icon icon-orange"><i class="fa-solid fa-phone"></i></div>
                         <div class="info-text">
                             <h4>Telepon</h4>
-                            <a href="tel:+6285248965590">+62 852-4896-5590</a>
+                            <a href="tel:+6282345866845">+62 823-4586-6845</a>
                             <p style="margin-top:0.2rem;font-size:0.8rem;">Sen–Jum 08:00–18:00 · Sab–Min 09:00–17:00</p>
                         </div>
                     </div>
@@ -331,7 +331,7 @@
                     <h4 style="font-size:0.9rem;font-weight:700;color:#374151;margin-bottom:0.75rem;"><i class="fa-solid fa-share-nodes" style="color:#B91C1C;margin-right:0.4rem;"></i> Ikuti Kami</h4>
                     <div class="social-row">
                         <a href="https://www.instagram.com/sumberindofarma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/6285248965590" target="_blank" class="social-btn" style="background:#25D366;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://wa.me/6282345866845" target="_blank" class="social-btn" style="background:#25D366;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                         <a href="https://www.tiktok.com/@ptsumberindofarmatama" target="_blank" class="social-btn" style="background:#000000;display:flex;align-items:center;justify-content:center;" title="TikTok"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="<?php echo e(asset('logo tiktok.avif')); ?>" alt="TikTok" style="width:14px;height:14px;object-fit:contain;"></div></a>
                         <a href="#" class="social-btn" style="background:#EE3131;display:flex;align-items:center;justify-content:center;" title="Shopee"><div style="width:18px;height:18px;background:white;border-radius:6px;display:flex;align-items:center;justify-content:center;"><img src="<?php echo e(asset('logoshopee.jpeg')); ?>" alt="Shopee" style="width:14px;height:14px;object-fit:contain;"></div></a>
                     </div>
@@ -430,7 +430,7 @@ function kirimWA() {
 💬 *Pesan*:
 ${pesan}`;
 
-    window.open('https://wa.me/6285248965590?text=' + encodeURIComponent(teks), '_blank');
+    window.open('https://wa.me/6282345866845?text=' + encodeURIComponent(teks), '_blank');
 }
 </script>
 <?php $__env->stopSection(); ?>

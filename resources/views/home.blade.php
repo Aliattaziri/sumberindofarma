@@ -84,8 +84,8 @@
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12),
                 inset 0 1px 0 rgba(255, 255, 255, 0.16);
     min-height: 44px;
-    width: min(100%, 220px);
-    max-width: 220px;
+    width: min(100%, 320px);
+    max-width: 320px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: rgba(153, 27, 27, 0.9);
     margin: 0 auto;
@@ -169,6 +169,18 @@
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
+.promo-b2b-logo {
+    width: 68px;
+    height: 68px;
+    padding: 2px;
+    border-radius: 50%;
+    object-fit: contain;
+    flex-shrink: 0;
+    background: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.16));
+}
+
 .promo-pbf {
     background: radial-gradient(circle at 20% 25%, rgba(255,255,255,0.16), transparent 26%),
                 linear-gradient(135deg, #fb923c 0%, #f97316 48%, #ea580c 100%);
@@ -205,7 +217,8 @@
     line-height: 1.1;
     color: #fff;
     letter-spacing: -0.5px;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: left;
 }
 
 .promo-card p {
@@ -1052,14 +1065,38 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script>
+function openTokoProPbf(event, link) {
+    if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        return;
+    }
+
+    event.preventDefault();
+    const fallbackUrl = link.dataset.fallback;
+    const appUrl = /Android/i.test(navigator.userAgent)
+        ? link.dataset.android
+        : link.dataset.ios;
+    let fallbackTimer = setTimeout(function() {
+        window.location.href = fallbackUrl;
+    }, 1500);
+
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            clearTimeout(fallbackTimer);
+        }
+    }, { once: true });
+    window.location.href = appUrl;
+}
+</script>
+
 {{-- PROMO --}}
 <div class="promo-section">
   <div class="container">
     <div class="promo-grid">
-            <a href="{{ route('partners') }}" class="promo-card promo-contact">
+                        <a href="https://play.google.com/store/apps/details?id=com.canggihsoftware.b2btokopro" data-android="intent://products-pbf#Intent;scheme=tokopro;package=com.canggihsoftware.b2btokopro;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.canggihsoftware.b2btokopro;end" data-ios="tokopro://products-pbf" data-fallback="https://play.google.com/store/apps/details?id=com.canggihsoftware.b2btokopro" onclick="openTokoProPbf(event, this)" target="_blank" rel="noopener noreferrer" class="promo-card promo-contact">
         <div class="promo-card-content">
-          <img src="{{ asset('logo pt sumber indo farma tama.png') }}" alt="Sumberindo Farma" class="promo-goapotik-logo">
-          <h4>Lihat Mitra Kami</h4>
+                    <img src="{{ asset('logo b2b.png') }}" alt="B2B TokoPro" class="promo-b2b-logo">
+                    <h4>Kunjungi Toko Kami di B2B TokoPro</h4>
         </div>
       </a>
             <!-- Apotek cards removed per request; only PBF remains -->
@@ -1606,7 +1643,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <h3>💬 Mau pesan via WhatsApp?</h3>
         <p>Tim kami siap bantu proses pesanan Anda dengan cepat & mudah.</p>
       </div>
-      <a href="https://wa.me/6285248965590?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20memesan%20produk." target="_blank" class="btn-wa">
+    <a href="https://wa.me/6282345866845?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20memesan%20produk." target="_blank" class="btn-wa">
         <i class="fa-brands fa-whatsapp" style="font-size:1.3rem;"></i> Chat WhatsApp
       </a>
     </div>

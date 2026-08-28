@@ -47,7 +47,7 @@
                             <i class="fas fa-star" style="color: #fbbf24;"></i>
                             <small class="text-muted">(124 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Vitamin%20C%20500mg%20-%20Rp%2045.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Vitamin%20C%20500mg%20-%20Rp%2045.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                             <i class="fas fa-star-half" style="color: #fbbf24;"></i>
                             <small class="text-muted">(89 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Paracetamol%20500mg%20-%20Rp%2015.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Paracetamol%20500mg%20-%20Rp%2015.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                             <i class="fas fa-star" style="color: #fbbf24;"></i>
                             <small class="text-muted">(156 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Probiotik%20Plus%20-%20Rp%2065.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Probiotik%20Plus%20-%20Rp%2065.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                             <i class="fas fa-star" style="color: #d1d5db;"></i>
                             <small class="text-muted">(67 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Antiseptik%20100ml%20-%20Rp%2025.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Antiseptik%20100ml%20-%20Rp%2025.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@
                             <i class="fas fa-star" style="color: #fbbf24;"></i>
                             <small class="text-muted">(203 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Multivitamin%20Harian%20-%20Rp%2095.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Multivitamin%20Harian%20-%20Rp%2095.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                             <i class="fas fa-star-half" style="color: #fbbf24;"></i>
                             <small class="text-muted">(98 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Plester%20Antiair%20-%20Rp%2018.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Plester%20Antiair%20-%20Rp%2018.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -197,7 +197,7 @@
                             <i class="fas fa-star" style="color: #d1d5db;"></i>
                             <small class="text-muted">(54 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Obat%20Tetes%20Mata%20-%20Rp%2035.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Obat%20Tetes%20Mata%20-%20Rp%2035.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -222,7 +222,7 @@
                             <i class="fas fa-star" style="color: #fbbf24;"></i>
                             <small class="text-muted">(187 ulasan)</small>
                         </div>
-                        <a href="https://wa.me/6285248965590?text=Halo%2C%20saya%20ingin%20memesan%20Zinc%20Tablet%20-%20Rp%2055.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
+                        <a href="https://wa.me/6282345866845?text=Halo%2C%20saya%20ingin%20memesan%20Zinc%20Tablet%20-%20Rp%2055.000" target="_blank" class="btn btn-primary w-100" style="text-decoration: none; display: flex; align-items: center; justify-content: center; background: #25D366;">💬 Pesan via WhatsApp</a>
                     </div>
                 </div>
             </div>

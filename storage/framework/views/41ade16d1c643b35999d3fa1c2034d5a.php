@@ -1251,7 +1251,7 @@
                     <h3>Kontak</h3>
                     <ul>
                         <li>
-                            <a href="tel:+6285248965590"><i class="fa-solid fa-phone footer-icon"></i>+62 852-4896-5590</a>
+                            <a href="tel:+6282345866845"><i class="fa-solid fa-phone footer-icon"></i>+62 823-4586-6845</a>
                         </li>
                         <li>
                             <a href="mailto:pt.sumberindofarmatama@sumberindopontianak.com"><i class="fa-solid fa-envelope footer-icon"></i>pt.sumberindofarmatama@sumberindopontianak.com</a>
@@ -1363,7 +1363,7 @@
             <div class="float-item">
                 <span class="float-tooltip">Chat WhatsApp</span>
                 <span class="float-label-mobile">WhatsApp</span>
-                <a href="https://wa.me/6285248965590?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20bertanya%20tentang%20produk%20obat."
+                <a href="https://wa.me/6282345866845?text=Halo%20Sumberindo%20Farma%20Tama%2C%20saya%20ingin%20bertanya%20tentang%20produk%20obat."
                    target="_blank" class="float-btn float-btn-wa"
                    style="background:#25D366;color:white;font-size:1.9rem;box-shadow:0 6px 24px rgba(37,211,102,0.55);">
                     <i class="fa-brands fa-whatsapp"></i>
