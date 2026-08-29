@@ -777,23 +777,27 @@
 .banner-promo-track {
     display: flex;
     width: 100%;
+    gap: 0;
+    padding: 0;
+    box-sizing: border-box;
     transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
     will-change: transform;
-    border-radius: 20px;
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    box-shadow: none;
 }
 
 .banner-promo-item {
     flex: 0 0 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 0;
+    border-radius: 22px;
     display: block;
     color: #fff;
     text-decoration: none;
     background: #111;
-    box-shadow: none;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.14);
+    border: 4px solid rgba(255,255,255,0.72);
     aspect-ratio: 19 / 6;
     min-height: 180px;
     height: auto;
@@ -813,6 +817,7 @@
     filter: brightness(0.88);
     transition: transform 0.45s ease;
     object-fit: cover;
+    border-radius: 18px;
 }
 
 .banner-promo-item:hover .banner-promo-bg {
@@ -999,6 +1004,13 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentIndex = 0;
         let autoTimer = null;
         const intervalMs = 4200;
+        const slideWidthPercent = 100 / slides.length;
+
+        track.style.width = (slides.length * 100) + '%';
+        slides.forEach(function(slide) {
+            slide.style.flex = '0 0 ' + slideWidthPercent + '%';
+            slide.style.width = slideWidthPercent + '%';
+        });
 
         const setActiveDot = function(index) {
             dots.forEach(function(dot, dotIndex) {
@@ -1008,7 +1020,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const goToSlide = function(index) {
             currentIndex = (index + slides.length) % slides.length;
-            track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+            track.style.transform = 'translateX(-' + (currentIndex * slideWidthPercent) + '%)';
             setActiveDot(currentIndex);
         };
 
