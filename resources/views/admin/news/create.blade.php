@@ -73,8 +73,24 @@
             @enderror
         </div>
 
-        <!-- Publikasi -->
+        <!-- Tanggal & Publikasi -->
         <div style="margin-bottom: 2rem; padding: 1rem; background: #f3f4f6; border-radius: 0.375rem;">
+            <div style="margin-bottom: 1rem;">
+                <label for="created_at" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                    Tanggal Berita
+                </label>
+                <input
+                    type="date"
+                    id="created_at"
+                    name="created_at"
+                    value="{{ old('created_at', now()->format('Y-m-d')) }}"
+                    style="width: 100%; max-width: 280px; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-family: inherit;"
+                >
+                <p style="color: #6b7280; font-size: 0.875rem; margin: 0.5rem 0 0 0;">
+                    Atur tanggal publikasi sesuai kebutuhan. Jika dikosongkan, akan memakai tanggal hari ini.
+                </p>
+            </div>
+
             <label style="display: flex; align-items: center; cursor: pointer;">
                 <input type="checkbox" name="is_published" value="1" {{ old('is_published') ? 'checked' : '' }} style="width: 1rem; height: 1rem; margin-right: 0.5rem; cursor: pointer;">
                 <span style="margin: 0; font-weight: 600;">✓ Publikasikan sekarang</span>

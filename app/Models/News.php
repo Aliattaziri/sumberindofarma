@@ -26,6 +26,7 @@ class News extends Model
         'comment_count',
         'share_count',
         'is_published',
+        'created_at',
     ];
 
     protected $casts = [

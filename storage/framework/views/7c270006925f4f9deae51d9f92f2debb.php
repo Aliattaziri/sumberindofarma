@@ -1,13 +1,13 @@
-@extends('layouts.admin')
 
-@section('title', 'Edit Berita - Admin Sumberindo Farma Tama')
-@section('page-title', '📰 Edit Berita')
 
-@section('content')
+<?php $__env->startSection('title', 'Edit Berita - Admin Sumberindo Farma Tama'); ?>
+<?php $__env->startSection('page-title', '📰 Edit Berita'); ?>
+
+<?php $__env->startSection('content'); ?>
 <div style="background: white; padding: 2rem; border-radius: 0.75rem; max-width: 900px;">
-    <form action="{{ route('admin.news.update', $news->id) }}" method="POST" enctype="multipart/form-data" id="newsForm">
-        @csrf
-        @method('PUT')
+    <form action="<?php echo e(route('admin.news.update', $news->id)); ?>" method="POST" enctype="multipart/form-data" id="newsForm">
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('PUT'); ?>
 
         <!-- Deskripsi -->
         <div style="margin-bottom: 1.5rem;">
@@ -21,13 +21,20 @@
                 placeholder="Tulis deskripsi konten berita Anda di sini..."
                 style="width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-family: inherit;"
                 required
-            >{{ old('deskripsi', $news->deskripsi) }}</textarea>
+            ><?php echo e(old('deskripsi', $news->deskripsi)); ?></textarea>
             <p style="color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem;">
                 <span id="charCount">0</span> karakter (tanpa batasan)
             </p>
-            @error('deskripsi')
-                <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</p>
-            @enderror
+            <?php $__errorArgs = ['deskripsi'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- File Media -->
@@ -38,20 +45,20 @@
             <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 0.75rem;">
                 Foto (JPG, PNG, GIF, WebP) atau Video (MP4, WebM, MOV). Maksimal 500MB. Untuk carousel, upload beberapa foto di bagian galeri.
             </p>
-            @if($news->file)
+            <?php if($news->file): ?>
                 <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.375rem; margin-bottom: 1rem;">
                     <p style="margin: 0 0 0.5rem 0; font-weight: 600; color: #374151;">File saat ini:</p>
-                    @if(str_contains($news->file, '.mp4') || str_contains($news->file, '.webm') || str_contains($news->file, '.mov'))
-                        <video src="{{ asset('storage/' . $news->file) }}" controls style="max-height: 150px; max-width: 100%; border-radius: 0.375rem;"></video>
-                    @else
-                        <img src="{{ asset('storage/' . $news->file) }}" alt="Current media" style="max-height: 150px; max-width: 100%; object-fit: cover; border-radius: 0.375rem;">
-                    @endif
+                    <?php if(str_contains($news->file, '.mp4') || str_contains($news->file, '.webm') || str_contains($news->file, '.mov')): ?>
+                        <video src="<?php echo e(asset('storage/' . $news->file)); ?>" controls style="max-height: 150px; max-width: 100%; border-radius: 0.375rem;"></video>
+                    <?php else: ?>
+                        <img src="<?php echo e(asset('storage/' . $news->file)); ?>" alt="Current media" style="max-height: 150px; max-width: 100%; object-fit: cover; border-radius: 0.375rem;">
+                    <?php endif; ?>
                     <label style="display: flex; align-items: center; cursor: pointer; margin-top: 0.75rem;">
                         <input type="checkbox" name="delete_file" value="1" style="width: 1rem; height: 1rem; margin-right: 0.5rem; cursor: pointer;">
                         <span style="font-size: 0.875rem; color: #ef4444; font-weight: 600;">🗑️ Hapus file ini dan ganti dengan yang baru</span>
                     </label>
                 </div>
-            @endif
+            <?php endif; ?>
             <div style="border: 2px dashed #d1d5db; border-radius: 0.375rem; padding: 2rem; text-align: center; cursor: pointer; background: #f9fafb; transition: all 0.3s;" id="dropZoneMain">
                 <input type="file" id="file" name="file" style="display: none;" accept="image/*,video/*">
                 <div id="fileLabel" style="pointer-events: none;">
@@ -61,9 +68,16 @@
                 </div>
                 <div id="filePreview" style="margin-top: 1rem;"></div>
             </div>
-            @error('file')
-                <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</p>
-            @enderror
+            <?php $__errorArgs = ['file'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- Gallery Carousel -->
@@ -74,21 +88,21 @@
             <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 0.75rem;">
                 Atur urutan foto sesuai preferensi Anda. Foto paling atas akan jadi cover utama. Semua foto default memakai rasio 3:4. Maksimal 500MB per file.
             </p>
-            @if(!empty($news->gallery))
+            <?php if(!empty($news->gallery)): ?>
                 <div id="existingGalleryPreview" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
-                    @foreach($news->gallery as $index => $galleryImage)
-                        <div class="existing-gallery-item" data-path="{{ $galleryImage }}" style="position: relative; width: 90px; height: 120px; border-radius: 0.5rem; overflow: hidden; border: {{ $index === 0 ? '2px solid #f59e0b' : '1px solid #e5e7eb' }}; box-shadow: {{ $index === 0 ? '0 0 0 1px rgba(245,158,11,0.45)' : 'none' }}; background: #fff;">
-                            <img src="{{ asset('storage/' . $galleryImage) }}" alt="Gallery" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div style="position:absolute; top:6px; left:6px; background: {{ $index === 0 ? '#f59e0b' : 'rgba(15,23,42,0.8)' }}; color:#fff; font-size:0.65rem; font-weight:700; padding:0.2rem 0.45rem; border-radius:999px;">{{ $index === 0 ? 'Cover' : '#' . ($index + 1) }}</div>
+                    <?php $__currentLoopData = $news->gallery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $galleryImage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="existing-gallery-item" data-path="<?php echo e($galleryImage); ?>" style="position: relative; width: 90px; height: 120px; border-radius: 0.5rem; overflow: hidden; border: <?php echo e($index === 0 ? '2px solid #f59e0b' : '1px solid #e5e7eb'); ?>; box-shadow: <?php echo e($index === 0 ? '0 0 0 1px rgba(245,158,11,0.45)' : 'none'); ?>; background: #fff;">
+                            <img src="<?php echo e(asset('storage/' . $galleryImage)); ?>" alt="Gallery" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position:absolute; top:6px; left:6px; background: <?php echo e($index === 0 ? '#f59e0b' : 'rgba(15,23,42,0.8)'); ?>; color:#fff; font-size:0.65rem; font-weight:700; padding:0.2rem 0.45rem; border-radius:999px;"><?php echo e($index === 0 ? 'Cover' : '#' . ($index + 1)); ?></div>
                             <div style="position:absolute; bottom:6px; left:6px; right:6px; display:flex; gap:0.25rem; justify-content:space-between;">
-                                <button type="button" class="gallery-move-left" data-path="{{ $galleryImage }}" style="flex:1; border:none; border-radius:0.4rem; background:rgba(0,0,0,0.65); color:#fff; font-size:0.7rem; cursor:pointer;">←</button>
-                                <button type="button" class="gallery-move-right" data-path="{{ $galleryImage }}" style="flex:1; border:none; border-radius:0.4rem; background:rgba(0,0,0,0.65); color:#fff; font-size:0.7rem; cursor:pointer;">→</button>
-                                <button type="button" class="gallery-remove" data-path="{{ $galleryImage }}" style="flex:1; border:none; border-radius:0.4rem; background:rgba(239,68,68,0.9); color:#fff; font-size:0.7rem; cursor:pointer;">✕</button>
+                                <button type="button" class="gallery-move-left" data-path="<?php echo e($galleryImage); ?>" style="flex:1; border:none; border-radius:0.4rem; background:rgba(0,0,0,0.65); color:#fff; font-size:0.7rem; cursor:pointer;">←</button>
+                                <button type="button" class="gallery-move-right" data-path="<?php echo e($galleryImage); ?>" style="flex:1; border:none; border-radius:0.4rem; background:rgba(0,0,0,0.65); color:#fff; font-size:0.7rem; cursor:pointer;">→</button>
+                                <button type="button" class="gallery-remove" data-path="<?php echo e($galleryImage); ?>" style="flex:1; border:none; border-radius:0.4rem; background:rgba(239,68,68,0.9); color:#fff; font-size:0.7rem; cursor:pointer;">✕</button>
                             </div>
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
-            @endif
+            <?php endif; ?>
             <div style="border: 2px dashed #d1d5db; border-radius: 0.375rem; padding: 1.25rem; background: #f9fafb;" id="galleryDropZone">
                 <input type="file" id="gallery" name="gallery[]" multiple accept="image/*" style="display: none;">
                 <div id="galleryLabel" style="cursor: pointer; text-align: center; color: #374151;">
@@ -98,10 +112,17 @@
                 <div id="galleryPreview" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;"></div>
             </div>
             <input type="hidden" id="galleryOrder" name="gallery_order" value="">
-            <input type="hidden" id="galleryExistingOrder" name="gallery_existing_order" value='{{ json_encode($news->gallery ?? []) }}'>
-            @error('gallery')
-                <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;">{{ $message }}</p>
-            @enderror
+            <input type="hidden" id="galleryExistingOrder" name="gallery_existing_order" value='<?php echo e(json_encode($news->gallery ?? [])); ?>'>
+            <?php $__errorArgs = ['gallery'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                <p style="color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem;"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <!-- Tanggal & Publikasi -->
@@ -114,7 +135,7 @@
                     type="date"
                     id="created_at"
                     name="created_at"
-                    value="{{ old('created_at', $news->created_at ? $news->created_at->format('Y-m-d') : now()->format('Y-m-d')) }}"
+                    value="<?php echo e(old('created_at', $news->created_at ? $news->created_at->format('Y-m-d') : now()->format('Y-m-d'))); ?>"
                     style="width: 100%; max-width: 280px; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-family: inherit;"
                 >
                 <p style="color: #6b7280; font-size: 0.875rem; margin: 0.5rem 0 0 0;">
@@ -123,7 +144,7 @@
             </div>
 
             <label style="display: flex; align-items: center; cursor: pointer;">
-                <input type="checkbox" name="is_published" value="1" {{ old('is_published', $news->is_published) ? 'checked' : '' }} style="width: 1rem; height: 1rem; margin-right: 0.5rem; cursor: pointer;">
+                <input type="checkbox" name="is_published" value="1" <?php echo e(old('is_published', $news->is_published) ? 'checked' : ''); ?> style="width: 1rem; height: 1rem; margin-right: 0.5rem; cursor: pointer;">
                 <span style="margin: 0; font-weight: 600;">✓ Publikasikan</span>
             </label>
             <p style="color: #6b7280; font-size: 0.875rem; margin: 0.5rem 0 0 1.75rem;">
@@ -134,21 +155,21 @@
         <!-- Info -->
         <div style="margin-bottom: 2rem; padding: 1rem; background: #ecfdf5; border-radius: 0.375rem; border-left: 4px solid #10b981;">
             <p style="margin: 0; color: #047857; font-size: 0.875rem;">
-                ℹ️ Dibuat: {{ $news->created_at->format('d M Y H:i') }} | Dilihat: {{ $news->views }} kali
+                ℹ️ Dibuat: <?php echo e($news->created_at->format('d M Y H:i')); ?> | Dilihat: <?php echo e($news->views); ?> kali
             </p>
         </div>
 
         <!-- Buttons -->
         <div style="display: flex; gap: 1rem;">
             <button type="submit" class="btn btn-primary">✓ Simpan Perubahan</button>
-            <a href="{{ route('admin.news.index') }}" class="btn btn-secondary">✕ Batal</a>
+            <a href="<?php echo e(route('admin.news.index')); ?>" class="btn btn-secondary">✕ Batal</a>
         </div>
     </form>
 
     <!-- Delete Form (Outside Main Form) -->
-    <form action="{{ route('admin.news.destroy', $news->id) }}" method="POST" style="display: inline; margin-top: 1rem;">
-        @csrf
-        @method('DELETE')
+    <form action="<?php echo e(route('admin.news.destroy', $news->id)); ?>" method="POST" style="display: inline; margin-top: 1rem;">
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('DELETE'); ?>
         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">🗑️ Hapus</button>
     </form>
 </div>
@@ -392,4 +413,6 @@ function handleFile(file, input, label, preview, maxMB) {
     reader.readAsDataURL(file);
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Ali Attaziri\sumberindofarma\resources\views/admin/news/edit.blade.php ENDPATH**/ ?>

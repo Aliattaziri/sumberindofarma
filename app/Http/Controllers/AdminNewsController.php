@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Helpers\ImageHelper;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -114,6 +115,7 @@ class AdminNewsController extends Controller
             'gallery'       => 'nullable|array',
             'gallery.*'     => 'file|mimes:jpeg,jpg,png,gif,webp|max:512000',
             'gallery_order' => 'nullable|string',
+            'created_at'    => 'nullable|date_format:Y-m-d',
             'is_published'  => 'nullable|boolean',
         ]);
 
@@ -145,6 +147,9 @@ class AdminNewsController extends Controller
         $data['is_published'] = $request->boolean('is_published', false);
         $data['ratio'] = $data['ratio'] ?? '3:4';
         $data['views'] = 0;
+        $data['created_at'] = $request->filled('created_at')
+            ? Carbon::parse($request->input('created_at'))->format('Y-m-d 00:00:00')
+            : now()->format('Y-m-d H:i:s');
 
         News::create($data);
 
@@ -180,6 +185,7 @@ class AdminNewsController extends Controller
             'gallery'        => 'nullable|array',
             'gallery.*'      => 'file|mimes:jpeg,jpg,png,gif,webp|max:512000',
             'delete_file'    => 'nullable|boolean',
+            'created_at'     => 'nullable|date_format:Y-m-d',
             'is_published'   => 'nullable|boolean',
         ]);
 
@@ -246,6 +252,9 @@ class AdminNewsController extends Controller
         // Set published status
         $data['is_published'] = $request->boolean('is_published', false);
         $data['ratio'] = $data['ratio'] ?? $news->ratio ?? '3:4';
+        if ($request->filled('created_at')) {
+            $data['created_at'] = Carbon::parse($request->input('created_at'))->format('Y-m-d 00:00:00');
+        }
 
         $news->update($data);
 
